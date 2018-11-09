@@ -1,4 +1,4 @@
-package ru.POJO;
+package ru.POJO.buh;
 
 import javax.persistence.*;
 
