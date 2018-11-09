@@ -8,19 +8,19 @@ public class ContactPerson {
 
     @Id
     //TODO Добавить автоинкрементную аннотацию
-    @Column(name = "CONTACT_PERSON_ID")
+    @Column(name = "CONTACT_PERSON_ID", nullable = false)
     private Integer ContactPersonID;
 
-    @Column(name = "CONTACT_PERSON_FULL_NAME")
+    @Column(name = "CONTACT_PERSON_FULL_NAME", nullable = false)
     private String fullName;
 
-    @Column(name = "CONTACT_PERSON_POSITION")
+    @Column(name = "CONTACT_PERSON_POSITION", nullable = false)
     private String position;
 
-    @Column(name = "CONTACT_PERSON_PHONE")
+    @Column(name = "CONTACT_PERSON_PHONE", nullable = false)
     private String phone;
 
-    @Column(name = "CONTACT_PERSON_EMAIL")
+    @Column(name = "CONTACT_PERSON_EMAIL", nullable = false)
     private String email;
 
     @Column(name = "CONTACT_CHANGES")

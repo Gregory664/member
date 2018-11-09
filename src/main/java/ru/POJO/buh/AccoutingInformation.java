@@ -6,17 +6,17 @@ import javax.persistence.*;
 @Table(name = "ACCOUTING_INFORMATION")
 public class AccoutingInformation {
     @Id
-    @Column(name = "MEMBER_ID")
+    @Column(name = "MEMBER_ID", nullable = false)
     //TODO Добавить связь  к классу ACCOUTING_INFORMATION - Member| 1-1
     private String memberId;
 
-    @Column(name = "ACCOUTING_INFORMATION_OGRN")
+    @Column(name = "ACCOUTING_INFORMATION_OGRN", nullable = false)
     private String ogrn;
 
-    @Column(name = "ACCOUTING_INFORMATION_KPP")
+    @Column(name = "ACCOUTING_INFORMATION_KPP", nullable = false)
     private String kpp;
 
-    @Column(name = "ACCOUTING_INFORMATION_TIN")
+    @Column(name = "ACCOUTING_INFORMATION_TIN", nullable = false)
     private String tin;
 
     private AccoutingInformation() {

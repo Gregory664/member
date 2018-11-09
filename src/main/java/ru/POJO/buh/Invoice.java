@@ -8,20 +8,21 @@ import java.util.Date;
 public class Invoice {
     @Id
     //TODO Добавить автоинкрементную аннотацию
-    @Column(name = "INVOICE_ID")
+    @Column(name = "INVOICE_ID", nullable = false)
     private Integer invoiceId;
 
-    @Column(name = "MEMBER_ID")
+    @Column(name = "MEMBER_ID", nullable = false)
     //TODO Добавить связь к классу GENERAL_INFORMATION-Member| 1-1
     private String memberId;
 
-    @Column(name = "INVOICE_DATE")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "INVOICE_DATE", nullable = false)
     private Date date;
 
-    @Column(name = "INVOICE_STATUS")
+    @Column(name = "INVOICE_STATUS", nullable = false)
     private String status;
 
-    @Column(name = "INVOICE_GET")
+    @Column(name = "INVOICE_GET", nullable = false)
     private String delivery;
 
     @Column(name = "INVOICE_COMMENT")

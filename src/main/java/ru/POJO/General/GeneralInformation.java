@@ -6,44 +6,44 @@ import javax.persistence.*;
 @Table(name = "GENERAL_INFORMATION")
 public class GeneralInformation {
     @Id
-    @Column(name = "MEMBER_ID")
+    @Column(name = "MEMBER_ID", nullable = false)
     //TODO Добавить связь к классу GENERAL_INFORMATION-Member| 1-1
     private String memberId;
 
-    @Column(name = "ORGANIZATION_FORM")
+    @Column(name = "ORGANIZATION_FORM", nullable = false)
     private String organizationForm;
 
-    @Column(name = "ECONOMIC_SECTOR")
+    @Column(name = "ECONOMIC_SECTOR", nullable = false)
     private String economicSector;
 
-    @Column(name = "OWNERSHIP_FORM")
+    @Column(name = "OWNERSHIP_FORM", nullable = false)
     private String ownershipForm;
 
-    @Column(name = "ACTIVITY_TYPE")
+    @Column(name = "ACTIVITY_TYPE", nullable = false)
     private String activityType;
 
-    @Column(name = "BUSINESS_FORM")
+    @Column(name = "BUSINESS_FORM", nullable = false)
     private String businessForm;
 
-    @Column(name = "VED_IMPORT")
+    @Column(name = "VED_IMPORT", nullable = false)
     private String vedImport;
 
-    @Column(name = "VED_EXPORT")
+    @Column(name = "VED_EXPORT", nullable = false)
     private String vedExport;
 
-    @Column(name = "INVESTMENTS_TARGET", nullable = false)
+    @Column(name = "INVESTMENTS_TARGET")
     private String investmentsTarget;
 
-    @Column(name = "INVESTMENTS_SIZE", nullable = false)
+    @Column(name = "INVESTMENTS_SIZE")
     private String investmentsSize;
 
-    @Column(name = "INTERACTION_OFFLINE")
+    @Column(name = "INTERACTION_OFFLINE", nullable = false)
     private String interactionOffline;
 
-    @Column(name = "INTERACTION_ONLINE")
+    @Column(name = "INTERACTION_ONLINE", nullable = false)
     private String interactionOnline;
 
-    @Column(name = "GENERAL_INFORMATION_CHANGES", nullable = false)
+    @Column(name = "GENERAL_INFORMATION_CHANGES")
     private String changes;
 
     private GeneralInformation() {

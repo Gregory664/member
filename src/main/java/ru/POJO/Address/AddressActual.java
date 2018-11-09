@@ -7,29 +7,29 @@ import javax.persistence.*;
 public class AddressActual {
 
     @Id
-    @Column(name = "MEMBER_ID")
+    @Column(name = "MEMBER_ID", nullable = false)
     //TODO Добавить связь  к классу ADDRESS_ACTUAL - Member| 1-1
     private String memberId;
 
-    @Column(name = "ADDRESS_LEGAL_INDEX")
+    @Column(name = "ADDRESS_LEGAL_INDEX", nullable = false)
     private Integer index;
 
-    @Column(name = "ADDRESS_LEGAL_TOWN")
+    @Column(name = "ADDRESS_LEGAL_TOWN", nullable = false)
     private String town;
 
-    @Column(name = "ADDRESS_LEGAL_STREET")
+    @Column(name = "ADDRESS_LEGAL_STREET", nullable = false)
     private String street;
 
-    @Column(name = "ADDRESS_LEGAL_HOUSE")
+    @Column(name = "ADDRESS_LEGAL_HOUSE", nullable = false)
     private String house;
 
-    @Column(name = "ADDRESS_LEGAL_OFFICE", nullable = false)
+    @Column(name = "ADDRESS_LEGAL_OFFICE")
     private String office;
 
-    @Column(name = "ADDRESS_LEGAL_DISTRICT")
+    @Column(name = "ADDRESS_LEGAL_DISTRICT", nullable = false)
     private String district;
 
-    @Column(name = "ADDRESS_LEGAL_CHANGES", nullable = false)
+    @Column(name = "ADDRESS_LEGAL_CHANGES")
     private String changes;
 
     private AddressActual() {

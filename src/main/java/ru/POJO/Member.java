@@ -8,20 +8,20 @@ import java.util.Date;
 public class Member {
 
     @Id
-    @Column(name = "MEMBER_ID")
+    @Column(name = "MEMBER_ID", nullable = false)
     private String memberId;
 
-    @Column(name = "MEMBER_SERIAL")
+    @Column(name = "MEMBER_SERIAL", nullable = false)
     private Integer memberSerial;
 
-    @Column(name = "MEMBER_STATUS")
+    @Column(name = "MEMBER_STATUS", nullable = false)
     private String memberStatus;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "MEMBER_DATE_OF_ENTRY")
+    @Column(name = "MEMBER_DATE_OF_ENTRY", nullable = false)
     private Date memberDate;
 
-    @Column(name = "MEMBER_SHORT_NAME")
+    @Column(name = "MEMBER_SHORT_NAME", nullable = false)
     private String memberShortName;
 
     private Member() {
