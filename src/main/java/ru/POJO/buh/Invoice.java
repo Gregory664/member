@@ -7,7 +7,7 @@ import java.util.Date;
 @Table(name = "INVOICE")
 public class Invoice {
     @Id
-    //TODO Добавить автоинкрементную аннотацию
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "INVOICE_ID", nullable = false)
     private Integer invoiceId;
 
@@ -32,8 +32,7 @@ public class Invoice {
 
     }
 
-    public Invoice(Integer invoiceId, String memberId, Date date, String status, String delivery, String comment) {
-        this.invoiceId = invoiceId;
+    public Invoice(String memberId, Date date, String status, String delivery, String comment) {
         this.memberId = memberId;
         this.date = date;
         this.status = status;

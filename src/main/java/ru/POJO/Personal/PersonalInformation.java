@@ -25,7 +25,9 @@ public class PersonalInformation {
 
     }
 
-    public PersonalInformation(String memberId, Integer relateId, Integer directorId, Integer contactPersonId, Integer contactId) {
+    public PersonalInformation(String memberId, Integer relateId,
+                               Integer directorId, Integer contactPersonId,
+                               Integer contactId) {
         this.memberId = memberId;
         this.relateId = relateId;
         this.directorId = directorId;

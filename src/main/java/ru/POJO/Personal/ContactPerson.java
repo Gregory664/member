@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class ContactPerson {
 
     @Id
-    //TODO Добавить автоинкрементную аннотацию
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTACT_PERSON_ID", nullable = false)
     private Integer ContactPersonID;
 
@@ -30,8 +30,11 @@ public class ContactPerson {
 
     }
 
-    public ContactPerson(Integer contactPersonID, String fullName, String position, String phone, String email, String changes) {
-        ContactPersonID = contactPersonID;
+    public ContactPerson(String fullName,
+                         String position,
+                         String phone,
+                         String email,
+                         String changes) {
         this.fullName = fullName;
         this.position = position;
         this.phone = phone;

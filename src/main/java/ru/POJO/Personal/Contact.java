@@ -6,8 +6,8 @@ import javax.persistence.*;
 @Table(name = "CONTACT")
 public class Contact {
 
-    //TODO Добавить автоинкрементную аннотацию
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTACT_ID", nullable = false)
     private Integer contactId;
 
@@ -30,8 +30,7 @@ public class Contact {
 
     }
 
-    public Contact(Integer contactId, String phone, String fax, String site, String email, String changes) {
-        this.contactId = contactId;
+    public Contact(String phone, String fax, String site, String email, String changes) {
         this.phone = phone;
         this.fax = fax;
         this.site = site;

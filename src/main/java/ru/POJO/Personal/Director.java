@@ -8,7 +8,7 @@ import java.util.Date;
 public class Director {
 
     @Id
-    //TODO Добавить автоинкрементную аннотацию
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DIRECTOR_ID", nullable = false)
     private Integer directorId;
 
@@ -35,8 +35,9 @@ public class Director {
 
     }
 
-    public Director(Integer directorId, String position, String fullName, String phone, String email, Date birthday, String changes) {
-        this.directorId = directorId;
+    public Director(String position, String fullName,
+                    String phone, String email,
+                    Date birthday, String changes) {
         this.position = position;
         this.fullName = fullName;
         this.phone = phone;

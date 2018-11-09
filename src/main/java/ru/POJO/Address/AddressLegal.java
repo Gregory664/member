@@ -36,7 +36,14 @@ public class AddressLegal {
 
     }
 
-    public AddressLegal(String memberId, Integer index, String town, String street, String house, String office, String district, String changes) {
+    public AddressLegal(String memberId,
+                        Integer index,
+                        String town,
+                        String street,
+                        String house,
+                        String office,
+                        String district,
+                        String changes) {
         this.memberId = memberId;
         this.index = index;
         this.town = town;

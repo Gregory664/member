@@ -32,11 +32,18 @@ public class AddressActual {
     @Column(name = "ADDRESS_LEGAL_CHANGES")
     private String changes;
 
-    private AddressActual() {
+    public AddressActual() {
 
     }
 
-    public AddressActual(String memberId, Integer index, String town, String street, String house, String office, String district, String changes) {
+    public AddressActual(String memberId,
+                         Integer index,
+                         String town,
+                         String street,
+                         String house,
+                         String office,
+                         String district,
+                         String changes) {
         this.memberId = memberId;
         this.index = index;
         this.town = town;
