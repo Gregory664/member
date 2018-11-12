@@ -1,4 +1,4 @@
-package ru.POJO.Personal;
+package ru.model.src.Personal;
 
 import javax.persistence.*;
 
@@ -40,6 +40,13 @@ public class ContactPerson {
         this.phone = phone;
         this.email = email;
         this.changes = changes;
+    }
+
+    public ContactPerson(String fullName, String position, String phone, String email) {
+        this.fullName = fullName;
+        this.position = position;
+        this.phone = phone;
+        this.email = email;
     }
 
     public Integer getContactPersonID() {
@@ -88,5 +95,17 @@ public class ContactPerson {
 
     public void setChanges(String changes) {
         this.changes = changes;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactPerson{" +
+                "ContactPersonID=" + ContactPersonID +
+                ", fullName='" + fullName + '\'' +
+                ", position='" + position + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", changes='" + changes + '\'' +
+                '}';
     }
 }

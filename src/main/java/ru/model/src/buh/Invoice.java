@@ -1,19 +1,22 @@
-package ru.POJO.buh;
+package ru.model.src.buh;
+
+import ru.model.src.Member;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "INVOICE")
-public class Invoice {
+public class Invoice implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "INVOICE_ID", nullable = false)
     private Integer invoiceId;
 
-    @Column(name = "MEMBER_ID", nullable = false)
-    //TODO Добавить связь к классу GENERAL_INFORMATION-Member| 1-1
-    private String memberId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "INVOICE_DATE", nullable = false)
@@ -32,12 +35,18 @@ public class Invoice {
 
     }
 
-    public Invoice(String memberId, Date date, String status, String delivery, String comment) {
-        this.memberId = memberId;
+    public Invoice(Member member, Date date, String status, String delivery, String comment) {
+        this.member = member;
         this.date = date;
         this.status = status;
         this.delivery = delivery;
         this.comment = comment;
+    }
+
+    public Invoice(Member member, Date date, String status) {
+        this.member = member;
+        this.date = date;
+        this.status = status;
     }
 
     public Integer getInvoiceId() {
@@ -48,12 +57,12 @@ public class Invoice {
         this.invoiceId = invoiceId;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public Date getDate() {
@@ -86,5 +95,17 @@ public class Invoice {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "invoiceId=" + invoiceId +
+                ", member=" + member.getMemberId() +
+                ", date=" + date +
+                ", status='" + status + '\'' +
+                ", delivery='" + delivery + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

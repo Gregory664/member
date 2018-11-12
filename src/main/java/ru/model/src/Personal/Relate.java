@@ -1,4 +1,4 @@
-package ru.POJO.Personal;
+package ru.model.src.Personal;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -37,6 +37,12 @@ public class Relate {
         this.dateOfCreation = dateOfCreation;
         this.services = services;
         this.changes = changes;
+    }
+
+    public Relate(String fullName, String size, String services) {
+        this.fullName = fullName;
+        this.size = size;
+        this.services = services;
     }
 
     public Integer getRelateId() {
@@ -85,5 +91,17 @@ public class Relate {
 
     public void setChanges(String changes) {
         this.changes = changes;
+    }
+
+    @Override
+    public String toString() {
+        return "Relate{" +
+                "relateId=" + relateId +
+                ", fullName='" + fullName + '\'' +
+                ", size='" + size + '\'' +
+                ", dateOfCreation=" + dateOfCreation +
+                ", services='" + services + '\'' +
+                ", changes='" + changes + '\'' +
+                '}';
     }
 }

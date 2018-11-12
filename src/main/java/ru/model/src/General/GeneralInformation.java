@@ -1,14 +1,17 @@
-package ru.POJO.General;
+package ru.model.src.General;
+
+import ru.model.src.Member;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "GENERAL_INFORMATION")
-public class GeneralInformation {
+public class GeneralInformation implements Serializable {
     @Id
-    @Column(name = "MEMBER_ID", nullable = false)
-    //TODO Добавить связь к классу GENERAL_INFORMATION-Member| 1-1
-    private String memberId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @Column(name = "ORGANIZATION_FORM", nullable = false)
     private String organizationForm;
@@ -50,7 +53,7 @@ public class GeneralInformation {
 
     }
 
-    public GeneralInformation(String memberId,
+    public GeneralInformation(Member member,
                               String organizationForm,
                               String economicSector,
                               String ownershipForm,
@@ -63,8 +66,7 @@ public class GeneralInformation {
                               String interactionOffline,
                               String interactionOnline,
                               String changes) {
-
-        this.memberId = memberId;
+        this.member = member;
         this.organizationForm = organizationForm;
         this.economicSector = economicSector;
         this.ownershipForm = ownershipForm;
@@ -79,12 +81,60 @@ public class GeneralInformation {
         this.changes = changes;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public GeneralInformation(Member member,
+                              String organizationForm,
+                              String economicSector,
+                              String ownershipForm,
+                              String activityType,
+                              String businessForm,
+                              String vedImport,
+                              String vedExport,
+                              String interactionOffline,
+                              String interactionOnline,
+                              String changes) {
+        this.member = member;
+        this.organizationForm = organizationForm;
+        this.economicSector = economicSector;
+        this.ownershipForm = ownershipForm;
+        this.activityType = activityType;
+        this.businessForm = businessForm;
+        this.vedImport = vedImport;
+        this.vedExport = vedExport;
+        this.interactionOffline = interactionOffline;
+        this.interactionOnline = interactionOnline;
+        this.changes = changes;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public GeneralInformation(Member member,
+                              String organizationForm,
+                              String economicSector,
+                              String ownershipForm,
+                              String activityType,
+                              String businessForm,
+                              String vedImport,
+                              String vedExport,
+                              String interactionOffline,
+                              String interactionOnline) {
+        this.member = member;
+        this.organizationForm = organizationForm;
+        this.economicSector = economicSector;
+        this.ownershipForm = ownershipForm;
+        this.activityType = activityType;
+        this.businessForm = businessForm;
+        this.vedImport = vedImport;
+        this.vedExport = vedExport;
+        this.interactionOffline = interactionOffline;
+        this.interactionOnline = interactionOnline;
+    }
+
+
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public String getOrganizationForm() {
@@ -181,5 +231,24 @@ public class GeneralInformation {
 
     public void setChanges(String changes) {
         this.changes = changes;
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralInformation{" +
+                "memberId='" + member.getMemberId() + '\'' +
+                ", organizationForm='" + organizationForm + '\'' +
+                ", economicSector='" + economicSector + '\'' +
+                ", ownershipForm='" + ownershipForm + '\'' +
+                ", activityType='" + activityType + '\'' +
+                ", businessForm='" + businessForm + '\'' +
+                ", vedImport='" + vedImport + '\'' +
+                ", vedExport='" + vedExport + '\'' +
+                ", investmentsTarget='" + investmentsTarget + '\'' +
+                ", investmentsSize='" + investmentsSize + '\'' +
+                ", interactionOffline='" + interactionOffline + '\'' +
+                ", interactionOnline='" + interactionOnline + '\'' +
+                ", changes='" + changes + '\'' +
+                '}';
     }
 }

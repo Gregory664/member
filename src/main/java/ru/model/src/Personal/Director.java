@@ -1,4 +1,4 @@
-package ru.POJO.Personal;
+package ru.model.src.Personal;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -44,6 +44,14 @@ public class Director {
         this.email = email;
         this.birthday = birthday;
         this.changes = changes;
+    }
+
+    public Director(String position, String fullName, String phone, String email, Date birthday) {
+        this.position = position;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.birthday = birthday;
     }
 
     public Integer getDirectorId() {
@@ -102,5 +110,16 @@ public class Director {
         this.changes = changes;
     }
 
-
+    @Override
+    public String toString() {
+        return "Director{" +
+                "directorId=" + directorId +
+                ", position='" + position + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", birthday=" + birthday +
+                ", changes='" + changes + '\'' +
+                '}';
+    }
 }

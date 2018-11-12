@@ -1,15 +1,17 @@
-package ru.POJO.Address;
+package ru.model.src.Address;
 
+import ru.model.src.Member;
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "ADDRESS_LEGAL")
-public class AddressLegal {
+public class AddressLegal implements Serializable {
 
     @Id
-    @Column(name = "MEMBER_ID", nullable = false)
-    //TODO Добавить связь к классу ADDRESS_LEGAL-Member| 1-1
-    private String memberId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @Column(name = "ADDRESS_LEGAL_INDEX", nullable = false)
     private Integer index;
@@ -36,7 +38,7 @@ public class AddressLegal {
 
     }
 
-    public AddressLegal(String memberId,
+    public AddressLegal(Member member,
                         Integer index,
                         String town,
                         String street,
@@ -44,7 +46,7 @@ public class AddressLegal {
                         String office,
                         String district,
                         String changes) {
-        this.memberId = memberId;
+        this.member = member;
         this.index = index;
         this.town = town;
         this.street = street;
@@ -54,12 +56,28 @@ public class AddressLegal {
         this.changes = changes;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public AddressLegal(Member member,
+                        Integer index,
+                        String town,
+                        String street,
+                        String house,
+                        String district) {
+        this.member = member;
+        this.index = index;
+        this.town = town;
+        this.street = street;
+        this.house = house;
+        this.district = district;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public Integer getIndex() {
@@ -116,5 +134,19 @@ public class AddressLegal {
 
     public void setChanges(String changes) {
         this.changes = changes;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressLegal{" +
+                "member=" + member.getMemberId() +
+                ", index=" + index +
+                ", town='" + town + '\'' +
+                ", street='" + street + '\'' +
+                ", house='" + house + '\'' +
+                ", office='" + office + '\'' +
+                ", district='" + district + '\'' +
+                ", changes='" + changes + '\'' +
+                '}';
     }
 }

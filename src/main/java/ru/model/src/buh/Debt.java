@@ -1,14 +1,18 @@
-package ru.POJO.buh;
+package ru.model.src.buh;
+
+import ru.model.src.Member;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "DEBT")
-public class Debt {
+public class Debt implements Serializable {
+
     @Id
-    @Column(name = "MEMBER_ID", nullable = false)
-    //TODO Добавить связь к классу DEBT-Member| 1-1
-    private String memberId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @Column(name = "DEBT_STATUS", nullable = false)
     private String status;
@@ -23,19 +27,19 @@ public class Debt {
 
     }
 
-    public Debt(String memberId, String status, String period, String comment) {
-        this.memberId = memberId;
+    public Debt(Member member, String status, String period, String comment) {
+        this.member = member;
         this.status = status;
         this.period = period;
         this.comment = comment;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public String getStatus() {
@@ -60,5 +64,15 @@ public class Debt {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Debt{" +
+                "member=" + member.getMemberId() +
+                ", status='" + status + '\'' +
+                ", period='" + period + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

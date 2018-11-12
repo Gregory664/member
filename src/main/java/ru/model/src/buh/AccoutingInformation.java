@@ -1,14 +1,16 @@
-package ru.POJO.buh;
+package ru.model.src.buh;
 
+import ru.model.src.Member;
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "ACCOUTING_INFORMATION")
-public class AccoutingInformation {
+public class AccoutingInformation implements Serializable {
     @Id
-    @Column(name = "MEMBER_ID", nullable = false)
-    //TODO Добавить связь  к классу ACCOUTING_INFORMATION - Member| 1-1
-    private String memberId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @Column(name = "ACCOUTING_INFORMATION_OGRN", nullable = false)
     private String ogrn;
@@ -23,19 +25,19 @@ public class AccoutingInformation {
 
     }
 
-    public AccoutingInformation(String memberId, String ogrn, String kpp, String tin) {
-        this.memberId = memberId;
+    public AccoutingInformation(Member member, String ogrn, String kpp, String tin) {
+        this.member = member;
         this.ogrn = ogrn;
         this.kpp = kpp;
         this.tin = tin;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public String getOgrn() {
@@ -60,5 +62,15 @@ public class AccoutingInformation {
 
     public void setTin(String tin) {
         this.tin = tin;
+    }
+
+    @Override
+    public String toString() {
+        return "AccoutingInformation{" +
+                "member=" + member.getMemberId() +
+                ", ogrn='" + ogrn + '\'' +
+                ", kpp='" + kpp + '\'' +
+                ", tin='" + tin + '\'' +
+                '}';
     }
 }

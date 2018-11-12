@@ -1,11 +1,12 @@
-package ru.POJO.Personal;
+package ru.model.src.Personal;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "CONTACT")
-public class Contact {
+public class ContactOrg {
 
+    //FIXME Разобраться с этим классом
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTACT_ID", nullable = false)
@@ -26,11 +27,8 @@ public class Contact {
     @Column(name = "CONTACT_CHANGES")
     private String changes;
 
-    private Contact() {
-
-    }
-
-    public Contact(String phone, String fax, String site, String email, String changes) {
+    public ContactOrg(Integer contactId, String phone, String fax, String site, String email, String changes) {
+        this.contactId = contactId;
         this.phone = phone;
         this.fax = fax;
         this.site = site;
@@ -85,4 +83,6 @@ public class Contact {
     public void setChanges(String changes) {
         this.changes = changes;
     }
+
+
 }
