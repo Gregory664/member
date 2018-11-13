@@ -1,16 +1,19 @@
 package ru.model.src.Personal;
 
+import ru.model.src.Member;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "DIRECTOR")
-public class Director {
+public class Director implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DIRECTOR_ID", nullable = false)
-    private Integer directorId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    private Member member;
 
     @Column(name = "DIRECTOR_POSITION", nullable = false)
     private String position;
@@ -35,9 +38,8 @@ public class Director {
 
     }
 
-    public Director(String position, String fullName,
-                    String phone, String email,
-                    Date birthday, String changes) {
+    public Director(Member member, String position, String fullName, String phone, String email, Date birthday, String changes) {
+        this.member = member;
         this.position = position;
         this.fullName = fullName;
         this.phone = phone;
@@ -46,20 +48,12 @@ public class Director {
         this.changes = changes;
     }
 
-    public Director(String position, String fullName, String phone, String email, Date birthday) {
-        this.position = position;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.email = email;
-        this.birthday = birthday;
+    public Member getMember() {
+        return member;
     }
 
-    public Integer getDirectorId() {
-        return directorId;
-    }
-
-    public void setDirectorId(Integer directorId) {
-        this.directorId = directorId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public String getPosition() {
@@ -113,7 +107,7 @@ public class Director {
     @Override
     public String toString() {
         return "Director{" +
-                "directorId=" + directorId +
+                "member=" + member.getMemberId() +
                 ", position='" + position + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", phone='" + phone + '\'' +

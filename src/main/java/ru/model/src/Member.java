@@ -3,14 +3,17 @@ package ru.model.src;
 import ru.model.src.Address.AddressActual;
 import ru.model.src.Address.AddressLegal;
 import ru.model.src.General.GeneralInformation;
-import ru.model.src.Personal.PersonalInformation;
+import ru.model.src.Personal.Contact;
+import ru.model.src.Personal.ContactPerson;
+import ru.model.src.Personal.Director;
+import ru.model.src.Personal.Relate;
 import ru.model.src.buh.AccoutingInformation;
 import ru.model.src.buh.Debt;
 import ru.model.src.buh.Invoice;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "MEMBER")
@@ -53,10 +56,10 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private AccoutingInformation accoutingInformation;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "INVOICE")
     @JoinColumn(name = "MEMBER_ID")
-    private Invoice invoice;
+    private List<Invoice> invoice;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "GENERAL_INFORMATION")
@@ -64,9 +67,24 @@ public class Member {
     private GeneralInformation generalInformation;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "PERSONAL_INFORMATION")
+    @JoinTable(name = "CONTACT")
     @JoinColumn(name = "MEMBER_ID")
-    private PersonalInformation personalInformation;
+    private Contact contact;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "CONTACT_PERSON")
+    @JoinColumn(name = "MEMBER_ID")
+    private ContactPerson contactPerson;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "DIRECTOR")
+    @JoinColumn(name = "MEMBER_ID")
+    private Director director;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "RELATE")
+    @JoinColumn(name = "MEMBER_ID")
+    private Relate relate;
 
     private Member() {
 
@@ -152,11 +170,11 @@ public class Member {
         this.accoutingInformation = accoutingInformation;
     }
 
-    public Invoice getInvoice() {
+    public List<Invoice> getInvoice() {
         return invoice;
     }
 
-    public void setInvoice(Invoice invoice) {
+    public void setInvoice(List<Invoice> invoice) {
         this.invoice = invoice;
     }
 
@@ -168,29 +186,35 @@ public class Member {
         this.generalInformation = generalInformation;
     }
 
-    public PersonalInformation getPersonalInformation() {
-        return personalInformation;
+    public Contact getContact() {
+        return contact;
     }
 
-    public void setPersonalInformation(PersonalInformation personalInformation) {
-        this.personalInformation = personalInformation;
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 
-    @Override
-    public String toString() {
-        return "Member{" +
-                "memberId='" + memberId + '\'' +
-                ", memberSerial=" + memberSerial +
-                ", memberStatus='" + memberStatus + '\'' +
-                ", memberDate=" + memberDate +
-                ", memberShortName='" + memberShortName + '\'' +
-                ", addressActual=" + addressActual +
-                ", addressLegal=" + addressLegal +
-                ", debt=" + debt.toString() +
-                ", accoutingInformation=" + accoutingInformation +
-                ", invoice=" + invoice +
-                ", generalInformation=" + generalInformation +
-                ", personalInformation=" + personalInformation +
-                '}';
+    public ContactPerson getContactPerson() {
+        return contactPerson;
+    }
+
+    public void setContactPerson(ContactPerson contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+
+    public Director getDirector() {
+        return director;
+    }
+
+    public void setDirector(Director director) {
+        this.director = director;
+    }
+
+    public Relate getRelate() {
+        return relate;
+    }
+
+    public void setRelate(Relate relate) {
+        this.relate = relate;
     }
 }

@@ -26,8 +26,7 @@
 
         <mapping class="ru.model.src.General.GeneralInformation"></mapping>
 
-        <mapping class="ru.model.src.Personal.PersonalInformation"></mapping>
-        <mapping class="ru.model.src.Personal.ContactOrg"></mapping>
+        <mapping class="ru.model.src.Personal.Contact"></mapping>
         <mapping class="ru.model.src.Personal.ContactPerson"></mapping>
         <mapping class="ru.model.src.Personal.Director"></mapping>
         <mapping class="ru.model.src.Personal.Relate"></mapping>

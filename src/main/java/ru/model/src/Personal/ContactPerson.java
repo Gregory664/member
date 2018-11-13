@@ -1,15 +1,17 @@
 package ru.model.src.Personal;
 
+import ru.model.src.Member;
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "CONTACT_PERSON")
-public class ContactPerson {
+public class ContactPerson implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CONTACT_PERSON_ID", nullable = false)
-    private Integer ContactPersonID;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    private Member member;
 
     @Column(name = "CONTACT_PERSON_FULL_NAME", nullable = false)
     private String fullName;
@@ -30,11 +32,8 @@ public class ContactPerson {
 
     }
 
-    public ContactPerson(String fullName,
-                         String position,
-                         String phone,
-                         String email,
-                         String changes) {
+    public ContactPerson(Member member, String fullName, String position, String phone, String email, String changes) {
+        this.member = member;
         this.fullName = fullName;
         this.position = position;
         this.phone = phone;
@@ -42,19 +41,12 @@ public class ContactPerson {
         this.changes = changes;
     }
 
-    public ContactPerson(String fullName, String position, String phone, String email) {
-        this.fullName = fullName;
-        this.position = position;
-        this.phone = phone;
-        this.email = email;
+    public Member getMember() {
+        return member;
     }
 
-    public Integer getContactPersonID() {
-        return ContactPersonID;
-    }
-
-    public void setContactPersonID(Integer contactPersonID) {
-        ContactPersonID = contactPersonID;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public String getFullName() {
@@ -100,7 +92,7 @@ public class ContactPerson {
     @Override
     public String toString() {
         return "ContactPerson{" +
-                "ContactPersonID=" + ContactPersonID +
+                "member=" + member.getMemberId() +
                 ", fullName='" + fullName + '\'' +
                 ", position='" + position + '\'' +
                 ", phone='" + phone + '\'' +

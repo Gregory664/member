@@ -1,16 +1,17 @@
 package ru.model.src.Personal;
 
+import ru.model.src.Member;
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "CONTACT")
-public class ContactOrg {
+public class Contact implements Serializable {
 
-    //FIXME Разобраться с этим классом
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CONTACT_ID", nullable = false)
-    private Integer contactId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    private Member member;
 
     @Column(name = "CONTACT_PHONE", nullable = false)
     private String phone;
@@ -27,8 +28,12 @@ public class ContactOrg {
     @Column(name = "CONTACT_CHANGES")
     private String changes;
 
-    public ContactOrg(Integer contactId, String phone, String fax, String site, String email, String changes) {
-        this.contactId = contactId;
+    private Contact() {
+
+    }
+
+    public Contact(Member member, String phone, String fax, String site, String email, String changes) {
+        this.member = member;
         this.phone = phone;
         this.fax = fax;
         this.site = site;
@@ -36,12 +41,18 @@ public class ContactOrg {
         this.changes = changes;
     }
 
-    public Integer getContactId() {
-        return contactId;
+    public Contact(Member member, String phone, String email) {
+        this.member = member;
+        this.phone = phone;
+        this.email = email;
     }
 
-    public void setContactId(Integer contactId) {
-        this.contactId = contactId;
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public String getPhone() {
@@ -84,5 +95,15 @@ public class ContactOrg {
         this.changes = changes;
     }
 
-
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "member=" + member.getMemberId() +
+                ", phone='" + phone + '\'' +
+                ", fax='" + fax + '\'' +
+                ", site='" + site + '\'' +
+                ", email='" + email + '\'' +
+                ", changes='" + changes + '\'' +
+                '}';
+    }
 }

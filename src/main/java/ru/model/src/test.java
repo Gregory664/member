@@ -4,11 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import ru.model.src.Personal.PersonalInformation;
-import ru.model.src.buh.Debt;
-
-import javax.crypto.spec.DESedeKeySpec;
-import java.util.Date;
+import ru.model.src.Personal.Contact;
 
 public class test {
     public static void main(String[] args) throws ClassNotFoundException {
@@ -21,7 +17,10 @@ public class test {
             Member member = session.get(Member.class, "111-001");
             //System.out.println(member.toString());
             System.out.println("????????????????????????????????????????????????????????????????????????????????");
-
+            Contact contact = new Contact(member, "89804567788", "as@as.as");
+            member.setContact(contact);
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            session.save(member.getContact());
 
             transaction.commit();
         }

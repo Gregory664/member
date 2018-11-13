@@ -1,15 +1,17 @@
 package ru.model.src.Personal;
 
+import ru.model.src.Member;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "RELATE")
-public class Relate {
+public class Relate implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RELATE_ID", nullable = false)
-    private Integer relateId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    private Member member;
 
     @Column(name = "RELATE_FULL_NAME", nullable = false)
     private String fullName;
@@ -45,12 +47,12 @@ public class Relate {
         this.services = services;
     }
 
-    public Integer getRelateId() {
-        return relateId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setRelateId(Integer relateId) {
-        this.relateId = relateId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public String getFullName() {
@@ -96,7 +98,7 @@ public class Relate {
     @Override
     public String toString() {
         return "Relate{" +
-                "relateId=" + relateId +
+                "member=" + member.getMemberId() +
                 ", fullName='" + fullName + '\'' +
                 ", size='" + size + '\'' +
                 ", dateOfCreation=" + dateOfCreation +

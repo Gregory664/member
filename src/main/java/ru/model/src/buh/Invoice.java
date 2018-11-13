@@ -10,11 +10,12 @@ import java.util.Date;
 @Table(name = "INVOICE")
 public class Invoice implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "INVOICE_ID", nullable = false)
     private Integer invoiceId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "MEMBER")
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 

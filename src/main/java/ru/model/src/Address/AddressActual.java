@@ -14,25 +14,25 @@ public class AddressActual implements Serializable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @Column(name = "ADDRESS_LEGAL_INDEX", nullable = false)
+    @Column(name = "ADDRESS_ACTUAL_INDEX", nullable = false)
     private Integer index;
 
-    @Column(name = "ADDRESS_LEGAL_TOWN", nullable = false)
+    @Column(name = "ADDRESS_ACTUAL_TOWN", nullable = false)
     private String town;
 
-    @Column(name = "ADDRESS_LEGAL_STREET", nullable = false)
+    @Column(name = "ADDRESS_ACTUAL_STREET", nullable = false)
     private String street;
 
-    @Column(name = "ADDRESS_LEGAL_HOUSE", nullable = false)
+    @Column(name = "ADDRESS_ACTUAL_HOUSE", nullable = false)
     private String house;
 
-    @Column(name = "ADDRESS_LEGAL_OFFICE")
+    @Column(name = "ADDRESS_ACTUAL_OFFICE")
     private String office;
 
-    @Column(name = "ADDRESS_LEGAL_DISTRICT", nullable = false)
+    @Column(name = "ADDRESS_ACTUAL_DISTRICT", nullable = false)
     private String district;
 
-    @Column(name = "ADDRESS_LEGAL_CHANGES")
+    @Column(name = "ADDRESS_ACTUAL_CHANGES")
     private String changes;
 
     private AddressActual() {
