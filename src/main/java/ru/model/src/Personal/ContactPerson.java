@@ -41,6 +41,8 @@ public class ContactPerson implements Serializable {
         this.changes = changes;
     }
 
+
+
     public Member getMember() {
         return member;
     }

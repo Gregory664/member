@@ -11,7 +11,7 @@ public class Debt implements Serializable {
 
     @Id
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID")
+    @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
     @Column(name = "DEBT_STATUS", nullable = false)
@@ -33,6 +33,19 @@ public class Debt implements Serializable {
         this.period = period;
         this.comment = comment;
     }
+
+    public Debt(Member member, String status) {
+        this.member = member;
+        this.status = status;
+    }
+
+    public Debt(Member member, String status, String period) {
+        this.member = member;
+        this.status = status;
+        this.period = period;
+    }
+
+
 
     public Member getMember() {
         return member;

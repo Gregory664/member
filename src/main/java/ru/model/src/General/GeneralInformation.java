@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class GeneralInformation implements Serializable {
     @Id
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID")
+    @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
     @Column(name = "ORGANIZATION_FORM", nullable = false)

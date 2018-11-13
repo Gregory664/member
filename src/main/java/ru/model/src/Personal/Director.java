@@ -48,6 +48,14 @@ public class Director implements Serializable {
         this.changes = changes;
     }
 
+    public Director(Member member, String position, String fullName, String phone, String email) {
+        this.member = member;
+        this.position = position;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+    }
+
     public Member getMember() {
         return member;
     }

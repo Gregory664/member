@@ -12,8 +12,7 @@ import ru.model.src.buh.Debt;
 import ru.model.src.buh.Invoice;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "MEMBER")
@@ -37,52 +36,41 @@ public class Member {
     private String memberShortName;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "ADDRESS_ACTUAL")
     @JoinColumn(name = "MEMBER_ID")
     private AddressActual addressActual;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "ADDRESS_LEGAL")
     @JoinColumn(name = "MEMBER_ID")
     private AddressLegal addressLegal;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "DEBT")
     @JoinColumn(name = "MEMBER_ID")
     private Debt debt;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "ACCOUTING_INFORMATION")
     @JoinColumn(name = "MEMBER_ID")
     private AccoutingInformation accoutingInformation;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "INVOICE")
-    @JoinColumn(name = "MEMBER_ID")
-    private List<Invoice> invoice;
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member")
+    private List<Invoice> invoice = new ArrayList<Invoice>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "GENERAL_INFORMATION")
     @JoinColumn(name = "MEMBER_ID")
     private GeneralInformation generalInformation;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "CONTACT")
     @JoinColumn(name = "MEMBER_ID")
     private Contact contact;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "CONTACT_PERSON")
     @JoinColumn(name = "MEMBER_ID")
     private ContactPerson contactPerson;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "DIRECTOR")
     @JoinColumn(name = "MEMBER_ID")
     private Director director;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "RELATE")
     @JoinColumn(name = "MEMBER_ID")
     private Relate relate;
 
