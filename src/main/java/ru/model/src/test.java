@@ -1,5 +1,7 @@
 package ru.model.src;
 
+
+
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,6 +19,10 @@ public class test {
             Transaction transaction = session.beginTransaction();
             Member member = session.get(Member.class, "111-001");
             transaction.commit();
+            boolean z = member.getGeneralInformation().isB2b();
+
+
+            System.out.println(z);
         }
         catch (Exception e) {
             System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -29,5 +35,6 @@ public class test {
         }
 
     }
+
 
 }

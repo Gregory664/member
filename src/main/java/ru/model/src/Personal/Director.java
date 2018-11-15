@@ -21,14 +21,17 @@ public class Director implements Serializable {
     @Column(name = "DIRECTOR_FULL_NAME", nullable = false)
     private String fullName;
 
-    @Column(name = "DIRECTOR_PHONE")
-    private String phone;
+    @Column(name = "DIRECTOR_PHONE_MOBILE", nullable = false)
+    private String phoneMobile;
 
-    @Column(name = "DIRECTOR_EMAIL")
+    @Column(name = "DIRECTOR_PHONE_CITY", nullable = false)
+    private String phoneCity;
+
+    @Column(name = "DIRECTOR_EMAIL", nullable = false)
     private String email;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "DIRECTOR_BIRTHDAY")
+    @Column(name = "DIRECTOR_BIRTHDAY", nullable = false)
     private Date birthday;
 
     @Column(name = "DIRECTOR_CHANGES")
@@ -38,22 +41,31 @@ public class Director implements Serializable {
 
     }
 
-    public Director(Member member, String position, String fullName, String phone, String email, Date birthday, String changes) {
+    public Director(Member member, String position, String fullName, String phoneMobile, String phoneCity, String email, Date birthday, String changes) {
         this.member = member;
         this.position = position;
         this.fullName = fullName;
-        this.phone = phone;
+        this.phoneMobile = phoneMobile;
+        this.phoneCity = phoneCity;
         this.email = email;
         this.birthday = birthday;
         this.changes = changes;
     }
 
-    public Director(Member member, String position, String fullName, String phone, String email) {
+    public Director(Member member,
+                    String position,
+                    String fullName,
+                    String phoneMobile,
+                    String phoneCity,
+                    String email,
+                    Date birthday) {
         this.member = member;
         this.position = position;
         this.fullName = fullName;
-        this.phone = phone;
+        this.phoneMobile = phoneMobile;
+        this.phoneCity = phoneCity;
         this.email = email;
+        this.birthday = birthday;
     }
 
     public Member getMember() {
@@ -80,12 +92,20 @@ public class Director implements Serializable {
         this.fullName = fullName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneMobile() {
+        return phoneMobile;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneMobile(String phoneMobile) {
+        this.phoneMobile = phoneMobile;
+    }
+
+    public String getPhoneCity() {
+        return phoneCity;
+    }
+
+    public void setPhoneCity(String phoneCity) {
+        this.phoneCity = phoneCity;
     }
 
     public String getEmail() {
@@ -110,18 +130,5 @@ public class Director implements Serializable {
 
     public void setChanges(String changes) {
         this.changes = changes;
-    }
-
-    @Override
-    public String toString() {
-        return "Director{" +
-                "member=" + member.getMemberId() +
-                ", position='" + position + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", birthday=" + birthday +
-                ", changes='" + changes + '\'' +
-                '}';
     }
 }

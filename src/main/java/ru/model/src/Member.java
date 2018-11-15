@@ -52,7 +52,7 @@ public class Member {
     private AccoutingInformation accoutingInformation;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member")
-    private List<Invoice> invoice = new ArrayList<Invoice>();
+    private List<Invoice> invoice;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
@@ -62,9 +62,8 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private Contact contact;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID")
-    private ContactPerson contactPerson;
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member")
+    private List<ContactPerson> contactPerson;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
@@ -182,11 +181,11 @@ public class Member {
         this.contact = contact;
     }
 
-    public ContactPerson getContactPerson() {
+    public List<ContactPerson> getContactPerson() {
         return contactPerson;
     }
 
-    public void setContactPerson(ContactPerson contactPerson) {
+    public void setContactPerson(List<ContactPerson> contactPerson) {
         this.contactPerson = contactPerson;
     }
 

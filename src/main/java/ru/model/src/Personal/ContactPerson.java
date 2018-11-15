@@ -19,8 +19,11 @@ public class ContactPerson implements Serializable {
     @Column(name = "CONTACT_PERSON_POSITION", nullable = false)
     private String position;
 
-    @Column(name = "CONTACT_PERSON_PHONE", nullable = false)
-    private String phone;
+    @Column(name = "CONTACT_PERSON_PHONE_MOBILE", nullable = false)
+    private String phoneMobile;
+
+    @Column(name = "CONTACT_PERSON_PHONE_CITY", nullable = false)
+    private String phoneCity;
 
     @Column(name = "CONTACT_PERSON_EMAIL", nullable = false)
     private String email;
@@ -32,16 +35,21 @@ public class ContactPerson implements Serializable {
 
     }
 
-    public ContactPerson(Member member, String fullName, String position, String phone, String email, String changes) {
+    public ContactPerson(Member member,
+                         String fullName,
+                         String position,
+                         String phoneMobile,
+                         String phoneCity,
+                         String email,
+                         String changes) {
         this.member = member;
         this.fullName = fullName;
         this.position = position;
-        this.phone = phone;
+        this.phoneMobile = phoneMobile;
+        this.phoneCity = phoneCity;
         this.email = email;
         this.changes = changes;
     }
-
-
 
     public Member getMember() {
         return member;
@@ -67,12 +75,20 @@ public class ContactPerson implements Serializable {
         this.position = position;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneMobile() {
+        return phoneMobile;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneMobile(String phoneMobile) {
+        this.phoneMobile = phoneMobile;
+    }
+
+    public String getPhoneCity() {
+        return phoneCity;
+    }
+
+    public void setPhoneCity(String phoneCity) {
+        this.phoneCity = phoneCity;
     }
 
     public String getEmail() {
@@ -89,17 +105,5 @@ public class ContactPerson implements Serializable {
 
     public void setChanges(String changes) {
         this.changes = changes;
-    }
-
-    @Override
-    public String toString() {
-        return "ContactPerson{" +
-                "member=" + member.getMemberId() +
-                ", fullName='" + fullName + '\'' +
-                ", position='" + position + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", changes='" + changes + '\'' +
-                '}';
     }
 }

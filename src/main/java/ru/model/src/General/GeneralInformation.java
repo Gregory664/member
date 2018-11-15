@@ -41,10 +41,25 @@ public class GeneralInformation implements Serializable {
     private String investmentsSize;
 
     @Column(name = "INTERACTION_OFFLINE", nullable = false)
-    private String interactionOffline;
+    private boolean interactionOffline;
 
     @Column(name = "INTERACTION_ONLINE", nullable = false)
-    private String interactionOnline;
+    private boolean interactionOnline;
+
+    @Column(name = "B2B", nullable = false)
+    private boolean b2b;
+
+    @Column(name = "B2C", nullable = false)
+    private boolean b2c;
+
+    @Column(name = "BUSINESS_MISSION_VISITING", nullable = false)
+    private boolean businessMissionVisiting;
+
+    @Column(name = "BUSINESS_MISSION_REGIONAL", nullable = false)
+    private boolean businessMissionRegional;
+
+    @Column(name = "MKAS", nullable = false)
+    private boolean mkas;
 
     @Column(name = "GENERAL_INFORMATION_CHANGES")
     private String changes;
@@ -52,6 +67,7 @@ public class GeneralInformation implements Serializable {
     private GeneralInformation() {
 
     }
+
 
     public GeneralInformation(Member member,
                               String organizationForm,
@@ -63,8 +79,13 @@ public class GeneralInformation implements Serializable {
                               String vedExport,
                               String investmentsTarget,
                               String investmentsSize,
-                              String interactionOffline,
-                              String interactionOnline,
+                              boolean interactionOffline,
+                              boolean interactionOnline,
+                              boolean b2b,
+                              boolean b2c,
+                              boolean businessMissionVisiting,
+                              boolean businessMissionRegional,
+                              boolean mkas,
                               String changes) {
         this.member = member;
         this.organizationForm = organizationForm;
@@ -78,6 +99,11 @@ public class GeneralInformation implements Serializable {
         this.investmentsSize = investmentsSize;
         this.interactionOffline = interactionOffline;
         this.interactionOnline = interactionOnline;
+        this.b2b = b2b;
+        this.b2c = b2c;
+        this.businessMissionVisiting = businessMissionVisiting;
+        this.businessMissionRegional = businessMissionRegional;
+        this.mkas = mkas;
         this.changes = changes;
     }
 
@@ -89,9 +115,13 @@ public class GeneralInformation implements Serializable {
                               String businessForm,
                               String vedImport,
                               String vedExport,
-                              String interactionOffline,
-                              String interactionOnline,
-                              String changes) {
+                              boolean interactionOffline,
+                              boolean interactionOnline,
+                              boolean b2b,
+                              boolean b2c,
+                              boolean businessMissionVisiting,
+                              boolean businessMissionRegional,
+                              boolean mkas) {
         this.member = member;
         this.organizationForm = organizationForm;
         this.economicSector = economicSector;
@@ -102,32 +132,12 @@ public class GeneralInformation implements Serializable {
         this.vedExport = vedExport;
         this.interactionOffline = interactionOffline;
         this.interactionOnline = interactionOnline;
-        this.changes = changes;
+        this.b2b = b2b;
+        this.b2c = b2c;
+        this.businessMissionVisiting = businessMissionVisiting;
+        this.businessMissionRegional = businessMissionRegional;
+        this.mkas = mkas;
     }
-
-    public GeneralInformation(Member member,
-                              String organizationForm,
-                              String economicSector,
-                              String ownershipForm,
-                              String activityType,
-                              String businessForm,
-                              String vedImport,
-                              String vedExport,
-                              String interactionOffline,
-                              String interactionOnline) {
-        this.member = member;
-        this.organizationForm = organizationForm;
-        this.economicSector = economicSector;
-        this.ownershipForm = ownershipForm;
-        this.activityType = activityType;
-        this.businessForm = businessForm;
-        this.vedImport = vedImport;
-        this.vedExport = vedExport;
-        this.interactionOffline = interactionOffline;
-        this.interactionOnline = interactionOnline;
-    }
-
-
 
     public Member getMember() {
         return member;
@@ -209,19 +219,19 @@ public class GeneralInformation implements Serializable {
         this.investmentsSize = investmentsSize;
     }
 
-    public String getInteractionOffline() {
+    public boolean isInteractionOffline() {
         return interactionOffline;
     }
 
-    public void setInteractionOffline(String interactionOffline) {
+    public void setInteractionOffline(boolean interactionOffline) {
         this.interactionOffline = interactionOffline;
     }
 
-    public String getInteractionOnline() {
+    public boolean isInteractionOnline() {
         return interactionOnline;
     }
 
-    public void setInteractionOnline(String interactionOnline) {
+    public void setInteractionOnline(boolean interactionOnline) {
         this.interactionOnline = interactionOnline;
     }
 
@@ -233,22 +243,43 @@ public class GeneralInformation implements Serializable {
         this.changes = changes;
     }
 
-    @Override
-    public String toString() {
-        return "GeneralInformation{" +
-                "memberId='" + member.getMemberId() + '\'' +
-                ", organizationForm='" + organizationForm + '\'' +
-                ", economicSector='" + economicSector + '\'' +
-                ", ownershipForm='" + ownershipForm + '\'' +
-                ", activityType='" + activityType + '\'' +
-                ", businessForm='" + businessForm + '\'' +
-                ", vedImport='" + vedImport + '\'' +
-                ", vedExport='" + vedExport + '\'' +
-                ", investmentsTarget='" + investmentsTarget + '\'' +
-                ", investmentsSize='" + investmentsSize + '\'' +
-                ", interactionOffline='" + interactionOffline + '\'' +
-                ", interactionOnline='" + interactionOnline + '\'' +
-                ", changes='" + changes + '\'' +
-                '}';
+    public boolean isB2b() {
+        return b2b;
+    }
+
+    public void setB2b(boolean b2b) {
+        this.b2b = b2b;
+    }
+
+    public boolean isB2c() {
+        return b2c;
+    }
+
+    public void setB2c(boolean b2c) {
+        this.b2c = b2c;
+    }
+
+    public boolean isBusinessMissionVisiting() {
+        return businessMissionVisiting;
+    }
+
+    public void setBusinessMissionVisiting(boolean businessMissionVisiting) {
+        this.businessMissionVisiting = businessMissionVisiting;
+    }
+
+    public boolean isBusinessMissionRegional() {
+        return businessMissionRegional;
+    }
+
+    public void setBusinessMissionRegional(boolean businessMissionRegional) {
+        this.businessMissionRegional = businessMissionRegional;
+    }
+
+    public boolean isMkas() {
+        return mkas;
+    }
+
+    public void setMkas(boolean mkas) {
+        this.mkas = mkas;
     }
 }
