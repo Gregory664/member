@@ -1,6 +1,6 @@
-package ru.model.src.Personal;
+package ru.src.model.Personal;
 
-import ru.model.src.Member;
+import ru.src.model.Member;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;

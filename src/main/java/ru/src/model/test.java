@@ -1,14 +1,9 @@
-package ru.model.src;
-
-
+package ru.src.model;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import ru.model.src.Personal.Contact;
-
-import java.util.Date;
 
 public class test {
     public static void main(String[] args) {

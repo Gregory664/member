@@ -1,6 +1,6 @@
-package ru.model.src.buh;
+package ru.src.model.buh;
 
-import ru.model.src.Member;
+import ru.src.model.Member;
 
 import javax.persistence.*;
 import java.io.Serializable;

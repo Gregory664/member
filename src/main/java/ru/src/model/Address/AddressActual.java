@@ -1,6 +1,6 @@
-package ru.model.src.Address;
+package ru.src.model.Address;
 
-import ru.model.src.Member;
+import ru.src.model.Member;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,15 +1,15 @@
-package ru.model.src;
+package ru.src.model;
 
-import ru.model.src.Address.AddressActual;
-import ru.model.src.Address.AddressLegal;
-import ru.model.src.General.GeneralInformation;
-import ru.model.src.Personal.Contact;
-import ru.model.src.Personal.ContactPerson;
-import ru.model.src.Personal.Director;
-import ru.model.src.Personal.Relate;
-import ru.model.src.buh.AccoutingInformation;
-import ru.model.src.buh.Debt;
-import ru.model.src.buh.Invoice;
+import ru.src.model.Address.AddressActual;
+import ru.src.model.Address.AddressLegal;
+import ru.src.model.General.GeneralInformation;
+import ru.src.model.Personal.Contact;
+import ru.src.model.Personal.ContactPerson;
+import ru.src.model.Personal.Director;
+import ru.src.model.Personal.Relate;
+import ru.src.model.buh.AccoutingInformation;
+import ru.src.model.buh.Debt;
+import ru.src.model.buh.Invoice;
 
 import javax.persistence.*;
 import java.util.*;

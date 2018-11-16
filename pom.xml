@@ -54,12 +54,10 @@
             <version>2.3.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.zenjava</groupId>
-            <artifactId>javafx-maven-plugin</artifactId>
-            <version>8.8.3</version>
-        </dependency>
+
 
     </dependencies>
+
+
 
 </project>

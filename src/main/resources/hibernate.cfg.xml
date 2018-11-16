@@ -18,21 +18,21 @@
         <property name="hibernate.connection.characterEncoding">utf8</property>
         <property name="hibernate.connection.useUnicode">true</property>
 
-        <mapping class="ru.model.src.Member"></mapping>
+        <mapping class="ru.src.model.Member"></mapping>
 
-        <mapping class="ru.model.src.buh.Debt"></mapping>
-        <mapping class="ru.model.src.buh.AccoutingInformation"></mapping>
-        <mapping class="ru.model.src.buh.Invoice"></mapping>
+        <mapping class="ru.src.model.buh.Debt"></mapping>
+        <mapping class="ru.src.model.buh.AccoutingInformation"></mapping>
+        <mapping class="ru.src.model.buh.Invoice"></mapping>
 
-        <mapping class="ru.model.src.General.GeneralInformation"></mapping>
+        <mapping class="ru.src.model.General.GeneralInformation"></mapping>
 
-        <mapping class="ru.model.src.Personal.Contact"></mapping>
-        <mapping class="ru.model.src.Personal.ContactPerson"></mapping>
-        <mapping class="ru.model.src.Personal.Director"></mapping>
-        <mapping class="ru.model.src.Personal.Relate"></mapping>
+        <mapping class="ru.src.model.Personal.Contact"></mapping>
+        <mapping class="ru.src.model.Personal.ContactPerson"></mapping>
+        <mapping class="ru.src.model.Personal.Director"></mapping>
+        <mapping class="ru.src.model.Personal.Relate"></mapping>
 
-        <mapping class="ru.model.src.Address.AddressActual"></mapping>
-        <mapping class="ru.model.src.Address.AddressLegal"></mapping>
+        <mapping class="ru.src.model.Address.AddressActual"></mapping>
+        <mapping class="ru.src.model.Address.AddressLegal"></mapping>
 
 
 
