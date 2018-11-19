@@ -14,6 +14,12 @@ public class AddressActual implements Serializable {
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
+    @Column(name = "ADDRESS_ACTUAL_REGION_ID")
+    private Integer regionId;
+
+    @Column(name = "ADDRESS_ACTUAL_REGION_NAME")
+    private String regionName;
+
     @Column(name = "ADDRESS_ACTUAL_INDEX", nullable = false)
     private Integer index;
 
@@ -40,6 +46,8 @@ public class AddressActual implements Serializable {
     }
 
     public AddressActual(Member member,
+                         Integer regionId,
+                         String regionName,
                          Integer index,
                          String town,
                          String street,
@@ -48,6 +56,8 @@ public class AddressActual implements Serializable {
                          String district,
                          String changes) {
         this.member = member;
+        this.regionId = regionId;
+        this.regionName = regionName;
         this.index = index;
         this.town = town;
         this.street = street;
@@ -57,18 +67,14 @@ public class AddressActual implements Serializable {
         this.changes = changes;
     }
 
-    public AddressActual(Member member,
-                         Integer index,
-                         String town,
-                         String street,
-                         String house,
-                         String district) {
+    public AddressActual(Member member, Integer regionId, String regionName, Integer index, String town, String street, String house) {
         this.member = member;
+        this.regionId = regionId;
+        this.regionName = regionName;
         this.index = index;
         this.town = town;
         this.street = street;
         this.house = house;
-        this.district = district;
     }
 
     public Member getMember() {
@@ -77,6 +83,22 @@ public class AddressActual implements Serializable {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public Integer getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(Integer regionId) {
+        this.regionId = regionId;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
     }
 
     public Integer getIndex() {
@@ -133,19 +155,5 @@ public class AddressActual implements Serializable {
 
     public void setChanges(String changes) {
         this.changes = changes;
-    }
-
-    @Override
-    public String toString() {
-        return "AddressActual{" +
-                "member=" + member.getMemberId() +
-                ", index=" + index +
-                ", town='" + town + '\'' +
-                ", street='" + street + '\'' +
-                ", house='" + house + '\'' +
-                ", office='" + office + '\'' +
-                ", district='" + district + '\'' +
-                ", changes='" + changes + '\'' +
-                '}';
     }
 }
