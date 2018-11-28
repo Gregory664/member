@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <VBox prefHeight="394.0" prefWidth="1009.0">
+                           <children>
+                              <TitledPane animated="false" collapsible="false" text="Основная информация" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <GridPane hgap="4.0" minHeight="276.0" prefHeight="231.0" prefWidth="990.0" vgap="4.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="230.0" prefWidth="230.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Полное название организации" />
+                                          <Label text="Дата основания организации" GridPane.rowIndex="1" />
+                                          <Label text="Количество работников" GridPane.rowIndex="2" />
+                                          <Label text="Вид деятельности/ &#10;Оказываемые услуги" GridPane.rowIndex="3" />
+                                          <Label text="Дополнительная информация" GridPane.rowIndex="4" />
+                                          <TextArea fx:id="text_relate_fullName" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" />
+                                          <DatePicker fx:id="text_relate_dateOfCreation" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="date_relate_size" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextArea fx:id="text_relate_services" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextArea fx:id="text_relate_changes" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" collapsible="false" text="Дополнительная информация" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <GridPane hgap="4.0" minHeight="655.0" prefHeight="401.0" prefWidth="990.0" vgap="4.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="711.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Форма организации" />
+                                          <Label text="Тип экономической деятельности" GridPane.rowIndex="1" />
+                                          <Label text="Тип формы собственности" GridPane.rowIndex="2" />
+                                          <Label text="Тип вида деятельности" GridPane.rowIndex="3" />
+                                          <Label text="Тип формы предпринимательства" GridPane.rowIndex="4" />
+                                          <Label text="Являются импортерами" GridPane.rowIndex="5" />
+                                          <Label text="Являются экспортерами" GridPane.rowIndex="6" />
+                                          <Label text="Инвестиционные цели" GridPane.rowIndex="7" />
+                                          <Label text="Объем инвестиций" GridPane.rowIndex="8" />
+                                          <Label text="Участие Online" GridPane.rowIndex="9" />
+                                          <Label text="Участие Offline" GridPane.rowIndex="10" />
+                                          <Label text="Заинтересованность в B2B" GridPane.rowIndex="11" />
+                                          <Label text="Заинтересованность в B2C" GridPane.rowIndex="12" />
+                                          <Label text="Выездные бизнес миссии" GridPane.rowIndex="13" />
+                                          <Label text="Региональные бизнес миссии" GridPane.rowIndex="14" />
+                                          <Label text="Заинтересованность в MKAS" GridPane.rowIndex="15" />
+                                          <Label text="Дополнительная информация" GridPane.rowIndex="16" />
+                                          <ComboBox fx:id="comboBox_generalInformation_organizationForm" prefWidth="150.0" GridPane.columnIndex="1" />
+                                          <ComboBox fx:id="comboBox_generalInformation_economicSector" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextArea fx:id="text_generalInformation_investmentsTarget" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <TextField fx:id="text_generalInformation_investmentsSize" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                          <TextArea fx:id="text_generalInformation_changes" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                                          <ComboBox fx:id="comboBox_generalInformation_ownershipForm" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <ComboBox fx:id="comboBox_generalInformation_activityType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <ComboBox fx:id="comboBox_generalInformation_businessForm" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <ComboBox fx:id="comboBox_generalInformation_vedImport" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <ComboBox fx:id="comboBox_generalInformation_vedExport" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <ComboBox fx:id="comboBox_generalInformation_interactionOnline" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                          <ComboBox fx:id="comboBox_generalInformation_interactionOffline" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                          <ComboBox fx:id="comboBox_generalInformation_b2b" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                          <ComboBox fx:id="comboBox_generalInformation_b2c" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                                          <ComboBox fx:id="comboBox_generalInformation_businessMissionVisiting" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                                          <ComboBox fx:id="comboBox_generalInformation_businessMissionRegional" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                                          <ComboBox fx:id="comboBox_generalInformation_mkas" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" collapsible="false" text="Руководство" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <GridPane hgap="4.0" minHeight="285.0" prefHeight="277.0" prefWidth="990.0" vgap="4.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.0" minWidth="215.0" prefWidth="215.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="ФИО" />
+                                          <Label text="Должность" GridPane.rowIndex="1" />
+                                          <Label text="Мобильный телефон" GridPane.rowIndex="2" />
+                                          <Label text="Дополнительный телефон" GridPane.rowIndex="3" />
+                                          <Label text="Электронная почта" GridPane.rowIndex="4" />
+                                          <Label text="Дата рождения" GridPane.rowIndex="5" />
+                                          <Label text="Дополнительная информация" GridPane.rowIndex="6" />
+                                          <TextField fx:id="text_director_fullName" GridPane.columnIndex="1" />
+                                          <TextField fx:id="text_director_position" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="text_director_phoneMobile" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="text_director_phoneCity" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="text_director_email" maxWidth="300.0" prefHeight="26.0" prefWidth="307.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <DatePicker fx:id="date_director_birthday" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextArea fx:id="text_director_changes" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" collapsible="false" text="Контактная информация" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <GridPane hgap="4.0" minHeight="215.0" prefHeight="216.0" prefWidth="990.0" vgap="4.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="145.0" prefWidth="145.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="823.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Телефон" />
+                                          <Label text="Факс" GridPane.rowIndex="1" />
+                                          <Label text="Сайт" GridPane.rowIndex="2" />
+                                          <Label text="Электронная почта" GridPane.rowIndex="3" />
+                                          <Label text="Дополнительная &#10;информация" GridPane.rowIndex="4" />
+                                          <TextField fx:id="text_contact_phone" maxWidth="110.0" GridPane.columnIndex="1" />
+                                          <TextField fx:id="text_contact_fax" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="text_contact_site" maxWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="text_contact_email" maxWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextArea fx:id="text_contact_changes" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" collapsible="false" text="Бухгалтерская информация" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <GridPane hgap="4.0" minHeight="115.0" prefHeight="100.0" prefWidth="990.0" vgap="4.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="928.0" minWidth="10.0" prefWidth="926.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="ОГРН" />
+                                          <Label text="КПП" GridPane.rowIndex="1" />
+                                          <Label text="ИНН" GridPane.rowIndex="2" />
+                                          <TextField fx:id="text_accoutingInformation_ogrn" maxWidth="150.0" GridPane.columnIndex="1" />
+                                          <TextField fx:id="text_accoutingInformation_kpp" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="text_accoutingInformation_tin" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" collapsible="false" text="Информация по задолжности" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <GridPane hgap="4.0" minHeight="150.0" prefHeight="123.0" prefWidth="992.0" vgap="4.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.0" minWidth="215.0" prefWidth="215.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="755.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Статус задолжности" />
+                                          <Label text="Период задолжности" GridPane.rowIndex="1" />
+                                          <Label text="Дополнительная информация" GridPane.rowIndex="2" />
+                                          <TextField fx:id="text_debt_period" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextArea fx:id="text_debt_comment" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <ComboBox fx:id="comboBox_debt_status" maxHeight="200.0" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" collapsible="false" text="Юридический адрес" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <GridPane hgap="4.0" minHeight="350.0" prefHeight="313.0" prefWidth="990.0" vgap="4.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="841.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Код региона" />
+                                          <Label text="Регион" GridPane.rowIndex="1" />
+                                          <Label text="Индекс" GridPane.rowIndex="2" />
+                                          <Label text="Город" GridPane.rowIndex="3" />
+                                          <Label text="Улица" GridPane.rowIndex="4" />
+                                          <Label text="Дом" GridPane.rowIndex="5" />
+                                          <Label text="Офис" GridPane.rowIndex="6" />
+                                          <Label text="Район" GridPane.rowIndex="7" />
+                                          <Label text="Дополнительная информация" wrapText="true" GridPane.rowIndex="8" />
+                                          <TextField fx:id="text_addressLegal_regionId" maxWidth="70.0" GridPane.columnIndex="1" />
+                                          <TextField fx:id="text_addressLegal_regionName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="text_addressLegal_index" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="text_addressLegal_town" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="text_addressLegal_street" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="text_addressLegal_house" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="text_addressLegal_office" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <TextField fx:id="text_addressLegal_district" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <TextArea fx:id="text_addressLegal_changes" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" collapsible="false" text="Фактический адрес" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <GridPane hgap="4.0" minHeight="350.0" prefHeight="313.0" prefWidth="990.0" vgap="4.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="841.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Label text="Код региона" />
+                                          <Label text="Регион" GridPane.rowIndex="1" />
+                                          <Label text="Индекс" GridPane.rowIndex="2" />
+                                          <Label text="Город" GridPane.rowIndex="3" />
+                                          <Label text="Улица" GridPane.rowIndex="4" />
+                                          <Label text="Дом" GridPane.rowIndex="5" />
+                                          <Label text="Офис" GridPane.rowIndex="6" />
+                                          <Label text="Район" GridPane.rowIndex="7" />
+                                          <Label text="Дополнительная информация" wrapText="true" GridPane.rowIndex="8" />
+                                          <TextField fx:id="text_addressActual_regionId" maxWidth="70.0" GridPane.columnIndex="1" />
+                                          <TextField fx:id="text_addressActual_regionName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="text_addressActual_index" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="text_addressActual_town" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="text_addressActual_street" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="text_addressActual_house" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="text_addressActual_office" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <TextField fx:id="text_addressActual_district" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <TextArea fx:id="text_addressActual_changes" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </TitledPane>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </AnchorPane>
+            <GridPane maxHeight="50.0" minHeight="50.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="btn_saveMember" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" text="Сохранить" GridPane.halignment="RIGHT">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="btn_cancel" cancelButton="true" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" text="Отмена" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
