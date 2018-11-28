@@ -9,6 +9,10 @@ import java.io.Serializable;
 public class ContactPerson implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CONTACT_PERSON_ID", nullable = false)
+    private Integer contactPersonId;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
