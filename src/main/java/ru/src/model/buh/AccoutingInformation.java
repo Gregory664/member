@@ -21,6 +21,7 @@ public class AccoutingInformation implements Serializable {
     @Column(name = "ACCOUTING_INFORMATION_TIN", nullable = false)
     private String tin;
 
+
     private AccoutingInformation() {
 
     }
@@ -31,6 +32,7 @@ public class AccoutingInformation implements Serializable {
         this.kpp = kpp;
         this.tin = tin;
     }
+
 
     public Member getMember() {
         return member;
@@ -63,6 +65,7 @@ public class AccoutingInformation implements Serializable {
     public void setTin(String tin) {
         this.tin = tin;
     }
+
 
     @Override
     public String toString() {

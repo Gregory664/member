@@ -4,6 +4,7 @@ import ru.src.model.Member;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -24,29 +25,28 @@ public class Director implements Serializable {
     @Column(name = "DIRECTOR_PHONE_MOBILE", nullable = false)
     private String phoneMobile;
 
-    @Column(name = "DIRECTOR_PHONE_CITY", nullable = false)
+    @Column(name = "DIRECTOR_PHONE_CITY")
     private String phoneCity;
 
     @Column(name = "DIRECTOR_EMAIL", nullable = false)
     private String email;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "DIRECTOR_BIRTHDAY", nullable = false)
-    private Date birthday;
+    @Column(name = "DIRECTOR_BIRTHDAY")
+    private LocalDate birthday;
 
     @Column(name = "DIRECTOR_CHANGES")
     private String changes;
+
 
     private Director() {
 
     }
 
-    public Director(Member member, String position, String fullName, String phoneMobile, String phoneCity, String email, Date birthday, String changes) {
+    public Director(Member member, String position, String fullName, String phoneMobile, String email, LocalDate birthday, String changes) {
         this.member = member;
         this.position = position;
         this.fullName = fullName;
         this.phoneMobile = phoneMobile;
-        this.phoneCity = phoneCity;
         this.email = email;
         this.birthday = birthday;
         this.changes = changes;
@@ -56,17 +56,14 @@ public class Director implements Serializable {
                     String position,
                     String fullName,
                     String phoneMobile,
-                    String phoneCity,
-                    String email,
-                    Date birthday) {
+                    String email) {
         this.member = member;
         this.position = position;
         this.fullName = fullName;
         this.phoneMobile = phoneMobile;
-        this.phoneCity = phoneCity;
         this.email = email;
-        this.birthday = birthday;
     }
+
 
     public Member getMember() {
         return member;
@@ -116,11 +113,11 @@ public class Director implements Serializable {
         this.email = email;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

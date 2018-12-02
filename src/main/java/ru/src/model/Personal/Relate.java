@@ -3,6 +3,7 @@ package ru.src.model.Personal;
 import ru.src.model.Member;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -17,11 +18,11 @@ public class Relate implements Serializable {
     private String fullName;
 
     @Column(name = "RELATE_SIZE", nullable = false)
-    private String size;
+    private Integer size;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "RELATE_DATE_OF_CREATION")
-    private Date dateOfCreation;
+    private LocalDate dateOfCreation;
 
     @Column(name = "RELATE_SERVICES", nullable = false)
     private String services;
@@ -29,11 +30,20 @@ public class Relate implements Serializable {
     @Column(name = "RELATE_CHANGES")
     private String changes;
 
+
     private Relate() {
 
     }
 
-    public Relate(String fullName, String size, Date dateOfCreation, String services, String changes) {
+    public Relate(Member member, String fullName, Integer size, String services) {
+        this.member = member;
+        this.fullName = fullName;
+        this.size = size;
+        this.services = services;
+    }
+
+    public Relate(Member member, String fullName, Integer size, LocalDate dateOfCreation, String services, String changes) {
+        this.member = member;
         this.fullName = fullName;
         this.size = size;
         this.dateOfCreation = dateOfCreation;
@@ -41,11 +51,6 @@ public class Relate implements Serializable {
         this.changes = changes;
     }
 
-    public Relate(String fullName, String size, String services) {
-        this.fullName = fullName;
-        this.size = size;
-        this.services = services;
-    }
 
     public Member getMember() {
         return member;
@@ -63,19 +68,19 @@ public class Relate implements Serializable {
         this.fullName = fullName;
     }
 
-    public String getSize() {
+    public Integer getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 
-    public Date getDateOfCreation() {
+    public LocalDate getDateOfCreation() {
         return dateOfCreation;
     }
 
-    public void setDateOfCreation(Date dateOfCreation) {
+    public void setDateOfCreation(LocalDate dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
 
@@ -94,6 +99,7 @@ public class Relate implements Serializable {
     public void setChanges(String changes) {
         this.changes = changes;
     }
+
 
     @Override
     public String toString() {

@@ -4,13 +4,16 @@ import ru.src.model.Member;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
 @Table(name = "INVOICE")
 public class Invoice implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "INVOICE_ID", nullable = false)
     private Integer invoiceId;
 
@@ -21,16 +24,14 @@ public class Invoice implements Serializable {
     @Column(name = "INVOICE_NUMBER", nullable = false)
     private Integer invoiceNumber;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "INVOICE_DATE_OF_CREATION", nullable = false)
-    private Date dateCreation;
+    private LocalDate dateCreation;
 
     @Column(name = "INVOICE_STATUS_OF_RECEIVING")
     private Boolean statusReceiving;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "INVOICE_DATE_OF_RECEIVING")
-    private Date dateReceiving;
+    private LocalDate dateReceiving;
 
     @Column(name = "INVOICE_STATUS_OF_PAYMENT")
     private Boolean statusPayment;
@@ -38,50 +39,36 @@ public class Invoice implements Serializable {
     @Column(name = "INVOICE_ORDER_ID")
     private Integer orderId;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "INVOICE_ORDER_DATE")
-    private Date orderDate;
+    private LocalDate orderDate;
 
-    @Column(name = "INVOICE_PRICE")
+    @Column(name = "INVOICE_PRICE", nullable = false)
     private Integer price;
 
     @Column(name = "INVOICE_COMMENT")
     private String comment;
 
+
     private Invoice() {
 
     }
 
-    public Invoice(Integer invoiceId, Member member, Integer invoiceNumber, Date dateCreation) {
-        this.invoiceId = invoiceId;
+    public Invoice(Member member, Integer invoiceNumber, LocalDate dateCreation, Integer price) {
         this.member = member;
         this.invoiceNumber = invoiceNumber;
         this.dateCreation = dateCreation;
+        this.price = price;
+        this.invoiceId = generateInvoiceId();
     }
 
-    public Invoice(Integer invoiceId,
-                   Member member,
-                   Integer invoiceNumber,
-                   Date dateCreation,
-                   Boolean statusReceiving,
-                   Date dateReceiving,
-                   Boolean statusPayment,
-                   Integer orderId,
-                   Date orderDate,
-                   Integer price,
-                   String comment) {
-        this.invoiceId = invoiceId;
-        this.member = member;
-        this.invoiceNumber = invoiceNumber;
-        this.dateCreation = dateCreation;
-        this.statusReceiving = statusReceiving;
-        this.dateReceiving = dateReceiving;
-        this.statusPayment = statusPayment;
-        this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.price = price;
-        this.comment = comment;
+
+    private Integer generateInvoiceId() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        BigDecimal numberFromSumParams = new BigDecimal(invoiceNumber + dateCreation.format(formatter) + price);
+        double doubleSqrt = Math.sqrt(Math.sqrt(numberFromSumParams.doubleValue()));
+        return Math.toIntExact(Math.round(doubleSqrt));
     }
+
 
     public Integer getInvoiceId() {
         return invoiceId;
@@ -107,11 +94,11 @@ public class Invoice implements Serializable {
         this.invoiceNumber = invoiceNumber;
     }
 
-    public Date getDateCreation() {
+    public LocalDate getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Date dateCreation) {
+    public void setDateCreation(LocalDate dateCreation) {
         this.dateCreation = dateCreation;
     }
 
@@ -123,11 +110,11 @@ public class Invoice implements Serializable {
         this.statusReceiving = statusReceiving;
     }
 
-    public Date getDateReceiving() {
+    public LocalDate getDateReceiving() {
         return dateReceiving;
     }
 
-    public void setDateReceiving(Date dateReceiving) {
+    public void setDateReceiving(LocalDate dateReceiving) {
         this.dateReceiving = dateReceiving;
     }
 
@@ -147,11 +134,11 @@ public class Invoice implements Serializable {
         this.orderId = orderId;
     }
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 

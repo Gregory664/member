@@ -34,7 +34,7 @@ public class AddressLegal implements Serializable {
     @Column(name = "ADDRESS_LEGAL_OFFICE")
     private String office;
 
-    @Column(name = "ADDRESS_LEGAL_DISTRICT", nullable = false)
+    @Column(name = "ADDRESS_LEGAL_DISTRICT")
     private String district;
 
     @Column(name = "ADDRESS_LEGAL_CHANGES")

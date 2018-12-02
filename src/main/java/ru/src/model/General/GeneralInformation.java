@@ -29,10 +29,10 @@ public class GeneralInformation implements Serializable {
     private String businessForm;
 
     @Column(name = "VED_IMPORT", nullable = false)
-    private String vedImport;
+    private boolean vedImport;
 
     @Column(name = "VED_EXPORT", nullable = false)
-    private String vedExport;
+    private boolean vedExport;
 
     @Column(name = "INVESTMENTS_TARGET")
     private String investmentsTarget;
@@ -64,57 +64,19 @@ public class GeneralInformation implements Serializable {
     @Column(name = "GENERAL_INFORMATION_CHANGES")
     private String changes;
 
+
     private GeneralInformation() {
 
     }
 
-
     public GeneralInformation(Member member,
                               String organizationForm,
                               String economicSector,
                               String ownershipForm,
                               String activityType,
                               String businessForm,
-                              String vedImport,
-                              String vedExport,
-                              String investmentsTarget,
-                              String investmentsSize,
-                              boolean interactionOffline,
-                              boolean interactionOnline,
-                              boolean b2b,
-                              boolean b2c,
-                              boolean businessMissionVisiting,
-                              boolean businessMissionRegional,
-                              boolean mkas,
-                              String changes) {
-        this.member = member;
-        this.organizationForm = organizationForm;
-        this.economicSector = economicSector;
-        this.ownershipForm = ownershipForm;
-        this.activityType = activityType;
-        this.businessForm = businessForm;
-        this.vedImport = vedImport;
-        this.vedExport = vedExport;
-        this.investmentsTarget = investmentsTarget;
-        this.investmentsSize = investmentsSize;
-        this.interactionOffline = interactionOffline;
-        this.interactionOnline = interactionOnline;
-        this.b2b = b2b;
-        this.b2c = b2c;
-        this.businessMissionVisiting = businessMissionVisiting;
-        this.businessMissionRegional = businessMissionRegional;
-        this.mkas = mkas;
-        this.changes = changes;
-    }
-
-    public GeneralInformation(Member member,
-                              String organizationForm,
-                              String economicSector,
-                              String ownershipForm,
-                              String activityType,
-                              String businessForm,
-                              String vedImport,
-                              String vedExport,
+                              boolean vedImport,
+                              boolean vedExport,
                               boolean interactionOffline,
                               boolean interactionOnline,
                               boolean b2b,
@@ -138,6 +100,7 @@ public class GeneralInformation implements Serializable {
         this.businessMissionRegional = businessMissionRegional;
         this.mkas = mkas;
     }
+
 
     public Member getMember() {
         return member;
@@ -187,19 +150,19 @@ public class GeneralInformation implements Serializable {
         this.businessForm = businessForm;
     }
 
-    public String getVedImport() {
+    public boolean isVedImport() {
         return vedImport;
     }
 
-    public void setVedImport(String vedImport) {
+    public void setVedImport(boolean vedImport) {
         this.vedImport = vedImport;
     }
 
-    public String getVedExport() {
+    public boolean isVedExport() {
         return vedExport;
     }
 
-    public void setVedExport(String vedExport) {
+    public void setVedExport(boolean vedExport) {
         this.vedExport = vedExport;
     }
 
@@ -233,14 +196,6 @@ public class GeneralInformation implements Serializable {
 
     public void setInteractionOnline(boolean interactionOnline) {
         this.interactionOnline = interactionOnline;
-    }
-
-    public String getChanges() {
-        return changes;
-    }
-
-    public void setChanges(String changes) {
-        this.changes = changes;
     }
 
     public boolean isB2b() {
@@ -281,5 +236,13 @@ public class GeneralInformation implements Serializable {
 
     public void setMkas(boolean mkas) {
         this.mkas = mkas;
+    }
+
+    public String getChanges() {
+        return changes;
+    }
+
+    public void setChanges(String changes) {
+        this.changes = changes;
     }
 }

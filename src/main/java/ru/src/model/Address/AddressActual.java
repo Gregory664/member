@@ -35,7 +35,7 @@ public class AddressActual implements Serializable {
     @Column(name = "ADDRESS_ACTUAL_OFFICE")
     private String office;
 
-    @Column(name = "ADDRESS_ACTUAL_DISTRICT", nullable = false)
+    @Column(name = "ADDRESS_ACTUAL_DISTRICT")
     private String district;
 
     @Column(name = "ADDRESS_ACTUAL_CHANGES")

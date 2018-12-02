@@ -12,6 +12,7 @@ import ru.src.model.buh.Debt;
 import ru.src.model.buh.Invoice;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -30,60 +31,62 @@ public class Member {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "MEMBER_DATE_OF_ENTRY", nullable = false)
-    private Date memberDate;
+    private LocalDate memberDate;
 
     @Column(name = "MEMBER_SHORT_NAME", nullable = false)
     private String memberShortName;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private AddressActual addressActual;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private AddressLegal addressLegal;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private Debt debt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private AccoutingInformation accoutingInformation;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member")
     private List<Invoice> invoice;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private GeneralInformation generalInformation;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private Contact contact;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member")
     private List<ContactPerson> contactPerson;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private Director director;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private Relate relate;
+
 
     private Member() {
 
     }
 
-    public Member(String memberId, Integer memberSerial, String memberStatus, Date memberDate, String memberShortName) {
+    public Member(String memberId, Integer memberSerial, String memberStatus, LocalDate memberDate, String memberShortName) {
         this.memberId = memberId;
         this.memberSerial = memberSerial;
         this.memberStatus = memberStatus;
         this.memberDate = memberDate;
         this.memberShortName = memberShortName;
     }
+
 
     public String getMemberId() {
         return memberId;
@@ -109,11 +112,11 @@ public class Member {
         this.memberStatus = memberStatus;
     }
 
-    public Date getMemberDate() {
+    public LocalDate getMemberDate() {
         return memberDate;
     }
 
-    public void setMemberDate(Date memberDate) {
+    public void setMemberDate(LocalDate memberDate) {
         this.memberDate = memberDate;
     }
 

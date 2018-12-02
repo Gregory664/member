@@ -28,6 +28,7 @@ public class Contact implements Serializable {
     @Column(name = "CONTACT_CHANGES")
     private String changes;
 
+
     private Contact() {
 
     }
@@ -46,6 +47,7 @@ public class Contact implements Serializable {
         this.phone = phone;
         this.email = email;
     }
+
 
     public Member getMember() {
         return member;

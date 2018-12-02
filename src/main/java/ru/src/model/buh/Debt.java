@@ -23,6 +23,7 @@ public class Debt implements Serializable {
     @Column(name = "DEBT_COMMENT")
     private String comment;
 
+
     private Debt() {
 
     }
@@ -44,7 +45,6 @@ public class Debt implements Serializable {
         this.status = status;
         this.period = period;
     }
-
 
 
     public Member getMember() {
@@ -78,6 +78,7 @@ public class Debt implements Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
 
     @Override
     public String toString() {

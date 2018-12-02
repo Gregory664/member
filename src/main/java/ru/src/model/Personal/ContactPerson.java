@@ -9,7 +9,6 @@ import java.io.Serializable;
 public class ContactPerson implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTACT_PERSON_ID", nullable = false)
     private Integer contactPersonId;
 
@@ -26,7 +25,7 @@ public class ContactPerson implements Serializable {
     @Column(name = "CONTACT_PERSON_PHONE_MOBILE", nullable = false)
     private String phoneMobile;
 
-    @Column(name = "CONTACT_PERSON_PHONE_CITY", nullable = false)
+    @Column(name = "CONTACT_PERSON_PHONE_CITY")
     private String phoneCity;
 
     @Column(name = "CONTACT_PERSON_EMAIL", nullable = false)
@@ -43,9 +42,18 @@ public class ContactPerson implements Serializable {
                          String fullName,
                          String position,
                          String phoneMobile,
-                         String phoneCity,
                          String email,
                          String changes) {
+        this.member = member;
+        this.fullName = fullName;
+        this.position = position;
+        this.phoneMobile = phoneMobile;
+        this.email = email;
+        this.changes = changes;
+    }
+
+    public ContactPerson(Member member, String fullName, String position, String phoneMobile, String phoneCity, String email, String changes) {
+        this.contactPersonId = contactPersonId;
         this.member = member;
         this.fullName = fullName;
         this.position = position;
@@ -54,6 +62,7 @@ public class ContactPerson implements Serializable {
         this.email = email;
         this.changes = changes;
     }
+    //TODO Добавить алгоритм генерации угикального ID
 
     public Member getMember() {
         return member;
