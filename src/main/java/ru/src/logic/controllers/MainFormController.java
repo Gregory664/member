@@ -7,6 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.Organizations;
+import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
 import ru.src.model.General.GeneralInformation;
 import ru.src.model.Member;
@@ -250,6 +251,7 @@ public class MainFormController {
         fillAccoutingInformation(member.getAccoutingInformation());
         fillDebt(member.getDebt());
         fillAddressLegal(member.getAddressLegal());
+        fillAddressActual(member.getAddressActual());
     }
 
     private void fillRelate(Relate relate) {
@@ -320,6 +322,18 @@ public class MainFormController {
         text_addressLegal_office.setText(addressLegal.getOffice());
         text_addressLegal_district.setText(addressLegal.getDistrict());
         text_addressLegal_changes.setText(addressLegal.getChanges());
+    }
+
+    private void fillAddressActual(AddressActual addressActual) {
+        text_addressActual_regionId.setText(addressActual.getRegionId().toString());
+        text_addressActual_regionName.setText(addressActual.getRegionName());
+        text_addressActual_index.setText(addressActual.getIndex().toString());
+        text_addressActual_town.setText(addressActual.getTown());
+        text_addressActual_street.setText(addressActual.getStreet());
+        text_addressActual_house.setText(addressActual.getHouse());
+        text_addressActual_office.setText(addressActual.getOffice());
+        text_addressActual_district.setText(addressActual.getDistrict());
+        text_addressActual_changes.setText(addressActual.getChanges());
     }
 
     public void setMemberParams(MouseEvent mouseEvent) {
