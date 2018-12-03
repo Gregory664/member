@@ -9,6 +9,7 @@ import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.Organizations;
 import ru.src.model.General.GeneralInformation;
 import ru.src.model.Member;
+import ru.src.model.Personal.Contact;
 import ru.src.model.Personal.Director;
 import ru.src.model.Personal.Relate;
 
@@ -242,6 +243,7 @@ public class MainFormController {
         fillRelate(member.getRelate());
         fillGeneralInformation(member.getGeneralInformation());
         fillDirector(member.getDirector());
+        fillContact(member.getContact());
 
     }
 
@@ -281,6 +283,14 @@ public class MainFormController {
         text_director_phoneCity.setText(director.getPhoneCity());
         date_director_birthday.setValue(director.getBirthday());
         text_director_changes.setText(director.getChanges());
+    }
+
+    private void fillContact(Contact contact) {
+        text_contact_phone.setText(contact.getPhone());
+        text_contact_fax.setText(contact.getFax());
+        text_contact_site.setText(contact.getSite());
+        text_contact_email.setText(contact.getEmail());
+        text_contact_changes.setText(contact.getChanges());
     }
 
     public void setMemberParams(MouseEvent mouseEvent) {
