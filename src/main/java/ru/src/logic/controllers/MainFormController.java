@@ -5,8 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.Organizations;
+import ru.src.model.General.GeneralInformation;
 import ru.src.model.Member;
+import ru.src.model.Personal.Relate;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -37,9 +40,9 @@ public class MainFormController {
     @FXML
     public TextArea text_relate_fullName;
     @FXML
-    public DatePicker text_relate_dateOfCreation;
+    public DatePicker date_relate_dateOfCreation;
     @FXML
-    public TextField date_relate_size;
+    public TextField text_relate_size;
     @FXML
     public TextArea text_relate_services;
     @FXML
@@ -223,7 +226,8 @@ public class MainFormController {
 
         table_members.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
-                System.out.println(table_members.getSelectionModel().getSelectedIndex());
+                Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+                fillAllInformation(member);
             }
         });
 
@@ -231,6 +235,44 @@ public class MainFormController {
         table_members.setItems(memberOrganizations.getMembers());
         long stop = System.currentTimeMillis();
         System.out.println((stop - start) + " ms");
+    }
+
+    private void fillAllInformation(Member member) {
+        fillRelate(member.getRelate());
+        fillGeneralInformation(member.getGeneralInformation());
+
+
+
+
+    }
+
+    private void fillRelate(Relate relate) {
+        text_relate_fullName.setText(relate.getFullName());
+        date_relate_dateOfCreation.setValue(relate.getDateOfCreation());
+        text_relate_size.setText(relate.getSize().toString());
+        text_relate_services.setText(relate.getServices());
+        text_relate_changes.setText(relate.getChanges());
+    }
+
+    private void fillGeneralInformation(GeneralInformation generalInformation) {
+        text_generalInformation_organizationForm.setText(generalInformation.getOrganizationForm());
+        text_generalInformation_economicSector.setText(generalInformation.getEconomicSector());
+        text_generalInformation_ownershipForm.setText(generalInformation.getOwnershipForm());
+        text_generalInformation_activityType.setText(generalInformation.getActivityType());
+        text_generalInformation_businessForm.setText(generalInformation.getBusinessForm());
+        text_generalInformation_vedImport.setText(MemberUtils.isImportExport(generalInformation.isVedImport()));
+        text_generalInformation_vedExport.setText(MemberUtils.isImportExport(generalInformation.isVedExport()));
+        text_generalInformation_investmentsTarget.setText(generalInformation.getInvestmentsTarget());
+        text_generalInformation_investmentsSize.setText(generalInformation.getInvestmentsSize());
+        text_generalInformation_interactionOffline.setText(MemberUtils.isInteresting(generalInformation.isInteractionOffline()));
+        text_generalInformation_interactionOnline.setText(MemberUtils.isInteresting(generalInformation.isInteractionOnline()));
+        text_generalInformation_b2b.setText(MemberUtils.isInteresting(generalInformation.isB2b()));
+        text_generalInformation_b2c.setText(MemberUtils.isInteresting(generalInformation.isB2c()));
+        text_generalInformation_businessMissionVisiting.setText(MemberUtils.isInteresting(generalInformation.isBusinessMissionVisiting()));
+        text_generalInformation_businessMissionRegional.setText(MemberUtils.isInteresting(generalInformation.isBusinessMissionRegional()));
+        text_generalInformation_mkas.setText(MemberUtils.isInteresting(generalInformation.isMkas()));
+        text_generalInformation_changes.setText(generalInformation.getChanges());
+
     }
 
 
