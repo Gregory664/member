@@ -13,6 +13,7 @@ import ru.src.model.Personal.Contact;
 import ru.src.model.Personal.Director;
 import ru.src.model.Personal.Relate;
 import ru.src.model.buh.AccoutingInformation;
+import ru.src.model.buh.Debt;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -246,6 +247,7 @@ public class MainFormController {
         fillDirector(member.getDirector());
         fillContact(member.getContact());
         fillAccoutingInformation(member.getAccoutingInformation());
+        fillDebt(member.getDebt());
     }
 
     private void fillRelate(Relate relate) {
@@ -298,6 +300,12 @@ public class MainFormController {
         text_accoutingInformation_ogrn.setText(accoutingInformation.getOgrn());
         text_accoutingInformation_kpp.setText(accoutingInformation.getKpp());
         text_accoutingInformation_tin.setText(accoutingInformation.getTin());
+    }
+
+    private void fillDebt(Debt debt) {
+        text_debt_status.setText(debt.getStatus());
+        text_debt_period.setText(debt.getPeriod());
+        text_debt_comment.setText(debt.getComment());
     }
 
     public void setMemberParams(MouseEvent mouseEvent) {
