@@ -12,6 +12,7 @@ import ru.src.model.Member;
 import ru.src.model.Personal.Contact;
 import ru.src.model.Personal.Director;
 import ru.src.model.Personal.Relate;
+import ru.src.model.buh.AccoutingInformation;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -244,7 +245,7 @@ public class MainFormController {
         fillGeneralInformation(member.getGeneralInformation());
         fillDirector(member.getDirector());
         fillContact(member.getContact());
-
+        fillAccoutingInformation(member.getAccoutingInformation());
     }
 
     private void fillRelate(Relate relate) {
@@ -291,6 +292,12 @@ public class MainFormController {
         text_contact_site.setText(contact.getSite());
         text_contact_email.setText(contact.getEmail());
         text_contact_changes.setText(contact.getChanges());
+    }
+
+    private void fillAccoutingInformation(AccoutingInformation accoutingInformation) {
+        text_accoutingInformation_ogrn.setText(accoutingInformation.getOgrn());
+        text_accoutingInformation_kpp.setText(accoutingInformation.getKpp());
+        text_accoutingInformation_tin.setText(accoutingInformation.getTin());
     }
 
     public void setMemberParams(MouseEvent mouseEvent) {

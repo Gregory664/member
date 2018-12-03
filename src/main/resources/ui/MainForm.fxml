@@ -46,7 +46,7 @@
                      <content>
                         <VBox prefHeight="394.0" prefWidth="1009.0">
                            <children>
-                              <TitledPane text="Основная информация" VBox.vgrow="ALWAYS">
+                              <TitledPane expanded="false" text="Основная информация" VBox.vgrow="ALWAYS">
                                  <content>
                                     <GridPane hgap="4.0" minHeight="276.0" prefHeight="231.0" prefWidth="990.0" vgap="4.0">
                                       <columnConstraints>
