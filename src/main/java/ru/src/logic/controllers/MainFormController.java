@@ -7,6 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.Organizations;
+import ru.src.model.Address.AddressLegal;
 import ru.src.model.General.GeneralInformation;
 import ru.src.model.Member;
 import ru.src.model.Personal.Contact;
@@ -248,6 +249,7 @@ public class MainFormController {
         fillContact(member.getContact());
         fillAccoutingInformation(member.getAccoutingInformation());
         fillDebt(member.getDebt());
+        fillAddressLegal(member.getAddressLegal());
     }
 
     private void fillRelate(Relate relate) {
@@ -306,6 +308,18 @@ public class MainFormController {
         text_debt_status.setText(debt.getStatus());
         text_debt_period.setText(debt.getPeriod());
         text_debt_comment.setText(debt.getComment());
+    }
+
+    private void fillAddressLegal(AddressLegal addressLegal) {
+        text_addressLegal_regionId.setText(addressLegal.getRegionId().toString());
+        text_addressLegal_regionName.setText(addressLegal.getRegionName());
+        text_addressLegal_index.setText(addressLegal.getIndex().toString());
+        text_addressLegal_town.setText(addressLegal.getTown());
+        text_addressLegal_street.setText(addressLegal.getStreet());
+        text_addressLegal_house.setText(addressLegal.getHouse());
+        text_addressLegal_office.setText(addressLegal.getOffice());
+        text_addressLegal_district.setText(addressLegal.getDistrict());
+        text_addressLegal_changes.setText(addressLegal.getChanges());
     }
 
     public void setMemberParams(MouseEvent mouseEvent) {
