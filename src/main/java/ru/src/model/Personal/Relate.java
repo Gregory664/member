@@ -20,7 +20,6 @@ public class Relate implements Serializable {
     @Column(name = "RELATE_SIZE", nullable = false)
     private Integer size;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "RELATE_DATE_OF_CREATION")
     private LocalDate dateOfCreation;
 

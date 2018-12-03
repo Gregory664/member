@@ -20,30 +20,23 @@ import ru.src.model.buh.Debt;
 import ru.src.model.buh.Invoice;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ListResourceBundle;
+import java.util.*;
 
 public class test {
+
+
     public static void main(String[] args) {
 
-        Member member = DBConnection.getMember("111-001");
-        Invoice invoice = new Invoice(member, 10000, LocalDate.of(2080, 12, 31), 100000);
-        List<Invoice> invoices = new ArrayList<>();
-        invoices.add(invoice);
-        member.setInvoice(invoices);
-        DBConnection.updateMember(member);
-//        ArrayList<Member> members = getMembers(1, 2);
+       List<Member> members = getMembers(10, 3);
 //
-//        long startaddMember = System.currentTimeMillis();
-//        for (Member member: members) {
-//            DBConnection.addMember(member);
-//        }
-//        long stopaddMember = System.currentTimeMillis();
+        long startaddMember = System.currentTimeMillis();
+        for (Member member: members) {
+            DBConnection.addMember(member);
+        }
+        long stopaddMember = System.currentTimeMillis();
+        System.out.println();
+        members.clear();
 
-//        members.clear();
-//
 //        long startGetMember = System.currentTimeMillis();
 //        List<Member> members1 = DBConnection.getAllMembers();
 //        long stopGetMember = System.currentTimeMillis();
@@ -54,15 +47,20 @@ public class test {
 //            DBConnection.removeMember(member);
 //        }
 //        long stopDeleteMember = System.currentTimeMillis();
-
-        //System.out.println("add member : " + (stopaddMember - startaddMember) + " ms");
-//        System.out.println("get member : " + (stopGetMember - startGetMember) + " ms");
+//////////
+////System.out.println("add member : " + (stopaddMember - startaddMember) + " ms");
+//         System.out.println("get member : " + (stopGetMember - startGetMember) + " ms");
 //        System.out.println("delete member : " + (stopDeleteMember - startDeleteMember) + " ms");
     }
 
     private static ArrayList<Member> getMembers(int length, int invoiceSize) {
+
         ArrayList<Member> members = new ArrayList<>();
         long start = System.currentTimeMillis();
+
+        int number = 0;
+        int sum = 0;
+
         for (int i = 0; i < length; i++) {
             Member member = new Member( "" + i, i,"test", LocalDate.now(), "test");
             AddressActual addressActual = new AddressActual(member, 0, "test", 394000, "test", "test", "test");
@@ -87,14 +85,12 @@ public class test {
             member.setRelate(relate);
 
             List<Invoice> invoices = new ArrayList<>();
-//            for (int j = 0; j < invoiceSize; j++) {
-//                Invoice invoice = new Invoice(member, j, new Date());
-//                invoices.add(invoice);
-//            }
+            for (int j = 0; j < invoiceSize; j++) {
+                Invoice invoice = new Invoice(member, ++number, LocalDate.of(2020, 12, 30), ++sum);
+                invoices.add(invoice);
+            }
             member.setInvoice(invoices);
-
             members.add(member);
-
 
         }
         long stop = System.currentTimeMillis();

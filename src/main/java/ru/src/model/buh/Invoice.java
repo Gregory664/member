@@ -15,7 +15,7 @@ import java.util.Date;
 public class Invoice implements Serializable {
     @Id
     @Column(name = "INVOICE_ID", nullable = false)
-    private Integer invoiceId;
+    private String invoiceId;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
@@ -62,19 +62,18 @@ public class Invoice implements Serializable {
     }
 
 
-    private Integer generateInvoiceId() {
+    private String generateInvoiceId() {
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
-        BigDecimal numberFromSumParams = new BigDecimal(invoiceNumber + dateCreation.format(formatter) + price);
-        double doubleSqrt = Math.sqrt(Math.sqrt(numberFromSumParams.doubleValue()));
-        return Math.toIntExact(Math.round(doubleSqrt));
+        return this.invoiceNumber + this.dateCreation.format(formatter);
     }
 
 
-    public Integer getInvoiceId() {
+    public String getInvoiceId() {
         return invoiceId;
     }
 
-    public void setInvoiceId(Integer invoiceId) {
+    public void setInvoiceId(String invoiceId) {
         this.invoiceId = invoiceId;
     }
 

@@ -29,7 +29,6 @@ public class Member {
     @Column(name = "MEMBER_STATUS", nullable = false)
     private String memberStatus;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "MEMBER_DATE_OF_ENTRY", nullable = false)
     private LocalDate memberDate;
 
