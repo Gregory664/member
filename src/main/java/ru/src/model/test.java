@@ -13,6 +13,7 @@ import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
 import ru.src.model.General.GeneralInformation;
 import ru.src.model.Personal.Contact;
+import ru.src.model.Personal.ContactPerson;
 import ru.src.model.Personal.Director;
 import ru.src.model.Personal.Relate;
 import ru.src.model.buh.AccoutingInformation;
@@ -27,15 +28,15 @@ public class test {
 
     public static void main(String[] args) {
 
-       List<Member> members = getMembers(10, 3);
+//       List<Member> members = getMembers(5, 3);
 //
-        long startaddMember = System.currentTimeMillis();
-        for (Member member: members) {
-            DBConnection.addMember(member);
-        }
-        long stopaddMember = System.currentTimeMillis();
-        System.out.println();
-        members.clear();
+//        long startaddMember = System.currentTimeMillis();
+//        for (Member member: members) {
+//            DBConnection.addMember(member);
+//        }
+//        long stopaddMember = System.currentTimeMillis();
+//        System.out.println();
+//        members.clear();
 
 //        long startGetMember = System.currentTimeMillis();
 //        List<Member> members1 = DBConnection.getAllMembers();
@@ -47,8 +48,8 @@ public class test {
 //            DBConnection.removeMember(member);
 //        }
 //        long stopDeleteMember = System.currentTimeMillis();
-//////////
-////System.out.println("add member : " + (stopaddMember - startaddMember) + " ms");
+////////
+//System.out.println("add member : " + (stopaddMember - startaddMember) + " ms");
 //         System.out.println("get member : " + (stopGetMember - startGetMember) + " ms");
 //        System.out.println("delete member : " + (stopDeleteMember - startDeleteMember) + " ms");
     }
@@ -67,13 +68,14 @@ public class test {
             AddressLegal addressLegal = new AddressLegal(member, 0, "test", 394000, "test", "test", "test");
             AccoutingInformation accoutingInformation = new AccoutingInformation(member, "1" + i, "1" + i, "1" + i);
             Debt debt = new Debt(member, "test");
-            GeneralInformation generalInformation = new GeneralInformation(member, "test",
-                    "test","test","test","test",
-                    true,true,true, true,true,true,
-                    true,true,true);
-            Contact contact = new Contact(member, "88005553535", "test");
-            Director director = new Director(member, "test", "test", "88005553535","test");
-            Relate relate = new Relate(member, "100", 100, "test");
+            GeneralInformation generalInformation = new GeneralInformation(member, "test" + i,
+                    "test" + i,"test" + i,                    "test" + i,
+                    "test" + i,false,true,
+                    false,
+                    true,true,true, true,true,true);
+            Contact contact = new Contact(member, "880055535" + i, "test");
+            Director director = new Director(member, "test" + i, "test" + i, "88005553535","test");
+            Relate relate = new Relate(member, "100", 100 + i, "test");
 
             member.setAddressActual(addressActual);
             member.setAddressLegal(addressLegal);
@@ -86,10 +88,16 @@ public class test {
 
             List<Invoice> invoices = new ArrayList<>();
             for (int j = 0; j < invoiceSize; j++) {
-                Invoice invoice = new Invoice(member, ++number, LocalDate.of(2020, 12, 30), ++sum);
+                Invoice invoice = new Invoice(member, ++number, LocalDate.of(2020 + j, 12, 30), ++sum);
                 invoices.add(invoice);
             }
             member.setInvoice(invoices);
+
+            List<ContactPerson> contactPeople = new ArrayList<>();
+            contactPeople.add(new ContactPerson(member, "А А Дюма 1" + i, "Директор", "88005550001", "ad@ad.ru"));
+            contactPeople.add(new ContactPerson(member, "А А Дюма 2" + i, "Директор", "88005550002", "asdfasd@ad.ru"));
+            member.setContactPerson(contactPeople);
+
             members.add(member);
 
         }

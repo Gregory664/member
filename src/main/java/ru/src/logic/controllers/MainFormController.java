@@ -1,6 +1,9 @@
 package ru.src.logic.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -12,18 +15,26 @@ import ru.src.model.Address.AddressLegal;
 import ru.src.model.General.GeneralInformation;
 import ru.src.model.Member;
 import ru.src.model.Personal.Contact;
+import ru.src.model.Personal.ContactPerson;
 import ru.src.model.Personal.Director;
 import ru.src.model.Personal.Relate;
 import ru.src.model.buh.AccoutingInformation;
 import ru.src.model.buh.Debt;
+import ru.src.model.buh.Invoice;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainFormController {
 
 
     private Organizations memberOrganizations = new Organizations();
+    private HashMap<Integer, Invoice> invoiceHashMap = new HashMap<>();
+    private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
 
     @FXML
     public TextField text_Search;
@@ -197,23 +208,23 @@ public class MainFormController {
     @FXML
     public Button btn_rename_invoice;
     @FXML
-    public TextField invoice_invoiceNumber;
+    public TextField text_invoice_invoiceNumber;
     @FXML
-    public DatePicker invoice_dateCreation;
+    public DatePicker date_invoice_dateCreation;
     @FXML
-    public TextField invoice_statusReceiving;
+    public TextField text_invoice_statusReceiving;
     @FXML
-    public DatePicker invoice_dateReceiving;
+    public DatePicker date_invoice_dateReceiving;
     @FXML
-    public TextField invoice_orderId;
+    public TextField text_invoice_orderId;
     @FXML
-    public DatePicker invoice_orderDate;
+    public DatePicker date_invoice_orderDate;
     @FXML
-    public TextField invoice_price;
+    public TextField text_invoice_price;
     @FXML
-    public TextField invoice_statusPayment;
+    public TextField text_invoice_statusPayment;
     @FXML
-    public TextArea invoice_comment;
+    public TextArea text_invoice_comment;
 
     @FXML
     public void initialize() {
@@ -252,6 +263,9 @@ public class MainFormController {
         fillDebt(member.getDebt());
         fillAddressLegal(member.getAddressLegal());
         fillAddressActual(member.getAddressActual());
+        fillContactPersons(member.getContactPerson());
+        fillInvoices(member.getInvoice());
+
     }
 
     private void fillRelate(Relate relate) {
@@ -336,7 +350,73 @@ public class MainFormController {
         text_addressActual_changes.setText(addressActual.getChanges());
     }
 
+    private void fillInvoices(List<Invoice> invoiceList) {
+        invoiceHashMap.clear();
+        for(Invoice invoice: invoiceList) {
+            invoiceHashMap.put(invoice.getInvoiceNumber(), invoice);
+        }
+        ObservableList<Integer> observableList = FXCollections.observableArrayList();
+        invoiceHashMap.forEach((k, v) -> observableList.add(k));
+
+        cmbBox_invoiceId.setItems(observableList);
+
+    }
+
+    private void fillContactPersons(List<ContactPerson> contactPeople) {
+        contactPersonHashMap.clear();
+        for(ContactPerson contactPerson: contactPeople) {
+            contactPersonHashMap.put(contactPerson.getFullName(), contactPerson);
+        }
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        contactPersonHashMap.forEach((k, v) -> observableList.add(k));
+
+        cmbBox_contactPersonId.setItems(observableList);
+    }
+
     public void setMemberParams(MouseEvent mouseEvent) {
 
+    }
+
+    public void fillInvoice(ActionEvent actionEvent) {
+        Invoice invoice = invoiceHashMap.get(cmbBox_invoiceId.getValue());
+
+        text_invoice_invoiceNumber.clear();
+        date_invoice_dateCreation.setValue(null);
+        text_invoice_statusReceiving.clear();
+        date_invoice_dateReceiving.setValue(null);
+        text_invoice_orderId.clear();
+        date_invoice_orderDate.setValue(invoice.getOrderDate());
+        text_invoice_price.clear();
+        text_invoice_statusPayment.clear();
+        text_invoice_comment.clear();
+
+        text_invoice_invoiceNumber.setText(invoice.getInvoiceNumber().toString());
+        date_invoice_dateCreation.setValue(invoice.getDateCreation());
+        text_invoice_statusReceiving.setText(MemberUtils.isReceive(invoice.getStatusReceiving()));
+        date_invoice_dateReceiving.setValue(invoice.getDateReceiving());
+        text_invoice_orderId.setText(invoice.getOrderId().toString());
+        date_invoice_orderDate.setValue(invoice.getOrderDate());
+        text_invoice_price.setText(invoice.getPrice().toString());
+        text_invoice_statusPayment.setText(MemberUtils.isPayment(invoice.getStatusPayment()));
+        text_invoice_comment.setText(invoice.getComment());
+    }
+
+
+    public void fillContactPerson(ActionEvent actionEvent) {
+        ContactPerson contactPerson = contactPersonHashMap.get(cmbBox_contactPersonId.getValue());
+
+        text_contactPerson_fullName.clear();
+        text_contactPerson_position.clear();
+        text_contactPerson_phoneMobile.clear();
+        text_contactPerson_phoneCity.clear();
+        text_contactPerson_email.clear();
+        text_contactPerson_changes.clear();
+
+        text_contactPerson_fullName.setText(contactPerson.getFullName());
+        text_contactPerson_position.setText(contactPerson.getPosition());
+        text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
+        text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
+        text_contactPerson_email.setText(contactPerson.getEmail());
+        text_contactPerson_changes.setText(contactPerson.getChanges());
     }
 }

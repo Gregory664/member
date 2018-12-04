@@ -10,7 +10,7 @@ public class ContactPerson implements Serializable {
 
     @Id
     @Column(name = "CONTACT_PERSON_ID", nullable = false)
-    private Integer contactPersonId;
+    private String contactPersonId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
@@ -42,18 +42,22 @@ public class ContactPerson implements Serializable {
                          String fullName,
                          String position,
                          String phoneMobile,
-                         String email,
-                         String changes) {
+                         String email) {
         this.member = member;
         this.fullName = fullName;
         this.position = position;
         this.phoneMobile = phoneMobile;
         this.email = email;
-        this.changes = changes;
+        this.contactPersonId = generateContactPersonId();
     }
 
-    public ContactPerson(Member member, String fullName, String position, String phoneMobile, String phoneCity, String email, String changes) {
-        this.contactPersonId = contactPersonId;
+    public ContactPerson(Member member,
+                         String fullName,
+                         String position,
+                         String phoneMobile,
+                         String phoneCity,
+                         String email,
+                         String changes) {
         this.member = member;
         this.fullName = fullName;
         this.position = position;
@@ -61,8 +65,24 @@ public class ContactPerson implements Serializable {
         this.phoneCity = phoneCity;
         this.email = email;
         this.changes = changes;
+        this.contactPersonId = generateContactPersonId();
     }
-    //TODO Добавить алгоритм генерации угикального ID
+
+
+    private String generateContactPersonId() {
+        String id = String.valueOf(this.fullName.length()) + String.valueOf(this.position.length());
+        String time = String.valueOf(System.nanoTime()).substring(7);
+        return id + time;
+    }
+
+
+    public String getContactPersonId() {
+        return contactPersonId;
+    }
+
+    public void setContactPersonId(String contactPersonId) {
+        this.contactPersonId = contactPersonId;
+    }
 
     public Member getMember() {
         return member;
