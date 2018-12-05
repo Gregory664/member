@@ -51,23 +51,6 @@ public class ContactPerson implements Serializable {
         this.contactPersonId = generateContactPersonId();
     }
 
-    public ContactPerson(Member member,
-                         String fullName,
-                         String position,
-                         String phoneMobile,
-                         String phoneCity,
-                         String email,
-                         String changes) {
-        this.member = member;
-        this.fullName = fullName;
-        this.position = position;
-        this.phoneMobile = phoneMobile;
-        this.phoneCity = phoneCity;
-        this.email = email;
-        this.changes = changes;
-        this.contactPersonId = generateContactPersonId();
-    }
-
 
     private String generateContactPersonId() {
         String id = String.valueOf(this.fullName.length()) + String.valueOf(this.position.length());

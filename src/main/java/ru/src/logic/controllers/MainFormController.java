@@ -377,10 +377,9 @@ public class MainFormController {
 
     }
 
-    public void fillInvoice(ActionEvent actionEvent) {
+    public void fillSelectedInvoice(ActionEvent actionEvent) {
         Invoice invoice = invoiceHashMap.get(cmbBox_invoiceId.getValue());
 
-        text_invoice_invoiceNumber.clear();
         date_invoice_dateCreation.setValue(null);
         text_invoice_statusReceiving.clear();
         date_invoice_dateReceiving.setValue(null);
@@ -390,7 +389,6 @@ public class MainFormController {
         text_invoice_statusPayment.clear();
         text_invoice_comment.clear();
 
-        text_invoice_invoiceNumber.setText(invoice.getInvoiceNumber().toString());
         date_invoice_dateCreation.setValue(invoice.getDateCreation());
         text_invoice_statusReceiving.setText(MemberUtils.isReceive(invoice.getStatusReceiving()));
         date_invoice_dateReceiving.setValue(invoice.getDateReceiving());
@@ -402,17 +400,15 @@ public class MainFormController {
     }
 
 
-    public void fillContactPerson(ActionEvent actionEvent) {
+    public void fillSelectedPerson(ActionEvent actionEvent) {
         ContactPerson contactPerson = contactPersonHashMap.get(cmbBox_contactPersonId.getValue());
 
-        text_contactPerson_fullName.clear();
         text_contactPerson_position.clear();
         text_contactPerson_phoneMobile.clear();
         text_contactPerson_phoneCity.clear();
         text_contactPerson_email.clear();
         text_contactPerson_changes.clear();
 
-        text_contactPerson_fullName.setText(contactPerson.getFullName());
         text_contactPerson_position.setText(contactPerson.getPosition());
         text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
         text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
