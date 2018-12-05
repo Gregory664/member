@@ -19,7 +19,7 @@ public class CreateInvoiceController {
     public Button btnSave;
     @FXML
     public Button btnCancel;
-
+    //TODO Реализовать добавление счета
     public void saveInvoice(ActionEvent actionEvent) {
     }
 
