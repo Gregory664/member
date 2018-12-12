@@ -29,7 +29,7 @@
                   <Label text="Номер счета" />
                   <Label text="Дата счета" GridPane.rowIndex="1" />
                   <Label text="Сумма" GridPane.rowIndex="2" />
-                  <TextField fx:id="text_invoiceId" maxWidth="200.0" minWidth="200.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="text_invoiceNumber" maxWidth="200.0" minWidth="200.0" GridPane.columnIndex="1" />
                   <TextField fx:id="text_invoice_price" maxWidth="200.0" minWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <DatePicker fx:id="date_invoice_dateCreation" maxWidth="200.0" minWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>

@@ -51,8 +51,8 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private AccoutingInformation accoutingInformation;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member")
-    private List<Invoice> invoice;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="member", orphanRemoval = true)
+    public List<Invoice> invoice;
 
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")

@@ -17,9 +17,9 @@ public class Invoice implements Serializable {
     @Column(name = "INVOICE_ID", nullable = false)
     private String invoiceId;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Member.class)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
-    private Member member;
+    public Member member;
 
     @Column(name = "INVOICE_NUMBER", nullable = false)
     private Integer invoiceNumber;
@@ -37,7 +37,7 @@ public class Invoice implements Serializable {
     private Boolean statusPayment;
 
     @Column(name = "INVOICE_ORDER_ID")
-    private Integer orderId;
+    private String orderId;
 
     @Column(name = "INVOICE_ORDER_DATE")
     private LocalDate orderDate;
@@ -125,11 +125,11 @@ public class Invoice implements Serializable {
         this.statusPayment = statusPayment;
     }
 
-    public Integer getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 

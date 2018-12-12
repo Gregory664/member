@@ -5,9 +5,15 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.Organizations;
 import ru.src.model.Address.AddressActual;
@@ -22,19 +28,13 @@ import ru.src.model.buh.AccoutingInformation;
 import ru.src.model.buh.Debt;
 import ru.src.model.buh.Invoice;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 public class MainFormController {
-
-
-    private Organizations memberOrganizations = new Organizations();
-    private HashMap<Integer, Invoice> invoiceHashMap = new HashMap<>();
-    private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
 
     @FXML
     public TextField text_Search;
@@ -187,8 +187,6 @@ public class MainFormController {
     @FXML
     public Button btn_rename_contactPerson;
     @FXML
-    public TextField text_contactPerson_fullName;
-    @FXML
     public TextField text_contactPerson_position;
     @FXML
     public TextField text_contactPerson_phoneMobile;
@@ -208,23 +206,38 @@ public class MainFormController {
     @FXML
     public Button btn_rename_invoice;
     @FXML
-    public TextField text_invoice_invoiceNumber;
-    @FXML
-    public DatePicker date_invoice_dateCreation;
-    @FXML
     public TextField text_invoice_statusReceiving;
     @FXML
-    public DatePicker date_invoice_dateReceiving;
-    @FXML
     public TextField text_invoice_orderId;
-    @FXML
-    public DatePicker date_invoice_orderDate;
     @FXML
     public TextField text_invoice_price;
     @FXML
     public TextField text_invoice_statusPayment;
     @FXML
     public TextArea text_invoice_comment;
+    @FXML
+    public TextField text_invoice_dateCreation;
+    @FXML
+    public TextField text_invoice_dateReceiving;
+    @FXML
+    public TextField text_invoice_orderDate;
+
+    private Organizations memberOrganizations = new Organizations();
+    private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
+    private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
+
+    private Stage mainStage;
+    private Stage createInvoiceStage;
+    private Stage updateInvoiceStage;
+
+    private FXMLLoader createInvoicefxmlLoader = new FXMLLoader();
+    private FXMLLoader updateInvoicefxmlLoader = new FXMLLoader();
+
+    private Parent createInvoice;
+    private Parent updateInvoice;
+
+    private CreateInvoiceController createInvoiceController;
+    private UpdateInvoiceController updateInvoiceController;
 
     @FXML
     public void initialize() {
@@ -234,24 +247,49 @@ public class MainFormController {
         column_memberStatus.setCellValueFactory(new PropertyValueFactory<>("memberStatus"));
         column_memberShortName.setCellValueFactory(new PropertyValueFactory<>("memberShortName"));
 
+        initListeners();
+
+        table_members.setItems(memberOrganizations.getMembers());
+        initCreateInvoiceLoader();
+        initUpdateInvoiceLoader();
+    }
+
+    private void initCreateInvoiceLoader() {
+        try {
+            createInvoicefxmlLoader.setLocation(getClass().getResource("/ui/CreateInvoiceForm.fxml"));
+            createInvoice = createInvoicefxmlLoader.load();
+            createInvoiceController = createInvoicefxmlLoader.getController();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void initUpdateInvoiceLoader() {
+        try {
+            updateInvoicefxmlLoader.setLocation(getClass().getResource("/ui/UpdateInvoiceForm.fxml"));
+            updateInvoice = updateInvoicefxmlLoader.load();
+            updateInvoiceController = updateInvoicefxmlLoader.getController();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initListeners() {
+
         memberOrganizations.getMembers().addListener(new ListChangeListener<Member>() {
             @Override
             public void onChanged(Change<? extends Member> c) {
 
             }
         });
-
+        //Слушатель, заполняющий все поля по нажатию на строку таблицы
         table_members.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
                 Member member = (Member) table_members.getSelectionModel().getSelectedItem();
                 fillAllInformation(member);
             }
         });
-
-        long start = System.currentTimeMillis();
-        table_members.setItems(memberOrganizations.getMembers());
-        long stop = System.currentTimeMillis();
-        System.out.println((stop - start) + " ms");
     }
 
     private void fillAllInformation(Member member) {
@@ -353,13 +391,15 @@ public class MainFormController {
     private void fillInvoices(List<Invoice> invoiceList) {
         invoiceHashMap.clear();
         for(Invoice invoice: invoiceList) {
-            invoiceHashMap.put(invoice.getInvoiceNumber(), invoice);
+            invoiceHashMap.put(invoice.getInvoiceId(), invoice);
         }
-        ObservableList<Integer> observableList = FXCollections.observableArrayList();
-        invoiceHashMap.forEach((k, v) -> observableList.add(k));
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        invoiceHashMap.forEach((k, v) -> observableList.add(v.getInvoiceNumber().toString() + " (id" + k + ")"));
 
         cmbBox_invoiceId.setItems(observableList);
-
+        if(observableList.size() > 0) {
+            cmbBox_invoiceId.getSelectionModel().select(0);
+        }
     }
 
     private void fillContactPersons(List<ContactPerson> contactPeople) {
@@ -378,27 +418,29 @@ public class MainFormController {
     }
 
     public void fillSelectedInvoice(ActionEvent actionEvent) {
-        Invoice invoice = invoiceHashMap.get(cmbBox_invoiceId.getValue());
-
-        date_invoice_dateCreation.setValue(null);
+        text_invoice_dateCreation.clear();
         text_invoice_statusReceiving.clear();
-        date_invoice_dateReceiving.setValue(null);
+        text_invoice_dateReceiving.clear();
         text_invoice_orderId.clear();
-        date_invoice_orderDate.setValue(invoice.getOrderDate());
+        text_invoice_orderDate.clear();
         text_invoice_price.clear();
         text_invoice_statusPayment.clear();
         text_invoice_comment.clear();
 
-        date_invoice_dateCreation.setValue(invoice.getDateCreation());
+        Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
+
+
+
+        text_invoice_dateCreation.setText(MemberUtils.dateToString(invoice.getDateCreation()));
         text_invoice_statusReceiving.setText(MemberUtils.isReceive(invoice.getStatusReceiving()));
-        date_invoice_dateReceiving.setValue(invoice.getDateReceiving());
-        text_invoice_orderId.setText(invoice.getOrderId().toString());
-        date_invoice_orderDate.setValue(invoice.getOrderDate());
-        text_invoice_price.setText(invoice.getPrice().toString());
+        text_invoice_dateReceiving.setText(MemberUtils.dateToString(invoice.getDateReceiving()));
+        text_invoice_orderId.setText(invoice.getOrderId());
+        text_invoice_orderDate.setText(MemberUtils.dateToString(invoice.getOrderDate()));
+        text_invoice_price.setText(String.valueOf(invoice.getPrice()));
         text_invoice_statusPayment.setText(MemberUtils.isPayment(invoice.getStatusPayment()));
         text_invoice_comment.setText(invoice.getComment());
-    }
 
+    }
 
     public void fillSelectedPerson(ActionEvent actionEvent) {
         ContactPerson contactPerson = contactPersonHashMap.get(cmbBox_contactPersonId.getValue());
@@ -414,5 +456,66 @@ public class MainFormController {
         text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
         text_contactPerson_email.setText(contactPerson.getEmail());
         text_contactPerson_changes.setText(contactPerson.getChanges());
+    }
+
+
+    public void createInvoice(ActionEvent actionEvent) {
+        if(createInvoiceStage==null) {
+            createInvoiceStage = new Stage();
+            createInvoiceStage.setResizable(false);
+            createInvoiceStage.setScene(new Scene(createInvoice));
+            createInvoiceStage.initModality(Modality.WINDOW_MODAL);
+            createInvoiceStage.initOwner(mainStage);
+
+        }
+        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+        createInvoiceController.setMember(member);
+        if(member.getInvoice() == null){
+            List<Invoice> invoices = new ArrayList<>();
+            member.setInvoice(invoices);
+        }
+
+
+        createInvoiceStage.showAndWait();
+
+        member.getInvoice().add(createInvoiceController.getInvoice());
+
+        DBConnection.updateMember(member);
+        memberOrganizations.updateMember(member);
+    }
+
+    public void deleteInvoice(ActionEvent actionEvent) {
+        Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
+        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+        member.getInvoice().remove(invoice);
+
+        DBConnection.updateMember(member);
+        memberOrganizations.updateMember(member);
+    }
+
+    public void renameInvoice(ActionEvent actionEvent) {
+        if(updateInvoiceStage==null) {
+            updateInvoiceStage = new Stage();
+            updateInvoiceStage.setResizable(false);
+            updateInvoiceStage.setScene(new Scene(updateInvoice));
+            updateInvoiceStage.initModality(Modality.WINDOW_MODAL);
+            updateInvoiceStage.initOwner(mainStage);
+        }
+        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+        Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
+        updateInvoiceController.setInvoice(invoice);
+        updateInvoiceStage.showAndWait();
+
+        int searchIndex = -1;
+        for(Invoice invoices: member.getInvoice())
+        {
+            if(invoices.getInvoiceId().equals(invoice.getInvoiceId())) {
+                searchIndex = member.getInvoice().indexOf(invoices);
+            }
+        }
+        member.getInvoice().set(searchIndex, invoice);
+        DBConnection.updateMember(member);
+        memberOrganizations.updateMember(member);
+
     }
 }

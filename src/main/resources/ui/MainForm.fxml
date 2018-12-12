@@ -20,7 +20,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.MainFormController">
    <children>
-      <SplitPane dividerPositions="0.14652956298200515" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="1024.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.19794344473007713" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="1024.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minWidth="0.0" prefHeight="271.0" prefWidth="1022.0">
                <children>
@@ -332,7 +332,7 @@
                                     </GridPane>
                                  </content>
                               </TitledPane>
-                              <TitledPane text="Контактные лица" VBox.vgrow="ALWAYS">
+                              <TitledPane expanded="false" text="Контактные лица" VBox.vgrow="ALWAYS">
                                  <content>
                                     <VBox minHeight="285.0" prefHeight="230.0" prefWidth="990.0">
                                        <children>
@@ -374,7 +374,7 @@
                                     </VBox>
                                  </content>
                               </TitledPane>
-                              <TitledPane expanded="false" text="Информация по счетам" VBox.vgrow="ALWAYS">
+                              <TitledPane text="Информация по счетам" VBox.vgrow="ALWAYS">
                                  <content>
                                     <VBox maxHeight="350.0" minHeight="350.0" prefHeight="442.0" prefWidth="990.0">
                                        <children>
@@ -382,9 +382,9 @@
                                              <children>
                                                 <Label layoutY="10.0" text="Номер счета" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="6.0" />
                                                 <ComboBox fx:id="cmbBox_invoiceId" layoutX="225.0" layoutY="1.0" onAction="#fillSelectedInvoice" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="225.0" AnchorPane.topAnchor="3.0" />
-                                                <Button fx:id="btn_add_invoice" layoutX="434.0" layoutY="1.0" mnemonicParsing="false" text="+" AnchorPane.leftAnchor="434.0" AnchorPane.topAnchor="3.0" />
-                                                <Button fx:id="btn_remove_invoice" layoutX="467.0" layoutY="1.0" mnemonicParsing="false" text="-" AnchorPane.leftAnchor="467.0" AnchorPane.topAnchor="3.0" />
-                                                <Button fx:id="btn_rename_invoice" layoutX="496.0" layoutY="1.0" mnemonicParsing="false" text="R" AnchorPane.leftAnchor="496.0" AnchorPane.topAnchor="3.0" />
+                                                <Button fx:id="btn_add_invoice" layoutX="434.0" layoutY="1.0" mnemonicParsing="false" onAction="#createInvoice" text="+" AnchorPane.leftAnchor="434.0" AnchorPane.topAnchor="3.0" />
+                                                <Button fx:id="btn_remove_invoice" layoutX="467.0" layoutY="1.0" mnemonicParsing="false" onAction="#deleteInvoice" text="-" AnchorPane.leftAnchor="467.0" AnchorPane.topAnchor="3.0" />
+                                                <Button fx:id="btn_rename_invoice" layoutX="496.0" layoutY="1.0" mnemonicParsing="false" onAction="#renameInvoice" text="R" AnchorPane.leftAnchor="496.0" AnchorPane.topAnchor="3.0" />
                                              </children>
                                           </AnchorPane>
                                           <GridPane hgap="4.0" maxHeight="300.0" minHeight="290.0" prefHeight="331.0" prefWidth="970.0" vgap="4.0" VBox.vgrow="ALWAYS">
@@ -411,14 +411,14 @@
                                                 <Label text="Сумма" GridPane.rowIndex="5" />
                                                 <Label text="Статус оплаты" GridPane.rowIndex="6" />
                                                 <Label text="Дополнительная информация" GridPane.rowIndex="7" />
-                                                <DatePicker fx:id="date_invoice_dateCreation" editable="false" maxWidth="200.0" GridPane.columnIndex="1" />
                                                 <TextField fx:id="text_invoice_statusReceiving" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <DatePicker fx:id="date_invoice_dateReceiving" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <TextField fx:id="text_invoice_orderId" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <DatePicker fx:id="date_invoice_orderDate" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <TextField fx:id="text_invoice_price" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                 <TextField fx:id="text_invoice_statusPayment" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                 <TextArea fx:id="text_invoice_comment" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                <TextField fx:id="text_invoice_dateReceiving" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="text_invoice_orderDate" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <TextField fx:id="text_invoice_dateCreation" editable="false" maxWidth="200.0" GridPane.columnIndex="1" />
 
                                              </children>
                                           </GridPane>

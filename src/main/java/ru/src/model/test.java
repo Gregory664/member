@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import ru.src.logic.implementation.DBConnection;
+import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.Organizations;
 import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
@@ -28,7 +29,9 @@ public class test {
 
     public static void main(String[] args) {
 
-//       List<Member> members = getMembers(5, 3);
+//       List<Member> members = getMembers(2, 3);
+//       DBConnection.addMember(new Member("111-500", 2, "status", LocalDate.now(), "Кратко"));
+//       DBConnection.addMember(new Member("111-600", 2, "status2", LocalDate.now(), "Кратко2"));
 //
 //        long startaddMember = System.currentTimeMillis();
 //        for (Member member: members) {
@@ -41,17 +44,21 @@ public class test {
 //        long startGetMember = System.currentTimeMillis();
 //        List<Member> members1 = DBConnection.getAllMembers();
 //        long stopGetMember = System.currentTimeMillis();
-//
-//
+////
+////
 //        long startDeleteMember = System.currentTimeMillis();
 //        for (Member member: members1) {
 //            DBConnection.removeMember(member);
 //        }
 //        long stopDeleteMember = System.currentTimeMillis();
-////////
+//////
 //System.out.println("add member : " + (stopaddMember - startaddMember) + " ms");
 //         System.out.println("get member : " + (stopGetMember - startGetMember) + " ms");
 //        System.out.println("delete member : " + (stopDeleteMember - startDeleteMember) + " ms");
+
+        String id = MemberUtils.extractId("888 (id123456)");
+        System.out.println(id);
+
     }
 
     private static ArrayList<Member> getMembers(int length, int invoiceSize) {

@@ -31,8 +31,15 @@ public class Organizations implements MemberLogic {
         members.remove(member);
     }
 
-    //TODO Добавить обновление объекта в листе
-    public void updateMember(Member member) { }
+    public void updateMember(Member member) {
+        int searchIndex = 0;
+        for(Member searchMember: members) {
+            if(searchMember.getMemberId().equals(member.getMemberId())) {
+                searchIndex = members.indexOf(searchMember);
+            }
+        }
+        members.set(searchIndex, member);
+    }
 
 
 

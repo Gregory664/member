@@ -43,13 +43,13 @@
                   <Label text="Сумма" GridPane.rowIndex="6" />
                   <Label text="Статус оплаты" GridPane.rowIndex="7" />
                   <Label text="Дополнительная информация" GridPane.rowIndex="8" />
-                  <TextField fx:id="text_invoiceId" maxWidth="200.0" minWidth="200.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="text_invoiceNumber" editable="false" maxWidth="200.0" minWidth="200.0" GridPane.columnIndex="1" />
                   <DatePicker fx:id="date_dateCreation" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <DatePicker fx:id="date_dateReceiving" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="text_orderId" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="text_orderId" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <DatePicker fx:id="date_orderDate" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextField fx:id="text_price" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <TextArea fx:id="text_comment" editable="false" maxWidth="439.0" minWidth="400.0" prefHeight="60.0" prefWidth="439.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextArea fx:id="text_comment" maxWidth="439.0" minWidth="400.0" prefHeight="60.0" prefWidth="439.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <ComboBox fx:id="cmbBox_statusReceiving" maxWidth="200.0" minWidth="200.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <ComboBox fx:id="cmbBox_statusPayment" maxWidth="200.0" minWidth="200.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                </children>
