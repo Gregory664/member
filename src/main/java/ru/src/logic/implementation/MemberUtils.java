@@ -1,6 +1,10 @@
 package ru.src.logic.implementation;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
+
 import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 public class MemberUtils {
     public static String isImportExport(boolean value) {
@@ -46,5 +50,21 @@ public class MemberUtils {
 
     public static String extractId(String id) {
         return id.substring(id.indexOf("d") + 1, id.length() - 1);
+    }
+
+    public static void alertDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(message);
+        alert.setTitle(null);
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
+
+    public static void checkDigital(TextField textField) {
+        Pattern p = Pattern.compile("\\d+");
+
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!p.matcher(newValue).matches()) textField.setText(oldValue);
+        });
     }
 }

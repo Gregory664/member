@@ -13,6 +13,7 @@ import ru.src.model.Member;
 import ru.src.model.buh.Invoice;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class UpdateInvoiceController {
     @FXML
@@ -46,6 +47,16 @@ public class UpdateInvoiceController {
     public Invoice getInvoice() {
         return invoice;
     }
+
+    @FXML
+    public void initialize(){
+        Pattern p = Pattern.compile("\\d+");
+
+        MemberUtils.checkDigital(text_orderId);
+
+    }
+
+
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
@@ -108,6 +119,8 @@ public class UpdateInvoiceController {
 
         payment.clear();
         receive.clear();
+
+        MemberUtils.alertDialog("Счет успешно обновлен!");
         closeWindow(actionEvent);
     }
 

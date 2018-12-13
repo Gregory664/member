@@ -33,6 +33,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class MainFormController {
 
@@ -252,6 +253,7 @@ public class MainFormController {
         table_members.setItems(memberOrganizations.getMembers());
         initCreateInvoiceLoader();
         initUpdateInvoiceLoader();
+
     }
 
     private void initCreateInvoiceLoader() {
@@ -397,8 +399,19 @@ public class MainFormController {
         invoiceHashMap.forEach((k, v) -> observableList.add(v.getInvoiceNumber().toString() + " (id" + k + ")"));
 
         cmbBox_invoiceId.setItems(observableList);
-        if(observableList.size() > 0) {
+
+
+        btn_add_invoice.setDisable(false);
+        if(invoiceHashMap.size() > 0) {
             cmbBox_invoiceId.getSelectionModel().select(0);
+            cmbBox_invoiceId.setDisable(false);
+            btn_rename_invoice.setDisable(false);
+            btn_remove_invoice.setDisable(false);
+        }
+        else {
+            cmbBox_invoiceId.setDisable(true);
+            btn_rename_invoice.setDisable(true);
+            btn_remove_invoice.setDisable(true);
         }
     }
 
@@ -427,18 +440,21 @@ public class MainFormController {
         text_invoice_statusPayment.clear();
         text_invoice_comment.clear();
 
-        Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
+        if(invoiceHashMap.size() > 0) {
 
+            Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
 
+            text_invoice_dateCreation.setText(MemberUtils.dateToString(invoice.getDateCreation()));
+            text_invoice_statusReceiving.setText(MemberUtils.isReceive(invoice.getStatusReceiving()));
+            text_invoice_dateReceiving.setText(MemberUtils.dateToString(invoice.getDateReceiving()));
+            text_invoice_orderId.setText(invoice.getOrderId());
+            text_invoice_orderDate.setText(MemberUtils.dateToString(invoice.getOrderDate()));
+            text_invoice_price.setText(String.valueOf(invoice.getPrice()));
+            text_invoice_statusPayment.setText(MemberUtils.isPayment(invoice.getStatusPayment()));
+            text_invoice_comment.setText(invoice.getComment());
 
-        text_invoice_dateCreation.setText(MemberUtils.dateToString(invoice.getDateCreation()));
-        text_invoice_statusReceiving.setText(MemberUtils.isReceive(invoice.getStatusReceiving()));
-        text_invoice_dateReceiving.setText(MemberUtils.dateToString(invoice.getDateReceiving()));
-        text_invoice_orderId.setText(invoice.getOrderId());
-        text_invoice_orderDate.setText(MemberUtils.dateToString(invoice.getOrderDate()));
-        text_invoice_price.setText(String.valueOf(invoice.getPrice()));
-        text_invoice_statusPayment.setText(MemberUtils.isPayment(invoice.getStatusPayment()));
-        text_invoice_comment.setText(invoice.getComment());
+        }
+
 
     }
 
@@ -462,8 +478,7 @@ public class MainFormController {
     public void createInvoice(ActionEvent actionEvent) {
         if(createInvoiceStage==null) {
             createInvoiceStage = new Stage();
-            createInvoiceStage.setResizable(false);
-            createInvoiceStage.setScene(new Scene(createInvoice));
+            createInvoiceStage.setResizable(false);createInvoiceStage.setScene(new Scene(createInvoice));
             createInvoiceStage.initModality(Modality.WINDOW_MODAL);
             createInvoiceStage.initOwner(mainStage);
 
@@ -475,22 +490,33 @@ public class MainFormController {
             member.setInvoice(invoices);
         }
 
-
         createInvoiceStage.showAndWait();
-
         member.getInvoice().add(createInvoiceController.getInvoice());
 
         DBConnection.updateMember(member);
         memberOrganizations.updateMember(member);
+
+
     }
 
     public void deleteInvoice(ActionEvent actionEvent) {
-        Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
-        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-        member.getInvoice().remove(invoice);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Удаление счета");
+        alert.setHeaderText(null);
+        alert.setContentText("Вы действительно хотите удалить счет?");
 
-        DBConnection.updateMember(member);
-        memberOrganizations.updateMember(member);
+        Optional<ButtonType> optional = alert.showAndWait();
+
+        if(optional.get() == ButtonType.OK) {
+
+            Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
+            Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+            member.getInvoice().remove(invoice);
+
+            DBConnection.updateMember(member);
+            memberOrganizations.updateMember(member);
+            MemberUtils.alertDialog("Cчет успешно удален!");
+        }
     }
 
     public void renameInvoice(ActionEvent actionEvent) {

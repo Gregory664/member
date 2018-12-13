@@ -381,10 +381,10 @@
                                           <AnchorPane prefHeight="36.0" prefWidth="970.0">
                                              <children>
                                                 <Label layoutY="10.0" text="Номер счета" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="6.0" />
-                                                <ComboBox fx:id="cmbBox_invoiceId" layoutX="225.0" layoutY="1.0" onAction="#fillSelectedInvoice" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="225.0" AnchorPane.topAnchor="3.0" />
-                                                <Button fx:id="btn_add_invoice" layoutX="434.0" layoutY="1.0" mnemonicParsing="false" onAction="#createInvoice" text="+" AnchorPane.leftAnchor="434.0" AnchorPane.topAnchor="3.0" />
-                                                <Button fx:id="btn_remove_invoice" layoutX="467.0" layoutY="1.0" mnemonicParsing="false" onAction="#deleteInvoice" text="-" AnchorPane.leftAnchor="467.0" AnchorPane.topAnchor="3.0" />
-                                                <Button fx:id="btn_rename_invoice" layoutX="496.0" layoutY="1.0" mnemonicParsing="false" onAction="#renameInvoice" text="R" AnchorPane.leftAnchor="496.0" AnchorPane.topAnchor="3.0" />
+                                                <ComboBox fx:id="cmbBox_invoiceId" disable="true" layoutX="225.0" layoutY="1.0" onAction="#fillSelectedInvoice" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="225.0" AnchorPane.topAnchor="3.0" />
+                                                <Button fx:id="btn_add_invoice" disable="true" layoutX="434.0" layoutY="1.0" mnemonicParsing="false" onAction="#createInvoice" text="+" AnchorPane.leftAnchor="434.0" AnchorPane.topAnchor="3.0" />
+                                                <Button fx:id="btn_remove_invoice" disable="true" layoutX="467.0" layoutY="1.0" mnemonicParsing="false" onAction="#deleteInvoice" text="-" AnchorPane.leftAnchor="467.0" AnchorPane.topAnchor="3.0" />
+                                                <Button fx:id="btn_rename_invoice" disable="true" layoutX="496.0" layoutY="1.0" mnemonicParsing="false" onAction="#renameInvoice" text="R" AnchorPane.leftAnchor="496.0" AnchorPane.topAnchor="3.0" />
                                              </children>
                                           </AnchorPane>
                                           <GridPane hgap="4.0" maxHeight="300.0" minHeight="290.0" prefHeight="331.0" prefWidth="970.0" vgap="4.0" VBox.vgrow="ALWAYS">
@@ -414,7 +414,7 @@
                                                 <TextField fx:id="text_invoice_statusReceiving" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <TextField fx:id="text_invoice_orderId" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <TextField fx:id="text_invoice_price" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                <TextField fx:id="text_invoice_statusPayment" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <TextField fx:id="text_invoice_statusPayment" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                 <TextArea fx:id="text_invoice_comment" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                                 <TextField fx:id="text_invoice_dateReceiving" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <TextField fx:id="text_invoice_orderDate" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
