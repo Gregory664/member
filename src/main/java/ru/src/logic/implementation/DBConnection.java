@@ -91,5 +91,21 @@ public class DBConnection implements MemberLogic {
         }
     }
 
+    public static boolean isInvoiceExists(String id) {
+        boolean result = false;
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Invoice invoice = session.get(Invoice.class, id);
+            transaction.commit();
+            result = true;
+        }
+        catch (Exception e) {
+            result = false;
+        }
+        return result;
+    }
+
 
 }
+

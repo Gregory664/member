@@ -1,31 +1,18 @@
 package ru.src.logic.controllers;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import org.omg.CORBA.INV_FLAG;
-import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.model.Member;
 import ru.src.model.buh.Invoice;
 
-import javax.xml.soap.Text;
-import java.awt.*;
 import java.time.LocalDate;
-import java.util.regex.Pattern;
 
 public class CreateInvoiceController {
     @FXML
@@ -47,6 +34,7 @@ public class CreateInvoiceController {
 
     private Invoice invoice;
     private Member member;
+    private boolean createInvoice = false;
 
     public Invoice getInvoice() {
         return invoice;
@@ -56,20 +44,23 @@ public class CreateInvoiceController {
         this.member = member;
     }
 
-    @FXML
-    public void initialize(){
-        Pattern p = Pattern.compile("\\d+");
-        MemberUtils.checkDigital(text_invoiceNumber);
-        MemberUtils.checkDigital(text_invoice_price);
+    public boolean isCreateInvoice() {
+        return createInvoice;
     }
 
+    @FXML
+    public void initialize(){
+        MemberUtils.checkTextLength(text_invoiceNumber, label_alarm_invoiceNumber, 5);
+        MemberUtils.checkTextLength(text_invoice_price, label_alarm_invoice_price, 9);
+        MemberUtils.checkTextDigital(text_invoiceNumber);
+        MemberUtils.checkTextDigital(text_invoice_price);
+    }
+
+
     public void saveInvoice(ActionEvent actionEvent) {
-
-
-
         boolean isEmpty = false;
-        if(isEmpty(text_invoiceNumber)) {
-            checkAlarm(text_invoiceNumber, label_alarm_invoiceNumber);
+        if(MemberUtils.isEmptyTextField(text_invoiceNumber)) {
+            MemberUtils.checkAlarm(text_invoiceNumber, label_alarm_invoiceNumber);
             isEmpty = true;
         } else {
             text_invoiceNumber.setStyle(null);
@@ -77,8 +68,8 @@ public class CreateInvoiceController {
             label_alarm_invoiceNumber.setText("");
         }
 
-        if(isEmpty(text_invoice_price)) {
-            checkAlarm(text_invoice_price, label_alarm_invoice_price);
+        if(MemberUtils.isEmptyTextField(text_invoice_price)) {
+            MemberUtils.checkAlarm(text_invoice_price, label_alarm_invoice_price);
             isEmpty = true;
         } else {
             text_invoice_price.setStyle(null);
@@ -87,7 +78,7 @@ public class CreateInvoiceController {
         }
 
         if(date_invoice_dateCreation.getValue() == null) {
-            checkAlarm(date_invoice_dateCreation, label_alarm_invoice_dateCreation);
+            MemberUtils.checkAlarm(date_invoice_dateCreation, label_alarm_invoice_dateCreation);
             isEmpty = true;
         } else {
             date_invoice_dateCreation.setStyle(null);
@@ -106,14 +97,18 @@ public class CreateInvoiceController {
             clearText();
             clearStyle();
 
-            MemberUtils.alertDialog("Счет успешно добавлен!");
+            createInvoice = true;
+
             closeWindow(actionEvent);
         }
     }
 
-
     @FXML
     private void closeWindow(ActionEvent actionEvent) {
+        createInvoice = false;
+        clearText();
+        clearStyle();
+
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.hide();
@@ -138,22 +133,7 @@ public class CreateInvoiceController {
         label_alarm_invoiceNumber.setStyle(null);
     }
 
-    private boolean isEmpty(TextField textField) {
-        return textField.getText().length() == 0 ? true : false;
-    }
 
-    private void checkAlarm(Object textField, Label label) {
-        String color = "-fx-background-color: #de9396;";
-        if(textField instanceof TextField) {
-            ((TextField) textField).setStyle(color);
-        }
-        if(textField instanceof DatePicker) {
-            ((DatePicker) textField).setStyle(color);
-        }
-        label.setTextFill(Color.valueOf("#de9396"));
-        label.setText("Обязательное поле");
-
-    }
 
 
 }

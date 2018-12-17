@@ -332,17 +332,17 @@
                                     </GridPane>
                                  </content>
                               </TitledPane>
-                              <TitledPane expanded="false" text="Контактные лица" VBox.vgrow="ALWAYS">
+                              <TitledPane text="Контактные лица" VBox.vgrow="ALWAYS">
                                  <content>
                                     <VBox minHeight="285.0" prefHeight="230.0" prefWidth="990.0">
                                        <children>
                                           <AnchorPane prefHeight="36.0" prefWidth="970.0">
                                              <children>
                                                 <Label layoutY="10.0" text="ФИО" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                                                <ComboBox fx:id="cmbBox_contactPersonId" layoutX="225.0" layoutY="1.0" onAction="#fillSelectedPerson" prefHeight="26.0" prefWidth="624.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="121.0" AnchorPane.topAnchor="3.0" />
-                                                <Button fx:id="btn_add_contactPerson" layoutX="434.0" layoutY="1.0" mnemonicParsing="false" text="+" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="3.0" />
-                                                <Button fx:id="btn_remove_contactPerson" layoutX="467.0" layoutY="1.0" mnemonicParsing="false" text="-" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="3.0" />
-                                                <Button fx:id="btn_rename_contactPerson" layoutX="496.0" layoutY="1.0" mnemonicParsing="false" text="R" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="3.0" />
+                                                <ComboBox fx:id="cmbBox_contactPersonId" disable="true" layoutX="225.0" layoutY="1.0" onAction="#fillSelectedPerson" prefHeight="26.0" prefWidth="624.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="121.0" AnchorPane.topAnchor="3.0" />
+                                                <Button fx:id="btn_add_contactPerson" disable="true" layoutX="434.0" layoutY="1.0" mnemonicParsing="false" onAction="#createContactPerson" text="+" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="3.0" />
+                                                <Button fx:id="btn_remove_contactPerson" disable="true" layoutX="467.0" layoutY="1.0" mnemonicParsing="false" onAction="#removeContactPerson" text="-" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="3.0" />
+                                                <Button fx:id="btn_rename_contactPerson" disable="true" layoutX="496.0" layoutY="1.0" mnemonicParsing="false" onAction="#renameContactPerson" text="R" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="3.0" />
                                              </children>
                                           </AnchorPane>
                                           <GridPane hgap="4.0" vgap="4.0">
@@ -367,14 +367,14 @@
                                                 <TextField fx:id="text_contactPerson_phoneMobile" editable="false" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <TextField fx:id="text_contactPerson_phoneCity" editable="false" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <TextField fx:id="text_contactPerson_email" editable="false" maxWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <TextArea fx:id="text_contactPerson_changes" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <TextArea fx:id="text_contactPerson_changes" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                              </children>
                                           </GridPane>
                                        </children>
                                     </VBox>
                                  </content>
                               </TitledPane>
-                              <TitledPane text="Информация по счетам" VBox.vgrow="ALWAYS">
+                              <TitledPane expanded="false" text="Информация по счетам" VBox.vgrow="ALWAYS">
                                  <content>
                                     <VBox maxHeight="350.0" minHeight="350.0" prefHeight="442.0" prefWidth="990.0">
                                        <children>

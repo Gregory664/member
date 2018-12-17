@@ -1,7 +1,7 @@
 package ru.src.logic.implementation;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;
@@ -60,11 +60,86 @@ public class MemberUtils {
         alert.showAndWait();
     }
 
-    public static void checkDigital(TextField textField) {
-        Pattern p = Pattern.compile("\\d+");
+    public static void checkTextDigital(TextField textField) {
+        Pattern p = Pattern.compile("\\d*");
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!p.matcher(newValue).matches()) textField.setText(oldValue);
+            if (!p.matcher(newValue).matches() && newValue.length() >= 0) textField.setText(oldValue);
         });
+    }
+
+    public static void checkTextDigital(TextField textField, int maxLength) {
+        Pattern p = Pattern.compile("\\d*");
+
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(textField.getText().length() <= maxLength) {
+                if (!p.matcher(newValue).matches()) textField.setText(oldValue);
+            } else {
+                String s = textField.getText().substring(0, maxLength);
+                textField.setText(s);
+            }
+        });
+    }
+
+    public static void checkTextPhone(TextField textField) {
+        Pattern p = Pattern.compile("\\d*");
+        int maxLength = 11;
+
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(textField.getText().length() <= maxLength) {
+                if (!p.matcher(newValue).matches()) textField.setText(oldValue);
+            } else {
+                String s = textField.getText().substring(0, maxLength);
+                textField.setText(s);
+            }
+        });
+    }
+
+    public static void checkTextLength(TextField textField, Label label, int maxLength) {
+
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(textField.getText().length() >= maxLength) {
+                String s = textField.getText().substring(0, maxLength);
+                textField.setText(s);
+                label.setText("Поле достигло максимального значения");
+                label.setTextFill(Color.ORANGE);
+            } else {
+                label.setText(null);
+                label.setStyle(null);
+            }
+        });
+    }
+
+    public static void checkTextLength(TextArea textField, Label label, int maxLength) {
+
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(textField.getText().length() >= maxLength) {
+                String s = textField.getText().substring(0, maxLength);
+                textField.setText(s);
+                label.setText("Поле достигло максимального значения");
+                label.setTextFill(Color.ORANGE);
+            } else {
+                label.setText(null);
+                label.setStyle(null);
+            }
+        });
+    }
+
+
+    public static boolean isEmptyTextField(TextField textField) {
+        return textField.getText().length() == 0 ? true : false;
+    }
+
+    public static void checkAlarm(Object textField, Label label) {
+        String color = "-fx-background-color: #de9396;";
+        if(textField instanceof TextField) {
+            ((TextField) textField).setStyle(color);
+        }
+        if(textField instanceof DatePicker) {
+            ((DatePicker) textField).setStyle(color);
+        }
+        label.setTextFill(Color.valueOf("#de9396"));
+        label.setText("Обязательное поле");
+
     }
 }

@@ -230,15 +230,24 @@ public class MainFormController {
     private Stage mainStage;
     private Stage createInvoiceStage;
     private Stage updateInvoiceStage;
+    private Stage createContactPersonStage;
+    private Stage updateContactPersonStage;
 
     private FXMLLoader createInvoicefxmlLoader = new FXMLLoader();
     private FXMLLoader updateInvoicefxmlLoader = new FXMLLoader();
+    private FXMLLoader createContactPersonfxmlLoader = new FXMLLoader();
+    private FXMLLoader updateContactPersonfxmlLoafer = new FXMLLoader();
+
 
     private Parent createInvoice;
     private Parent updateInvoice;
+    private Parent createContactPerson;
+    private Parent updateContactPerson;
 
     private CreateInvoiceController createInvoiceController;
     private UpdateInvoiceController updateInvoiceController;
+    private CreateContactPersonController createContactPersonController;
+    private UpdateContactPersonController updateContactPersonController;
 
     @FXML
     public void initialize() {
@@ -253,12 +262,33 @@ public class MainFormController {
         table_members.setItems(memberOrganizations.getMembers());
         initCreateInvoiceLoader();
         initUpdateInvoiceLoader();
+        initCreateContactPersonLoader();
+        initUpdateContactPersonLoader();
+    }
 
+    private void initCreateContactPersonLoader() {
+        try {
+            createContactPersonfxmlLoader.setLocation(getClass().getResource("/ui/ContactPerson/CreateContactPerson.fxml"));
+            createContactPerson = createContactPersonfxmlLoader.load();
+            createContactPersonController = createContactPersonfxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initUpdateContactPersonLoader() {
+        try {
+            updateContactPersonfxmlLoafer.setLocation(getClass().getResource("/ui/ContactPerson/UpdateContactPerson.fxml"));
+            updateContactPerson = updateContactPersonfxmlLoafer.load();
+            updateContactPersonController = updateContactPersonfxmlLoafer.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initCreateInvoiceLoader() {
         try {
-            createInvoicefxmlLoader.setLocation(getClass().getResource("/ui/CreateInvoiceForm.fxml"));
+            createInvoicefxmlLoader.setLocation(getClass().getResource("/ui/Invoice/CreateInvoiceForm.fxml"));
             createInvoice = createInvoicefxmlLoader.load();
             createInvoiceController = createInvoicefxmlLoader.getController();
         }
@@ -266,9 +296,10 @@ public class MainFormController {
             e.printStackTrace();
         }
     }
+
     private void initUpdateInvoiceLoader() {
         try {
-            updateInvoicefxmlLoader.setLocation(getClass().getResource("/ui/UpdateInvoiceForm.fxml"));
+            updateInvoicefxmlLoader.setLocation(getClass().getResource("/ui/Invoice/UpdateInvoiceForm.fxml"));
             updateInvoice = updateInvoicefxmlLoader.load();
             updateInvoiceController = updateInvoicefxmlLoader.getController();
         }
@@ -407,8 +438,7 @@ public class MainFormController {
             cmbBox_invoiceId.setDisable(false);
             btn_rename_invoice.setDisable(false);
             btn_remove_invoice.setDisable(false);
-        }
-        else {
+        } else {
             cmbBox_invoiceId.setDisable(true);
             btn_rename_invoice.setDisable(true);
             btn_remove_invoice.setDisable(true);
@@ -418,12 +448,24 @@ public class MainFormController {
     private void fillContactPersons(List<ContactPerson> contactPeople) {
         contactPersonHashMap.clear();
         for(ContactPerson contactPerson: contactPeople) {
-            contactPersonHashMap.put(contactPerson.getFullName(), contactPerson);
+            contactPersonHashMap.put(contactPerson.getContactPersonId(), contactPerson);
         }
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        contactPersonHashMap.forEach((k, v) -> observableList.add(k));
+        contactPersonHashMap.forEach((k, v) -> observableList.add(v.getFullName() + " (id" + k + ")"));
 
         cmbBox_contactPersonId.setItems(observableList);
+
+        btn_add_contactPerson.setDisable(false);
+        if(contactPersonHashMap.size() > 0) {
+            cmbBox_contactPersonId.getSelectionModel().select(0);
+            cmbBox_contactPersonId.setDisable(false);
+            btn_remove_contactPerson.setDisable(false);
+            btn_rename_contactPerson.setDisable(false);
+        } else {
+            cmbBox_contactPersonId.setDisable(true);
+            btn_remove_contactPerson.setDisable(true);
+            btn_rename_contactPerson.setDisable(true);
+        }
     }
 
     public void setMemberParams(MouseEvent mouseEvent) {
@@ -454,12 +496,9 @@ public class MainFormController {
             text_invoice_comment.setText(invoice.getComment());
 
         }
-
-
     }
 
     public void fillSelectedPerson(ActionEvent actionEvent) {
-        ContactPerson contactPerson = contactPersonHashMap.get(cmbBox_contactPersonId.getValue());
 
         text_contactPerson_position.clear();
         text_contactPerson_phoneMobile.clear();
@@ -467,34 +506,50 @@ public class MainFormController {
         text_contactPerson_email.clear();
         text_contactPerson_changes.clear();
 
-        text_contactPerson_position.setText(contactPerson.getPosition());
-        text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
-        text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
-        text_contactPerson_email.setText(contactPerson.getEmail());
-        text_contactPerson_changes.setText(contactPerson.getChanges());
+        if(contactPersonHashMap.size() > 0) {
+            ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue().toString()));
+
+            text_contactPerson_position.setText(contactPerson.getPosition());
+            text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
+            text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
+            text_contactPerson_email.setText(contactPerson.getEmail());
+            text_contactPerson_changes.setText(contactPerson.getChanges());
+        }
     }
 
 
     public void createInvoice(ActionEvent actionEvent) {
-        if(createInvoiceStage==null) {
+        if(createInvoiceStage == null) {
             createInvoiceStage = new Stage();
-            createInvoiceStage.setResizable(false);createInvoiceStage.setScene(new Scene(createInvoice));
+            createInvoiceStage.setResizable(false);
+            createInvoiceStage.setScene(new Scene(createInvoice));
             createInvoiceStage.initModality(Modality.WINDOW_MODAL);
             createInvoiceStage.initOwner(mainStage);
 
         }
         Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-        createInvoiceController.setMember(member);
         if(member.getInvoice() == null){
             List<Invoice> invoices = new ArrayList<>();
             member.setInvoice(invoices);
         }
 
+        createInvoiceController.setMember(member);
         createInvoiceStage.showAndWait();
-        member.getInvoice().add(createInvoiceController.getInvoice());
 
-        DBConnection.updateMember(member);
-        memberOrganizations.updateMember(member);
+        if(DBConnection.isInvoiceExists(createInvoiceController.getInvoice().getInvoiceId())) {
+            member.getInvoice().add(createInvoiceController.getInvoice());
+
+            DBConnection.updateMember(member);
+            memberOrganizations.updateMember(member);
+            MemberUtils.alertDialog("Счет успешно добавлен!");
+        }
+        if(!createInvoiceController.isCreateInvoice()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Ошибка!");
+            alert.setHeaderText(null);
+            alert.setContentText("Такой счет уже существует!");
+            alert.showAndWait();
+        }
 
 
     }
@@ -520,7 +575,7 @@ public class MainFormController {
     }
 
     public void renameInvoice(ActionEvent actionEvent) {
-        if(updateInvoiceStage==null) {
+        if(updateInvoiceStage == null) {
             updateInvoiceStage = new Stage();
             updateInvoiceStage.setResizable(false);
             updateInvoiceStage.setScene(new Scene(updateInvoice));
@@ -540,6 +595,78 @@ public class MainFormController {
             }
         }
         member.getInvoice().set(searchIndex, invoice);
+        DBConnection.updateMember(member);
+        memberOrganizations.updateMember(member);
+
+    }
+
+
+    public void createContactPerson(ActionEvent actionEvent) {
+        if(createContactPersonStage == null){
+            createContactPersonStage = new Stage();
+            createContactPersonStage.setResizable(false);
+            createContactPersonStage.setScene(new Scene(createContactPerson));
+            createContactPersonStage.initModality(Modality.WINDOW_MODAL);
+            createContactPersonStage.initOwner(mainStage);
+        }
+
+        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+
+        if(member.getContactPerson() == null) {
+            List<ContactPerson> people = new ArrayList<>();
+            member.setContactPerson(people);
+        }
+
+        createContactPersonController.setMember(member);
+        createContactPersonStage.showAndWait();
+
+        member.getContactPerson().add(createContactPersonController.getContactPerson());
+
+        DBConnection.updateMember(member);
+        memberOrganizations.updateMember(member);
+
+    }
+
+    public void removeContactPerson(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Удаление контактного лица");
+        alert.setHeaderText(null);
+        alert.setContentText("Вы действительно хотите удалить контактное лицо?");
+
+        Optional<ButtonType> optional = alert.showAndWait();
+
+        if(optional.get() == ButtonType.OK) {
+            ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue().toString()));
+            Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+            member.getContactPerson().remove(contactPerson);
+
+            DBConnection.updateMember(member);
+            memberOrganizations.updateMember(member);
+            MemberUtils.alertDialog("Данные контактного лица успешно удалены!");
+        }
+    }
+
+    public void renameContactPerson(ActionEvent actionEvent) {
+        if(updateContactPersonStage == null) {
+            updateContactPersonStage = new Stage();
+            updateContactPersonStage.setResizable(false);
+            updateContactPersonStage.setScene(new Scene(updateContactPerson));
+            updateContactPersonStage.initModality(Modality.WINDOW_MODAL);
+            updateContactPersonStage.initOwner(mainStage);
+        }
+
+        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+        ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue().toString()));
+        updateContactPersonController.setContactPerson(contactPerson);
+        updateContactPersonStage.showAndWait();
+
+        int searchIndex = -1;
+        for(ContactPerson person: member.getContactPerson()) {
+            if(person.getContactPersonId().equals(contactPerson.getContactPersonId())) {
+                searchIndex = member.getContactPerson().indexOf(person);
+            }
+        }
+        member.getContactPerson().set(searchIndex, contactPerson);
         DBConnection.updateMember(member);
         memberOrganizations.updateMember(member);
 

@@ -6,13 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.MemberUtils;
-import ru.src.model.Member;
 import ru.src.model.buh.Invoice;
 
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class UpdateInvoiceController {
@@ -38,6 +35,8 @@ public class UpdateInvoiceController {
     public Button btnSave;
     @FXML
     public Button btnCancel;
+    @FXML
+    public Label label_alarm_invoiceChange;
 
     private Invoice invoice;
 
@@ -50,10 +49,8 @@ public class UpdateInvoiceController {
 
     @FXML
     public void initialize(){
-        Pattern p = Pattern.compile("\\d+");
-
-        MemberUtils.checkDigital(text_orderId);
-
+        MemberUtils.checkTextDigital(text_orderId, 5);
+        MemberUtils.checkTextLength(text_comment, label_alarm_invoiceChange, 255);
     }
 
 
@@ -117,17 +114,30 @@ public class UpdateInvoiceController {
 
         invoice.setComment(text_comment.getText());
 
-        payment.clear();
-        receive.clear();
+        clearText();
+        clearStyle();
 
         MemberUtils.alertDialog("Счет успешно обновлен!");
         closeWindow(actionEvent);
     }
 
     public void closeWindow(ActionEvent actionEvent) {
+        clearText();
+        clearStyle();
+
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.hide();
+    }
+
+    private void clearStyle() {
+        label_alarm_invoiceChange.setTextFill(null);
+    }
+
+    private void clearText() {
+        label_alarm_invoiceChange.setText("");
+        payment.clear();
+        receive.clear();
     }
 
 
