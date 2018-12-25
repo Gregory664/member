@@ -42,16 +42,6 @@ public class Director implements Serializable {
 
     }
 
-    public Director(Member member, String position, String fullName, String phoneMobile, String email, LocalDate birthday, String changes) {
-        this.member = member;
-        this.position = position;
-        this.fullName = fullName;
-        this.phoneMobile = phoneMobile;
-        this.email = email;
-        this.birthday = birthday;
-        this.changes = changes;
-    }
-
     public Director(Member member,
                     String position,
                     String fullName,

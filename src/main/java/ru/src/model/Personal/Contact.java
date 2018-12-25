@@ -33,15 +33,6 @@ public class Contact implements Serializable {
 
     }
 
-    public Contact(Member member, String phone, String fax, String site, String email, String changes) {
-        this.member = member;
-        this.phone = phone;
-        this.fax = fax;
-        this.site = site;
-        this.email = email;
-        this.changes = changes;
-    }
-
     public Contact(Member member, String phone, String email) {
         this.member = member;
         this.phone = phone;

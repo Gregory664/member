@@ -15,7 +15,7 @@ public class Debt implements Serializable {
     private Member member;
 
     @Column(name = "DEBT_STATUS", nullable = false)
-    private String status;
+    private boolean status;
 
     @Column(name = "DEBT_PERIOD")
     private String period;
@@ -28,19 +28,12 @@ public class Debt implements Serializable {
 
     }
 
-    public Debt(Member member, String status, String period, String comment) {
-        this.member = member;
-        this.status = status;
-        this.period = period;
-        this.comment = comment;
-    }
-
-    public Debt(Member member, String status) {
+    public Debt(Member member, boolean status) {
         this.member = member;
         this.status = status;
     }
 
-    public Debt(Member member, String status, String period) {
+    public Debt(Member member, boolean status, String period) {
         this.member = member;
         this.status = status;
         this.period = period;
@@ -55,11 +48,11 @@ public class Debt implements Serializable {
         this.member = member;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

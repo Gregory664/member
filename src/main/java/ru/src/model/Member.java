@@ -73,6 +73,10 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private Relate relate;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name = "MEMBER_ID")
+    private SocialNetworks socialNetworks;
+
 
     private Member() {
 
@@ -205,5 +209,13 @@ public class Member {
 
     public void setRelate(Relate relate) {
         this.relate = relate;
+    }
+
+    public SocialNetworks getSocialNetworks() {
+        return socialNetworks;
+    }
+
+    public void setSocialNetworks(SocialNetworks socialNetworks) {
+        this.socialNetworks = socialNetworks;
     }
 }

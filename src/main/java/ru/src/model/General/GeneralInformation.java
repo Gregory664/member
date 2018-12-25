@@ -38,7 +38,7 @@ public class GeneralInformation implements Serializable {
     private String investmentsTarget;
 
     @Column(name = "INVESTMENTS_SIZE")
-    private String investmentsSize;
+    private Integer investmentsSize;
 
     @Column(name = "INTERACTION_OFFLINE", nullable = false)
     private boolean interactionOffline;
@@ -174,11 +174,11 @@ public class GeneralInformation implements Serializable {
         this.investmentsTarget = investmentsTarget;
     }
 
-    public String getInvestmentsSize() {
+    public Integer getInvestmentsSize() {
         return investmentsSize;
     }
 
-    public void setInvestmentsSize(String investmentsSize) {
+    public void setInvestmentsSize(Integer investmentsSize) {
         this.investmentsSize = investmentsSize;
     }
 

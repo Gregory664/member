@@ -33,7 +33,7 @@
 
         <mapping class="ru.src.model.Address.AddressActual"></mapping>
         <mapping class="ru.src.model.Address.AddressLegal"></mapping>
-
+        <mapping class="ru.src.model.SocialNetworks"></mapping>
 
 
 

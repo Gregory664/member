@@ -11,7 +11,7 @@ public class AddressActual implements Serializable {
 
     @Id
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_ID", nullable = false)
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     @Column(name = "ADDRESS_ACTUAL_REGION_ID")

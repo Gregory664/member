@@ -43,8 +43,8 @@ public class UpdateContactPersonController {
 
     @FXML
     public void initialize() {
-        MemberUtils.checkTextPhone(text_contactPerson_phoneCity);
-        MemberUtils.checkTextPhone(text_contactPerson_phoneMobile);
+        MemberUtils.checkTextPhone(text_contactPerson_phoneCity, label_alarm_contactPerson_phoneCity);
+        MemberUtils.checkTextPhone(text_contactPerson_phoneMobile, label_alarm_contactPerson_phoneMobile);
         MemberUtils.checkTextLength(text_contactPerson_email, label_alarm_contactPerson_email, 50);
         MemberUtils.checkTextLength(text_contactPerson_changes, label_alarm_contactPerson_changes, 255);
     }
@@ -58,9 +58,12 @@ public class UpdateContactPersonController {
         text_contactPerson_fullName.setText(contactPerson.getFullName());
         text_contactPerson_position.setText(contactPerson.getPosition());
         text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
-        text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
+        if(contactPerson.getPhoneCity() != null)
+            text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
+        if(contactPerson.getChanges() != null)
+            text_contactPerson_changes.setText(contactPerson.getChanges());
         text_contactPerson_email.setText(contactPerson.getEmail());
-        text_contactPerson_changes.setText(contactPerson.getChanges());
+
     }
 
     private ContactPerson contactPerson;
@@ -77,7 +80,7 @@ public class UpdateContactPersonController {
         contactPerson.setEmail(text_contactPerson_email.getText());
         contactPerson.setChanges(text_contactPerson_changes.getText());
 
-        MemberUtils.alertDialog("Данные контактного лица успешно обновлены!");
+        MemberUtils.informationDialog("Данные контактного лица успешно обновлены!");
         closeWindow(actionEvent);
     }
 

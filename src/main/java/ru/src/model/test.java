@@ -30,34 +30,38 @@ public class test {
     public static void main(String[] args) {
 
 //       List<Member> members = getMembers(2, 3);
-//       DBConnection.addMember(new Member("111-500", 2, "status", LocalDate.now(), "Кратко"));
-//       DBConnection.addMember(new Member("111-600", 2, "status2", LocalDate.now(), "Кратко2"));
-//
-//        long startaddMember = System.currentTimeMillis();
+////       DBConnection.addMember(new Member("111-500", 2, "status", LocalDate.now(), "Кратко"));
+////       DBConnection.addMember(new Member("111-600", 2, "status2", LocalDate.now(), "Кратко2"));
+////
+////        long startaddMember = System.currentTimeMillis();
 //        for (Member member: members) {
 //            DBConnection.addMember(member);
 //        }
-//        long stopaddMember = System.currentTimeMillis();
-//        System.out.println();
-//        members.clear();
+//////        long stopaddMember = System.currentTimeMillis();
+//////        System.out.println();
+////        members.clear();
 
-//        long startGetMember = System.currentTimeMillis();
-//        List<Member> members1 = DBConnection.getAllMembers();
-//        long stopGetMember = System.currentTimeMillis();
-////
-////
-//        long startDeleteMember = System.currentTimeMillis();
-//        for (Member member: members1) {
-//            DBConnection.removeMember(member);
-//        }
-//        long stopDeleteMember = System.currentTimeMillis();
+        long startGetMember = System.currentTimeMillis();
+        List<Member> members1 = DBConnection.getAllMembers();
+        long stopGetMember = System.currentTimeMillis();
 //////
-//System.out.println("add member : " + (stopaddMember - startaddMember) + " ms");
-//         System.out.println("get member : " + (stopGetMember - startGetMember) + " ms");
-//        System.out.println("delete member : " + (stopDeleteMember - startDeleteMember) + " ms");
+//////
+////        long startDeleteMember = System.currentTimeMillis();
+////        for (Member member: members1) {
+////            DBConnection.removeMember(member);
+////        }
+////        long stopDeleteMember = System.currentTimeMillis();
+////////
+////System.out.println("add member : " + (stopaddMember - startaddMember) + " ms");
+////         System.out.println("get member : " + (stopGetMember - startGetMember) + " ms");
+////        System.out.println("delete member : " + (stopDeleteMember - startDeleteMember) + " ms");
+//
+//        String id = MemberUtils.extractId("888 (id123456)");
+//        System.out.println(id);
+// /       DBConnection.isMemberExists("1");
+//        DBConnection.isMemberExists("0");
+//        DBConnection.isMemberExists("1234");
 
-        String id = MemberUtils.extractId("888 (id123456)");
-        System.out.println(id);
 
     }
 
@@ -72,9 +76,11 @@ public class test {
         for (int i = 0; i < length; i++) {
             Member member = new Member( "" + i, i,"test", LocalDate.now(), "test");
             AddressActual addressActual = new AddressActual(member, 0, "test", 394000, "test", "test", "test");
+            addressActual.setOffice("12fdsa");
+            addressActual.setOffice("23");
             AddressLegal addressLegal = new AddressLegal(member, 0, "test", 394000, "test", "test", "test");
             AccoutingInformation accoutingInformation = new AccoutingInformation(member, "1" + i, "1" + i, "1" + i);
-            Debt debt = new Debt(member, "test");
+            Debt debt = new Debt(member, true);
             GeneralInformation generalInformation = new GeneralInformation(member, "test" + i,
                     "test" + i,"test" + i,                    "test" + i,
                     "test" + i,false,true,
@@ -93,17 +99,17 @@ public class test {
             member.setDirector(director);
             member.setRelate(relate);
 
-            List<Invoice> invoices = new ArrayList<>();
-            for (int j = 0; j < invoiceSize; j++) {
-                Invoice invoice = new Invoice(member, ++number, LocalDate.of(2020 + j, 12, 30), ++sum);
-                invoices.add(invoice);
-            }
-            member.setInvoice(invoices);
-
-            List<ContactPerson> contactPeople = new ArrayList<>();
-            contactPeople.add(new ContactPerson(member, "А А Дюма 1" + i, "Директор", "88005550001", "ad@ad.ru"));
-            contactPeople.add(new ContactPerson(member, "А А Дюма 2" + i, "Директор", "88005550002", "asdfasd@ad.ru"));
-            member.setContactPerson(contactPeople);
+//            List<Invoice> invoices = new ArrayList<>();
+//            for (int j = 0; j < invoiceSize; j++) {
+//                Invoice invoice = new Invoice(member, ++number, LocalDate.of(2020 + j, 12, 30), ++sum);
+//                invoices.add(invoice);
+//            }
+//            member.setInvoice(invoices);
+//
+//            List<ContactPerson> contactPeople = new ArrayList<>();
+//            contactPeople.add(new ContactPerson(member, "А А Дюма 1" + i, "Директор", "88005550001", "ad@ad.ru"));
+//            contactPeople.add(new ContactPerson(member, "А А Дюма 2" + i, "Директор", "88005550002", "asdfasd@ad.ru"));
+//            member.setContactPerson(contactPeople);
 
             members.add(member);
 

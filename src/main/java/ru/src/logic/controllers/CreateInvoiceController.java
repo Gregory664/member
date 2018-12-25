@@ -13,6 +13,7 @@ import ru.src.model.Member;
 import ru.src.model.buh.Invoice;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
 public class CreateInvoiceController {
     @FXML
@@ -50,43 +51,13 @@ public class CreateInvoiceController {
 
     @FXML
     public void initialize(){
-        MemberUtils.checkTextLength(text_invoiceNumber, label_alarm_invoiceNumber, 5);
-        MemberUtils.checkTextLength(text_invoice_price, label_alarm_invoice_price, 9);
-        MemberUtils.checkTextDigital(text_invoiceNumber);
-        MemberUtils.checkTextDigital(text_invoice_price);
+        MemberUtils.checkTextDigital(text_invoiceNumber, label_alarm_invoiceNumber, 5);
+        MemberUtils.checkTextDigital(text_invoice_price, label_alarm_invoice_price, 9);
     }
 
-
     public void saveInvoice(ActionEvent actionEvent) {
-        boolean isEmpty = false;
-        if(MemberUtils.isEmptyTextField(text_invoiceNumber)) {
-            MemberUtils.checkAlarm(text_invoiceNumber, label_alarm_invoiceNumber);
-            isEmpty = true;
-        } else {
-            text_invoiceNumber.setStyle(null);
-            label_alarm_invoiceNumber.setStyle(null);
-            label_alarm_invoiceNumber.setText("");
-        }
 
-        if(MemberUtils.isEmptyTextField(text_invoice_price)) {
-            MemberUtils.checkAlarm(text_invoice_price, label_alarm_invoice_price);
-            isEmpty = true;
-        } else {
-            text_invoice_price.setStyle(null);
-            label_alarm_invoice_price.setStyle(null);
-            label_alarm_invoice_price.setText("");
-        }
-
-        if(date_invoice_dateCreation.getValue() == null) {
-            MemberUtils.checkAlarm(date_invoice_dateCreation, label_alarm_invoice_dateCreation);
-            isEmpty = true;
-        } else {
-            date_invoice_dateCreation.setStyle(null);
-            label_alarm_invoice_dateCreation.setStyle(null);
-            label_alarm_invoice_dateCreation.setText("");
-        }
-
-        if(!isEmpty) {
+        if(!isFieldsEmpty()) {
             invoice = new Invoice(this.member,
                     Integer.valueOf(text_invoiceNumber.getText()),
                     date_invoice_dateCreation.getValue(),
@@ -103,9 +74,18 @@ public class CreateInvoiceController {
         }
     }
 
+    private boolean isFieldsEmpty() {
+        HashSet<Boolean> set = new HashSet<Boolean>();
+        set.add(MemberUtils.isEmptyField(text_invoiceNumber, label_alarm_invoiceNumber));
+        set.add(MemberUtils.isEmptyField(text_invoice_price, label_alarm_invoice_price));
+        set.add(MemberUtils.isEmptyField(date_invoice_dateCreation, label_alarm_invoice_dateCreation));
+        return set.contains(true);
+    }
+
+
     @FXML
     private void closeWindow(ActionEvent actionEvent) {
-        createInvoice = false;
+
         clearText();
         clearStyle();
 

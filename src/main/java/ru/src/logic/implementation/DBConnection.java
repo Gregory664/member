@@ -106,6 +106,22 @@ public class DBConnection implements MemberLogic {
         return result;
     }
 
+    public static boolean isMemberExists(String id) {
+        boolean result = false;
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Member member = session.get(Member.class, id);
+            transaction.commit();
+            if(member == null) result = false;
+            else result = true;
+        }
+        catch (Exception e) {
+            result = false;
+        }
+        return result;
+    }
+
 
 }
 

@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.model.buh.Invoice;
 
-import java.util.regex.Pattern;
-
 public class UpdateInvoiceController {
     @FXML
     public TextField text_invoiceNumber;
@@ -49,7 +47,8 @@ public class UpdateInvoiceController {
 
     @FXML
     public void initialize(){
-        MemberUtils.checkTextDigital(text_orderId, 5);
+        //TODO поправить форму - добавить слушатели к боксу
+        //MemberUtils.checkTextDigital(text_orderId, ,5);
         MemberUtils.checkTextLength(text_comment, label_alarm_invoiceChange, 255);
     }
 
@@ -117,7 +116,7 @@ public class UpdateInvoiceController {
         clearText();
         clearStyle();
 
-        MemberUtils.alertDialog("Счет успешно обновлен!");
+        MemberUtils.informationDialog("Счет успешно обновлен!");
         closeWindow(actionEvent);
     }
 

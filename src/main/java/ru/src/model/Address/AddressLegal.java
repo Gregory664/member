@@ -50,28 +50,6 @@ public class AddressLegal implements Serializable {
                         Integer index,
                         String town,
                         String street,
-                        String house,
-                        String office,
-                        String district,
-                        String changes) {
-        this.member = member;
-        this.regionId = regionId;
-        this.regionName = regionName;
-        this.index = index;
-        this.town = town;
-        this.street = street;
-        this.house = house;
-        this.office = office;
-        this.district = district;
-        this.changes = changes;
-    }
-
-    public AddressLegal(Member member,
-                        Integer regionId,
-                        String regionName,
-                        Integer index,
-                        String town,
-                        String street,
                         String house) {
         this.member = member;
         this.regionId = regionId;

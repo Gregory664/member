@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 public class MemberUtils {
+    private static final String  EMPTY_COLOR = "#de9396";
+
     public static String isImportExport(boolean value) {
         return value ? "Да" : "Нет";
     }
@@ -19,6 +21,14 @@ public class MemberUtils {
         return value ? "Получен" : "Не получен";
     }
 
+    public static String isPayment(boolean value) {
+        return value ? "Отплачен" : "Не отплачен";
+    }
+
+    public static String isDebt(boolean value) {
+        return value ? "Имеется" : "Отсутствует";
+    }
+
     public static boolean receiveToBoolean(String value) {
         boolean result = false;
         if(value.equals("Получен")) result =  true;
@@ -26,14 +36,31 @@ public class MemberUtils {
         return result;
     }
 
-    public static String isPayment(boolean value) {
-        return value ? "Отплачен" : "Не отплачен";
-    }
-
     public static boolean paymentToBoolean(String value) {
         boolean result = false;
         if(value.equals("Отплачен")) result =  true;
         if(value.equals("Не отплачен")) result = false;
+        return result;
+    }
+
+    public static boolean debtToBoolean(String value)  {
+        boolean result = false;
+        if(value.equals("Имеется")) result =  true;
+        if(value.equals("Отсутствует")) result = false;
+        return result;
+    }
+
+    public static boolean vedToBoolean(String value) {
+        boolean result = false;
+        if(value.equals("Да")) result =  true;
+        if(value.equals("Нет")) result = false;
+        return result;
+    }
+
+    public static boolean interestingToBoolean(String value) {
+        boolean result = false;
+        if(value.equals("Интересует")) result =  true;
+        if(value.equals("Не интересует")) result = false;
         return result;
     }
 
@@ -49,10 +76,10 @@ public class MemberUtils {
     }
 
     public static String extractId(String id) {
-        return id.substring(id.indexOf("d") + 1, id.length() - 1);
+        return id.substring(id.indexOf("(") + 3, id.length() - 1);
     }
 
-    public static void alertDialog(String message) {
+    public static void informationDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(message);
         alert.setTitle(null);
@@ -60,37 +87,62 @@ public class MemberUtils {
         alert.showAndWait();
     }
 
-    public static void checkTextDigital(TextField textField) {
-        Pattern p = Pattern.compile("\\d*");
-
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!p.matcher(newValue).matches() && newValue.length() >= 0) textField.setText(oldValue);
-        });
+    public static void alertDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.setTitle(null);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 
-    public static void checkTextDigital(TextField textField, int maxLength) {
+
+
+
+    public static void checkTextDigital(TextField textField, Label label, int maxLength) {
         Pattern p = Pattern.compile("\\d*");
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(textField.getText().length() <= maxLength) {
-                if (!p.matcher(newValue).matches()) textField.setText(oldValue);
+                label.setText(null);
+                label.setStyle(null);
+
+                if (!p.matcher(newValue).matches()) {
+                    textField.setText(oldValue);
+                    label.setText("Введите корректные символы");
+                    label.setTextFill(Color.ORANGE);
+                }
+
             } else {
                 String s = textField.getText().substring(0, maxLength);
                 textField.setText(s);
+
+                label.setText("Поле достигло максимального значения");
+                label.setTextFill(Color.ORANGE);
             }
         });
     }
 
-    public static void checkTextPhone(TextField textField) {
+    public static void checkTextPhone(TextField textField, Label label) {
         Pattern p = Pattern.compile("\\d*");
         int maxLength = 11;
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(textField.getText().length() <= maxLength) {
-                if (!p.matcher(newValue).matches()) textField.setText(oldValue);
+                label.setText(null);
+                label.setStyle(null);
+
+                if (!p.matcher(newValue).matches()) {
+                    textField.setText(oldValue);
+                    label.setText("Введите номер в формате \"7XXXXXXX\"");
+                    label.setTextFill(Color.ORANGE);
+                }
+
             } else {
                 String s = textField.getText().substring(0, maxLength);
                 textField.setText(s);
+
+                label.setText("Поле достигло максимального значения");
+                label.setTextFill(Color.ORANGE);
             }
         });
     }
@@ -126,20 +178,65 @@ public class MemberUtils {
     }
 
 
-    public static boolean isEmptyTextField(TextField textField) {
-        return textField.getText().length() == 0 ? true : false;
+
+    public static boolean isEmptyField(TextField text, Label labelText) {
+        boolean isEmpty;
+        if(text.getText().length() == 0) {
+            text.setStyle("-fx-background-color: " + EMPTY_COLOR + ";");
+            labelText.setText("Обязательное поле");
+            labelText.setTextFill(Color.valueOf(EMPTY_COLOR));
+            isEmpty = true;
+        } else {
+            text.setStyle(null);
+            labelText.setStyle(null);
+            labelText.setText("");
+            isEmpty = false;
+        }
+        return isEmpty;
     }
 
-    public static void checkAlarm(Object textField, Label label) {
-        String color = "-fx-background-color: #de9396;";
-        if(textField instanceof TextField) {
-            ((TextField) textField).setStyle(color);
+    public static boolean isEmptyField(TextArea text, Label labelText) {
+        boolean isEmpty;
+        if(text.getText().length() == 0) {
+            text.setStyle("-fx-background-color: " + EMPTY_COLOR + ";");
+            labelText.setText("Обязательное поле");
+            labelText.setTextFill(Color.valueOf(EMPTY_COLOR));
+            isEmpty = true;
+        } else {
+            text.setStyle(null);
+            labelText.setStyle(null);
+            labelText.setText("");
+            isEmpty = false;
         }
-        if(textField instanceof DatePicker) {
-            ((DatePicker) textField).setStyle(color);
-        }
-        label.setTextFill(Color.valueOf("#de9396"));
-        label.setText("Обязательное поле");
+        return isEmpty;
+    }
 
+    public static boolean isEmptyField(DatePicker date, Label labelText) {
+        boolean isEmpty;
+        if(date.getValue() == null) {
+            labelText.setText("Обязательное поле");
+            labelText.setTextFill(Color.valueOf(EMPTY_COLOR));
+            isEmpty = true;
+        } else {
+            labelText.setStyle(null);
+            labelText.setText("");
+            isEmpty = false;
+        }
+        return isEmpty;
+    }
+
+    public static boolean isEmptyField(ComboBox comboBox, Label labelText) {
+        boolean isEmpty;
+        if(comboBox.getValue() == null) {
+            labelText.setText("Обязательное поле");
+            labelText.setTextFill(Color.valueOf(EMPTY_COLOR));
+            isEmpty = true;
+        }
+        else {
+            labelText.setStyle(null);
+            labelText.setText("");
+            isEmpty = false;
+        }
+        return isEmpty;
     }
 }
