@@ -17,7 +17,13 @@ import java.util.HashSet;
 
 public class CreateInvoiceController {
     @FXML
-    public TextField text_invoiceNumber;
+    public TextField text_invoiceNumber = new TextField() {
+        @Override
+        public void paste() {
+
+        }
+    };
+
     @FXML
     public TextField text_invoice_price;
     @FXML
@@ -53,6 +59,9 @@ public class CreateInvoiceController {
     public void initialize(){
         MemberUtils.checkTextDigital(text_invoiceNumber, label_alarm_invoiceNumber, 5);
         MemberUtils.checkTextDigital(text_invoice_price, label_alarm_invoice_price, 9);
+
+
+
     }
 
     public void saveInvoice(ActionEvent actionEvent) {

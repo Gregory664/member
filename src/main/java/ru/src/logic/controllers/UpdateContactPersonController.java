@@ -69,6 +69,7 @@ public class UpdateContactPersonController {
     private ContactPerson contactPerson;
 
     public ContactPerson getContactPerson() {
+        clearText();
         return contactPerson;
     }
 
@@ -85,8 +86,14 @@ public class UpdateContactPersonController {
     }
 
     public void closeWindow(ActionEvent actionEvent) {
+        clearText();
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.hide();
+    }
+
+    private void clearText() {
+        text_contactPerson_phoneCity.setText("");
+        text_contactPerson_changes.setText("");
     }
 }

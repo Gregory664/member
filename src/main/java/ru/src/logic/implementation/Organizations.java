@@ -41,6 +41,10 @@ public class Organizations implements MemberLogic {
         members.set(searchIndex, member);
     }
 
+    public Integer getLength() {
+        return members.size();
+    }
+
 
 
 

@@ -229,6 +229,8 @@ public class MainFormController {
     public MenuItem menu_deleteMember;
     @FXML
     public MenuItem menu_renameMember;
+    @FXML
+    public Label countOfOrganization;
 
     private Organizations memberOrganizations = new Organizations();
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
@@ -240,12 +242,14 @@ public class MainFormController {
     private Stage createContactPersonStage;
     private Stage updateContactPersonStage;
     private Stage createMemberFormStage;
+    private Stage updateMemberFormStage;
 
     private FXMLLoader createInvoicefxmlLoader = new FXMLLoader();
     private FXMLLoader updateInvoicefxmlLoader = new FXMLLoader();
     private FXMLLoader createContactPersonfxmlLoader = new FXMLLoader();
     private FXMLLoader updateContactPersonfxmlLoafer = new FXMLLoader();
     private FXMLLoader createMemberFormfxmlloader = new FXMLLoader();
+    private FXMLLoader updateMemberFormfxmlloader = new FXMLLoader();
 
 
     private Parent createInvoice;
@@ -253,12 +257,14 @@ public class MainFormController {
     private Parent createContactPerson;
     private Parent updateContactPerson;
     private Parent createMemberForm;
+    private Parent updateMemberForm;
 
     private CreateInvoiceController createInvoiceController;
     private UpdateInvoiceController updateInvoiceController;
     private CreateContactPersonController createContactPersonController;
     private UpdateContactPersonController updateContactPersonController;
     private CreateMemberFormController createMemberFormController;
+    private UpdateMemberFormController updateMemberFormController;
 
     @FXML
     public void initialize() {
@@ -277,13 +283,16 @@ public class MainFormController {
         initListeners();
 
         table_members.setItems(memberOrganizations.getMembers());
+        countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
+
         initCreateInvoiceLoader();
         initUpdateInvoiceLoader();
         initCreateContactPersonLoader();
         initUpdateContactPersonLoader();
         initCreateMemberFormLoader();
+        initUpdateMemberFormLoader();
 
-        menu_addMember.setDisable(true);
+        menu_addMember.setDisable(false);
         menu_deleteMember.setDisable(true);
         menu_renameMember.setDisable(true);
     }
@@ -341,14 +350,27 @@ public class MainFormController {
         }
     }
 
+    private void initUpdateMemberFormLoader() {
+        try {
+            updateMemberFormfxmlloader.setLocation(getClass().getResource("/ui/UpdateMemberForm.fxml"));
+            updateMemberForm = updateMemberFormfxmlloader.load();
+            updateMemberFormController = updateMemberFormfxmlloader.getController();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void initListeners() {
+
 
         memberOrganizations.getMembers().addListener(new ListChangeListener<Member>() {
             @Override
             public void onChanged(Change<? extends Member> c) {
-
+                countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
             }
         });
+
         //Слушатель, заполняющий все поля по нажатию на строку таблицы
         table_members.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
@@ -358,6 +380,11 @@ public class MainFormController {
 
                 Member member = (Member) table_members.getSelectionModel().getSelectedItem();
                 fillAllInformation(member);
+            }
+            else {
+                menu_addMember.setDisable(false);
+                menu_deleteMember.setDisable(true);
+                menu_renameMember.setDisable(true);
             }
         });
     }
@@ -464,6 +491,7 @@ public class MainFormController {
 
     private void fillInvoices(List<Invoice> invoiceList) {
         invoiceHashMap.clear();
+        clearInvoiceFields();
         for(Invoice invoice: invoiceList) {
             invoiceHashMap.put(invoice.getInvoiceId(), invoice);
         }
@@ -472,9 +500,9 @@ public class MainFormController {
 
 
 
+        cmbBox_invoiceId.setItems(observableList);
         btn_add_invoice.setDisable(false);
         if(invoiceHashMap.size() > 0) {
-            cmbBox_invoiceId.setItems(observableList);
             cmbBox_invoiceId.getSelectionModel().select(0);
             cmbBox_invoiceId.setDisable(false);
             btn_rename_invoice.setDisable(false);
@@ -488,16 +516,16 @@ public class MainFormController {
 
     private void fillContactPersons(List<ContactPerson> contactPeople) {
         contactPersonHashMap.clear();
-
+        clearContactPersonFields();
         for (ContactPerson contactPerson : contactPeople) {
             contactPersonHashMap.put(contactPerson.getContactPersonId(), contactPerson);
         }
         ObservableList<String> observableList = FXCollections.observableArrayList();
         contactPersonHashMap.forEach((k, v) -> observableList.add(v.getFullName() + " (id" + k + ")"));
 
+        cmbBox_contactPersonId.setItems(observableList);
         btn_add_contactPerson.setDisable(false);
         if (contactPersonHashMap.size() > 0) {
-            cmbBox_contactPersonId.setItems(observableList);
             cmbBox_contactPersonId.getSelectionModel().select(0);
             cmbBox_contactPersonId.setDisable(false);
             btn_remove_contactPerson.setDisable(false);
@@ -514,14 +542,7 @@ public class MainFormController {
     }
 
     public void fillSelectedInvoice(ActionEvent actionEvent) {
-        text_invoice_dateCreation.clear();
-        text_invoice_statusReceiving.clear();
-        text_invoice_dateReceiving.clear();
-        text_invoice_orderId.clear();
-        text_invoice_orderDate.clear();
-        text_invoice_price.clear();
-        text_invoice_statusPayment.clear();
-        text_invoice_comment.clear();
+        clearInvoiceFields();
 
         if(invoiceHashMap.size() > 0) {
 
@@ -539,13 +560,20 @@ public class MainFormController {
         }
     }
 
+    private void clearInvoiceFields() {
+        text_invoice_dateCreation.clear();
+        text_invoice_statusReceiving.clear();
+        text_invoice_dateReceiving.clear();
+        text_invoice_orderId.clear();
+        text_invoice_orderDate.clear();
+        text_invoice_price.clear();
+        text_invoice_statusPayment.clear();
+        text_invoice_comment.clear();
+    }
+
     public void fillSelectedPerson(ActionEvent actionEvent) {
 
-        text_contactPerson_position.clear();
-        text_contactPerson_phoneMobile.clear();
-        text_contactPerson_phoneCity.clear();
-        text_contactPerson_email.clear();
-        text_contactPerson_changes.clear();
+        clearContactPersonFields();
 
         if(contactPersonHashMap.size() > 0) {
             ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue().toString()));
@@ -556,6 +584,14 @@ public class MainFormController {
             text_contactPerson_email.setText(contactPerson.getEmail());
             text_contactPerson_changes.setText(contactPerson.getChanges());
         }
+    }
+
+    private void clearContactPersonFields() {
+        text_contactPerson_position.clear();
+        text_contactPerson_phoneMobile.clear();
+        text_contactPerson_phoneCity.clear();
+        text_contactPerson_email.clear();
+        text_contactPerson_changes.clear();
     }
 
 
@@ -752,17 +788,19 @@ public class MainFormController {
     }
 
     public void renameMember(ActionEvent actionEvent) {
-        if (createMemberFormStage == null) {
-            createMemberFormStage = new Stage();
-            createMemberFormStage.setScene(new Scene(createMemberForm));
-            createMemberFormStage.initModality(Modality.WINDOW_MODAL);
-            createMemberFormStage.initOwner(mainStage);
+
+        if (updateMemberFormStage == null) {
+            updateMemberFormStage = new Stage();
+            updateMemberFormStage.setScene(new Scene(updateMemberForm));
+            updateMemberFormStage.initModality(Modality.WINDOW_MODAL);
+            updateMemberFormStage.initOwner(mainStage);
         }
-        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-        createMemberFormController.setMember(member);
 
-        createMemberFormStage.showAndWait();
+        updateMemberFormController.setMember((Member) table_members.getSelectionModel().getSelectedItem());
 
+        updateMemberFormStage.showAndWait();
+
+        Member member = updateMemberFormController.getMember();
         DBConnection.updateMember(member);
         memberOrganizations.updateMember(member);
 

@@ -28,7 +28,7 @@
                <children>
                   <TextField fx:id="text_Search" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="345.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
                   <Button fx:id="btn_Search" layoutX="374.0" layoutY="14.0" mnemonicParsing="false" text="Поиск" AnchorPane.leftAnchor="374.0" AnchorPane.topAnchor="14.0" />
-                  <TableView fx:id="table_members" layoutX="14.0" layoutY="51.0" onMousePressed="#setMemberParams" prefHeight="334.0" prefWidth="994.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="51.0">
+                  <TableView fx:id="table_members" layoutX="14.0" layoutY="51.0" onMousePressed="#setMemberParams" prefHeight="334.0" prefWidth="994.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="51.0">
                     <columns>
                       <TableColumn fx:id="column_memberId" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="-1.0" text="Номер билета" />
                         <TableColumn fx:id="column_memberSerial" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="149.0" text="Номер" />
@@ -49,6 +49,7 @@
                         </ContextMenu>
                      </contextMenu>
                   </TableView>
+                  <Label fx:id="countOfOrganization" text="Label" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="1022.0">

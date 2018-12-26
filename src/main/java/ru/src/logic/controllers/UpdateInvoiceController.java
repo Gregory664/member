@@ -42,6 +42,8 @@ public class UpdateInvoiceController {
     private ObservableList<String> receive = FXCollections.observableArrayList();
 
     public Invoice getInvoice() {
+        clearText();
+        clearStyle();
         return invoice;
     }
 

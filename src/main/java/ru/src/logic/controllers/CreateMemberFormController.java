@@ -361,12 +361,6 @@ public class CreateMemberFormController {
         return member;
     }
 
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-
     @FXML
     public void initialize() {
         clearText();
