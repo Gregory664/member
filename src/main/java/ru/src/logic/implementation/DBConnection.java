@@ -3,11 +3,14 @@ package ru.src.logic.implementation;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import ru.src.logic.interfaces.MemberLogic;
+import ru.src.model.FindMember;
 import ru.src.model.Member;
 import ru.src.model.buh.Invoice;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -122,6 +125,25 @@ public class DBConnection implements MemberLogic {
         return result;
     }
 
+    public static List<FindMember> getQueryList(String queryString) {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        List<String> result = new ArrayList<>();
+        List<FindMember> findMembers = new ArrayList<FindMember>();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Query query = session.createSQLQuery(queryString);
+            result = query.list();
+            transaction.commit();
 
+            for (Object o : result) {
+                Object[] g = (Object[]) o;
+                findMembers.add(new FindMember(g[0].toString(), g[1].toString(), g[2].toString(), g[3].toString(), g[4].toString()));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return findMembers;
+    }
 }
 

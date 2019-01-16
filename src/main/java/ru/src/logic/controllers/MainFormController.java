@@ -99,6 +99,16 @@ public class MainFormController {
     @FXML
     public TextField text_generalInformation_mkas;
     @FXML
+    public TextField text_generalInformation_needForYoungPersonnel;
+    @FXML
+    public TextField text_generalInformation_discounts;
+    @FXML
+    public TextField text_generalInformation_reliablePartners;
+    @FXML
+    public TextField text_generalInformation_pilotProjects;
+    @FXML
+    public TextField text_generalInformation_antiCorruptionCharter;
+    @FXML
     public TextArea text_generalInformation_changes;
 
     @FXML
@@ -243,6 +253,7 @@ public class MainFormController {
     private Stage updateContactPersonStage;
     private Stage createMemberFormStage;
     private Stage updateMemberFormStage;
+    private Stage selectStage;
 
     private FXMLLoader createInvoicefxmlLoader = new FXMLLoader();
     private FXMLLoader updateInvoicefxmlLoader = new FXMLLoader();
@@ -250,6 +261,7 @@ public class MainFormController {
     private FXMLLoader updateContactPersonfxmlLoafer = new FXMLLoader();
     private FXMLLoader createMemberFormfxmlloader = new FXMLLoader();
     private FXMLLoader updateMemberFormfxmlloader = new FXMLLoader();
+    private FXMLLoader selectFormfxmlloader = new FXMLLoader();
 
 
     private Parent createInvoice;
@@ -258,6 +270,7 @@ public class MainFormController {
     private Parent updateContactPerson;
     private Parent createMemberForm;
     private Parent updateMemberForm;
+    private Parent selectForm;
 
     private CreateInvoiceController createInvoiceController;
     private UpdateInvoiceController updateInvoiceController;
@@ -265,6 +278,7 @@ public class MainFormController {
     private UpdateContactPersonController updateContactPersonController;
     private CreateMemberFormController createMemberFormController;
     private UpdateMemberFormController updateMemberFormController;
+    private SelectController selectController;
 
     @FXML
     public void initialize() {
@@ -291,10 +305,21 @@ public class MainFormController {
         initUpdateContactPersonLoader();
         initCreateMemberFormLoader();
         initUpdateMemberFormLoader();
+        initSelectFormLoader();
 
         menu_addMember.setDisable(false);
         menu_deleteMember.setDisable(true);
         menu_renameMember.setDisable(true);
+    }
+
+    private void initSelectFormLoader() {
+        try {
+            selectFormfxmlloader.setLocation(getClass().getResource("/ui/select_v3.fxml"));
+            selectForm = selectFormfxmlloader.load();
+            selectController = selectFormfxmlloader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initCreateContactPersonLoader() {
@@ -432,6 +457,11 @@ public class MainFormController {
         text_generalInformation_businessMissionVisiting.setText(MemberUtils.isInteresting(generalInformation.isBusinessMissionVisiting()));
         text_generalInformation_businessMissionRegional.setText(MemberUtils.isInteresting(generalInformation.isBusinessMissionRegional()));
         text_generalInformation_mkas.setText(MemberUtils.isInteresting(generalInformation.isMkas()));
+        text_generalInformation_needForYoungPersonnel.setText(MemberUtils.isInteresting(generalInformation.isNeedForYoungPersonnel()));
+        text_generalInformation_discounts.setText(MemberUtils.isInteresting(generalInformation.isDiscounts()));
+        text_generalInformation_reliablePartners.setText(MemberUtils.isInteresting(generalInformation.isReliablePartners()));
+        text_generalInformation_pilotProjects.setText(MemberUtils.isInteresting(generalInformation.isPilotProjects()));
+        text_generalInformation_antiCorruptionCharter.setText(MemberUtils.isInteresting(generalInformation.isAntiCorruptionCharter()));
         text_generalInformation_changes.setText(generalInformation.getChanges());
 
     }
@@ -440,6 +470,7 @@ public class MainFormController {
         text_director_position.setText(director.getPosition());
         text_director_fullName.setText(director.getFullName());
         text_director_phoneMobile.setText(director.getPhoneMobile());
+        text_director_email.setText(director.getEmail());
         text_director_phoneCity.setText(director.getPhoneCity());
         date_director_birthday.setValue(director.getBirthday());
         text_director_changes.setText(director.getChanges());
@@ -806,5 +837,16 @@ public class MainFormController {
 
         MemberUtils.informationDialog("Данные организации успешно обновлены!");
 
+    }
+
+    public void openSelect(ActionEvent actionEvent) {
+        if(selectStage == null) {
+            selectStage = new Stage();
+            selectStage.setScene(new Scene(selectForm));
+            selectStage.initModality(Modality.WINDOW_MODAL);
+            selectStage.initOwner(mainStage);
+        }
+
+        selectStage.showAndWait();
     }
 }

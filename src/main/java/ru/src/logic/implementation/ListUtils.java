@@ -4,35 +4,46 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class ListUtils {
     public static ObservableList<String> getMemberStatusList() {
         ObservableList<String> memberStatusList = FXCollections.observableArrayList();
-        memberStatusList.add("Актуально");
-        memberStatusList.add("Деятельность прекращена");
+        memberStatusList.add("Актуально стабильно");
+        memberStatusList.add("Актуально нестабильно");
+        memberStatusList.add("Актуально долг 1 год");
+        memberStatusList.add("Актуально долг 2 года");
+        memberStatusList.add("Актуально долг 3 года");
         memberStatusList.add("Заявление на исключение");
+        memberStatusList.add("Деятельность прекращена");
         memberStatusList.add("Потеря связи");
         memberStatusList.add("Смена формы собственности");
         memberStatusList.add("На исключение");
-        memberStatusList.add("На удаление");
         return memberStatusList;
     }
 
     public static ObservableList<String> getOrganizationForm() {
         ObservableList<String> organizationFormList = FXCollections.observableArrayList();
-        organizationFormList.add("ООО");
-        organizationFormList.add("ПАО");
-        organizationFormList.add("АО");
-        organizationFormList.add("ИАО");
-        organizationFormList.add("ИП");
-        organizationFormList.add("НП");
-        organizationFormList.add("ОАО");
-        organizationFormList.add("ЗАО");
-        organizationFormList.add("СРО");
-        organizationFormList.add("Ассоциация");
-        organizationFormList.add("СОЮЗ");
-        organizationFormList.add("ФОНД");
+        organizationFormList.add("ООО");//
+        organizationFormList.add("ПАО");//
+        organizationFormList.add("АО");//
+        organizationFormList.add("ИАО");//
+        organizationFormList.add("ИП");//
+        organizationFormList.add("НП");//
+        organizationFormList.add("ОАО");//
+        organizationFormList.add("ЗАО");//
+        organizationFormList.add("СРО");//
+        organizationFormList.add("ФОНД");//
+        organizationFormList.add("Ассоциация");//
+        organizationFormList.add("Союз");//
+        organizationFormList.add("Объединение");//
+        organizationFormList.add("Самозанятый");//
+        organizationFormList.add("ОУ");//
+        organizationFormList.add("АНО");//
+        organizationFormList.add("Бюджетное учреждение");//
+        organizationFormList.add("Госучреждение");//
         return organizationFormList;
     }
     public static ObservableList<String> getEconomicSector() {
@@ -227,6 +238,22 @@ public class ListUtils {
         regionMap.put(92, "г. Севастополь");
         regionMap.put(99, "Иные территории, включая город и космодром Байконур");
         return regionMap;
+    }
+    public static HashMap<Integer, String> getMonth() {
+        HashMap<Integer, String> month = new HashMap<Integer, String>();
+        month.put(1, "Январь");
+        month.put(2, "Февраль");
+        month.put(3, "Март");
+        month.put(4, "Апрель");
+        month.put(5, "Май");
+        month.put(6, "Июнь");
+        month.put(7, "Июль");
+        month.put(8, "Август");
+        month.put(9, "Сентябрь");
+        month.put(10, "Октябрь");
+        month.put(11, "Ноябрь");
+        month.put(12, "Декабрь");
+        return month;
     }
 
 }

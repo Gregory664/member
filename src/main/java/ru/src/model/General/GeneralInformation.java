@@ -61,12 +61,67 @@ public class GeneralInformation implements Serializable {
     @Column(name = "MKAS", nullable = false)
     private boolean mkas;
 
+    @Column(name = "NEED_FOR_YOUNG_PERSONNEL", nullable = false)
+    private boolean needForYoungPersonnel;
+
+    @Column(name = "DISCOUNTS", nullable = false)
+    private boolean discounts;
+
+    @Column(name = "RELIABLE_PARTNERS", nullable = false)
+    private boolean reliablePartners;
+
+    @Column(name = "PILOT_PROJECTS", nullable = false)
+    private boolean pilotProjects;
+
+    @Column(name = "ANTI_CORRUPTION_CHARTER", nullable = false)
+    private boolean antiCorruptionCharter;
+
     @Column(name = "GENERAL_INFORMATION_CHANGES")
     private String changes;
 
 
     private GeneralInformation() {
 
+    }
+
+    public boolean isNeedForYoungPersonnel() {
+        return needForYoungPersonnel;
+    }
+
+    public void setNeedForYoungPersonnel(boolean needForYoungPersonnel) {
+        this.needForYoungPersonnel = needForYoungPersonnel;
+    }
+
+    public boolean isDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(boolean discounts) {
+        this.discounts = discounts;
+    }
+
+    public boolean isReliablePartners() {
+        return reliablePartners;
+    }
+
+    public void setReliablePartners(boolean reliablePartners) {
+        this.reliablePartners = reliablePartners;
+    }
+
+    public boolean isPilotProjects() {
+        return pilotProjects;
+    }
+
+    public void setPilotProjects(boolean pilotProjects) {
+        this.pilotProjects = pilotProjects;
+    }
+
+    public boolean isAntiCorruptionCharter() {
+        return antiCorruptionCharter;
+    }
+
+    public void setAntiCorruptionCharter(boolean antiCorruptionCharter) {
+        this.antiCorruptionCharter = antiCorruptionCharter;
     }
 
     public GeneralInformation(Member member,
@@ -83,7 +138,12 @@ public class GeneralInformation implements Serializable {
                               boolean b2c,
                               boolean businessMissionVisiting,
                               boolean businessMissionRegional,
-                              boolean mkas) {
+                              boolean mkas,
+                              boolean needForYoungPersonnel,
+                              boolean discounts,
+                              boolean reliablePartners,
+                              boolean pilotProjects,
+                              boolean antiCorruptionCharter) {
         this.member = member;
         this.organizationForm = organizationForm;
         this.economicSector = economicSector;
@@ -99,8 +159,12 @@ public class GeneralInformation implements Serializable {
         this.businessMissionVisiting = businessMissionVisiting;
         this.businessMissionRegional = businessMissionRegional;
         this.mkas = mkas;
+        this.needForYoungPersonnel = needForYoungPersonnel;
+        this.discounts = discounts;
+        this.reliablePartners = reliablePartners;
+        this.pilotProjects = pilotProjects;
+        this.antiCorruptionCharter = antiCorruptionCharter;
     }
-
 
     public Member getMember() {
         return member;

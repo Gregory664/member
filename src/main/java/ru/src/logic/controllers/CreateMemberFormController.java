@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class CreateMemberFormController {
+
     ObservableList<String> memberStatus = ListUtils.getMemberStatusList();//
     ObservableList<String> organizationForm = ListUtils.getOrganizationForm();//
     ObservableList<String> economicSector = ListUtils.getEconomicSector();//
@@ -122,6 +123,16 @@ public class CreateMemberFormController {
     @FXML
     public ComboBox comboBox_generalInformation_mkas;
     @FXML
+    public ComboBox comboBox_generalInformation_needForYoungPersonnel;
+    @FXML
+    public ComboBox comboBox_generalInformation_discounts;
+    @FXML
+    public ComboBox comboBox_generalInformation_reliablePartners;
+    @FXML
+    public ComboBox comboBox_generalInformation_pilotProjects;
+    @FXML
+    public ComboBox comboBox_generalInformation_antiCorruptionCharter;
+    @FXML
     public Label label_alarm_generalInformation_organizationForm;
     @FXML
     public Label label_alarm_generalInformation_economicSector;
@@ -131,6 +142,8 @@ public class CreateMemberFormController {
     public Label label_alarm_generalInformation_activityType;
     @FXML
     public Label label_alarm_generalInformation_businessForm;
+    @FXML
+    public Label label_alarm_generalInformation_vedImport;
     @FXML
     public Label label_alarm_generalInformation_vedExport;
     @FXML
@@ -152,9 +165,17 @@ public class CreateMemberFormController {
     @FXML
     public Label label_alarm_generalInformation_mkas;
     @FXML
-    public Label label_alarm_generalInformation_changes;
+    public Label label_alarm_generalInformation_needForYoungPersonnel;
     @FXML
-    public Label label_alarm_generalInformation_vedImport;
+    public Label label_alarm_generalInformation_discounts;
+    @FXML
+    public Label label_alarm_generalInformation_reliablePartners;
+    @FXML
+    public Label label_alarm_generalInformation_pilotProjects;
+    @FXML
+    public Label label_alarm_generalInformation_antiCorruptionCharter;
+    @FXML
+    public Label label_alarm_generalInformation_changes;
 
 
     @FXML
@@ -454,9 +475,15 @@ public class CreateMemberFormController {
         comboBox_generalInformation_businessMissionVisiting.setItems(interesting);
         comboBox_generalInformation_businessMissionRegional.setItems(interesting);
         comboBox_generalInformation_mkas.setItems(interesting);
+        comboBox_generalInformation_needForYoungPersonnel.setItems(interesting);
+        comboBox_generalInformation_discounts.setItems(interesting);
+        comboBox_generalInformation_reliablePartners.setItems(interesting);
+        comboBox_generalInformation_pilotProjects.setItems(interesting);
+        comboBox_generalInformation_antiCorruptionCharter.setItems(interesting);
         comboBox_debt_status.setItems(debd);
         comboBox_addressActual_district.setItems(district);
         comboBox_addressLegal_district.setItems(district);
+
 
         regionMap.forEach((integer, s) -> region.add(s));
         comboBox_addressActual_regionName.setItems(region);
@@ -493,6 +520,11 @@ public class CreateMemberFormController {
         label_alarm_generalInformation_mkas.setText("");
         label_alarm_generalInformation_changes.setText("");
         label_alarm_generalInformation_vedImport.setText("");
+        label_alarm_generalInformation_needForYoungPersonnel.setText("");
+        label_alarm_generalInformation_discounts.setText("");
+        label_alarm_generalInformation_reliablePartners.setText("");
+        label_alarm_generalInformation_pilotProjects.setText("");
+        label_alarm_generalInformation_antiCorruptionCharter.setText("");
 
         label_alarm_director_fullName.setText("");
         label_alarm_director_position.setText("");
@@ -705,6 +737,11 @@ public class CreateMemberFormController {
         label_alarm_generalInformation_mkas.setStyle(null);
         label_alarm_generalInformation_changes.setStyle(null);
         label_alarm_generalInformation_vedImport.setStyle(null);
+        label_alarm_generalInformation_needForYoungPersonnel.setStyle(null);
+        label_alarm_generalInformation_discounts.setStyle(null);
+        label_alarm_generalInformation_reliablePartners.setStyle(null);
+        label_alarm_generalInformation_pilotProjects.setStyle(null);
+        label_alarm_generalInformation_antiCorruptionCharter.setStyle(null);
 
         label_alarm_director_fullName.setStyle(null);
         label_alarm_director_position.setStyle(null);
@@ -843,6 +880,12 @@ public class CreateMemberFormController {
         comboBox_generalInformation_businessMissionVisiting.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isBusinessMissionRegional()));
         comboBox_generalInformation_businessMissionRegional.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isBusinessMissionRegional()));
         comboBox_generalInformation_mkas.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isMkas()));
+        comboBox_generalInformation_needForYoungPersonnel.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isNeedForYoungPersonnel()));
+        comboBox_generalInformation_discounts.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isDiscounts()));
+        comboBox_generalInformation_reliablePartners.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isReliablePartners()));
+        comboBox_generalInformation_pilotProjects.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isPilotProjects()));
+        comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isAntiCorruptionCharter()));
+
     }
 
     private void fillMember() {
@@ -934,7 +977,12 @@ public class CreateMemberFormController {
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_b2c.getSelectionModel().getSelectedItem().toString()),
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_businessMissionVisiting.getSelectionModel().getSelectedItem().toString()),
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_businessMissionRegional.getSelectionModel().getSelectedItem().toString()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_mkas.getSelectionModel().getSelectedItem().toString())
+                MemberUtils.interestingToBoolean(comboBox_generalInformation_mkas.getSelectionModel().getSelectedItem().toString()),
+                MemberUtils.interestingToBoolean(comboBox_generalInformation_needForYoungPersonnel.getSelectionModel().getSelectedItem().toString()),
+                MemberUtils.interestingToBoolean(comboBox_generalInformation_discounts.getSelectionModel().getSelectedItem().toString()),
+                MemberUtils.interestingToBoolean(comboBox_generalInformation_reliablePartners.getSelectionModel().getSelectedItem().toString()),
+                MemberUtils.interestingToBoolean(comboBox_generalInformation_pilotProjects.getSelectionModel().getSelectedItem().toString()),
+                MemberUtils.interestingToBoolean(comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().getSelectedItem().toString())
         );
 
         if (text_generalInformation_investmentsTarget.getText().length() > 0)
@@ -1101,6 +1149,12 @@ public class CreateMemberFormController {
         set.add(MemberUtils.isEmptyField(comboBox_generalInformation_businessMissionVisiting, label_alarm_generalInformation_businessMissionVisiting));
         set.add(MemberUtils.isEmptyField(comboBox_generalInformation_businessMissionRegional, label_alarm_generalInformation_businessMissionRegional));
         set.add(MemberUtils.isEmptyField(comboBox_generalInformation_mkas, label_alarm_generalInformation_mkas));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_needForYoungPersonnel, label_alarm_generalInformation_needForYoungPersonnel));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_discounts, label_alarm_generalInformation_discounts));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_reliablePartners, label_alarm_generalInformation_reliablePartners));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_pilotProjects, label_alarm_generalInformation_pilotProjects));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_antiCorruptionCharter, label_alarm_generalInformation_antiCorruptionCharter));
+
 
         set.add(MemberUtils.isEmptyField(text_director_fullName, label_alarm_director_fullName));
         set.add(MemberUtils.isEmptyField(text_director_position, label_alarm_director_position));
