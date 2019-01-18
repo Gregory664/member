@@ -24,6 +24,7 @@ import ru.src.model.Personal.Contact;
 import ru.src.model.Personal.ContactPerson;
 import ru.src.model.Personal.Director;
 import ru.src.model.Personal.Relate;
+import ru.src.model.SocialNetworks;
 import ru.src.model.buh.AccoutingInformation;
 import ru.src.model.buh.Debt;
 import ru.src.model.buh.Invoice;
@@ -234,6 +235,25 @@ public class MainFormController {
     public TextField text_invoice_orderDate;
 
     @FXML
+    public TextField text_socialNetworks_vkontakte;
+    @FXML
+    public TextField text_socialNetworks_facebook;
+    @FXML
+    public TextField text_socialNetworks_telegram;
+    @FXML
+    public TextField text_socialNetworks_whatsapp;
+    @FXML
+    public TextField text_socialNetworks_viber;
+    @FXML
+    public TextField text_socialNetworks_skype;
+    @FXML
+    public TextField text_socialNetworks_instagram;
+    @FXML
+    public TextField text_socialNetworks_twitter;
+    @FXML
+    public TextField text_socialNetworks_youtube;
+
+    @FXML
     public MenuItem menu_addMember;
     @FXML
     public MenuItem menu_deleteMember;
@@ -241,6 +261,7 @@ public class MainFormController {
     public MenuItem menu_renameMember;
     @FXML
     public Label countOfOrganization;
+
 
     private Organizations memberOrganizations = new Organizations();
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
@@ -425,7 +446,20 @@ public class MainFormController {
         fillAddressActual(member.getAddressActual());
         fillContactPersons(member.getContactPerson());
         fillInvoices(member.getInvoice());
+        fillSocialNetworks(member.getSocialNetworks());
 
+    }
+
+    private void fillSocialNetworks(SocialNetworks socialNetworks) {
+        text_socialNetworks_vkontakte.setText(socialNetworks.getVkontakte());
+        text_socialNetworks_facebook.setText(socialNetworks.getFacebook());
+        text_socialNetworks_telegram.setText(socialNetworks.getWhatsapp());
+        text_socialNetworks_whatsapp.setText(socialNetworks.getWhatsapp());
+        text_socialNetworks_viber.setText(socialNetworks.getViber());
+        text_socialNetworks_skype.setText(socialNetworks.getSkype());
+        text_socialNetworks_instagram.setText(socialNetworks.getInstagram());
+        text_socialNetworks_twitter.setText(socialNetworks.getTwitter());
+        text_socialNetworks_youtube.setText(socialNetworks.getYoutube());
     }
 
     private void fillRelate(Relate relate) {

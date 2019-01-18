@@ -86,6 +86,8 @@ public class SelectController {
     public Label label_location;
     @FXML
     public Label label_month;
+    @FXML
+    public Label label_receiving;
 
     @FXML
     public CheckBox checkBox_memberstatus_1;
@@ -319,6 +321,25 @@ public class SelectController {
     @FXML
     public CheckBox checkBox_month_12;
 
+    @FXML
+    public Label label_payment;
+    @FXML
+    public CheckBox checkBox_payment_1;
+    @FXML
+    public CheckBox checkBox_payment_2;
+    @FXML
+    public DatePicker date_payment_1;
+    @FXML
+    public DatePicker date_payment_2;
+
+    @FXML
+    public CheckBox checkBox_receiving_1;
+    @FXML
+    public CheckBox checkBox_receiving_2;
+    @FXML
+    public DatePicker date_receiving_1;
+    @FXML
+    public DatePicker date_receiving_2;
 
     private boolean isEmptyCBMemberStatus = false;
     private boolean isEmptyBusinessForm = false;
@@ -343,6 +364,9 @@ public class SelectController {
     private boolean isEmptyAntiCorruptionCharter = false;
     private boolean isEmptyLocation = false;
     private boolean isEmptyMonth = false;
+    private boolean isEmptyPayment = false;
+    private boolean isEmptyReceiving = false;
+    private boolean isEmptyDateReceiving = false;
 
 
     ArrayList<CheckBox> listMemberStatus = new ArrayList<CheckBox>();
@@ -368,6 +392,10 @@ public class SelectController {
     ArrayList<CheckBox> listAntiCorruptionCharter = new ArrayList<CheckBox>();
     ArrayList<CheckBox> listLocation = new ArrayList<CheckBox>();
     ArrayList<CheckBox> listMonth = new ArrayList<CheckBox>();
+    ArrayList<CheckBox> listPayment = new ArrayList<CheckBox>();
+    ArrayList<DatePicker> listDatePayment = new ArrayList<DatePicker>();
+    ArrayList<CheckBox> listReceiving = new ArrayList<CheckBox>();
+    ArrayList<DatePicker> listDateReceiving = new ArrayList<DatePicker>();
 
 
     Boolean[] listOfFlags = new Boolean[16];
@@ -412,6 +440,11 @@ public class SelectController {
         initializeAntiCorruptionCharter();
         initializeLocation();
         initializeMonth();
+        initializePayment();
+        initializeDatePayment();
+        initializeReceiving();
+        initializeDateReceiving();
+
 
 
         addMemberStatusListener();
@@ -437,12 +470,15 @@ public class SelectController {
         addDiscountsListener();
         addNeedForYoungPersonnelListener();
         addMonthListener();
+        addPaymentListener();
+        addReceivingListener();
 
         addSelectAllGeneralCheckBox();
         addSelectAllBusinessCharacteristicsCheckBox();
         addSelectAllInterestsCheckBox();
 
     }
+
 
 
 
@@ -496,8 +532,14 @@ public class SelectController {
         });
     }
 
-
-
+    private void initializeDatePayment() {
+        listDatePayment.add(date_payment_1);
+        listDatePayment.add(date_payment_2);
+    }
+    private void initializePayment() {
+        listPayment.add(checkBox_payment_1);
+        listPayment.add(checkBox_payment_2);
+    }
     private void initializeMonth() {
         listMonth.add(checkBox_month_1);
         listMonth.add(checkBox_month_2);
@@ -645,6 +687,14 @@ public class SelectController {
         listMemberStatus.add(checkBox_memberstatus_8);
         listMemberStatus.add(checkBox_memberstatus_9);
         listMemberStatus.add(checkBox_memberstatus_10);
+    }
+    private void initializeReceiving() {
+        listReceiving.add(checkBox_receiving_1);
+        listReceiving.add(checkBox_receiving_2);
+    }
+    private void initializeDateReceiving() {
+        listDateReceiving.add(date_receiving_1);
+        listDateReceiving.add(date_receiving_2);
     }
 
     private void addMemberStatusListener() {
@@ -993,6 +1043,57 @@ public class SelectController {
             }
         });
     }
+    private void addPaymentListener() {
+        label_payment.setOnMouseClicked(event -> {
+            if(event.getButton().equals(MouseButton.PRIMARY)) {
+                if(event.getClickCount() == 2){
+                    if(!isEmptyPayment) {
+                        selectPayment(true);
+                        isEmptyPayment = true;
+                    } else {
+                        selectPayment(false);
+                        isEmptyPayment = false;
+                    }
+                }
+            }
+        });
+
+        checkBox_payment_1.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue) disableDatePayment(false);
+            else disableDatePayment(true);
+        });
+
+        checkBox_payment_2.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue) disableDatePayment(false);
+            else disableDatePayment(true);
+        });
+    }
+    private void addReceivingListener() {
+        label_receiving.setOnMouseClicked(event -> {
+            if(event.getButton().equals(MouseButton.PRIMARY)) {
+                if(event.getClickCount() == 2){
+                    if(!isEmptyReceiving) {
+                        selectReceiving(true);
+                        isEmptyReceiving = true;
+                    } else {
+                        selectReceiving(false);
+                        isEmptyReceiving = false;
+                    }
+                }
+            }
+        });
+
+        checkBox_receiving_1.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue) disableDateReceiving(false);
+            else disableDateReceiving(true);
+        });
+
+        checkBox_receiving_2.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue) disableDateReceiving(false);
+            else disableDateReceiving(true);
+        });
+    }
+
 
 
     private void selectAllCheckBox(boolean value) {
@@ -1019,6 +1120,8 @@ public class SelectController {
         selectAntiCorruptionCharter(value);
         selectLocation(value);
         selectMonth(value);
+        selectPayment(value);
+        selectReceiving(value);
 
     }
 
@@ -1093,23 +1196,37 @@ public class SelectController {
     private void selectMonth(boolean value) {
         listMonth.forEach(checkBox -> checkBox.setSelected(value));
     }
+    private void selectPayment(boolean value) {
+        listPayment.forEach(checkBox -> checkBox.setSelected(value));
+    }
+    private void selectReceiving(boolean value) {
+        listReceiving.forEach(checkBox -> checkBox.setSelected(value));
+    }
+    private void disableDatePayment(boolean value) {
+        listDatePayment.forEach(datePicker -> datePicker.setDisable(value));
+    }
+    private void disableDateReceiving(boolean value) {
+        listDateReceiving.forEach(datePicker -> datePicker.setDisable(value));
+    }
+
 
 
     public void clearAllCheckBox(ActionEvent actionEvent) {
         selectAllCheckBox(false);
         list.clear();
+
+
     }
 
     public void search(ActionEvent actionEvent) {
         list.clear();
         list.addAll(DBConnection.getQueryList(getResultQuery()));
         table_select.setItems(list);
-
     }
 
     private String getResultQuery() {
         String selectQuery = "SELECT m.MEMBER_ID, m.MEMBER_SERIAL, c.CONTACT_PHONE, m.MEMBER_STATUS, m.MEMBER_SHORT_NAME";
-        String fromQuery = "FROM MEMBER m, CONTACT c, DEBT d, GENERAL_INFORMATION gi, ADDRESS_LEGAL al";
+        String fromQuery = "FROM MEMBER m, CONTACT c, DEBT d, GENERAL_INFORMATION gi, ADDRESS_LEGAL al, INVOICE i";
 
         ArrayList<String> test = new ArrayList<>();
 
@@ -1139,6 +1256,10 @@ public class SelectController {
         test.add(getWherePartFromList(listNeedForYoungPersonnel, "gi.NEED_FOR_YOUNG_PERSONNEL", 2));
         test.add(getWherePartFromList(listLocation, "al.ADDRESS_LEGAL_REGION_ID;al.ADDRESS_LEGAL_DISTRICT", 5));
         test.add(getWherePartFromList(listMonth, "month(MEMBER_DATE_OF_ENTRY)", 6));
+        test.add(getWherePartFromList(listPayment, "i.INVOICE_STATUS_OF_PAYMENT", 7));
+        test.add(getWherePartFromDate(listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
+        test.add(getWherePartFromList(listReceiving, "i.INVOICE_STATUS_OF_RECEIVING", 8));
+        test.add(getWherePartFromDate(listDateReceiving, "i.INVOICE_DATE_OF_RECEIVING;i.INVOICE_DATE_OF_RECEIVING"));
 
 
 
@@ -1148,7 +1269,8 @@ public class SelectController {
                 " AND (m.MEMBER_ID = c.MEMBER_ID)" +
                 " AND (m.MEMBER_ID = d.MEMBER_ID)" +
                 " AND (m.MEMBER_ID = gi.MEMBER_ID)" +
-                " AND (m.MEMBER_ID = al.MEMBER_ID);";
+                " AND (m.MEMBER_ID = al.MEMBER_ID)" +
+                " AND (m.MEMBER_ID = i.MEMBER_ID);";
 
         return selectQuery + "\n" + fromQuery + "\n" + whereQuery;
     }
@@ -1174,7 +1296,7 @@ public class SelectController {
                     if (checkBox.getText().equals("Воронежская область")) {
                         someSelect.add(splitPattern[0] + " = 36 AND " + splitPattern[1] + " != 'Воронеж Городской округ'");
                     }
-                }//month(MEMBER_DATE_OF_ENTRY) = 1;
+                }
                 if(flag == 6) {
                     Integer month = 0;
                     for (Map.Entry<Integer, String> entry: ListUtils.getMonth().entrySet()) {
@@ -1184,6 +1306,8 @@ public class SelectController {
                     }
                     someSelect.add(pattern + " = " + month.toString());
                 }
+                if(flag == 7) someSelect.add(pattern + " = " + MemberUtils.paymentToBoolean(checkBox.getText()));
+                if(flag == 8) someSelect.add(pattern + " = " + MemberUtils.receiveToBoolean(checkBox.getText()));
             }
         }
 
@@ -1197,6 +1321,36 @@ public class SelectController {
         else return null;
 
     }
+
+    private String getWherePartFromDate(ArrayList<DatePicker> datePickers, String pattern) {
+        String result = "";
+
+        ArrayList<String> someSelect = new ArrayList<String>();
+        String[] splitPattern = pattern.split(";");
+
+        if(checkBox_payment_1.isSelected() && !checkBox_payment_2.isSelected()) {
+            if (!(datePickers.get(0).getValue() == null))
+                someSelect.add(splitPattern[0] + " >= '" + datePickers.get(0).getValue().toString() + "'");
+            if (!(datePickers.get(1).getValue() == null))
+                someSelect.add(splitPattern[0] + " <= '" + datePickers.get(1).getValue().toString() + "'");
+        }
+        if(!checkBox_payment_1.isSelected() && checkBox_payment_2.isSelected()) {
+            if (!(datePickers.get(0).getValue() == null))
+                someSelect.add(splitPattern[1] + " >= '" + datePickers.get(0).getValue().toString() + "'");
+            if (!(datePickers.get(1).getValue() == null))
+                someSelect.add(splitPattern[1] + " <= '" + datePickers.get(1).getValue().toString() + "'");
+        }
+
+        if (!(someSelect.size() == 0)) {
+            for (int i = 0; i < someSelect.size(); i++) {
+                if (i != someSelect.size() - 1) result += someSelect.get(i) + " AND ";
+                else result += someSelect.get(i);
+            }
+            return result;
+        } else return null;
+
+    }
+
 
     private void removeAllNullObjectFromList(ArrayList<String> list) {
         int index = list.lastIndexOf(null);

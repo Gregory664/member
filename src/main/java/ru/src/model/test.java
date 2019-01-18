@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import ru.src.logic.controllers.SelectController;
 import ru.src.logic.implementation.DBConnection;
+import ru.src.logic.implementation.ListUtils;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.Organizations;
 import ru.src.model.Address.AddressActual;
@@ -24,24 +25,74 @@ import ru.src.model.buh.Invoice;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class test {
 
 
     public static void main(String[] args) {
 
-//        List<Object> test = DBConnection.test();
-//        System.out.println();
-//        List<Member> test = DBConnection.test();
-//
-//        //SelectController.removeAllObjectFromList(test);
-//        System.out.println();
+        ArrayList<Member> list = new ArrayList<Member>();
+        for (int i = 0; i < 500; i++) {
+            list.add(getMember());
+        }
+
+        list.forEach(member -> DBConnection.addMember(member));
+        System.out.println();
 
 
     }
 
-//   // private static ArrayList<Member> getMembers(int length, int invoiceSize) {
-//
+    private static Member getMember() {
+        Random one = new Random();
+        Integer id = one.nextInt(2000);
+        Member member = new Member("111-" + id.toString(),
+                one.nextInt(),
+                ListUtils.getMemberStatusList().get(new Random().nextInt(ListUtils.getMemberStatusList().size())),
+                getRandonDate(),
+                "test (" + id + ")");
+
+        GeneralInformation generalInformation = new GeneralInformation(member,
+                ListUtils.getOrganizationForm().get(new Random().nextInt(ListUtils.getOrganizationForm().size())),
+                ListUtils.getEconomicSector().get(new Random().nextInt(ListUtils.getEconomicSector().size())),
+                ListUtils.getOwnershipForm().get(new Random().nextInt(ListUtils.getOwnershipForm().size())),
+                ListUtils.getActivityType().get(new Random().nextInt(ListUtils.getActivityType().size())),
+                ListUtils.getBusinessForm().get(new Random().nextInt(ListUtils.getBusinessForm().size())),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean(),
+                new Random().nextBoolean());
+
+        Debt debt = new Debt(member, new Random().nextBoolean());
+
+        member.setGeneralInformation(generalInformation);
+        member.setDebt(debt);
+
+        return member;
+    }
+
+    private static LocalDate getRandonDate() {
+        long minDay = LocalDate.of(1970, 1, 1).toEpochDay();
+        long maxDay = LocalDate.of(2015, 12, 31).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+        return randomDate;
+
+    }
+}
+
+   // private static ArrayList<Member> getMembers(int length, int invoiceSize) {
+
 //        ArrayList<Member> members = new ArrayList<>();
 //        long start = System.currentTimeMillis();
 //
@@ -92,6 +143,3 @@ public class test {
 //        long stop = System.currentTimeMillis();
 //        System.out.println("create members : " + (stop - start) + " ms");
 //        return members;
-//    }
-
-}
