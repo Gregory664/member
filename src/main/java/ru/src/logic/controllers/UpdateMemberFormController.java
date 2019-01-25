@@ -10,33 +10,18 @@ import javafx.stage.Stage;
 import ru.src.logic.implementation.ListUtils;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.model.Member;
+import ru.src.model.Services;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class UpdateMemberFormController {
-
-    ObservableList<String> memberStatus = ListUtils.getMemberStatusList();//
-    ObservableList<String> organizationForm = ListUtils.getOrganizationForm();//
-    ObservableList<String> economicSector = ListUtils.getEconomicSector();//
-    ObservableList<String> ownershipForm = ListUtils.getOwnershipForm();//
-    ObservableList<String> activityType = ListUtils.getActivityType();
-    ObservableList<String> businessForm = ListUtils.getBusinessForm();
-    ObservableList<String> interesting = ListUtils.getInteresting();
-    ObservableList<String> ved = ListUtils.getVed();
-    ObservableList<String> debd = ListUtils.getDedbStatusList();
-    ObservableList<String> district = ListUtils.getDistrict();
-
-    HashMap<Integer, String> regionMap = ListUtils.getRegionMap();
-    ObservableList<String> region = FXCollections.observableArrayList();
 
     @FXML
     public TextField text_memberId;
     @FXML
     public TextField text_memberSerial;
     @FXML
-    public ComboBox comboBox_memberStatus;
+    public ComboBox<String> comboBox_memberStatus;
     @FXML
     public DatePicker date_memberDate;
     @FXML
@@ -74,11 +59,10 @@ public class UpdateMemberFormController {
     @FXML
     public Label label_alarm_relate_changes;
 
-
     @FXML
-    public ComboBox comboBox_generalInformation_organizationForm;
+    public ComboBox<String> comboBox_generalInformation_organizationForm;
     @FXML
-    public ComboBox comboBox_generalInformation_economicSector;
+    public ComboBox<String> comboBox_generalInformation_economicSector;
     @FXML
     public TextArea text_generalInformation_investmentsTarget;
     @FXML
@@ -86,39 +70,39 @@ public class UpdateMemberFormController {
     @FXML
     public TextArea text_generalInformation_changes;
     @FXML
-    public ComboBox comboBox_generalInformation_ownershipForm;
+    public ComboBox<String> comboBox_generalInformation_ownershipForm;
     @FXML
-    public ComboBox comboBox_generalInformation_activityType;
+    public ComboBox<String> comboBox_generalInformation_activityType;
     @FXML
-    public ComboBox comboBox_generalInformation_businessForm;
+    public ComboBox<String> comboBox_generalInformation_businessForm;
     @FXML
-    public ComboBox comboBox_generalInformation_vedImport;
+    public ComboBox<String> comboBox_generalInformation_vedImport;
     @FXML
-    public ComboBox comboBox_generalInformation_vedExport;
+    public ComboBox<String> comboBox_generalInformation_vedExport;
     @FXML
-    public ComboBox comboBox_generalInformation_interactionOnline;
+    public ComboBox<String> comboBox_generalInformation_interactionOnline;
     @FXML
-    public ComboBox comboBox_generalInformation_interactionOffline;
+    public ComboBox<String> comboBox_generalInformation_interactionOffline;
     @FXML
-    public ComboBox comboBox_generalInformation_b2b;
+    public ComboBox<String> comboBox_generalInformation_b2b;
     @FXML
-    public ComboBox comboBox_generalInformation_b2c;
+    public ComboBox<String> comboBox_generalInformation_b2c;
     @FXML
-    public ComboBox comboBox_generalInformation_businessMissionVisiting;
+    public ComboBox<String> comboBox_generalInformation_businessMissionVisiting;
     @FXML
-    public ComboBox comboBox_generalInformation_businessMissionRegional;
+    public ComboBox<String> comboBox_generalInformation_businessMissionRegional;
     @FXML
-    public ComboBox comboBox_generalInformation_mkas;
+    public ComboBox<String> comboBox_generalInformation_mkas;
     @FXML
-    public ComboBox comboBox_generalInformation_needForYoungPersonnel;
+    public ComboBox<String> comboBox_generalInformation_needForYoungPersonnel;
     @FXML
-    public ComboBox comboBox_generalInformation_discounts;
+    public ComboBox<String> comboBox_generalInformation_discounts;
     @FXML
-    public ComboBox comboBox_generalInformation_reliablePartners;
+    public ComboBox<String> comboBox_generalInformation_reliablePartners;
     @FXML
-    public ComboBox comboBox_generalInformation_pilotProjects;
+    public ComboBox<String> comboBox_generalInformation_pilotProjects;
     @FXML
-    public ComboBox comboBox_generalInformation_antiCorruptionCharter;
+    public ComboBox<String> comboBox_generalInformation_antiCorruptionCharter;
     @FXML
     public Label label_alarm_generalInformation_needForYoungPersonnel;
     @FXML
@@ -164,7 +148,6 @@ public class UpdateMemberFormController {
     @FXML
     public Label label_alarm_generalInformation_vedImport;
 
-
     @FXML
     public TextField text_director_fullName;
     @FXML
@@ -194,7 +177,6 @@ public class UpdateMemberFormController {
     @FXML
     public Label label_alarm_director_changes;
 
-
     @FXML
     public TextField text_contact_phone;
     @FXML
@@ -216,7 +198,6 @@ public class UpdateMemberFormController {
     @FXML
     public Label label_alarm_contact_changes;
 
-
     @FXML
     public TextField text_accoutingInformation_ogrn;
     @FXML
@@ -230,13 +211,12 @@ public class UpdateMemberFormController {
     @FXML
     public Label label_alarm_accoutingInformation_tin;
 
-
     @FXML
     public TextField text_debt_period;
     @FXML
     public TextArea text_debt_comment;
     @FXML
-    public ComboBox comboBox_debt_status;
+    public ComboBox<String> comboBox_debt_status;
     @FXML
     public Label label_alarm_debt_status;
     @FXML
@@ -244,11 +224,10 @@ public class UpdateMemberFormController {
     @FXML
     public Label label_alarm_debt_comment;
 
-
     @FXML
     public TextField text_addressLegal_regionId;
     @FXML
-    public ComboBox comboBox_addressLegal_regionName;
+    public ComboBox<String> comboBox_addressLegal_regionName;
     @FXML
     public TextField text_addressLegal_index;
     @FXML
@@ -260,7 +239,7 @@ public class UpdateMemberFormController {
     @FXML
     public TextField text_addressLegal_office;
     @FXML
-    public ComboBox comboBox_addressLegal_district;
+    public ComboBox<String> comboBox_addressLegal_district;
     @FXML
     public TextArea text_addressLegal_changes;
     @FXML
@@ -282,11 +261,10 @@ public class UpdateMemberFormController {
     @FXML
     public Label label_alarm_addressLegal_changes;
 
-
     @FXML
     public TextField text_addressActual_regionId;
     @FXML
-    public ComboBox comboBox_addressActual_regionName;
+    public ComboBox<String> comboBox_addressActual_regionName;
     @FXML
     public TextField text_addressActual_index;
     @FXML
@@ -298,7 +276,7 @@ public class UpdateMemberFormController {
     @FXML
     public TextField text_addressActual_office;
     @FXML
-    public ComboBox comboBox_addressActual_district;
+    public ComboBox<String> comboBox_addressActual_district;
     @FXML
     public TextArea text_addressActual_changes;
     @FXML
@@ -319,7 +297,6 @@ public class UpdateMemberFormController {
     public Label label_alarm_addressActual_district;
     @FXML
     public Label label_alarm_addressActual_changes;
-
 
     @FXML
     public TextField text_socialNetworks_vkontakte;
@@ -359,22 +336,68 @@ public class UpdateMemberFormController {
     public Label label_alarm_socialNetworks_youtube;
 
     @FXML
+    public CheckBox checkBox_services_1;
+    @FXML
+    public CheckBox checkBox_services_2;
+    @FXML
+    public CheckBox checkBox_services_3;
+    @FXML
+    public CheckBox checkBox_services_4;
+    @FXML
+    public CheckBox checkBox_services_5;
+    @FXML
+    public CheckBox checkBox_services_6;
+    @FXML
+    public CheckBox checkBox_services_7;
+    @FXML
+    public CheckBox checkBox_services_8;
+    @FXML
+    public CheckBox checkBox_services_9;
+    @FXML
+    public CheckBox checkBox_services_10;
+    @FXML
+    public CheckBox checkBox_services_11;
+    @FXML
+    public CheckBox checkBox_services_12;
+    @FXML
+    public CheckBox checkBox_services_13;
+    @FXML
+    public CheckBox checkBox_services_15;
+    @FXML
+    public CheckBox checkBox_services_14;
+    @FXML
+    public CheckBox checkBox_services_16;
+    @FXML
+    public CheckBox checkBox_services_17;
+
+    @FXML
     public Button btn_saveMember;
     @FXML
     public Button btn_cancel;
 
-    private Member member;
+    private ObservableList<String> memberStatus = ListUtils.getMemberStatusList();//
+    private ObservableList<String> organizationForm = ListUtils.getOrganizationForm();//
+    private ObservableList<String> economicSector = ListUtils.getEconomicSector();//
+    private ObservableList<String> ownershipForm = ListUtils.getOwnershipForm();//
+    private ObservableList<String> activityType = ListUtils.getActivityType();
+    private ObservableList<String> businessForm = ListUtils.getBusinessForm();
+    private ObservableList<String> interesting = ListUtils.getInteresting();
+    private ObservableList<String> ved = ListUtils.getVed();
+    private ObservableList<String> debd = ListUtils.getDedbStatusList();
+    private ObservableList<String> district = ListUtils.getDistrict();
+    private HashMap<Integer, String> regionMap = ListUtils.getRegionMap();
+    private ObservableList<String> region = FXCollections.observableArrayList();
 
+    private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
+
+    private Member member;
     public Member getMember() {
         return member;
     }
-
-
     public void setMember(Member member) {
         this.member = member;
         fillAllFields();
     }
-
 
     @FXML
     public void initialize() {
@@ -384,6 +407,8 @@ public class UpdateMemberFormController {
         addCheckInfoListeners();
         fillAllComboBox();
 
+        initServices();
+
         text_memberId.editableProperty().setValue(false);
 
         text_addressActual_regionId.editableProperty().setValue(false);
@@ -391,6 +416,46 @@ public class UpdateMemberFormController {
 
         comboBox_addressLegal_district.setDisable(true);
         comboBox_addressActual_district.setDisable(true);
+    }
+
+    private void fillServices() {
+        clearServices();
+        List<Services> services = member.getServices();
+        if(services != null) {
+            services.forEach(services1 -> {
+                servicesCheckBoxMap.get(services1.getServicesId()).setSelected(true);
+            });
+        }
+    }
+
+    private void initServices() {
+        servicesCheckBoxMap.put(1, checkBox_services_1);
+        servicesCheckBoxMap.put(2, checkBox_services_2);
+        servicesCheckBoxMap.put(3, checkBox_services_3);
+        servicesCheckBoxMap.put(4, checkBox_services_4);
+        servicesCheckBoxMap.put(5, checkBox_services_5);
+        servicesCheckBoxMap.put(6, checkBox_services_6);
+        servicesCheckBoxMap.put(7, checkBox_services_7);
+        servicesCheckBoxMap.put(8, checkBox_services_8);
+        servicesCheckBoxMap.put(9, checkBox_services_9);
+        servicesCheckBoxMap.put(10, checkBox_services_10);
+        servicesCheckBoxMap.put(11, checkBox_services_11);
+        servicesCheckBoxMap.put(12, checkBox_services_12);
+        servicesCheckBoxMap.put(13, checkBox_services_13);
+        servicesCheckBoxMap.put(14, checkBox_services_14);
+        servicesCheckBoxMap.put(15, checkBox_services_15);
+        servicesCheckBoxMap.put(16, checkBox_services_16);
+        servicesCheckBoxMap.put(17, checkBox_services_17);
+
+        servicesCheckBoxMap.forEach((integer, checkBox) -> {
+            checkBox.setStyle("-fx-opacity: 1");
+        });
+    }
+
+    private void clearServices() {
+        servicesCheckBoxMap.forEach((integer, checkBox) -> {
+            checkBox.setSelected(false);
+        });
     }
 
     private void addCheckInfoListeners() {
@@ -453,7 +518,6 @@ public class UpdateMemberFormController {
         MemberUtils.checkTextLength(text_socialNetworks_youtube,label_alarm_socialNetworks_youtube, 45);
     }
 
-
     private void fillAllComboBox() {
         comboBox_memberStatus.setItems(memberStatus);
 
@@ -479,7 +543,6 @@ public class UpdateMemberFormController {
         comboBox_debt_status.setItems(debd);
         comboBox_addressActual_district.setItems(district);
         comboBox_addressLegal_district.setItems(district);
-
 
         regionMap.forEach((integer, s) -> region.add(s));
         comboBox_addressActual_regionName.setItems(region);
@@ -902,7 +965,6 @@ public class UpdateMemberFormController {
         text_relate_changes.setText(member.getRelate().getChanges());
     }
 
-
     private void fillAllFields() {
         fillMember();
         fillRelate();
@@ -914,34 +976,22 @@ public class UpdateMemberFormController {
         fillAddressLegal();
         fillAddressActual();
         fillSocialNetworks();
-    }
-
-    private boolean isMemberUpdate = false;
-
-    public boolean isMemberUpdate() {
-        return isMemberUpdate;
-    }
-
-    public void setMemberUpdate(boolean memberUpdate) {
-        isMemberUpdate = memberUpdate;
+        fillServices();
     }
 
     @FXML
     public void saveMember(ActionEvent actionEvent) {
         if(!isFieldsEmpty()) {
                 setMemberParams();
-                isMemberUpdate = true;
                 clearText();
                 clearStyle();
                 closeWindow(actionEvent);
         }
-
     }
 
     private void setMemberParams() {
-
         member.setMemberSerial(Integer.valueOf(text_memberSerial.getText()));
-        member.setMemberStatus(comboBox_memberStatus.getSelectionModel().getSelectedItem().toString());
+        member.setMemberStatus(comboBox_memberStatus.getSelectionModel().getSelectedItem());
         member.setMemberDate(date_memberDate.getValue());
         member.setMemberShortName(text_memberShortName.getText());
 
@@ -953,27 +1003,25 @@ public class UpdateMemberFormController {
         if (text_relate_changes.getText() != null)
             member.getRelate().setServices(text_relate_services.getText());
 
-
-        member.getGeneralInformation().setOrganizationForm(comboBox_generalInformation_organizationForm.getSelectionModel().getSelectedItem().toString());
-        member.getGeneralInformation().setEconomicSector(comboBox_generalInformation_economicSector.getSelectionModel().getSelectedItem().toString());
-        member.getGeneralInformation().setOwnershipForm(comboBox_generalInformation_ownershipForm.getSelectionModel().getSelectedItem().toString());
-        member.getGeneralInformation().setActivityType(comboBox_generalInformation_activityType.getSelectionModel().getSelectedItem().toString());
-        member.getGeneralInformation().setBusinessForm(comboBox_generalInformation_businessForm.getSelectionModel().getSelectedItem().toString());
-        member.getGeneralInformation().setVedImport(MemberUtils.vedToBoolean(comboBox_generalInformation_vedImport.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setVedExport(MemberUtils.vedToBoolean(comboBox_generalInformation_vedExport.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setInteractionOffline(MemberUtils.interestingToBoolean(comboBox_generalInformation_interactionOffline.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setInteractionOnline(MemberUtils.interestingToBoolean(comboBox_generalInformation_interactionOnline.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setB2b(MemberUtils.interestingToBoolean(comboBox_generalInformation_b2b.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setB2c(MemberUtils.interestingToBoolean(comboBox_generalInformation_b2c.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setBusinessMissionVisiting(MemberUtils.interestingToBoolean(comboBox_generalInformation_businessMissionVisiting.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setBusinessMissionRegional(MemberUtils.interestingToBoolean(comboBox_generalInformation_businessMissionRegional.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setMkas(MemberUtils.interestingToBoolean(comboBox_generalInformation_mkas.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setNeedForYoungPersonnel(MemberUtils.interestingToBoolean(comboBox_generalInformation_needForYoungPersonnel.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setDiscounts(MemberUtils.interestingToBoolean(comboBox_generalInformation_discounts.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setReliablePartners(MemberUtils.interestingToBoolean(comboBox_generalInformation_reliablePartners.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setPilotProjects(MemberUtils.interestingToBoolean(comboBox_generalInformation_pilotProjects.getSelectionModel().getSelectedItem().toString()));
-        member.getGeneralInformation().setAntiCorruptionCharter(MemberUtils.interestingToBoolean(comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().getSelectedItem().toString()));
-
+        member.getGeneralInformation().setOrganizationForm(comboBox_generalInformation_organizationForm.getSelectionModel().getSelectedItem());
+        member.getGeneralInformation().setEconomicSector(comboBox_generalInformation_economicSector.getSelectionModel().getSelectedItem());
+        member.getGeneralInformation().setOwnershipForm(comboBox_generalInformation_ownershipForm.getSelectionModel().getSelectedItem());
+        member.getGeneralInformation().setActivityType(comboBox_generalInformation_activityType.getSelectionModel().getSelectedItem());
+        member.getGeneralInformation().setBusinessForm(comboBox_generalInformation_businessForm.getSelectionModel().getSelectedItem());
+        member.getGeneralInformation().setVedImport(MemberUtils.vedToBoolean(comboBox_generalInformation_vedImport.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setVedExport(MemberUtils.vedToBoolean(comboBox_generalInformation_vedExport.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setInteractionOffline(MemberUtils.interestingToBoolean(comboBox_generalInformation_interactionOffline.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setInteractionOnline(MemberUtils.interestingToBoolean(comboBox_generalInformation_interactionOnline.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setB2b(MemberUtils.interestingToBoolean(comboBox_generalInformation_b2b.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setB2c(MemberUtils.interestingToBoolean(comboBox_generalInformation_b2c.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setBusinessMissionVisiting(MemberUtils.interestingToBoolean(comboBox_generalInformation_businessMissionVisiting.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setBusinessMissionRegional(MemberUtils.interestingToBoolean(comboBox_generalInformation_businessMissionRegional.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setMkas(MemberUtils.interestingToBoolean(comboBox_generalInformation_mkas.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setNeedForYoungPersonnel(MemberUtils.interestingToBoolean(comboBox_generalInformation_needForYoungPersonnel.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setDiscounts(MemberUtils.interestingToBoolean(comboBox_generalInformation_discounts.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setReliablePartners(MemberUtils.interestingToBoolean(comboBox_generalInformation_reliablePartners.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setPilotProjects(MemberUtils.interestingToBoolean(comboBox_generalInformation_pilotProjects.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setAntiCorruptionCharter(MemberUtils.interestingToBoolean(comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().getSelectedItem()));
         if (text_generalInformation_investmentsTarget.getText().length() > 0)
             member.getGeneralInformation().setInvestmentsTarget(text_generalInformation_investmentsTarget.getText());
         if (text_generalInformation_investmentsSize.getText().length() > 0)
@@ -984,7 +1032,6 @@ public class UpdateMemberFormController {
         member.getDirector().setFullName(text_director_fullName.getText());
         member.getDirector().setPhoneMobile(text_director_phoneMobile.getText());
         member.getDirector().setEmail(text_director_email.getText());
-
         if (text_director_phoneCity.getText() != null)
             member.getDirector().setPhoneCity(text_director_phoneCity.getText());
         if (text_director_changes.getText() != null)
@@ -1007,7 +1054,7 @@ public class UpdateMemberFormController {
 
 
         member.getAddressLegal().setRegionId(Integer.valueOf(text_addressLegal_regionId.getText()));
-        member.getAddressLegal().setRegionName(comboBox_addressLegal_regionName.getSelectionModel().getSelectedItem().toString());
+        member.getAddressLegal().setRegionName(comboBox_addressLegal_regionName.getSelectionModel().getSelectedItem());
         member.getAddressLegal().setIndex(Integer.valueOf(text_addressLegal_index.getText()));
         member.getAddressLegal().setTown(text_addressLegal_town.getText());
         member.getAddressLegal().setStreet(text_addressLegal_street.getText());
@@ -1015,13 +1062,13 @@ public class UpdateMemberFormController {
         if (text_addressLegal_office.getText() != null)
             member.getAddressLegal().setOffice(text_addressLegal_office.getText());
         if (!comboBox_addressLegal_district.isDisable())
-            member.getAddressLegal().setDistrict(comboBox_addressLegal_district.getSelectionModel().getSelectedItem().toString());
+            member.getAddressLegal().setDistrict(comboBox_addressLegal_district.getSelectionModel().getSelectedItem());
         if (text_addressLegal_changes.getText() != null)
             member.getAddressLegal().setChanges(text_addressLegal_changes.getText());
 
 
         member.getAddressActual().setRegionId(Integer.valueOf(text_addressActual_regionId.getText()));
-        member.getAddressActual().setRegionName(comboBox_addressActual_regionName.getSelectionModel().getSelectedItem().toString());
+        member.getAddressActual().setRegionName(comboBox_addressActual_regionName.getSelectionModel().getSelectedItem());
         member.getAddressActual().setIndex(Integer.valueOf(text_addressActual_index.getText()));
         member.getAddressActual().setTown(text_addressActual_town.getText());
         member.getAddressActual().setStreet(text_addressActual_street.getText());
@@ -1029,12 +1076,12 @@ public class UpdateMemberFormController {
         if (text_addressActual_office.getText() != null)
             member.getAddressActual().setOffice(text_addressActual_office.getText());
         if (!comboBox_addressActual_district.isDisable())
-            member.getAddressActual().setDistrict(comboBox_addressActual_district.getSelectionModel().getSelectedItem().toString());
+            member.getAddressActual().setDistrict(comboBox_addressActual_district.getSelectionModel().getSelectedItem());
         if (text_addressActual_changes.getText() != null)
             member.getAddressActual().setChanges(text_addressActual_changes.getText());
 
 
-        member.getDebt().setStatus(MemberUtils.debtToBoolean(comboBox_debt_status.getSelectionModel().getSelectedItem().toString()));
+        member.getDebt().setStatus(MemberUtils.debtToBoolean(comboBox_debt_status.getSelectionModel().getSelectedItem()));
         if (text_debt_period.getText() != null)
             member.getDebt().setPeriod(text_debt_period.getText());
         if (text_debt_comment.getText() != null)
@@ -1059,10 +1106,19 @@ public class UpdateMemberFormController {
             member.getSocialNetworks().setTwitter(text_socialNetworks_twitter.getText());
         if (text_socialNetworks_youtube.getText() != null)
             member.getSocialNetworks().setYoutube(text_socialNetworks_youtube.getText());
+
+        List<Services> services = new ArrayList<>();
+        servicesCheckBoxMap.forEach((integer, checkBox) -> {
+            if(checkBox.isSelected()) {
+                services.add(new Services(integer, checkBox.getText()));
+            }
+        });
+
+        member.setServices(services);
     }
 
     private boolean isFieldsEmpty() {
-        HashSet<Boolean> set = new HashSet<Boolean>();
+        HashSet<Boolean> set = new HashSet<>();
 
         set.add(MemberUtils.isEmptyField(text_memberId, label_alarm_memberId));
         set.add(MemberUtils.isEmptyField(text_memberSerial, label_alarm_memberSerial));
@@ -1154,9 +1210,9 @@ public class UpdateMemberFormController {
         stage.hide();
     }
 
-    public void editAddressLegalRegionId(ActionEvent actionEvent) {
+    public void editAddressLegalRegionId() {
         Integer id = -1;
-        String regionName = comboBox_addressLegal_regionName.getValue().toString();
+        String regionName = comboBox_addressLegal_regionName.getValue();
 
         for(Map.Entry<Integer, String> entry: regionMap.entrySet()) {
             if(entry.getValue().equals(regionName)) {
@@ -1175,9 +1231,9 @@ public class UpdateMemberFormController {
         }
     }
 
-    public void editAddressActualRegionId(ActionEvent actionEvent) {
+    public void editAddressActualRegionId() {
         Integer id = -1;
-        String regionName = comboBox_addressActual_regionName.getValue().toString();
+        String regionName = comboBox_addressActual_regionName.getValue();
 
         for(Map.Entry<Integer, String> entry: regionMap.entrySet()) {
             if(entry.getValue().equals(regionName)) {

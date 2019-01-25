@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -14,10 +15,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.UpdateMemberFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.UpdateMemberFormController">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
@@ -69,7 +71,7 @@
                                     </GridPane>
                                  </content>
                               </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Расширенная информация" VBox.vgrow="ALWAYS">
+                              <TitledPane animated="false" collapsible="false" text="Расширенная информация">
                                  <content>
                                     <GridPane hgap="4.0" vgap="4.0">
                                       <columnConstraints>
@@ -112,8 +114,11 @@
                                        </children>
                                     </GridPane>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
                               </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Дополнительная информация" VBox.vgrow="ALWAYS">
+                              <TitledPane animated="false" collapsible="false" text="Дополнительная информация">
                                  <content>
                                     <GridPane hgap="4.0" vgap="4.0">
                                        <columnConstraints>
@@ -257,8 +262,11 @@
                                        </children>
                                     </GridPane>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
                               </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Руководство" VBox.vgrow="ALWAYS">
+                              <TitledPane animated="false" collapsible="false" text="Руководство">
                                  <content>
                                     <GridPane hgap="4.0" prefHeight="277.0" prefWidth="990.0" vgap="4.0">
                                        <columnConstraints>
@@ -313,8 +321,11 @@
                                        </children>
                                     </GridPane>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
                               </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Контактная информация" VBox.vgrow="ALWAYS">
+                              <TitledPane animated="false" collapsible="false" text="Контактная информация">
                                  <content>
                                     <GridPane hgap="4.0" vgap="4.0">
                                        <columnConstraints>
@@ -357,8 +368,11 @@
                                        </children>
                                     </GridPane>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
                               </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Бухгалтерская информация" VBox.vgrow="ALWAYS">
+                              <TitledPane animated="false" collapsible="false" text="Бухгалтерская информация">
                                  <content>
                                     <GridPane hgap="4.0" vgap="4.0">
                                        <columnConstraints>
@@ -389,8 +403,11 @@
                                        </children>
                                     </GridPane>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
                               </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Информация по задолжности" VBox.vgrow="ALWAYS">
+                              <TitledPane animated="false" collapsible="false" text="Информация по задолжности">
                                  <content>
                                     <GridPane hgap="4.0" vgap="4.0">
                                        <columnConstraints>
@@ -421,8 +438,11 @@
                                        </children>
                                     </GridPane>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
                               </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Юридический адрес" VBox.vgrow="ALWAYS">
+                              <TitledPane animated="false" collapsible="false" text="Юридический адрес">
                                  <content>
                                     <GridPane hgap="4.0" vgap="4.0">
                                        <columnConstraints>
@@ -489,8 +509,11 @@
                                        </children>
                                     </GridPane>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
                               </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Фактический адрес" VBox.vgrow="ALWAYS">
+                              <TitledPane animated="false" collapsible="false" text="Фактический адрес">
                                  <content>
                                     <GridPane hgap="4.0" vgap="4.0">
                                        <columnConstraints>
@@ -557,8 +580,11 @@
                                        </children>
                                     </GridPane>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
                               </TitledPane>
-                              <TitledPane animated="false" collapsible="false" text="Социальные сети" VBox.vgrow="ALWAYS">
+                              <TitledPane animated="false" collapsible="false" text="Социальные сети">
                                  <content>
                                     <GridPane prefHeight="143.0" prefWidth="992.0">
                                       <columnConstraints>
@@ -624,15 +650,189 @@
                                        </children>
                                     </GridPane>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </TitledPane>
+                              <TitledPane animated="false" collapsible="false" maxHeight="310.0" minHeight="310.0" text="Интересующие услуги">
+                                 <content>
+                                    <VBox>
+                                       <children>
+                                          <GridPane hgap="4.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <CheckBox fx:id="checkBox_services_1" mnemonicParsing="false" text="Экспертиза">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_2" mnemonicParsing="false" text="Сертификация" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_3" mnemonicParsing="false" text="Оценка" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_4" mnemonicParsing="false" text="Выставки, ярмарки, конгрессы, деловые миссии, презентации" wrapText="true" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_5" mnemonicParsing="false" text="Деловое образование, подготовка кадров" wrapText="true" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_6" mnemonicParsing="false" text="Информационно-консультационные услуги" wrapText="true" GridPane.columnIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_8" mnemonicParsing="false" text="Правовая охрана и защита интеллектуальной собственности" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_10" mnemonicParsing="false" text="МКАС" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_12" mnemonicParsing="false" text="Проведение примирительных процедур" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_13" mnemonicParsing="false" text="Лабораторные исследования" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_15" mnemonicParsing="false" text="Промышленная кооперация и субконтрактация" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_7" mnemonicParsing="false" text="Переводы" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_9" mnemonicParsing="false" text="Привлечение инвестиций" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_11" mnemonicParsing="false" text="СОУТ" GridPane.columnIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_14" mnemonicParsing="false" text="Электронно-цифровая подпись (ЭЦП)" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                             </children>
+                                          </GridPane>
+                                          <GridPane hgap="4.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="659.0" minWidth="659.0" prefWidth="659.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <VBox.margin>
+                                                <Insets top="4.0" />
+                                             </VBox.margin>
+                                             <children>
+                                                <CheckBox fx:id="checkBox_services_16" mnemonicParsing="false" text="Обеспечение системного подхода к повышению качества продукции (работ и услуг) на территории Воронежской области" wrapText="true">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_17" mnemonicParsing="false" text="Экспортная поддержка предприятий" GridPane.columnIndex="1">
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
                               </TitledPane>
                            </children>
                         </VBox>
                      </content>
                   </ScrollPane>
                </children>
-               <padding>
-                  <Insets top="15.0" />
-               </padding>
             </AnchorPane>
             <GridPane maxHeight="50.0" minHeight="50.0">
               <columnConstraints>
