@@ -3,8 +3,11 @@ package ru.src.logic.implementation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -255,5 +258,31 @@ public class ListUtils {
         month.put(12, "Декабрь");
         return month;
     }
+    public static String getDataFromCheckBoxMassive(Label label, ArrayList<CheckBox> checkBoxes) {
+        String result = "";
+        ArrayList<String> selectedCheckBox = new ArrayList<String>();
+        for (CheckBox box: checkBoxes) {
+            if(box.isSelected()) {
+                selectedCheckBox.add(box.getText());
+            }
+        }
+        if(selectedCheckBox.size() == 0) return null;
+        else {
+            result += label.getText().replace("\n", " ") + ": ";
+            for (int i = 0; i < selectedCheckBox.size(); i++) {
+                if (i != selectedCheckBox.size() - 1) {
+                    result += selectedCheckBox.get(i) + ", ";
+                } else result += selectedCheckBox.get(i) + ".";
+            }
+            return result;
+        }
+    }
 
+    public static void removeAllNullObjectFromList(ArrayList<String> list) {
+        int index = list.lastIndexOf(null);
+        if(index != -1) {
+           list.remove(null);
+           removeAllNullObjectFromList(list);
+        }
+    }
 }

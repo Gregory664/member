@@ -1,5 +1,6 @@
 package ru.src.model;
 
+import org.hibernate.annotations.ManyToAny;
 import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
 import ru.src.model.General.GeneralInformation;
@@ -77,6 +78,13 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private SocialNetworks socialNetworks;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "MEMBER_SERVICES",
+            joinColumns = { @JoinColumn(name = "MEMBER_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "SERVICES_ID")})
+    private List<Services> services;
+
+
 
     private Member() {
 
@@ -90,6 +98,13 @@ public class Member {
         this.memberShortName = memberShortName;
     }
 
+    public List<Services> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Services> services) {
+        this.services = services;
+    }
 
     public String getMemberId() {
         return memberId;

@@ -24,6 +24,7 @@ import ru.src.model.Personal.Contact;
 import ru.src.model.Personal.ContactPerson;
 import ru.src.model.Personal.Director;
 import ru.src.model.Personal.Relate;
+import ru.src.model.Services;
 import ru.src.model.SocialNetworks;
 import ru.src.model.buh.AccoutingInformation;
 import ru.src.model.buh.Debt;
@@ -263,6 +264,42 @@ public class MainFormController {
     public Label countOfOrganization;
 
 
+    @FXML
+    public CheckBox checkBox_services_1;
+    @FXML
+    public CheckBox checkBox_services_2;
+    @FXML
+    public CheckBox checkBox_services_3;
+    @FXML
+    public CheckBox checkBox_services_4;
+    @FXML
+    public CheckBox checkBox_services_5;
+    @FXML
+    public CheckBox checkBox_services_6;
+    @FXML
+    public CheckBox checkBox_services_7;
+    @FXML
+    public CheckBox checkBox_services_8;
+    @FXML
+    public CheckBox checkBox_services_9;
+    @FXML
+    public CheckBox checkBox_services_10;
+    @FXML
+    public CheckBox checkBox_services_11;
+    @FXML
+    public CheckBox checkBox_services_12;
+    @FXML
+    public CheckBox checkBox_services_13;
+    @FXML
+    public CheckBox checkBox_services_15;
+    @FXML
+    public CheckBox checkBox_services_14;
+    @FXML
+    public CheckBox checkBox_services_16;
+    @FXML
+    public CheckBox checkBox_services_17;
+
+
     private Organizations memberOrganizations = new Organizations();
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
@@ -301,6 +338,8 @@ public class MainFormController {
     private UpdateMemberFormController updateMemberFormController;
     private SelectController selectController;
 
+    private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
+
     @FXML
     public void initialize() {
         column_memberId.setCellValueFactory(new PropertyValueFactory<>("memberId"));
@@ -327,10 +366,35 @@ public class MainFormController {
         initCreateMemberFormLoader();
         initUpdateMemberFormLoader();
         initSelectFormLoader();
+        initServices();
 
         menu_addMember.setDisable(false);
         menu_deleteMember.setDisable(true);
         menu_renameMember.setDisable(true);
+    }
+
+    private void initServices() {
+        servicesCheckBoxMap.put(1, checkBox_services_1);
+        servicesCheckBoxMap.put(2, checkBox_services_2);
+        servicesCheckBoxMap.put(3, checkBox_services_3);
+        servicesCheckBoxMap.put(4, checkBox_services_4);
+        servicesCheckBoxMap.put(5, checkBox_services_5);
+        servicesCheckBoxMap.put(6, checkBox_services_6);
+        servicesCheckBoxMap.put(7, checkBox_services_7);
+        servicesCheckBoxMap.put(8, checkBox_services_8);
+        servicesCheckBoxMap.put(9, checkBox_services_9);
+        servicesCheckBoxMap.put(10, checkBox_services_10);
+        servicesCheckBoxMap.put(11, checkBox_services_11);
+        servicesCheckBoxMap.put(12, checkBox_services_12);
+        servicesCheckBoxMap.put(13, checkBox_services_13);
+        servicesCheckBoxMap.put(14, checkBox_services_14);
+        servicesCheckBoxMap.put(15, checkBox_services_15);
+        servicesCheckBoxMap.put(16, checkBox_services_16);
+        servicesCheckBoxMap.put(17, checkBox_services_17);
+
+        servicesCheckBoxMap.forEach((integer, checkBox) -> {
+            checkBox.setStyle("-fx-opacity: 1");
+        });
     }
 
     private void initSelectFormLoader() {
@@ -447,7 +511,24 @@ public class MainFormController {
         fillContactPersons(member.getContactPerson());
         fillInvoices(member.getInvoice());
         fillSocialNetworks(member.getSocialNetworks());
+        fillServices(member.getServices());
 
+
+    }
+
+    private void fillServices(List<Services> services) {
+        clearServices();
+        if(services != null) {
+            services.forEach(services1 -> {
+                servicesCheckBoxMap.get(services1.getServicesId()).setSelected(true);
+            });
+        }
+    }
+
+    private void clearServices() {
+        servicesCheckBoxMap.forEach((integer, checkBox) -> {
+            checkBox.setSelected(false);
+        });
     }
 
     private void fillSocialNetworks(SocialNetworks socialNetworks) {

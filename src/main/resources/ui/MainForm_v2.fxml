@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.MainFormController">
+   <children>
+      <SplitPane dividerPositions="0.487146529562982" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="1024.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minWidth="0.0" prefHeight="271.0" prefWidth="1022.0">
+               <children>
+                  <TextField fx:id="text_Search" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="345.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                  <Button fx:id="btn_Search" layoutX="374.0" layoutY="14.0" mnemonicParsing="false" onAction="#openSelect" text="Поиск" AnchorPane.leftAnchor="374.0" AnchorPane.topAnchor="14.0" />
+                  <TableView fx:id="table_members" layoutX="14.0" layoutY="51.0" onMousePressed="#setMemberParams" prefHeight="334.0" prefWidth="994.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="51.0">
+                    <columns>
+                      <TableColumn fx:id="column_memberId" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="-1.0" text="Номер билета" />
+                        <TableColumn fx:id="column_memberSerial" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="149.0" text="Номер" />
+                      <TableColumn fx:id="column_memberDate" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="50.0" text="Дата вступления в ТПП" />
+                        <TableColumn fx:id="column_memberStatus" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="40.0" text="Статус" />
+                        <TableColumn fx:id="column_memberShortName" editable="false" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="210.0" text="Сокращенное название организации" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem fx:id="menu_addMember" mnemonicParsing="false" onAction="#addMember" text="Добавить" />
+                              <MenuItem fx:id="menu_deleteMember" mnemonicParsing="false" onAction="#deleteMember" text="Удалить" />
+                              <MenuItem fx:id="menu_renameMember" mnemonicParsing="false" onAction="#renameMember" text="Редактировать" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </TableView>
+                  <Label fx:id="countOfOrganization" text="Label" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane maxHeight="395.0" minHeight="395.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                      <Tab closable="false" text="Расширенная информация">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <GridPane hgap="4.0" minHeight="276.0" prefHeight="231.0" prefWidth="990.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="230.0" prefWidth="230.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Полное название организации" />
+                                                <Label text="Дата основания организации" GridPane.rowIndex="1" />
+                                                <Label text="Количество работников" GridPane.rowIndex="2" />
+                                                <Label text="Вид деятельности/ &#10;Оказываемые услуги" GridPane.rowIndex="3" />
+                                                <Label text="Дополнительная информация" GridPane.rowIndex="4" />
+                                                <TextArea fx:id="text_relate_fullName" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" />
+                                                <DatePicker fx:id="date_relate_dateOfCreation" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="text_relate_size" editable="false" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextArea fx:id="text_relate_services" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextArea fx:id="text_relate_changes" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                             </children>
+                                          </GridPane>
+                                       </content>
+                                       <padding>
+                                          <Insets bottom="14.0" left="14.0" top="14.0" />
+                                       </padding>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                      <Tab text="Дополнительная информация">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane layoutX="-0.0380859375" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <GridPane hgap="4.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="711.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Форма организации" />
+                                                <Label text="Тип экономической деятельности" GridPane.rowIndex="1" />
+                                                <Label text="Тип формы собственности" GridPane.rowIndex="2" />
+                                                <Label text="Тип вида деятельности" GridPane.rowIndex="3" />
+                                                <Label text="Тип формы предпринимательства" GridPane.rowIndex="4" />
+                                                <Label text="Являются импортерами" GridPane.rowIndex="5" />
+                                                <Label text="Являются экспортерами" GridPane.rowIndex="6" />
+                                                <Label text="Инвестиционные цели" GridPane.rowIndex="7" />
+                                                <Label text="Объем инвестиций" GridPane.rowIndex="8" />
+                                                <Label text="Участие Online" GridPane.rowIndex="9" />
+                                                <Label text="Участие Offline" GridPane.rowIndex="10" />
+                                                <Label text="Заинтересованность в B2B" GridPane.rowIndex="11" />
+                                                <Label text="Заинтересованность в B2C" GridPane.rowIndex="12" />
+                                                <Label text="Выездные бизнес миссии" GridPane.rowIndex="13" />
+                                                <Label text="Региональные бизнес миссии" GridPane.rowIndex="14" />
+                                                <Label text="Заинтересованность в MKAS" GridPane.rowIndex="15" />
+                                                <Label text="Дополнительная информация" GridPane.rowIndex="21" />
+                                                <TextField fx:id="text_generalInformation_organizationForm" editable="false" maxWidth="300.0" minWidth="300.0" GridPane.columnIndex="1" />
+                                                <TextField fx:id="text_generalInformation_economicSector" editable="false" maxWidth="300.0" minWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="text_generalInformation_ownershipForm" editable="false" maxWidth="300.0" minWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="text_generalInformation_activityType" editable="false" maxWidth="300.0" minWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextField fx:id="text_generalInformation_businessForm" editable="false" maxWidth="300.0" minWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <TextField fx:id="text_generalInformation_vedImport" editable="false" maxWidth="75.0" minWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <TextField fx:id="text_generalInformation_vedExport" editable="false" maxWidth="75.0" minWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <TextArea fx:id="text_generalInformation_investmentsTarget" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                <TextField fx:id="text_generalInformation_investmentsSize" editable="false" maxWidth="100.0" minWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                <TextField fx:id="text_generalInformation_interactionOnline" editable="false" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                                <TextField fx:id="text_generalInformation_interactionOffline" editable="false" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                                <TextField fx:id="text_generalInformation_b2b" editable="false" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                                <TextField fx:id="text_generalInformation_b2c" editable="false" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                                                <TextField fx:id="text_generalInformation_businessMissionVisiting" editable="false" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                                                <TextField fx:id="text_generalInformation_businessMissionRegional" editable="false" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                                                <TextField fx:id="text_generalInformation_mkas" editable="false" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                                                <TextArea fx:id="text_generalInformation_changes" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="21" />
+                                                <Label text="Потребность в молодых кадрах" GridPane.rowIndex="16" />
+                                                <Label text="Скидки другим членам ТПП" GridPane.rowIndex="17" />
+                                                <Label text="Реестр надежных партнеров" GridPane.rowIndex="18" />
+                                                <Label text="Участие в пилотных проектах" GridPane.rowIndex="19" />
+                                                <Label text="Антикоррупционная хартия" GridPane.rowIndex="20" />
+                                                <TextField fx:id="text_generalInformation_needForYoungPersonnel" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                                                <TextField fx:id="text_generalInformation_discounts" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                                                <TextField fx:id="text_generalInformation_reliablePartners" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                                                <TextField fx:id="text_generalInformation_pilotProjects" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                                                <TextField fx:id="text_generalInformation_antiCorruptionCharter" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+                                             </children>
+                                          </GridPane>
+                                       </content>
+                                       <padding>
+                                          <Insets bottom="14.0" left="14.0" top="14.0" />
+                                       </padding>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Руководство">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <GridPane hgap="4.0" minHeight="285.0" prefHeight="277.0" prefWidth="990.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.0" minWidth="215.0" prefWidth="215.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="ФИО" />
+                                                <Label text="Должность" GridPane.rowIndex="1" />
+                                                <Label text="Мобильный телефон" GridPane.rowIndex="2" />
+                                                <Label text="Дополнительный телефон" GridPane.rowIndex="3" />
+                                                <Label text="Электронная почта" GridPane.rowIndex="4" />
+                                                <Label text="Дата рождения" GridPane.rowIndex="5" />
+                                                <Label text="Дополнительная информация" GridPane.rowIndex="6" />
+                                                <TextField fx:id="text_director_fullName" editable="false" GridPane.columnIndex="1" />
+                                                <TextField fx:id="text_director_position" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="text_director_phoneMobile" editable="false" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="text_director_phoneCity" editable="false" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextField fx:id="text_director_email" editable="false" maxWidth="300.0" prefHeight="26.0" prefWidth="307.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <DatePicker fx:id="date_director_birthday" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <TextArea fx:id="text_director_changes" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="14.0" left="14.0" top="14.0" />
+                                             </padding>
+                                          </GridPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Контактная информация">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane layoutX="-0.0380859375" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <GridPane hgap="4.0" minHeight="215.0" prefHeight="216.0" prefWidth="990.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="145.0" prefWidth="145.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="823.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Телефон" />
+                                                <Label text="Факс" GridPane.rowIndex="1" />
+                                                <Label text="Сайт" GridPane.rowIndex="2" />
+                                                <Label text="Электронная почта" GridPane.rowIndex="3" />
+                                                <Label text="Дополнительная &#10;информация" GridPane.rowIndex="4" />
+                                                <TextField fx:id="text_contact_phone" editable="false" maxWidth="110.0" GridPane.columnIndex="1" />
+                                                <TextField fx:id="text_contact_fax" editable="false" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="text_contact_site" editable="false" maxWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="text_contact_email" editable="false" maxWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextArea fx:id="text_contact_changes" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="14.0" left="14.0" top="14.0" />
+                                             </padding>
+                                          </GridPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Реквизиты">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <GridPane hgap="4.0" minHeight="110.0" prefHeight="100.0" prefWidth="990.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="928.0" minWidth="10.0" prefWidth="926.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="ОГРН" />
+                                                <Label text="КПП" GridPane.rowIndex="1" />
+                                                <Label text="ИНН" GridPane.rowIndex="2" />
+                                                <TextField fx:id="text_accoutingInformation_ogrn" editable="false" maxWidth="150.0" GridPane.columnIndex="1" />
+                                                <TextField fx:id="text_accoutingInformation_kpp" editable="false" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="text_accoutingInformation_tin" editable="false" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="14.0" left="14.0" top="14.0" />
+                                             </padding>
+                                          </GridPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Информация по задолжности">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <GridPane hgap="4.0" minHeight="140.0" prefHeight="140.0" prefWidth="990.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="215.0" minWidth="215.0" prefWidth="215.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="755.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Статус задолжности" />
+                                                <Label text="Период задолжности" GridPane.rowIndex="1" />
+                                                <Label text="Дополнительная информация" GridPane.rowIndex="2" />
+                                                <TextField fx:id="text_debt_status" editable="false" maxWidth="150.0" minWidth="150.0" GridPane.columnIndex="1" />
+                                                <TextField fx:id="text_debt_period" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextArea fx:id="text_debt_comment" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="14.0" left="14.0" top="14.0" />
+                                             </padding>
+                                          </GridPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Юридический адрес">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <GridPane hgap="4.0" minHeight="320.0" prefHeight="313.0" prefWidth="990.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="841.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Код региона" />
+                                                <Label text="Регион" GridPane.rowIndex="1" />
+                                                <Label text="Индекс" GridPane.rowIndex="2" />
+                                                <Label text="Город" GridPane.rowIndex="3" />
+                                                <Label text="Улица" GridPane.rowIndex="4" />
+                                                <Label text="Дом" GridPane.rowIndex="5" />
+                                                <Label text="Офис" GridPane.rowIndex="6" />
+                                                <Label text="Район" GridPane.rowIndex="7" />
+                                                <Label text="Дополнительная информация" wrapText="true" GridPane.rowIndex="8" />
+                                                <TextField fx:id="text_addressLegal_regionId" maxWidth="70.0" GridPane.columnIndex="1" />
+                                                <TextField fx:id="text_addressLegal_regionName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="text_addressLegal_index" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="text_addressLegal_town" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextField fx:id="text_addressLegal_street" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <TextField fx:id="text_addressLegal_house" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <TextField fx:id="text_addressLegal_office" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <TextField fx:id="text_addressLegal_district" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                <TextArea fx:id="text_addressLegal_changes" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="14.0" left="14.0" top="14.0" />
+                                             </padding>
+                                          </GridPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Фактический адрес">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <GridPane hgap="4.0" minHeight="320.0" prefHeight="313.0" prefWidth="990.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="841.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Код региона" />
+                                                <Label text="Регион" GridPane.rowIndex="1" />
+                                                <Label text="Индекс" GridPane.rowIndex="2" />
+                                                <Label text="Город" GridPane.rowIndex="3" />
+                                                <Label text="Улица" GridPane.rowIndex="4" />
+                                                <Label text="Дом" GridPane.rowIndex="5" />
+                                                <Label text="Офис" GridPane.rowIndex="6" />
+                                                <Label text="Район" GridPane.rowIndex="7" />
+                                                <Label text="Дополнительная информация" wrapText="true" GridPane.rowIndex="8" />
+                                                <TextField fx:id="text_addressActual_regionId" editable="false" maxWidth="70.0" GridPane.columnIndex="1" />
+                                                <TextField fx:id="text_addressActual_regionName" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="text_addressActual_index" editable="false" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="text_addressActual_town" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextField fx:id="text_addressActual_street" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <TextField fx:id="text_addressActual_house" editable="false" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <TextField fx:id="text_addressActual_office" editable="false" maxWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <TextField fx:id="text_addressActual_district" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                <TextArea fx:id="text_addressActual_changes" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="14.0" left="14.0" top="14.0" />
+                                             </padding>
+                                          </GridPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Контактные лица">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <VBox minHeight="242.0" prefHeight="242.0" prefWidth="990.0">
+                                             <children>
+                                                <AnchorPane prefHeight="36.0" prefWidth="970.0">
+                                                   <children>
+                                                      <Label layoutY="10.0" text="ФИО" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                                      <ComboBox fx:id="cmbBox_contactPersonId" disable="true" layoutX="225.0" layoutY="1.0" onAction="#fillSelectedPerson" prefHeight="26.0" prefWidth="624.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="121.0" AnchorPane.topAnchor="3.0" />
+                                                      <Button fx:id="btn_add_contactPerson" disable="true" layoutX="434.0" layoutY="1.0" mnemonicParsing="false" onAction="#createContactPerson" text="+" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="3.0" />
+                                                      <Button fx:id="btn_remove_contactPerson" disable="true" layoutX="467.0" layoutY="1.0" mnemonicParsing="false" onAction="#removeContactPerson" text="-" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="3.0" />
+                                                      <Button fx:id="btn_rename_contactPerson" disable="true" layoutX="496.0" layoutY="1.0" mnemonicParsing="false" onAction="#renameContactPerson" text="R" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="3.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <GridPane hgap="4.0" vgap="4.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="220.0" prefWidth="220.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="751.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Должность" />
+                                                      <Label text="Мобильный телефон" GridPane.rowIndex="1" />
+                                                      <Label text="Дополнительный телефон" GridPane.rowIndex="2" />
+                                                      <Label text="Электронная почта" GridPane.rowIndex="3" />
+                                                      <Label text="Дополнительная информация" GridPane.rowIndex="4" />
+                                                      <TextField fx:id="text_contactPerson_position" editable="false" GridPane.columnIndex="1" />
+                                                      <TextField fx:id="text_contactPerson_phoneMobile" editable="false" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <TextField fx:id="text_contactPerson_phoneCity" editable="false" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="text_contactPerson_email" editable="false" maxWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <TextArea fx:id="text_contactPerson_changes" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="7.0" />
+                                                   </VBox.margin>
+                                                </GridPane>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="14.0" left="14.0" top="14.0" />
+                                             </padding>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Информация по счетам">
+                           <content>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <VBox maxHeight="350.0" minHeight="350.0" prefHeight="442.0" prefWidth="990.0">
+                                             <children>
+                                                <AnchorPane prefHeight="36.0" prefWidth="970.0">
+                                                   <children>
+                                                      <Label layoutY="10.0" text="Номер счета" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="6.0" />
+                                                      <ComboBox fx:id="cmbBox_invoiceId" disable="true" layoutX="225.0" layoutY="1.0" onAction="#fillSelectedInvoice" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="225.0" AnchorPane.topAnchor="3.0" />
+                                                      <Button fx:id="btn_add_invoice" disable="true" layoutX="434.0" layoutY="1.0" mnemonicParsing="false" onAction="#createInvoice" text="+" AnchorPane.leftAnchor="434.0" AnchorPane.topAnchor="3.0" />
+                                                      <Button fx:id="btn_remove_invoice" disable="true" layoutX="467.0" layoutY="1.0" mnemonicParsing="false" onAction="#deleteInvoice" text="-" AnchorPane.leftAnchor="467.0" AnchorPane.topAnchor="3.0" />
+                                                      <Button fx:id="btn_rename_invoice" disable="true" layoutX="496.0" layoutY="1.0" mnemonicParsing="false" onAction="#renameInvoice" text="R" AnchorPane.leftAnchor="496.0" AnchorPane.topAnchor="3.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <GridPane hgap="4.0" maxHeight="300.0" minHeight="290.0" prefHeight="331.0" prefWidth="970.0" vgap="4.0" VBox.vgrow="ALWAYS">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="220.0" prefWidth="220.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="745.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <Label text="Дата счета" />
+                                                      <Label text="Статус получения" GridPane.rowIndex="1" />
+                                                      <Label text="Дата получения" GridPane.rowIndex="2" />
+                                                      <Label text="Номер платежного поручения" GridPane.rowIndex="3" />
+                                                      <Label text="Дата платежного поручения" GridPane.rowIndex="4" />
+                                                      <Label text="Сумма" GridPane.rowIndex="5" />
+                                                      <Label text="Статус оплаты" GridPane.rowIndex="6" />
+                                                      <Label text="Дополнительная информация" GridPane.rowIndex="7" />
+                                                      <TextField fx:id="text_invoice_statusReceiving" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <TextField fx:id="text_invoice_orderId" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <TextField fx:id="text_invoice_price" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                      <TextField fx:id="text_invoice_statusPayment" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                      <TextArea fx:id="text_invoice_comment" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                      <TextField fx:id="text_invoice_dateReceiving" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="text_invoice_orderDate" editable="false" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <TextField fx:id="text_invoice_dateCreation" editable="false" maxWidth="200.0" GridPane.columnIndex="1" />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets top="7.0" />
+                                                   </VBox.margin>
+                                                </GridPane>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="14.0" left="14.0" top="14.0" />
+                                             </padding>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Социальные сети">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane layoutY="22.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <GridPane hgap="4.0" vgap="4.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                                              <ColumnConstraints maxWidth="900.0" minWidth="900.0" prefWidth="900.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Vkontakte" />
+                                                <Label text="Facebook" GridPane.rowIndex="1" />
+                                                <Label text="Telegram" GridPane.rowIndex="2" />
+                                                <Label text="Whatsapp" GridPane.rowIndex="3" />
+                                                <Label text="Viber" GridPane.rowIndex="4" />
+                                                <Label text="Skype" GridPane.rowIndex="5" />
+                                                <Label text="Instagram" GridPane.rowIndex="6" />
+                                                <Label text="Twitter" GridPane.rowIndex="7" />
+                                                <Label text="Youtube" GridPane.rowIndex="8" />
+                                                <TextField fx:id="text_socialNetworks_vkontakte" GridPane.columnIndex="1" />
+                                                <TextField fx:id="text_socialNetworks_facebook" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="text_socialNetworks_telegram" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="text_socialNetworks_whatsapp" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextField fx:id="text_socialNetworks_viber" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <TextField fx:id="text_socialNetworks_skype" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <TextField fx:id="text_socialNetworks_instagram" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <TextField fx:id="text_socialNetworks_twitter" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                <TextField fx:id="text_socialNetworks_youtube" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="14.0" left="14.0" top="14.0" />
+                                             </padding>
+                                          </GridPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Интересующие услуги">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <GridPane hgap="4.0" vgap="4.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <padding>
+                                                <Insets left="14.0" right="14.0" top="14.0" />
+                                             </padding>
+                                             <children>
+                                                <CheckBox fx:id="checkBox_services_1" disable="true" mnemonicParsing="false" text="Экспертиза">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_2" disable="true" mnemonicParsing="false" text="Сертификация" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_3" disable="true" mnemonicParsing="false" text="Оценка" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_4" disable="true" mnemonicParsing="false" text="Выставки, ярмарки, конгрессы, деловые миссии, презентации" wrapText="true" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_5" disable="true" mnemonicParsing="false" text="Деловое образование, подготовка кадров" wrapText="true" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_6" disable="true" mnemonicParsing="false" text="Информационно-консультационные услуги" wrapText="true" GridPane.columnIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_8" disable="true" mnemonicParsing="false" text="Правовая охрана и защита интеллектуальной собственности" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_10" disable="true" mnemonicParsing="false" text="МКАС" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_12" disable="true" mnemonicParsing="false" text="Проведение примирительных процедур" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_13" disable="true" mnemonicParsing="false" text="Лабораторные исследования" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_15" disable="true" mnemonicParsing="false" text="Промышленная кооперация и субконтрактация" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_7" disable="true" mnemonicParsing="false" text="Переводы" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_9" disable="true" mnemonicParsing="false" text="Привлечение инвестиций" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_11" disable="true" mnemonicParsing="false" text="СОУТ" GridPane.columnIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_14" disable="true" mnemonicParsing="false" text="Электронно-цифровая подпись (ЭЦП)" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                             </children>
+                                          </GridPane>
+                                          <GridPane hgap="4.0" vgap="4.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="659.0" minWidth="659.0" prefWidth="659.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <VBox.margin>
+                                                <Insets top="4.0" />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets left="14.0" right="14.0" />
+                                             </padding>
+                                             <children>
+                                                <CheckBox fx:id="checkBox_services_16" disable="true" mnemonicParsing="false" text="Обеспечение системного подхода к повышению качества продукции (работ и услуг) на территории Воронежской области" wrapText="true">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_17" disable="true" mnemonicParsing="false" text="Экспортная поддержка предприятий" GridPane.columnIndex="1">
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

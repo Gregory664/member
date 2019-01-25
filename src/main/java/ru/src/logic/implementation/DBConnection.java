@@ -62,7 +62,10 @@ public class DBConnection implements MemberLogic {
             for (Member member: members) {
                 member.getInvoice().size();
                 member.getContactPerson().size();
+                member.getServices().size();
             }
+
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
