@@ -407,9 +407,6 @@ public class CreateMemberFormController {
     private ObservableList<String> region = FXCollections.observableArrayList();
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
-
-
-
     @FXML
     public void initialize() {
         clearText();

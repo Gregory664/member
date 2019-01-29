@@ -303,6 +303,7 @@ public class MainFormController {
     private Organizations memberOrganizations = new Organizations();
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
+    private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
     private Stage mainStage;
     private Stage createInvoiceStage;
@@ -338,7 +339,7 @@ public class MainFormController {
     private UpdateMemberFormController updateMemberFormController;
     private SelectController selectController;
 
-    private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
+
 
     @FXML
     public void initialize() {

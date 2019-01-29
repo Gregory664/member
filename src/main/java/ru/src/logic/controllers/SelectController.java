@@ -1,6 +1,5 @@
 package ru.src.logic.controllers;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -13,10 +12,11 @@ import javafx.scene.layout.AnchorPane;
 import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.ListUtils;
 import ru.src.logic.implementation.MemberUtils;
+import ru.src.logic.implementation.PDFUtils;
 import ru.src.model.FindMember;
-import ru.src.model.Member;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class SelectController {
@@ -340,6 +340,43 @@ public class SelectController {
     public DatePicker date_receiving_1;
     @FXML
     public DatePicker date_receiving_2;
+    @FXML
+    public Button btn_save;
+
+    @FXML
+    public CheckBox checkBox_services_1;
+    @FXML
+    public CheckBox checkBox_services_2;
+    @FXML
+    public CheckBox checkBox_services_3;
+    @FXML
+    public CheckBox checkBox_services_4;
+    @FXML
+    public CheckBox checkBox_services_5;
+    @FXML
+    public CheckBox checkBox_services_6;
+    @FXML
+    public CheckBox checkBox_services_7;
+    @FXML
+    public CheckBox checkBox_services_8;
+    @FXML
+    public CheckBox checkBox_services_9;
+    @FXML
+    public CheckBox checkBox_services_10;
+    @FXML
+    public CheckBox checkBox_services_11;
+    @FXML
+    public CheckBox checkBox_services_12;
+    @FXML
+    public CheckBox checkBox_services_13;
+    @FXML
+    public CheckBox checkBox_services_15;
+    @FXML
+    public CheckBox checkBox_services_14;
+    @FXML
+    public CheckBox checkBox_services_16;
+    @FXML
+    public CheckBox checkBox_services_17;
 
     private boolean isEmptyCBMemberStatus = false;
     private boolean isEmptyBusinessForm = false;
@@ -396,6 +433,7 @@ public class SelectController {
     ArrayList<DatePicker> listDatePayment = new ArrayList<DatePicker>();
     ArrayList<CheckBox> listReceiving = new ArrayList<CheckBox>();
     ArrayList<DatePicker> listDateReceiving = new ArrayList<DatePicker>();
+    private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
 
     Boolean[] listOfFlags = new Boolean[16];
@@ -444,8 +482,7 @@ public class SelectController {
         initializeDatePayment();
         initializeReceiving();
         initializeDateReceiving();
-
-
+        initializeServices();
 
         addMemberStatusListener();
         addBusinessFormListener();
@@ -478,9 +515,6 @@ public class SelectController {
         addSelectAllInterestsCheckBox();
 
     }
-
-
-
 
     private void addSelectAllInterestsCheckBox() {
         anchor_Interests.setOnMouseClicked(event -> {
@@ -695,6 +729,25 @@ public class SelectController {
     private void initializeDateReceiving() {
         listDateReceiving.add(date_receiving_1);
         listDateReceiving.add(date_receiving_2);
+    }
+    private void initializeServices() {
+        servicesCheckBoxMap.put(1, checkBox_services_1);
+        servicesCheckBoxMap.put(2, checkBox_services_2);
+        servicesCheckBoxMap.put(3, checkBox_services_3);
+        servicesCheckBoxMap.put(4, checkBox_services_4);
+        servicesCheckBoxMap.put(5, checkBox_services_5);
+        servicesCheckBoxMap.put(6, checkBox_services_6);
+        servicesCheckBoxMap.put(7, checkBox_services_7);
+        servicesCheckBoxMap.put(8, checkBox_services_8);
+        servicesCheckBoxMap.put(9, checkBox_services_9);
+        servicesCheckBoxMap.put(10, checkBox_services_10);
+        servicesCheckBoxMap.put(11, checkBox_services_11);
+        servicesCheckBoxMap.put(12, checkBox_services_12);
+        servicesCheckBoxMap.put(13, checkBox_services_13);
+        servicesCheckBoxMap.put(14, checkBox_services_14);
+        servicesCheckBoxMap.put(15, checkBox_services_15);
+        servicesCheckBoxMap.put(16, checkBox_services_16);
+        servicesCheckBoxMap.put(17, checkBox_services_17);
     }
 
     private void addMemberStatusListener() {
@@ -1094,8 +1147,6 @@ public class SelectController {
         });
     }
 
-
-
     private void selectAllCheckBox(boolean value) {
         selectMemberStatus(value);
         selectBusinessForm(value);
@@ -1122,9 +1173,8 @@ public class SelectController {
         selectMonth(value);
         selectPayment(value);
         selectReceiving(value);
-
+        selectServices(value);
     }
-
 
     private void selectMemberStatus(boolean value) {
         listMemberStatus.forEach(checkBox -> checkBox.setSelected(value));
@@ -1202,6 +1252,9 @@ public class SelectController {
     private void selectReceiving(boolean value) {
         listReceiving.forEach(checkBox -> checkBox.setSelected(value));
     }
+    private void selectServices(boolean value) {
+        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setSelected(value));
+    }
     private void disableDatePayment(boolean value) {
         listDatePayment.forEach(datePicker -> datePicker.setDisable(value));
     }
@@ -1209,13 +1262,9 @@ public class SelectController {
         listDateReceiving.forEach(datePicker -> datePicker.setDisable(value));
     }
 
-
-
     public void clearAllCheckBox(ActionEvent actionEvent) {
         selectAllCheckBox(false);
         list.clear();
-
-
     }
 
     public void search(ActionEvent actionEvent) {
@@ -1225,8 +1274,6 @@ public class SelectController {
     }
 
     private String getResultQuery() {
-        String selectQuery = "SELECT m.MEMBER_ID, m.MEMBER_SERIAL, c.CONTACT_PHONE, m.MEMBER_STATUS, m.MEMBER_SHORT_NAME";
-        String fromQuery = "FROM MEMBER m, CONTACT c, DEBT d, GENERAL_INFORMATION gi, ADDRESS_LEGAL al, INVOICE i";
 
         ArrayList<String> test = new ArrayList<>();
 
@@ -1256,21 +1303,27 @@ public class SelectController {
         test.add(getWherePartFromList(listNeedForYoungPersonnel, "gi.NEED_FOR_YOUNG_PERSONNEL", 2));
         test.add(getWherePartFromList(listLocation, "al.ADDRESS_LEGAL_REGION_ID;al.ADDRESS_LEGAL_DISTRICT", 5));
         test.add(getWherePartFromList(listMonth, "month(MEMBER_DATE_OF_ENTRY)", 6));
-        test.add(getWherePartFromList(listPayment, "i.INVOICE_STATUS_OF_PAYMENT", 7));
         test.add(getWherePartFromDate(listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
-        test.add(getWherePartFromList(listReceiving, "i.INVOICE_STATUS_OF_RECEIVING", 8));
         test.add(getWherePartFromDate(listDateReceiving, "i.INVOICE_DATE_OF_RECEIVING;i.INVOICE_DATE_OF_RECEIVING"));
+        test.add(getWherePartFromList(listReceiving, "i.INVOICE_STATUS_OF_RECEIVING", 8));
+        test.add(getWherePartFromList(listPayment, "i.INVOICE_STATUS_OF_PAYMENT", 7));
+        test.add(getWherePartFromServices());
 
+        ListUtils.removeAllNullObjectFromList(test);
 
-
-        removeAllNullObjectFromList(test);
-
-        String whereQuery = "WHERE " + getAppendWhereQuery(test) +
-                " AND (m.MEMBER_ID = c.MEMBER_ID)" +
-                " AND (m.MEMBER_ID = d.MEMBER_ID)" +
-                " AND (m.MEMBER_ID = gi.MEMBER_ID)" +
-                " AND (m.MEMBER_ID = al.MEMBER_ID)" +
-                " AND (m.MEMBER_ID = i.MEMBER_ID);";
+        String selectQuery = "SELECT DISTINCT m.MEMBER_ID, " +
+                "m.MEMBER_SERIAL, " +
+                "c.CONTACT_PHONE, " +
+                "m.MEMBER_STATUS, " +
+                "m.MEMBER_SHORT_NAME";
+        String fromQuery = "FROM MEMBER m \n" +
+               "INNER JOIN CONTACT c ON m.MEMBER_ID=c.MEMBER_ID " +
+               "INNER JOIN DEBT d ON m.MEMBER_ID=d.MEMBER_ID " +
+               "INNER JOIN GENERAL_INFORMATION gi ON m.MEMBER_ID=gi.MEMBER_ID " +
+               "INNER JOIN ADDRESS_LEGAL al ON m.MEMBER_ID=al.MEMBER_ID " +
+               "LEFT JOIN INVOICE i ON m.MEMBER_ID=i.MEMBER_ID " +
+               "INNER JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID";
+        String whereQuery = "WHERE " + getAppendWhereQuery(test) + ";";
 
         return selectQuery + "\n" + fromQuery + "\n" + whereQuery;
     }
@@ -1351,23 +1404,71 @@ public class SelectController {
 
     }
 
-
-    private void removeAllNullObjectFromList(ArrayList<String> list) {
-        int index = list.lastIndexOf(null);
-        if(index != -1) {
-           list.remove(null);
-           removeAllNullObjectFromList(list);
+    private String getWherePartFromServices() {
+        StringBuilder result = new StringBuilder();
+        StringBuilder numbers = new StringBuilder();
+        int numbersCount = 0;
+        for (Map.Entry<Integer, CheckBox> entry: servicesCheckBoxMap.entrySet()) {
+            if(entry.getValue().isSelected()) {
+                numbersCount++;
+                numbers.append(entry.getKey()).append(",");
+            }
         }
+        if(numbersCount != 0) {
+            numbers.deleteCharAt(numbers.length() - 1);
+            return result.append("ms.SERVICES_ID IN(")
+                    .append(numbers)
+                    .append(") GROUP BY m.MEMBER_ID HAVING COUNT(*)=")
+                    .append(numbersCount).toString();
+        } else return null;
+
     }
 
     private String getAppendWhereQuery(ArrayList<String> list) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < list.size(); i++) {
-            result += "(" + list.get(i) + ")";
-            if (i != list.size() - 1) result += " AND ";
+
+            if(i != list.size() - 1) result.append("(").append(list.get(i)).append(") AND ");
+            else result.append(list.get(i));
         }
-        return result;
+
+
+
+        return result.toString();
     }
 
+    public void saveToPDF(ActionEvent actionEvent) {
+        ArrayList<String> listParagraphForPDF = new ArrayList<String>();
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_memberStatus, listMemberStatus));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_businessForm, listBusinessForm));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_debt_status, listDebtStatus));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_organizationForm, listOrganizationForm));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_ownershipForm, listOwnershipForm));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_activityType, listActivityType));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_economicSector, listEconomicSector));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_vedImport, listVedImport));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_vedExport, listVedExport));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_interactionOnline, listInteractionOnline));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_interactionOffline, listInteractionOffline));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_b2b, listB2b));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_b2c, listB2c));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_businessMissionVisiting, listBusinessMissionVisiting));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_businessMissionRegional, listBusinessMissionRegional));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_mkas, listMkas));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_needForYoungPersonnel, listNeedForYoungPersonnel));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_discounts, listDiscounts));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_reliablePartners, listReliablePartners));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_pilotProjects, listPilotProjects));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_antiCorruptionCharter, listAntiCorruptionCharter));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_location, listLocation));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_month, listMonth));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_payment, listPayment));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_receiving, listReceiving));
+
+        ListUtils.removeAllNullObjectFromList(listParagraphForPDF);
+
+        PDFUtils.saveToPDF(listParagraphForPDF, "/home/green/test/test.pdf");
+
+    }
 }

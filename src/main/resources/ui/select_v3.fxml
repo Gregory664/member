@@ -836,6 +836,187 @@
                               </AnchorPane>
                           </content>
                         </Tab>
+                        <Tab text="Интересующие услуги">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <GridPane hgap="4.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <padding>
+                                                <Insets left="14.0" right="14.0" top="14.0" />
+                                             </padding>
+                                             <children>
+                                                <CheckBox fx:id="checkBox_services_1" mnemonicParsing="false" text="Экспертиза">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_2" mnemonicParsing="false" text="Сертификация" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_3" mnemonicParsing="false" text="Оценка" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_4" mnemonicParsing="false" text="Выставки, ярмарки, конгрессы, деловые миссии, презентации" wrapText="true" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_5" mnemonicParsing="false" text="Деловое образование, подготовка кадров" wrapText="true" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_6" mnemonicParsing="false" text="Информационно-консультационные услуги" wrapText="true" GridPane.columnIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_8" mnemonicParsing="false" text="Правовая охрана и защита интеллектуальной собственности" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_10" mnemonicParsing="false" text="МКАС" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_12" mnemonicParsing="false" text="Проведение примирительных процедур" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_13" mnemonicParsing="false" text="Лабораторные исследования" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_15" mnemonicParsing="false" text="Промышленная кооперация и субконтрактация" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_7" mnemonicParsing="false" text="Переводы" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_9" mnemonicParsing="false" text="Привлечение инвестиций" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_11" mnemonicParsing="false" text="СОУТ" GridPane.columnIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_14" mnemonicParsing="false" text="Электронно-цифровая подпись (ЭЦП)" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                             </children>
+                                          </GridPane>
+                                          <GridPane hgap="4.0" vgap="4.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="659.0" minWidth="659.0" prefWidth="659.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="327.0" prefWidth="327.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <VBox.margin>
+                                                <Insets top="4.0" />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets left="14.0" right="14.0" />
+                                             </padding>
+                                             <children>
+                                                <CheckBox fx:id="checkBox_services_16" mnemonicParsing="false" text="Обеспечение системного подхода к повышению качества продукции (работ и услуг) на территории Воронежской области" wrapText="true">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                                <CheckBox fx:id="checkBox_services_17" mnemonicParsing="false" text="Экспортная поддержка предприятий" GridPane.columnIndex="1">
+                                                   <padding>
+                                                      <Insets left="7.0" />
+                                                   </padding>
+                                                </CheckBox>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
                     </tabs>
                   </TabPane>
                </children>
