@@ -112,6 +112,12 @@ public class MainFormController {
     public TextField text_generalInformation_antiCorruptionCharter;
     @FXML
     public TextArea text_generalInformation_changes;
+    @FXML
+    public TextField text_generalInformation_newsletter;
+    @FXML
+    public TextField text_generalInformation_committees;
+    @FXML
+    public TextField text_generalInformation_corporateMember;
 
     @FXML
     public TextField text_director_fullName;
@@ -298,7 +304,6 @@ public class MainFormController {
     public CheckBox checkBox_services_16;
     @FXML
     public CheckBox checkBox_services_17;
-
 
     private Organizations memberOrganizations = new Organizations();
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
@@ -578,6 +583,9 @@ public class MainFormController {
         text_generalInformation_reliablePartners.setText(MemberUtils.isInteresting(generalInformation.isReliablePartners()));
         text_generalInformation_pilotProjects.setText(MemberUtils.isInteresting(generalInformation.isPilotProjects()));
         text_generalInformation_antiCorruptionCharter.setText(MemberUtils.isInteresting(generalInformation.isAntiCorruptionCharter()));
+        text_generalInformation_newsletter.setText(MemberUtils.isInteresting(generalInformation.isNewsletter()));
+        text_generalInformation_committees.setText(MemberUtils.isInteresting(generalInformation.isNewsletter()));
+        text_generalInformation_corporateMember.setText(MemberUtils.isYesNo(generalInformation.isNewsletter()));
         text_generalInformation_changes.setText(generalInformation.getChanges());
 
     }

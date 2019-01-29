@@ -55,7 +55,7 @@
                   <Label fx:id="countOfOrganization" text="Label" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
                </children>
             </AnchorPane>
-            <AnchorPane maxHeight="395.0" minHeight="395.0" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane maxHeight="395.0" minHeight="395.0" prefHeight="406.0" prefWidth="1022.0">
                <children>
                   <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
@@ -132,6 +132,9 @@
                                                 <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
@@ -151,7 +154,7 @@
                                                 <Label text="Выездные бизнес миссии" GridPane.rowIndex="13" />
                                                 <Label text="Региональные бизнес миссии" GridPane.rowIndex="14" />
                                                 <Label text="Заинтересованность в MKAS" GridPane.rowIndex="15" />
-                                                <Label text="Дополнительная информация" GridPane.rowIndex="21" />
+                                                <Label text="Дополнительная информация" GridPane.rowIndex="24" />
                                                 <TextField fx:id="text_generalInformation_organizationForm" editable="false" maxWidth="300.0" minWidth="300.0" GridPane.columnIndex="1" />
                                                 <TextField fx:id="text_generalInformation_economicSector" editable="false" maxWidth="300.0" minWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <TextField fx:id="text_generalInformation_ownershipForm" editable="false" maxWidth="300.0" minWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -168,7 +171,7 @@
                                                 <TextField fx:id="text_generalInformation_businessMissionVisiting" editable="false" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="13" />
                                                 <TextField fx:id="text_generalInformation_businessMissionRegional" editable="false" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="14" />
                                                 <TextField fx:id="text_generalInformation_mkas" editable="false" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-                                                <TextArea fx:id="text_generalInformation_changes" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="21" />
+                                                <TextArea fx:id="text_generalInformation_changes" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="24" />
                                                 <Label text="Потребность в молодых кадрах" GridPane.rowIndex="16" />
                                                 <Label text="Скидки другим членам ТПП" GridPane.rowIndex="17" />
                                                 <Label text="Реестр надежных партнеров" GridPane.rowIndex="18" />
@@ -179,6 +182,12 @@
                                                 <TextField fx:id="text_generalInformation_reliablePartners" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="18" />
                                                 <TextField fx:id="text_generalInformation_pilotProjects" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="19" />
                                                 <TextField fx:id="text_generalInformation_antiCorruptionCharter" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+                                                <Label text="Информационная рассылка" GridPane.rowIndex="21" />
+                                                <Label text="Участие в комитетах" GridPane.rowIndex="22" />
+                                                <Label text="Корпоративный член" GridPane.rowIndex="23" />
+                                                <TextField fx:id="text_generalInformation_newsletter" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="21" />
+                                                <TextField fx:id="text_generalInformation_committees" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="22" />
+                                                <TextField fx:id="text_generalInformation_corporateMember" maxWidth="170.0" minWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="23" />
                                              </children>
                                           </GridPane>
                                        </content>
