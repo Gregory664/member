@@ -76,12 +76,45 @@ public class GeneralInformation implements Serializable {
     @Column(name = "ANTI_CORRUPTION_CHARTER", nullable = false)
     private boolean antiCorruptionCharter;
 
+    @Column(name = "NEWSLETTER", nullable = false)
+    private boolean newsletter;
+
+    @Column(name = "COMMITTEES", nullable = false)
+    private boolean committees;
+
+    @Column(name = "CORPORATE_MEMBER", nullable = false)
+    private boolean corporateMember;
+
     @Column(name = "GENERAL_INFORMATION_CHANGES")
     private String changes;
 
 
     private GeneralInformation() {
 
+    }
+
+    public boolean isNewsletter() {
+        return newsletter;
+    }
+
+    public void setNewsletter(boolean newsletter) {
+        this.newsletter = newsletter;
+    }
+
+    public boolean isCommittees() {
+        return committees;
+    }
+
+    public void setCommittees(boolean committees) {
+        this.committees = committees;
+    }
+
+    public boolean isCorporateMember() {
+        return corporateMember;
+    }
+
+    public void setCorporateMember(boolean corporateMember) {
+        this.corporateMember = corporateMember;
     }
 
     public boolean isNeedForYoungPersonnel() {
@@ -143,7 +176,10 @@ public class GeneralInformation implements Serializable {
                               boolean discounts,
                               boolean reliablePartners,
                               boolean pilotProjects,
-                              boolean antiCorruptionCharter) {
+                              boolean antiCorruptionCharter,
+                              boolean newsletter,
+                              boolean committees,
+                              boolean corporateMember) {
         this.member = member;
         this.organizationForm = organizationForm;
         this.economicSector = economicSector;
@@ -164,6 +200,9 @@ public class GeneralInformation implements Serializable {
         this.reliablePartners = reliablePartners;
         this.pilotProjects = pilotProjects;
         this.antiCorruptionCharter = antiCorruptionCharter;
+        this.newsletter = newsletter;
+        this.committees = committees;
+        this.corporateMember = corporateMember;
     }
 
     public Member getMember() {
