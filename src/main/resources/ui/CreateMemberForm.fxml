@@ -189,6 +189,15 @@
                                           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
@@ -209,12 +218,12 @@
                                           <Label text="Выездные бизнес миссии" GridPane.rowIndex="39" />
                                           <Label text="Региональные бизнес миссии" GridPane.rowIndex="42" />
                                           <Label text="Заинтересованность в MKAS" GridPane.rowIndex="45" />
-                                          <Label text="Дополнительная информация" GridPane.rowIndex="63" />
+                                          <Label text="Дополнительная информация" GridPane.rowIndex="72" />
                                           <ComboBox fx:id="comboBox_generalInformation_organizationForm" maxWidth="300.0" minWidth="300.0" prefWidth="150.0" GridPane.columnIndex="1" />
                                           <ComboBox fx:id="comboBox_generalInformation_economicSector" maxWidth="300.0" minWidth="300.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <TextArea fx:id="text_generalInformation_investmentsTarget" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="21" />
                                           <TextField fx:id="text_generalInformation_investmentsSize" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="24" />
-                                          <TextArea fx:id="text_generalInformation_changes" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="63" />
+                                          <TextArea fx:id="text_generalInformation_changes" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="72" />
                                           <ComboBox fx:id="comboBox_generalInformation_ownershipForm" maxWidth="300.0" minWidth="300.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                           <ComboBox fx:id="comboBox_generalInformation_activityType" maxWidth="300.0" minWidth="300.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                           <ComboBox fx:id="comboBox_generalInformation_businessForm" maxWidth="300.0" minWidth="300.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
@@ -242,7 +251,7 @@
                                           <Label fx:id="label_alarm_generalInformation_businessMissionVisiting" GridPane.columnIndex="1" GridPane.rowIndex="40" />
                                           <Label fx:id="label_alarm_generalInformation_businessMissionRegional" GridPane.columnIndex="1" GridPane.rowIndex="43" />
                                           <Label fx:id="label_alarm_generalInformation_mkas" GridPane.columnIndex="1" GridPane.rowIndex="46" />
-                                          <Label fx:id="label_alarm_generalInformation_changes" GridPane.columnIndex="1" GridPane.rowIndex="64" />
+                                          <Label fx:id="label_alarm_generalInformation_changes" GridPane.columnIndex="1" GridPane.rowIndex="73" />
                                           <Label fx:id="label_alarm_generalInformation_vedImport" GridPane.columnIndex="1" GridPane.rowIndex="16" />
                                           <Label text="Потребность в молодых кадрах" GridPane.rowIndex="48" />
                                           <Label text="Скидки другим членам ТПП" GridPane.rowIndex="51" />
@@ -259,6 +268,15 @@
                                           <Label fx:id="label_alarm_generalInformation_reliablePartners" GridPane.columnIndex="1" GridPane.rowIndex="55" />
                                           <Label fx:id="label_alarm_generalInformation_pilotProjects" GridPane.columnIndex="1" GridPane.rowIndex="58" />
                                           <Label fx:id="label_alarm_generalInformation_antiCorruptionCharter" GridPane.columnIndex="1" GridPane.rowIndex="61" />
+                                          <Label text="Информационная рассылка" GridPane.rowIndex="63" />
+                                          <Label text="Участие в комитетах" GridPane.rowIndex="66" />
+                                          <Label text="Корпоративный член" GridPane.rowIndex="69" />
+                                          <ComboBox fx:id="comboBox_generalInformation_newsletter" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="63" />
+                                          <ComboBox fx:id="comboBox_generalInformation_committees" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="66" />
+                                          <ComboBox fx:id="comboBox_generalInformation_corporateMember" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="69" />
+                                          <Label fx:id="label_alarm_generalInformation_newsletter" GridPane.columnIndex="1" GridPane.rowIndex="64" />
+                                          <Label fx:id="label_alarm_generalInformation_committees" GridPane.columnIndex="1" GridPane.rowIndex="67" />
+                                          <Label fx:id="label_alarm_generalInformation_corporateMember" GridPane.columnIndex="1" GridPane.rowIndex="70" />
                                        </children>
                                     </GridPane>
                                  </content>

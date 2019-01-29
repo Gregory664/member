@@ -15,14 +15,12 @@ import ru.src.model.Address.AddressLegal;
 import ru.src.model.General.GeneralInformation;
 import ru.src.model.Member;
 import ru.src.model.Personal.Contact;
-import ru.src.model.Personal.ContactPerson;
 import ru.src.model.Personal.Director;
 import ru.src.model.Personal.Relate;
 import ru.src.model.Services;
 import ru.src.model.SocialNetworks;
 import ru.src.model.buh.AccoutingInformation;
 import ru.src.model.buh.Debt;
-import ru.src.model.buh.Invoice;
 
 import java.util.*;
 
@@ -115,6 +113,12 @@ public class CreateMemberFormController {
     @FXML
     public ComboBox<String> comboBox_generalInformation_antiCorruptionCharter;
     @FXML
+    public ComboBox<String> comboBox_generalInformation_newsletter;
+    @FXML
+    public ComboBox<String> comboBox_generalInformation_committees;
+    @FXML
+    public ComboBox<String> comboBox_generalInformation_corporateMember;
+    @FXML
     public Label label_alarm_generalInformation_organizationForm;
     @FXML
     public Label label_alarm_generalInformation_economicSector;
@@ -156,6 +160,12 @@ public class CreateMemberFormController {
     public Label label_alarm_generalInformation_pilotProjects;
     @FXML
     public Label label_alarm_generalInformation_antiCorruptionCharter;
+    @FXML
+    public Label label_alarm_generalInformation_newsletter;
+    @FXML
+    public Label label_alarm_generalInformation_committees;
+    @FXML
+    public Label label_alarm_generalInformation_corporateMember;
     @FXML
     public Label label_alarm_generalInformation_changes;
 
@@ -399,7 +409,7 @@ public class CreateMemberFormController {
     private ObservableList<String> activityType = ListUtils.getActivityType();
     private ObservableList<String> businessForm = ListUtils.getBusinessForm();
     private ObservableList<String> interesting = ListUtils.getInteresting();
-    private ObservableList<String> ved = ListUtils.getVed();
+    private ObservableList<String> yesNo = ListUtils.getYesNo();
     private ObservableList<String> debd = ListUtils.getDedbStatusList();
     private ObservableList<String> district = ListUtils.getDistrict();
 
@@ -517,8 +527,8 @@ public class CreateMemberFormController {
         comboBox_generalInformation_ownershipForm.setItems(ownershipForm);
         comboBox_generalInformation_activityType.setItems(activityType);
         comboBox_generalInformation_businessForm.setItems(businessForm);
-        comboBox_generalInformation_vedExport.setItems(ved);
-        comboBox_generalInformation_vedImport.setItems(ved);
+        comboBox_generalInformation_vedExport.setItems(yesNo);
+        comboBox_generalInformation_vedImport.setItems(yesNo);
         comboBox_generalInformation_interactionOnline.setItems(interesting);
         comboBox_generalInformation_interactionOffline.setItems(interesting);
         comboBox_generalInformation_b2b.setItems(interesting);
@@ -531,6 +541,9 @@ public class CreateMemberFormController {
         comboBox_generalInformation_reliablePartners.setItems(interesting);
         comboBox_generalInformation_pilotProjects.setItems(interesting);
         comboBox_generalInformation_antiCorruptionCharter.setItems(interesting);
+        comboBox_generalInformation_newsletter.setItems(interesting);
+        comboBox_generalInformation_committees.setItems(interesting);
+        comboBox_generalInformation_corporateMember.setItems(yesNo);
         comboBox_debt_status.setItems(debd);
         comboBox_addressActual_district.setItems(district);
         comboBox_addressLegal_district.setItems(district);
@@ -575,6 +588,9 @@ public class CreateMemberFormController {
         label_alarm_generalInformation_reliablePartners.setText("");
         label_alarm_generalInformation_pilotProjects.setText("");
         label_alarm_generalInformation_antiCorruptionCharter.setText("");
+        label_alarm_generalInformation_newsletter.setText("");
+        label_alarm_generalInformation_committees.setText("");
+        label_alarm_generalInformation_corporateMember.setText("");
 
         label_alarm_director_fullName.setText("");
         label_alarm_director_position.setText("");
@@ -792,6 +808,9 @@ public class CreateMemberFormController {
         label_alarm_generalInformation_reliablePartners.setStyle(null);
         label_alarm_generalInformation_pilotProjects.setStyle(null);
         label_alarm_generalInformation_antiCorruptionCharter.setStyle(null);
+        label_alarm_generalInformation_antiCorruptionCharter.setStyle(null);
+        label_alarm_generalInformation_newsletter.setStyle(null);
+        label_alarm_generalInformation_committees.setStyle(null);
 
         label_alarm_director_fullName.setStyle(null);
         label_alarm_director_position.setStyle(null);
@@ -897,8 +916,8 @@ public class CreateMemberFormController {
                 comboBox_generalInformation_ownershipForm.getSelectionModel().getSelectedItem(),
                 comboBox_generalInformation_activityType.getSelectionModel().getSelectedItem(),
                 comboBox_generalInformation_businessForm.getSelectionModel().getSelectedItem(),
-                MemberUtils.vedToBoolean(comboBox_generalInformation_vedImport.getSelectionModel().getSelectedItem()),
-                MemberUtils.vedToBoolean(comboBox_generalInformation_vedExport.getSelectionModel().getSelectedItem()),
+                MemberUtils.yesNoToBoolean(comboBox_generalInformation_vedImport.getSelectionModel().getSelectedItem()),
+                MemberUtils.yesNoToBoolean(comboBox_generalInformation_vedExport.getSelectionModel().getSelectedItem()),
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_interactionOffline.getSelectionModel().getSelectedItem()),
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_interactionOnline.getSelectionModel().getSelectedItem()),
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_b2b.getSelectionModel().getSelectedItem()),
@@ -910,7 +929,10 @@ public class CreateMemberFormController {
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_discounts.getSelectionModel().getSelectedItem()),
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_reliablePartners.getSelectionModel().getSelectedItem()),
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_pilotProjects.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().getSelectedItem())
+                MemberUtils.interestingToBoolean(comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().getSelectedItem()),
+                MemberUtils.interestingToBoolean(comboBox_generalInformation_newsletter.getSelectionModel().getSelectedItem()),
+                MemberUtils.interestingToBoolean(comboBox_generalInformation_committees.getSelectionModel().getSelectedItem()),
+                MemberUtils.yesNoToBoolean(comboBox_generalInformation_corporateMember.getSelectionModel().getSelectedItem())
         );
 
         if (text_generalInformation_investmentsTarget.getText().length() > 0)
@@ -1090,6 +1112,9 @@ public class CreateMemberFormController {
         set.add(MemberUtils.isEmptyField(comboBox_generalInformation_reliablePartners, label_alarm_generalInformation_reliablePartners));
         set.add(MemberUtils.isEmptyField(comboBox_generalInformation_pilotProjects, label_alarm_generalInformation_pilotProjects));
         set.add(MemberUtils.isEmptyField(comboBox_generalInformation_antiCorruptionCharter, label_alarm_generalInformation_antiCorruptionCharter));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_newsletter, label_alarm_generalInformation_newsletter));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_committees, label_alarm_generalInformation_committees));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_corporateMember, label_alarm_generalInformation_corporateMember));
 
 
         set.add(MemberUtils.isEmptyField(text_director_fullName, label_alarm_director_fullName));

@@ -53,7 +53,7 @@ public class MemberUtils {
         return result;
     }
 
-    public static boolean vedToBoolean(String value) {
+    public static boolean yesNoToBoolean(String value) {
         boolean result = false;
         if(value.equals("Да")) result =  true;
         if(value.equals("Нет")) result = false;

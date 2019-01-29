@@ -96,7 +96,7 @@ public class ListUtils {
         interestingList.add("Не интересует");
         return interestingList;
     }
-    public static ObservableList<String> getVed() {
+    public static ObservableList<String> getYesNo() {
         ObservableList<String> vedList = FXCollections.observableArrayList();
         vedList.add("Да");
         vedList.add("Нет");

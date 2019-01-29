@@ -1337,7 +1337,7 @@ public class SelectController {
                 if(flag == 1) someSelect.add(pattern + " = '" + checkBox.getText() + "'");
                 if(flag == 2) someSelect.add(pattern + " = " + MemberUtils.interestingToBoolean(checkBox.getText()));
                 if(flag == 3) someSelect.add(pattern + " = " + MemberUtils.debtToBoolean(checkBox.getText()));
-                if(flag == 4) someSelect.add(pattern + " = " + MemberUtils.vedToBoolean(checkBox.getText()));
+                if(flag == 4) someSelect.add(pattern + " = " + MemberUtils.yesNoToBoolean(checkBox.getText()));
                 if(flag == 5) {
                     String[] splitPattern = pattern.split(";");
                     if (checkBox.getText().equals("Иногородние")) {

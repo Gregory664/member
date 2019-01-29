@@ -382,7 +382,7 @@ public class UpdateMemberFormController {
     private ObservableList<String> activityType = ListUtils.getActivityType();
     private ObservableList<String> businessForm = ListUtils.getBusinessForm();
     private ObservableList<String> interesting = ListUtils.getInteresting();
-    private ObservableList<String> ved = ListUtils.getVed();
+    private ObservableList<String> ved = ListUtils.getYesNo();
     private ObservableList<String> debd = ListUtils.getDedbStatusList();
     private ObservableList<String> district = ListUtils.getDistrict();
     private HashMap<Integer, String> regionMap = ListUtils.getRegionMap();
@@ -1008,8 +1008,8 @@ public class UpdateMemberFormController {
         member.getGeneralInformation().setOwnershipForm(comboBox_generalInformation_ownershipForm.getSelectionModel().getSelectedItem());
         member.getGeneralInformation().setActivityType(comboBox_generalInformation_activityType.getSelectionModel().getSelectedItem());
         member.getGeneralInformation().setBusinessForm(comboBox_generalInformation_businessForm.getSelectionModel().getSelectedItem());
-        member.getGeneralInformation().setVedImport(MemberUtils.vedToBoolean(comboBox_generalInformation_vedImport.getSelectionModel().getSelectedItem()));
-        member.getGeneralInformation().setVedExport(MemberUtils.vedToBoolean(comboBox_generalInformation_vedExport.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setVedImport(MemberUtils.yesNoToBoolean(comboBox_generalInformation_vedImport.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setVedExport(MemberUtils.yesNoToBoolean(comboBox_generalInformation_vedExport.getSelectionModel().getSelectedItem()));
         member.getGeneralInformation().setInteractionOffline(MemberUtils.interestingToBoolean(comboBox_generalInformation_interactionOffline.getSelectionModel().getSelectedItem()));
         member.getGeneralInformation().setInteractionOnline(MemberUtils.interestingToBoolean(comboBox_generalInformation_interactionOnline.getSelectionModel().getSelectedItem()));
         member.getGeneralInformation().setB2b(MemberUtils.interestingToBoolean(comboBox_generalInformation_b2b.getSelectionModel().getSelectedItem()));
