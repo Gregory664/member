@@ -808,9 +808,9 @@ public class CreateMemberFormController {
         label_alarm_generalInformation_reliablePartners.setStyle(null);
         label_alarm_generalInformation_pilotProjects.setStyle(null);
         label_alarm_generalInformation_antiCorruptionCharter.setStyle(null);
-        label_alarm_generalInformation_antiCorruptionCharter.setStyle(null);
         label_alarm_generalInformation_newsletter.setStyle(null);
         label_alarm_generalInformation_committees.setStyle(null);
+        label_alarm_generalInformation_corporateMember.setStyle(null);
 
         label_alarm_director_fullName.setStyle(null);
         label_alarm_director_position.setStyle(null);

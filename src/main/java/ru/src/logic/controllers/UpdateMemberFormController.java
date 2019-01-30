@@ -104,6 +104,12 @@ public class UpdateMemberFormController {
     @FXML
     public ComboBox<String> comboBox_generalInformation_antiCorruptionCharter;
     @FXML
+    public ComboBox<String> comboBox_generalInformation_newsletter;
+    @FXML
+    public ComboBox<String> comboBox_generalInformation_committees;
+    @FXML
+    public ComboBox<String> comboBox_generalInformation_corporateMember;
+    @FXML
     public Label label_alarm_generalInformation_needForYoungPersonnel;
     @FXML
     public Label label_alarm_generalInformation_discounts;
@@ -147,6 +153,12 @@ public class UpdateMemberFormController {
     public Label label_alarm_generalInformation_changes;
     @FXML
     public Label label_alarm_generalInformation_vedImport;
+    @FXML
+    public Label label_alarm_generalInformation_newsletter;
+    @FXML
+    public Label label_alarm_generalInformation_committees;
+    @FXML
+    public Label label_alarm_generalInformation_corporateMember;
 
     @FXML
     public TextField text_director_fullName;
@@ -382,7 +394,7 @@ public class UpdateMemberFormController {
     private ObservableList<String> activityType = ListUtils.getActivityType();
     private ObservableList<String> businessForm = ListUtils.getBusinessForm();
     private ObservableList<String> interesting = ListUtils.getInteresting();
-    private ObservableList<String> ved = ListUtils.getYesNo();
+    private ObservableList<String> yesNo = ListUtils.getYesNo();
     private ObservableList<String> debd = ListUtils.getDedbStatusList();
     private ObservableList<String> district = ListUtils.getDistrict();
     private HashMap<Integer, String> regionMap = ListUtils.getRegionMap();
@@ -526,8 +538,8 @@ public class UpdateMemberFormController {
         comboBox_generalInformation_ownershipForm.setItems(ownershipForm);
         comboBox_generalInformation_activityType.setItems(activityType);
         comboBox_generalInformation_businessForm.setItems(businessForm);
-        comboBox_generalInformation_vedExport.setItems(ved);
-        comboBox_generalInformation_vedImport.setItems(ved);
+        comboBox_generalInformation_vedExport.setItems(yesNo);
+        comboBox_generalInformation_vedImport.setItems(yesNo);
         comboBox_generalInformation_interactionOnline.setItems(interesting);
         comboBox_generalInformation_interactionOffline.setItems(interesting);
         comboBox_generalInformation_b2b.setItems(interesting);
@@ -540,6 +552,9 @@ public class UpdateMemberFormController {
         comboBox_generalInformation_reliablePartners.setItems(interesting);
         comboBox_generalInformation_pilotProjects.setItems(interesting);
         comboBox_generalInformation_antiCorruptionCharter.setItems(interesting);
+        comboBox_generalInformation_newsletter.setItems(interesting);
+        comboBox_generalInformation_committees.setItems(interesting);
+        comboBox_generalInformation_corporateMember.setItems(yesNo);
         comboBox_debt_status.setItems(debd);
         comboBox_addressActual_district.setItems(district);
         comboBox_addressLegal_district.setItems(district);
@@ -801,6 +816,9 @@ public class UpdateMemberFormController {
         label_alarm_generalInformation_reliablePartners.setStyle(null);
         label_alarm_generalInformation_pilotProjects.setStyle(null);
         label_alarm_generalInformation_antiCorruptionCharter.setStyle(null);
+        label_alarm_generalInformation_newsletter.setStyle(null);
+        label_alarm_generalInformation_committees.setStyle(null);
+        label_alarm_generalInformation_corporateMember.setStyle(null);
 
         label_alarm_director_fullName.setStyle(null);
         label_alarm_director_position.setStyle(null);
@@ -946,6 +964,9 @@ public class UpdateMemberFormController {
         comboBox_generalInformation_reliablePartners.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isReliablePartners()));
         comboBox_generalInformation_pilotProjects.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isPilotProjects()));
         comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isAntiCorruptionCharter()));
+        comboBox_generalInformation_committees.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isCommittees()));
+        comboBox_generalInformation_newsletter.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isNewsletter()));
+        comboBox_generalInformation_corporateMember.getSelectionModel().select(MemberUtils.isYesNo(member.getGeneralInformation().isCorporateMember()));
 
     }
 
@@ -1022,10 +1043,14 @@ public class UpdateMemberFormController {
         member.getGeneralInformation().setReliablePartners(MemberUtils.interestingToBoolean(comboBox_generalInformation_reliablePartners.getSelectionModel().getSelectedItem()));
         member.getGeneralInformation().setPilotProjects(MemberUtils.interestingToBoolean(comboBox_generalInformation_pilotProjects.getSelectionModel().getSelectedItem()));
         member.getGeneralInformation().setAntiCorruptionCharter(MemberUtils.interestingToBoolean(comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setNewsletter(MemberUtils.interestingToBoolean(comboBox_generalInformation_newsletter.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setCommittees(MemberUtils.interestingToBoolean(comboBox_generalInformation_committees.getSelectionModel().getSelectedItem()));
+        member.getGeneralInformation().setCorporateMember(MemberUtils.yesNoToBoolean(comboBox_generalInformation_corporateMember.getSelectionModel().getSelectedItem()));
         if (text_generalInformation_investmentsTarget.getText().length() > 0)
             member.getGeneralInformation().setInvestmentsTarget(text_generalInformation_investmentsTarget.getText());
         if (text_generalInformation_investmentsSize.getText().length() > 0)
             member.getGeneralInformation().setInvestmentsSize(Integer.valueOf(text_generalInformation_investmentsSize.getText()));
+
 
 
         member.getDirector().setPosition(text_director_position.getText());
@@ -1154,7 +1179,9 @@ public class UpdateMemberFormController {
         set.add(MemberUtils.isEmptyField(comboBox_generalInformation_reliablePartners, label_alarm_generalInformation_reliablePartners));
         set.add(MemberUtils.isEmptyField(comboBox_generalInformation_pilotProjects, label_alarm_generalInformation_pilotProjects));
         set.add(MemberUtils.isEmptyField(comboBox_generalInformation_antiCorruptionCharter, label_alarm_generalInformation_antiCorruptionCharter));
-
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_newsletter, label_alarm_generalInformation_newsletter));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_committees, label_alarm_generalInformation_committees));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_corporateMember, label_alarm_generalInformation_corporateMember));
 
         set.add(MemberUtils.isEmptyField(text_director_fullName, label_alarm_director_fullName));
         set.add(MemberUtils.isEmptyField(text_director_position, label_alarm_director_position));
