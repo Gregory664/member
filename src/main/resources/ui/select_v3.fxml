@@ -594,7 +594,11 @@
                                               <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                               <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="14.0" minHeight="14.0" prefHeight="14.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="14.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="14.0" minHeight="14.0" prefHeight="14.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
@@ -697,6 +701,27 @@
                                                 <CheckBox fx:id="checkBox_pilotProjects_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="6" GridPane.rowIndex="2" />
                                                 <CheckBox fx:id="checkBox_antiCorruptionCharter_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="6" GridPane.rowIndex="5" />
                                                 <CheckBox fx:id="checkBox_antiCorruptionCharter_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+                                                <Label fx:id="label_newsletter" text="Информационная рассылка" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="label_committees" text="Участие в комитетах" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="label_corporateMember" text="Корпоративный член" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                                <CheckBox fx:id="checkBox_newsletter_1" mnemonicParsing="false" text="Интересует" GridPane.rowIndex="9" />
+                                                <CheckBox fx:id="checkBox_newsletter_2" mnemonicParsing="false" text="Не интересует" GridPane.rowIndex="10" />
+                                                <CheckBox fx:id="checkBox_committees_1" mnemonicParsing="false" text="Да" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                                <CheckBox fx:id="checkBox_committees_2" mnemonicParsing="false" text="Нет" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                                <CheckBox fx:id="checkBox_corporateMember_1" mnemonicParsing="false" text="Да" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                                                <CheckBox fx:id="checkBox_corporateMember_2" mnemonicParsing="false" text="Нет" GridPane.columnIndex="2" GridPane.rowIndex="10" />
                                              </children>
                                           </GridPane>
                                        </children>
@@ -1025,6 +1050,6 @@
       </SplitPane>
       <Button fx:id="btn_clear" maxWidth="36.0" minWidth="36.0" mnemonicParsing="false" onAction="#clearAllCheckBox" text="Re" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
       <Button fx:id="btn_search" mnemonicParsing="false" onAction="#search" text="Поиск" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="63.0" />
-      <Button fx:id="btn_save" layoutX="135.0" layoutY="761.0" mnemonicParsing="false" onAction="#saveToPDF" prefHeight="26.0" prefWidth="111.0" text="Сохранить" />
+      <Button fx:id="btn_save" layoutX="135.0" layoutY="761.0" mnemonicParsing="false" onAction="#saveToPDF" prefHeight="26.0" prefWidth="111.0" text="Сохранить" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="135.0" />
    </children>
 </AnchorPane>

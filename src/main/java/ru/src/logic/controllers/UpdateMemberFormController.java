@@ -553,7 +553,7 @@ public class UpdateMemberFormController {
         comboBox_generalInformation_pilotProjects.setItems(interesting);
         comboBox_generalInformation_antiCorruptionCharter.setItems(interesting);
         comboBox_generalInformation_newsletter.setItems(interesting);
-        comboBox_generalInformation_committees.setItems(interesting);
+        comboBox_generalInformation_committees.setItems(yesNo);
         comboBox_generalInformation_corporateMember.setItems(yesNo);
         comboBox_debt_status.setItems(debd);
         comboBox_addressActual_district.setItems(district);
@@ -964,7 +964,7 @@ public class UpdateMemberFormController {
         comboBox_generalInformation_reliablePartners.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isReliablePartners()));
         comboBox_generalInformation_pilotProjects.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isPilotProjects()));
         comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isAntiCorruptionCharter()));
-        comboBox_generalInformation_committees.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isCommittees()));
+        comboBox_generalInformation_committees.getSelectionModel().select(MemberUtils.isYesNo(member.getGeneralInformation().isCommittees()));
         comboBox_generalInformation_newsletter.getSelectionModel().select(MemberUtils.isInteresting(member.getGeneralInformation().isNewsletter()));
         comboBox_generalInformation_corporateMember.getSelectionModel().select(MemberUtils.isYesNo(member.getGeneralInformation().isCorporateMember()));
 

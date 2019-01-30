@@ -79,6 +79,13 @@ public class SelectController {
     @FXML
     public Label label_antiCorruptionCharter;
     @FXML
+    public Label label_newsletter;
+    @FXML
+    public Label label_committees;
+    @FXML
+    public Label label_corporateMember;
+
+    @FXML
     public Button btn_clear;
     @FXML
     public Button btn_search;
@@ -378,6 +385,21 @@ public class SelectController {
     @FXML
     public CheckBox checkBox_services_17;
 
+    @FXML
+    public CheckBox checkBox_newsletter_1;
+    @FXML
+    public CheckBox checkBox_newsletter_2;
+
+    @FXML
+    public CheckBox checkBox_committees_1;
+    @FXML
+    public CheckBox checkBox_committees_2;
+
+    @FXML
+    public CheckBox checkBox_corporateMember_1;
+    @FXML
+    public CheckBox checkBox_corporateMember_2;
+
     private boolean isEmptyCBMemberStatus = false;
     private boolean isEmptyBusinessForm = false;
     private boolean isEmptyDebtStatus = false;
@@ -399,6 +421,10 @@ public class SelectController {
     private boolean isEmptyReliablePartners = false;
     private boolean isEmptyPilotProjects = false;
     private boolean isEmptyAntiCorruptionCharter = false;
+    private boolean isEmptyNewsletter = false;
+    private boolean isEmptyCommittees = false;
+    private boolean isEmptyCorporateMember = false;
+
     private boolean isEmptyLocation = false;
     private boolean isEmptyMonth = false;
     private boolean isEmptyPayment = false;
@@ -433,8 +459,12 @@ public class SelectController {
     ArrayList<DatePicker> listDatePayment = new ArrayList<DatePicker>();
     ArrayList<CheckBox> listReceiving = new ArrayList<CheckBox>();
     ArrayList<DatePicker> listDateReceiving = new ArrayList<DatePicker>();
-    private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
+    ArrayList<CheckBox> listNewsletter = new ArrayList<CheckBox>();
+    ArrayList<CheckBox> listCommittees = new ArrayList<CheckBox>();
+    ArrayList<CheckBox> listCorporateMember = new ArrayList<CheckBox>();
 
+
+    private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
     Boolean[] listOfFlags = new Boolean[16];
 
@@ -483,6 +513,9 @@ public class SelectController {
         initializeReceiving();
         initializeDateReceiving();
         initializeServices();
+        initializeNewsletter();
+        initializeCommittees();
+        initializeCorporateMember();
 
         addMemberStatusListener();
         addBusinessFormListener();
@@ -509,12 +542,18 @@ public class SelectController {
         addMonthListener();
         addPaymentListener();
         addReceivingListener();
+        addNewsletterListener();
+        addCommitteesListener();
+        addCorporateMemberListener();
 
         addSelectAllGeneralCheckBox();
         addSelectAllBusinessCharacteristicsCheckBox();
         addSelectAllInterestsCheckBox();
 
     }
+
+
+
 
     private void addSelectAllInterestsCheckBox() {
         anchor_Interests.setOnMouseClicked(event -> {
@@ -532,6 +571,9 @@ public class SelectController {
                     selectReliablePartners(true);
                     selectDiscounts(true);
                     selectNeedForYoungPersonnel(true);
+                    selectNewsletter(true);
+                    selectCommittees(true);
+                    selectCorporateMember(true);
                     selectInteractionOnline(true);
                     selectInteractionOffline(true);
                 }
@@ -748,6 +790,18 @@ public class SelectController {
         servicesCheckBoxMap.put(15, checkBox_services_15);
         servicesCheckBoxMap.put(16, checkBox_services_16);
         servicesCheckBoxMap.put(17, checkBox_services_17);
+    }
+    private void initializeNewsletter() {
+        listNewsletter.add(checkBox_newsletter_1);
+        listNewsletter.add(checkBox_newsletter_2);
+    }
+    private void initializeCommittees() {
+        listCommittees.add(checkBox_committees_1);
+        listCommittees.add(checkBox_committees_2);
+    }
+    private void initializeCorporateMember() {
+        listCorporateMember.add(checkBox_corporateMember_1);
+        listCorporateMember.add(checkBox_corporateMember_2);
     }
 
     private void addMemberStatusListener() {
@@ -1081,6 +1135,51 @@ public class SelectController {
             }
         });
     }
+    private void addCorporateMemberListener() {
+        label_corporateMember.setOnMouseClicked(event -> {
+            if(event.getButton().equals(MouseButton.PRIMARY)) {
+                if(event.getClickCount() == 2){
+                    if(!isEmptyCorporateMember) {
+                        selectCorporateMember(true);
+                        isEmptyCorporateMember = true;
+                    } else {
+                        selectCorporateMember(false);
+                        isEmptyCorporateMember = false;
+                    }
+                }
+            }
+        });
+    }
+    private void addCommitteesListener() {
+        label_committees.setOnMouseClicked(event -> {
+            if(event.getButton().equals(MouseButton.PRIMARY)) {
+                if(event.getClickCount() == 2){
+                    if(!isEmptyCommittees) {
+                        selectCommittees(true);
+                        isEmptyCommittees = true;
+                    } else {
+                        selectCommittees(false);
+                        isEmptyCommittees = false;
+                    }
+                }
+            }
+        });
+    }
+    private void addNewsletterListener() {
+        label_newsletter.setOnMouseClicked(event -> {
+            if(event.getButton().equals(MouseButton.PRIMARY)) {
+                if(event.getClickCount() == 2){
+                    if(!isEmptyNewsletter) {
+                        selectNewsletter(true);
+                        isEmptyNewsletter = true;
+                    } else {
+                        selectNewsletter(false);
+                        isEmptyNewsletter = false;
+                    }
+                }
+            }
+        });
+    }
     private void addMonthListener() {
         label_month.setOnMouseClicked(event -> {
             if(event.getButton().equals(MouseButton.PRIMARY)) {
@@ -1174,6 +1273,9 @@ public class SelectController {
         selectPayment(value);
         selectReceiving(value);
         selectServices(value);
+        selectNewsletter(value);
+        selectCommittees(value);
+        selectCorporateMember(value);
     }
 
     private void selectMemberStatus(boolean value) {
@@ -1240,6 +1342,15 @@ public class SelectController {
         listNeedForYoungPersonnel.forEach(checkBox -> checkBox.setSelected(value));
 
     }
+    private void selectNewsletter(boolean value) {
+        listNewsletter.forEach(checkBox -> checkBox.setSelected(value));
+    }
+    private void selectCommittees(boolean value) {
+        listCommittees.forEach(checkBox -> checkBox.setSelected(value));
+    }
+    private void selectCorporateMember(boolean value) {
+        listCorporateMember.forEach(checkBox -> checkBox.setSelected(value));
+    }
     private void selectLocation(boolean value) {
         listLocation.forEach(checkBox -> checkBox.setSelected(value));
     }
@@ -1261,6 +1372,7 @@ public class SelectController {
     private void disableDateReceiving(boolean value) {
         listDateReceiving.forEach(datePicker -> datePicker.setDisable(value));
     }
+
 
     public void clearAllCheckBox(ActionEvent actionEvent) {
         selectAllCheckBox(false);
@@ -1301,6 +1413,10 @@ public class SelectController {
         test.add(getWherePartFromList(listReliablePartners, "gi.RELIABLE_PARTNERS", 2));
         test.add(getWherePartFromList(listDiscounts, "gi.DISCOUNTS", 2));
         test.add(getWherePartFromList(listNeedForYoungPersonnel, "gi.NEED_FOR_YOUNG_PERSONNEL", 2));
+        test.add(getWherePartFromList(listNewsletter, "gi.NEWSLETTER", 2));
+        test.add(getWherePartFromList(listCommittees, "gi.COMMITTEES", 4));
+        test.add(getWherePartFromList(listCorporateMember, "gi.CORPORATE_MEMBER", 4));
+
         test.add(getWherePartFromList(listLocation, "al.ADDRESS_LEGAL_REGION_ID;al.ADDRESS_LEGAL_DISTRICT", 5));
         test.add(getWherePartFromList(listMonth, "month(MEMBER_DATE_OF_ENTRY)", 6));
         test.add(getWherePartFromDate(listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
@@ -1461,6 +1577,9 @@ public class SelectController {
         listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_reliablePartners, listReliablePartners));
         listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_pilotProjects, listPilotProjects));
         listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_antiCorruptionCharter, listAntiCorruptionCharter));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_newsletter, listNewsletter));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_committees, listCommittees));
+        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_corporateMember, listCorporateMember));
         listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_location, listLocation));
         listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_month, listMonth));
         listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_payment, listPayment));

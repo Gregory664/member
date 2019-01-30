@@ -542,7 +542,7 @@ public class CreateMemberFormController {
         comboBox_generalInformation_pilotProjects.setItems(interesting);
         comboBox_generalInformation_antiCorruptionCharter.setItems(interesting);
         comboBox_generalInformation_newsletter.setItems(interesting);
-        comboBox_generalInformation_committees.setItems(interesting);
+        comboBox_generalInformation_committees.setItems(yesNo);
         comboBox_generalInformation_corporateMember.setItems(yesNo);
         comboBox_debt_status.setItems(debd);
         comboBox_addressActual_district.setItems(district);
@@ -931,7 +931,7 @@ public class CreateMemberFormController {
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_pilotProjects.getSelectionModel().getSelectedItem()),
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().getSelectedItem()),
                 MemberUtils.interestingToBoolean(comboBox_generalInformation_newsletter.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_committees.getSelectionModel().getSelectedItem()),
+                MemberUtils.yesNoToBoolean(comboBox_generalInformation_committees.getSelectionModel().getSelectedItem()),
                 MemberUtils.yesNoToBoolean(comboBox_generalInformation_corporateMember.getSelectionModel().getSelectedItem())
         );
 

@@ -1,5 +1,6 @@
 package ru.src.logic.controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -584,7 +585,7 @@ public class MainFormController {
         text_generalInformation_pilotProjects.setText(MemberUtils.isInteresting(generalInformation.isPilotProjects()));
         text_generalInformation_antiCorruptionCharter.setText(MemberUtils.isInteresting(generalInformation.isAntiCorruptionCharter()));
         text_generalInformation_newsletter.setText(MemberUtils.isInteresting(generalInformation.isNewsletter()));
-        text_generalInformation_committees.setText(MemberUtils.isInteresting(generalInformation.isNewsletter()));
+        text_generalInformation_committees.setText(MemberUtils.isYesNo(generalInformation.isNewsletter()));
         text_generalInformation_corporateMember.setText(MemberUtils.isYesNo(generalInformation.isNewsletter()));
         text_generalInformation_changes.setText(generalInformation.getChanges());
 
@@ -973,4 +974,6 @@ public class MainFormController {
 
         selectStage.showAndWait();
     }
+
+
 }
