@@ -130,7 +130,7 @@ public class DBConnection implements MemberLogic {
 
     public static List<FindMember> getQueryList(String queryString) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        List<String> result = new ArrayList<>();
+        List<String> result;
         List<FindMember> findMembers = new ArrayList<FindMember>();
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -140,7 +140,14 @@ public class DBConnection implements MemberLogic {
 
             for (Object o : result) {
                 Object[] g = (Object[]) o;
-                findMembers.add(new FindMember(g[0].toString(), g[1].toString(), g[2].toString(), g[3].toString(), g[4].toString()));
+                String memberId = g[0].toString();
+                String memberSerial = g[1].toString();
+                String memberPhone = g[2].toString();
+                String memberStatus = g[3].toString();
+                String memberShortName = g[4].toString();
+                String email = g[5].toString();
+
+                findMembers.add(new FindMember(memberId, memberSerial, memberPhone, memberStatus, memberShortName, email));
             }
 
         } catch (Exception e) {

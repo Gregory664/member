@@ -27,11 +27,9 @@ public class test extends Application {
         primaryStage.setOnCloseRequest(event -> exitApplication(primaryStage));
     }
 
-
     private void exitApplication(Stage primaryStage) {
         HibernateUtils.closeSessionFactory();
         primaryStage.close();
-
     }
 }
 

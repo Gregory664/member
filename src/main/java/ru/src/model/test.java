@@ -43,69 +43,21 @@ public class test {
 
 
     public static void main(String[] args) {
-//
-////        ArrayList<Member> list = new ArrayList<Member>();
-////        for (int i = 0; i < 500; i++) {
-////            list.add(getMember());
-////        }
-////
-////        list.forEach(member -> DBConnection.addMember(member));
-////        System.out.println();
-////        try (PDDocument doc = new PDDocument()) {
-////
-////            PDPage myPage = new PDPage();
-////            doc.addPage(myPage);
-////
-////            try (PDPageContentStream cont = new PDPageContentStream(doc, myPage)) {
-////
-////                cont.beginText();
-////
-////                cont.setFont(PDType1Font.TIMES_ROMAN, 12);
-////                cont.setLeading(14.5f);
-////
-////                cont.newLineAtOffset(5, 100);
-////                String line1 = "PIDR";
-////                cont.showText(line1);
-////
-////
-////
-////                cont.endText();
-////            } catch (IOException e) {
-////                e.printStackTrace();
-////            }
-////
-////            doc.save("/home/green/test/test.pdf");
-////
-////        } catch (IOException e) {
-////            e.printStackTrace();
-////        }
-////    }
-//
-//
-//
-//
-//    public void saveFile(String pathName) {
-//        pathName = "/home/green/test/base_test.csv";
-//        Charset charset = Charset.forName("UTF-8");
-//
-//        try {
-//            BufferedWriter bufferedWriter = Files.newBufferedWriter(Paths.get(pathName), charset);
-//            //BufferedWriter bufferedWriter = Files.newBufferedWriter(Paths.get(pathName), charset);
-//
-//
-//            bufferedWriter.newLine();
-//            bufferedWriter.flush();
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
+
+
+        List<Member> list = DBConnection.getAllMembers();
+//        for (int i = 0; i < 500; i++) {
+//            list.add(getMember());
 //        }
+
+        list.forEach(member -> DBConnection.removeMember(member));
+        System.out.println();
     }
 
     private static Member getMember() {
         Random one = new Random();
-        Integer id = one.nextInt(2000);
-        Member member = new Member("111-" + id.toString(),
+        Integer id = one.nextInt(999999);
+        Member member = new Member(id.toString(),
                 one.nextInt(),
                 ListUtils.getMemberStatusList().get(new Random().nextInt(ListUtils.getMemberStatusList().size())),
                 getRandonDate(),
@@ -136,9 +88,11 @@ public class test {
                 new Random().nextBoolean());
 
         Debt debt = new Debt(member, new Random().nextBoolean());
+        Contact contact = new Contact(member, "88005553535", "test@test.ru");
 
         member.setGeneralInformation(generalInformation);
         member.setDebt(debt);
+        member.setContact(contact);
 
         return member;
     }

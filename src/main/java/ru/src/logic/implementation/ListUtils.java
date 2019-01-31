@@ -258,31 +258,36 @@ public class ListUtils {
         month.put(12, "Декабрь");
         return month;
     }
-    public static String getDataFromCheckBoxMassive(Label label, ArrayList<CheckBox> checkBoxes) {
-        String result = "";
+    public static String[] getDataFromCheckBoxMassive(String title, ArrayList<CheckBox> checkBoxes) {
+        String[] result = new String[2];
         ArrayList<String> selectedCheckBox = new ArrayList<String>();
-        for (CheckBox box: checkBoxes) {
-            if(box.isSelected()) {
+        for (CheckBox box : checkBoxes) {
+            if (box.isSelected()) {
                 selectedCheckBox.add(box.getText());
             }
         }
-        if(selectedCheckBox.size() == 0) return null;
+
+        if (selectedCheckBox.size() == 0) return null;
         else {
-            result += label.getText().replace("\n", " ") + ": ";
+            result[0] = title;
+            StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < selectedCheckBox.size(); i++) {
                 if (i != selectedCheckBox.size() - 1) {
-                    result += selectedCheckBox.get(i) + ", ";
-                } else result += selectedCheckBox.get(i) + ".";
+                    stringBuilder.append(selectedCheckBox.get(i)).append(", ");
+                } else stringBuilder.append(selectedCheckBox.get(i)).append(".");
             }
+            result[1] = stringBuilder.toString();
             return result;
         }
     }
 
-    public static void removeAllNullObjectFromList(ArrayList<String> list) {
+
+
+    public static void removeAllNullObjectFromList(ArrayList list) {
         int index = list.lastIndexOf(null);
         if(index != -1) {
-           list.remove(null);
-           removeAllNullObjectFromList(list);
+            list.remove(null);
+            removeAllNullObjectFromList(list);
         }
     }
 }

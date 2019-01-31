@@ -5,16 +5,25 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.ListUtils;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.PDFUtils;
 import ru.src.model.FindMember;
+import sun.security.krb5.internal.crypto.Des;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -432,36 +441,36 @@ public class SelectController {
     private boolean isEmptyDateReceiving = false;
 
 
-    ArrayList<CheckBox> listMemberStatus = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listBusinessForm = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listDebtStatus = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listOrganizationForm = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listOwnershipForm = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listActivityType = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listEconomicSector = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listVedImport = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listVedExport = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listInteractionOnline = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listInteractionOffline = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listB2b = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listB2c = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listBusinessMissionVisiting = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listBusinessMissionRegional = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listMkas = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listNeedForYoungPersonnel = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listDiscounts = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listReliablePartners = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listPilotProjects = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listAntiCorruptionCharter = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listLocation = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listMonth = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listPayment = new ArrayList<CheckBox>();
-    ArrayList<DatePicker> listDatePayment = new ArrayList<DatePicker>();
-    ArrayList<CheckBox> listReceiving = new ArrayList<CheckBox>();
-    ArrayList<DatePicker> listDateReceiving = new ArrayList<DatePicker>();
-    ArrayList<CheckBox> listNewsletter = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listCommittees = new ArrayList<CheckBox>();
-    ArrayList<CheckBox> listCorporateMember = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listMemberStatus = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listBusinessForm = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listDebtStatus = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listOrganizationForm = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listOwnershipForm = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listActivityType = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listEconomicSector = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listVedImport = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listVedExport = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listInteractionOnline = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listInteractionOffline = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listB2b = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listB2c = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listBusinessMissionVisiting = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listBusinessMissionRegional = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listMkas = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listNeedForYoungPersonnel = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listDiscounts = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listReliablePartners = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listPilotProjects = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listAntiCorruptionCharter = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listLocation = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listMonth = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listPayment = new ArrayList<CheckBox>();
+    private ArrayList<DatePicker> listDatePayment = new ArrayList<DatePicker>();
+    private ArrayList<CheckBox> listReceiving = new ArrayList<CheckBox>();
+    private ArrayList<DatePicker> listDateReceiving = new ArrayList<DatePicker>();
+    private ArrayList<CheckBox> listNewsletter = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listCommittees = new ArrayList<CheckBox>();
+    private ArrayList<CheckBox> listCorporateMember = new ArrayList<CheckBox>();
 
 
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
@@ -470,6 +479,12 @@ public class SelectController {
 
     private ObservableList<FindMember> list = FXCollections.observableArrayList();
 
+    private Stage currentStage;
+
+    public void setCurrentStage(Stage currentStage) {
+        this.currentStage = currentStage;
+    }
+
     @FXML
     public void initialize() {
         column_memberId.setCellValueFactory(new PropertyValueFactory<>("memberId"));
@@ -477,6 +492,12 @@ public class SelectController {
         column_contactPhone.setCellValueFactory(new PropertyValueFactory<>("memberStatus"));
         column_memberStatus.setCellValueFactory(new PropertyValueFactory<>("phone"));
         column_memberShortName.setCellValueFactory(new PropertyValueFactory<>("memberShortName"));
+
+        column_memberId.setStyle( "-fx-alignment: CENTER;");
+        column_memberSerial.setStyle( "-fx-alignment: CENTER;");
+        column_contactPhone.setStyle( "-fx-alignment: CENTER;");
+        column_memberStatus.setStyle( "-fx-alignment: CENTER;");
+
 
         list.addListener(new ListChangeListener<FindMember>() {
             @Override
@@ -551,9 +572,6 @@ public class SelectController {
         addSelectAllInterestsCheckBox();
 
     }
-
-
-
 
     private void addSelectAllInterestsCheckBox() {
         anchor_Interests.setOnMouseClicked(event -> {
@@ -1431,7 +1449,8 @@ public class SelectController {
                 "m.MEMBER_SERIAL, " +
                 "c.CONTACT_PHONE, " +
                 "m.MEMBER_STATUS, " +
-                "m.MEMBER_SHORT_NAME";
+                "m.MEMBER_SHORT_NAME, " +
+                "c.CONTACT_EMAIL";
         String fromQuery = "FROM MEMBER m \n" +
                "INNER JOIN CONTACT c ON m.MEMBER_ID=c.MEMBER_ID " +
                "INNER JOIN DEBT d ON m.MEMBER_ID=d.MEMBER_ID " +
@@ -1450,33 +1469,49 @@ public class SelectController {
         ArrayList<String> someSelect = new ArrayList<String>();
         for (CheckBox checkBox: checkBoxes) {
             if(checkBox.isSelected()) {
-                if(flag == 1) someSelect.add(pattern + " = '" + checkBox.getText() + "'");
-                if(flag == 2) someSelect.add(pattern + " = " + MemberUtils.interestingToBoolean(checkBox.getText()));
-                if(flag == 3) someSelect.add(pattern + " = " + MemberUtils.debtToBoolean(checkBox.getText()));
-                if(flag == 4) someSelect.add(pattern + " = " + MemberUtils.yesNoToBoolean(checkBox.getText()));
-                if(flag == 5) {
-                    String[] splitPattern = pattern.split(";");
-                    if (checkBox.getText().equals("Иногородние")) {
-                        someSelect.add(splitPattern[0] + " != 36");
-                    }
-                    if (checkBox.getText().equals("Воронеж")) {
-                        someSelect.add(splitPattern[0] + " = 36 AND " + splitPattern[1] + " = 'Воронеж Городской округ'");
-                    }
-                    if (checkBox.getText().equals("Воронежская область")) {
-                        someSelect.add(splitPattern[0] + " = 36 AND " + splitPattern[1] + " != 'Воронеж Городской округ'");
-                    }
-                }
-                if(flag == 6) {
-                    Integer month = 0;
-                    for (Map.Entry<Integer, String> entry: ListUtils.getMonth().entrySet()) {
-                        if(entry.getValue().equals(checkBox.getText())) {
-                            month = entry.getKey();
+                switch (flag) {
+                    case 1:
+                        someSelect.add(pattern + " = '" + checkBox.getText() + "'");
+                        break;
+
+                    case 2:
+                        someSelect.add(pattern + " = " + MemberUtils.interestingToBoolean(checkBox.getText()));
+                        break;
+                    case 3:
+                        someSelect.add(pattern + " = " + MemberUtils.debtToBoolean(checkBox.getText()));
+                        break;
+                    case 4:
+                        someSelect.add(pattern + " = " + MemberUtils.yesNoToBoolean(checkBox.getText()));
+                        break;
+                    case 5:
+                        String[] splitPattern = pattern.split(";");
+                        if (checkBox.getText().equals("Иногородние")) {
+                            someSelect.add(splitPattern[0] + " != 36");
                         }
-                    }
-                    someSelect.add(pattern + " = " + month.toString());
+                        if (checkBox.getText().equals("Воронеж")) {
+                            someSelect.add(splitPattern[0] + " = 36 AND " + splitPattern[1] + " = 'Воронеж Городской округ'");
+                        }
+                        if (checkBox.getText().equals("Воронежская область")) {
+                            someSelect.add(splitPattern[0] + " = 36 AND " + splitPattern[1] + " != 'Воронеж Городской округ'");
+                        }
+                        break;
+
+                    case 6:
+                        Integer month = 0;
+                        for (Map.Entry<Integer, String> entry : ListUtils.getMonth().entrySet()) {
+                            if (entry.getValue().equals(checkBox.getText())) {
+                                month = entry.getKey();
+                            }
+                        }
+                        someSelect.add(pattern + " = " + month.toString());
+                        break;
+                    case 7:
+                        someSelect.add(pattern + " = " + MemberUtils.paymentToBoolean(checkBox.getText()));
+                        break;
+                    case 8:
+                        someSelect.add(pattern + " = " + MemberUtils.receiveToBoolean(checkBox.getText()));
+                        break;
                 }
-                if(flag == 7) someSelect.add(pattern + " = " + MemberUtils.paymentToBoolean(checkBox.getText()));
-                if(flag == 8) someSelect.add(pattern + " = " + MemberUtils.receiveToBoolean(checkBox.getText()));
             }
         }
 
@@ -1555,39 +1590,50 @@ public class SelectController {
     }
 
     public void saveToPDF(ActionEvent actionEvent) {
-        ArrayList<String> listParagraphForPDF = new ArrayList<String>();
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_memberStatus, listMemberStatus));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_businessForm, listBusinessForm));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_debt_status, listDebtStatus));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_organizationForm, listOrganizationForm));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_ownershipForm, listOwnershipForm));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_activityType, listActivityType));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_economicSector, listEconomicSector));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_vedImport, listVedImport));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_vedExport, listVedExport));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_interactionOnline, listInteractionOnline));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_interactionOffline, listInteractionOffline));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_b2b, listB2b));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_b2c, listB2c));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_businessMissionVisiting, listBusinessMissionVisiting));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_businessMissionRegional, listBusinessMissionRegional));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_mkas, listMkas));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_needForYoungPersonnel, listNeedForYoungPersonnel));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_discounts, listDiscounts));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_reliablePartners, listReliablePartners));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_pilotProjects, listPilotProjects));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_antiCorruptionCharter, listAntiCorruptionCharter));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_newsletter, listNewsletter));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_committees, listCommittees));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_corporateMember, listCorporateMember));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_location, listLocation));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_month, listMonth));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_payment, listPayment));
-        listParagraphForPDF.add(ListUtils.getDataFromCheckBoxMassive(label_receiving, listReceiving));
+        ArrayList<String[]> listSelectedParams = new ArrayList<>();
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_memberStatus.getText(), listMemberStatus));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_businessForm.getText(), listBusinessForm));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_debt_status.getText(), listDebtStatus));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_organizationForm.getText(), listOrganizationForm));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_ownershipForm.getText(), listOwnershipForm));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_activityType.getText(), listActivityType));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_economicSector.getText(), listEconomicSector));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_vedImport.getText(), listVedImport));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_vedExport.getText(), listVedExport));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_interactionOnline.getText(), listInteractionOnline));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_interactionOffline.getText(), listInteractionOffline));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_b2b.getText(), listB2b));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_b2c.getText(), listB2c));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_businessMissionVisiting.getText(), listBusinessMissionVisiting));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_businessMissionRegional.getText(), listBusinessMissionRegional));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_mkas.getText(), listMkas));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_needForYoungPersonnel.getText(), listNeedForYoungPersonnel));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_discounts.getText(), listDiscounts));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_reliablePartners.getText(), listReliablePartners));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_pilotProjects.getText(), listPilotProjects));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_antiCorruptionCharter.getText(), listAntiCorruptionCharter));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_newsletter.getText(), listNewsletter));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_committees.getText(), listCommittees));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_corporateMember.getText(), listCorporateMember));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_location.getText(), listLocation));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_month.getText(), listMonth));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_payment.getText(), listPayment));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_receiving.getText(), listReceiving));
+        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive("Интересующие услуги", new ArrayList<>(servicesCheckBoxMap.values())));
 
-        ListUtils.removeAllNullObjectFromList(listParagraphForPDF);
+        ListUtils.removeAllNullObjectFromList(listSelectedParams);
 
-        PDFUtils.saveToPDF(listParagraphForPDF, "/home/green/test/test.pdf");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf"));
+        File file = fileChooser.showSaveDialog(currentStage);
+
+        if (file != null) {
+            String path = file.getAbsolutePath();
+            if (!path.contains(".")) {
+                path += ".pdf";
+                PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
+            } else PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
+        }
 
     }
 }

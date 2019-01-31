@@ -409,6 +409,7 @@ public class MainFormController {
             selectFormfxmlloader.setLocation(getClass().getResource("/ui/select_v3.fxml"));
             selectForm = selectFormfxmlloader.load();
             selectController = selectFormfxmlloader.getController();
+            selectController.setCurrentStage(selectStage);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -756,7 +757,7 @@ public class MainFormController {
             createInvoiceStage = new Stage();
             createInvoiceStage.setResizable(false);
             createInvoiceStage.setScene(new Scene(createInvoice));
-            createInvoiceStage.initModality(Modality.WINDOW_MODAL);
+            createInvoiceStage.initModality(Modality.APPLICATION_MODAL);
             createInvoiceStage.initOwner(mainStage);
 
         }
@@ -812,7 +813,7 @@ public class MainFormController {
             updateInvoiceStage = new Stage();
             updateInvoiceStage.setResizable(false);
             updateInvoiceStage.setScene(new Scene(updateInvoice));
-            updateInvoiceStage.initModality(Modality.WINDOW_MODAL);
+            updateInvoiceStage.initModality(Modality.APPLICATION_MODAL);
             updateInvoiceStage.initOwner(mainStage);
         }
         Member member = (Member) table_members.getSelectionModel().getSelectedItem();
@@ -839,7 +840,7 @@ public class MainFormController {
             createContactPersonStage = new Stage();
             createContactPersonStage.setResizable(false);
             createContactPersonStage.setScene(new Scene(createContactPerson));
-            createContactPersonStage.initModality(Modality.WINDOW_MODAL);
+            createContactPersonStage.initModality(Modality.APPLICATION_MODAL);
             createContactPersonStage.initOwner(mainStage);
         }
 
@@ -884,7 +885,7 @@ public class MainFormController {
             updateContactPersonStage = new Stage();
             updateContactPersonStage.setResizable(false);
             updateContactPersonStage.setScene(new Scene(updateContactPerson));
-            updateContactPersonStage.initModality(Modality.WINDOW_MODAL);
+            updateContactPersonStage.initModality(Modality.APPLICATION_MODAL);
             updateContactPersonStage.initOwner(mainStage);
         }
 
@@ -910,7 +911,7 @@ public class MainFormController {
         if(createMemberFormStage == null) {
             createMemberFormStage = new Stage();
             createMemberFormStage.setScene(new Scene(createMemberForm));
-            createMemberFormStage.initModality(Modality.WINDOW_MODAL);
+            createMemberFormStage.initModality(Modality.APPLICATION_MODAL);
             createMemberFormStage.initOwner(mainStage);
         }
 
@@ -948,7 +949,7 @@ public class MainFormController {
         if (updateMemberFormStage == null) {
             updateMemberFormStage = new Stage();
             updateMemberFormStage.setScene(new Scene(updateMemberForm));
-            updateMemberFormStage.initModality(Modality.WINDOW_MODAL);
+            updateMemberFormStage.initModality(Modality.APPLICATION_MODAL);
             updateMemberFormStage.initOwner(mainStage);
         }
 
@@ -968,12 +969,11 @@ public class MainFormController {
         if(selectStage == null) {
             selectStage = new Stage();
             selectStage.setScene(new Scene(selectForm));
-            selectStage.initModality(Modality.WINDOW_MODAL);
+            selectStage.initModality(Modality.APPLICATION_MODAL);
             selectStage.initOwner(mainStage);
         }
 
         selectStage.showAndWait();
     }
-
 
 }

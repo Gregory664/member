@@ -1050,6 +1050,7 @@
       </SplitPane>
       <Button fx:id="btn_clear" maxWidth="36.0" minWidth="36.0" mnemonicParsing="false" onAction="#clearAllCheckBox" text="Re" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
       <Button fx:id="btn_search" mnemonicParsing="false" onAction="#search" text="Поиск" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="63.0" />
-      <Button fx:id="btn_save" layoutX="135.0" layoutY="761.0" mnemonicParsing="false" onAction="#saveToPDF" prefHeight="26.0" prefWidth="111.0" text="Сохранить" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="135.0" />
+      <Button fx:id="btn_save" layoutX="135.0" layoutY="761.0" mnemonicParsing="false" onAction="#saveToPDF" prefHeight="26.0" prefWidth="168.0" text="Сохранить в PDF" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="135.0" />
+      <Button fx:id="btn_saveCSV" layoutX="328.0" layoutY="760.0" mnemonicParsing="false" onAction="#saveCSV" text="Сохранить для рассылки" />
    </children>
 </AnchorPane>

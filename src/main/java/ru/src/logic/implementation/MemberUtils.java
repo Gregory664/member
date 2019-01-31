@@ -99,8 +99,6 @@ public class MemberUtils {
     }
 
 
-
-
     public static void checkTextDigital(TextField textField, Label label, int maxLength) {
         Pattern p = Pattern.compile("\\d*");
 
@@ -179,7 +177,6 @@ public class MemberUtils {
             }
         });
     }
-
 
 
     public static boolean isEmptyField(TextField text, Label labelText) {
