@@ -23,6 +23,7 @@ import sun.security.krb5.internal.crypto.Des;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -408,6 +409,7 @@ public class SelectController {
     public CheckBox checkBox_corporateMember_1;
     @FXML
     public CheckBox checkBox_corporateMember_2;
+    public Button btn_saveCSV;
 
     private boolean isEmptyCBMemberStatus = false;
     private boolean isEmptyBusinessForm = false;
@@ -1635,5 +1637,47 @@ public class SelectController {
             } else PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
         }
 
+    }
+
+    public void saveCSV(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("csv", "*.csv"));
+        File file = fileChooser.showSaveDialog(currentStage);
+
+        if (file != null) {
+            String path = file.getAbsolutePath();
+            if (!path.contains(".")) {
+                path += ".csv";
+                saveCSVFile(path);
+            } else saveCSVFile(path);
+        }
+    }
+
+    private void saveCSVFile(String pathName) {
+        try {
+            FileWriter writer = new FileWriter(pathName);
+
+            writer.append("Номер билета");
+            writer.append(";");
+            writer.append("Почта");
+            writer.append(";");
+            writer.append("Сокрашенное название организации");
+            writer.append("\n");
+
+            for (FindMember findMember: list) {
+                writer.append(findMember.getMemberId());
+                writer.append(";");
+                writer.append(findMember.getEmail());
+                writer.append(";");
+                writer.append(findMember.getMemberShortName());
+                writer.append("\n");
+            }
+
+            writer.flush();
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
