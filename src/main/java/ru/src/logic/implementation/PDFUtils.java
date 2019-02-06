@@ -2,6 +2,7 @@ package ru.src.logic.implementation;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import net.bytebuddy.asm.Advice;
 import org.apache.pdfbox.io.IOUtils;
 import ru.src.model.FindMember;
 
@@ -18,6 +19,9 @@ import ru.src.model.FindMember;
 
 import java.io.*;
 import java.lang.annotation.ElementType;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,45 +44,45 @@ public class PDFUtils {
             Font fontHeader = new Font(baseFont, 14);
             Font fontRow = new Font(baseFont, 12);
 
-            Paragraph elements = new Paragraph("Критерии выборки".toUpperCase(), fontHeader);
-            elements.setAlignment(Element.ALIGN_CENTER);
-            document.add(elements);
-            document.add(Chunk.NEWLINE);
+            String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.YYYY"));
+
 
             PdfPTable selectedParams = new PdfPTable(2);
             selectedParams.setTotalWidth(new float[]{150, 400});
             selectedParams.setLockedWidth(true);
-
             params.forEach(strings -> {
                 PdfPCell cell1 = new PdfPCell(new Phrase(strings[0], fontHeader));
                 cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell1.setGrayFill(0.9f);
 
-
                 PdfPCell cell2 = new PdfPCell(new Phrase(strings[1], fontRow));
                 cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-
 
                 selectedParams.addCell(cell1);
                 selectedParams.addCell(cell2);
                 selectedParams.completeRow();
             });
-
             document.add(selectedParams);
+
             document.newPage();
+            Paragraph elements = new Paragraph("Данные на ".toUpperCase() +
+                    currentDate + ", соответствующие выбранным критериям".toUpperCase(), fontHeader);
+            elements.setAlignment(Element.ALIGN_CENTER);
+            document.add(elements);
+            document.add(Chunk.NEWLINE);
+            document.add(new Paragraph("Количество организаций: ".toUpperCase() + findMembers.size(), fontRow));
+            document.add(Chunk.NEWLINE);
 
             PdfPTable tableFindMembers = new PdfPTable(5);
-            tableFindMembers.setTotalWidth(new float[]{50, 45, 80, 90, 285});
+            tableFindMembers.setTotalWidth(new float[]{50, 45, 80, 285, 90});
             tableFindMembers.setLockedWidth(true);
-
 
             PdfPCell columnNameMemberId = new PdfPCell(new Phrase("Номер\nбилета", fontRow));
             columnNameMemberId.setHorizontalAlignment(Element.ALIGN_CENTER);
             columnNameMemberId.setVerticalAlignment(Element.ALIGN_MIDDLE);
             columnNameMemberId.setGrayFill(0.9f);
-            //columnNameMemberId.wid
             tableFindMembers.addCell(columnNameMemberId);
 
             PdfPCell columnMemberSerial = new PdfPCell(new Phrase("Номер", fontRow));
@@ -87,11 +91,6 @@ public class PDFUtils {
             columnMemberSerial.setGrayFill(0.9f);
             tableFindMembers.addCell(columnMemberSerial);
 
-            PdfPCell columnNamePhone = new PdfPCell(new Phrase("Контактный\nтелефон", fontRow));
-            columnNamePhone.setHorizontalAlignment(Element.ALIGN_CENTER);
-            columnNamePhone.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            columnNamePhone.setGrayFill(0.9f);
-            tableFindMembers.addCell(columnNamePhone);
 
             PdfPCell columnNameMemberStatus = new PdfPCell(new Phrase("Статус", fontRow));
             columnNameMemberStatus.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -105,16 +104,21 @@ public class PDFUtils {
             columnNameMemberShortName.setGrayFill(0.9f);
             tableFindMembers.addCell(columnNameMemberShortName);
 
+            PdfPCell columnNamePhone = new PdfPCell(new Phrase("Контактный\nтелефон", fontRow));
+            columnNamePhone.setHorizontalAlignment(Element.ALIGN_CENTER);
+            columnNamePhone.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            columnNamePhone.setGrayFill(0.9f);
+            tableFindMembers.addCell(columnNamePhone);
             tableFindMembers.completeRow();
 
-
             findMembers.forEach(findMember -> {
+
                 ArrayList<PdfPCell> pdfPCells = new ArrayList<>();
                 pdfPCells.add(new PdfPCell(new Phrase(findMember.getMemberId(), fontRow)));
                 pdfPCells.add(new PdfPCell(new Phrase(findMember.getMemberSerial(), fontRow)));
-                pdfPCells.add(new PdfPCell(new Phrase(findMember.getPhone(), fontRow)));
                 pdfPCells.add(new PdfPCell(new Phrase(findMember.getMemberStatus(), fontRow)));
                 pdfPCells.add(new PdfPCell(new Phrase(findMember.getMemberShortName(), fontRow)));
+                pdfPCells.add(new PdfPCell(new Phrase(findMember.getPhone(), fontRow)));
 
                 pdfPCells.forEach(pdfPCell -> {
                     pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);

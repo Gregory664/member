@@ -15,7 +15,10 @@ public class test2 {
 //        member.getServices().add(new Services(3, "Оценка"));
 //        DBConnection.updateMember(member);
 //        System.out.println();
-        Desktop desktop = Desktop.getDesktop();
-        desktop.open(new File("/home/green/test/test.pdf"));
+//        Desktop desktop = Desktop.getDesktop();
+//        desktop.open(new File("/home/green/test/test.pdf"));
+        boolean b = true;
+        String text = String.valueOf(b);
+        System.out.println();
     }
 }

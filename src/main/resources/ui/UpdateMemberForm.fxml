@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.UpdateMemberFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="2000.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.UpdateMemberFormController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -219,14 +219,14 @@
                                           <Label text="Региональные бизнес миссии" GridPane.rowIndex="42" />
                                           <Label text="Заинтересованность в MKAS" GridPane.rowIndex="45" />
                                           <Label text="Дополнительная информация" GridPane.rowIndex="72" />
-                                          <ComboBox fx:id="comboBox_generalInformation_organizationForm" maxWidth="300.0" minWidth="300.0" prefWidth="150.0" GridPane.columnIndex="1" />
-                                          <ComboBox fx:id="comboBox_generalInformation_economicSector" maxWidth="300.0" minWidth="300.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <ComboBox fx:id="comboBox_generalInformation_organizationForm" maxWidth="320.0" minWidth="320.0" prefWidth="320.0" GridPane.columnIndex="1" />
+                                          <ComboBox fx:id="comboBox_generalInformation_economicSector" maxWidth="320.0" minWidth="320.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <TextArea fx:id="text_generalInformation_investmentsTarget" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="21" />
                                           <TextField fx:id="text_generalInformation_investmentsSize" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="24" />
                                           <TextArea fx:id="text_generalInformation_changes" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="72" />
-                                          <ComboBox fx:id="comboBox_generalInformation_ownershipForm" maxWidth="300.0" minWidth="300.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                          <ComboBox fx:id="comboBox_generalInformation_activityType" maxWidth="300.0" minWidth="300.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                          <ComboBox fx:id="comboBox_generalInformation_businessForm" maxWidth="300.0" minWidth="300.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                                          <ComboBox fx:id="comboBox_generalInformation_ownershipForm" maxWidth="320.0" minWidth="320.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <ComboBox fx:id="comboBox_generalInformation_activityType" maxWidth="320.0" minWidth="320.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                          <ComboBox fx:id="comboBox_generalInformation_businessForm" maxWidth="320.0" minWidth="320.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
                                           <ComboBox fx:id="comboBox_generalInformation_vedImport" maxWidth="75.0" minWidth="75.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
                                           <ComboBox fx:id="comboBox_generalInformation_vedExport" maxWidth="75.0" minWidth="75.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="18" />
                                           <ComboBox fx:id="comboBox_generalInformation_interactionOnline" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="27" />

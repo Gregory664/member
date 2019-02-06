@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.hibernate.SessionFactory;
 import ru.src.logic.implementation.HibernateUtils;
 
@@ -19,10 +20,12 @@ public class test extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         //Parent root = FXMLLoader.load(getClass().getResource("/ui/MainForm.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("/ui/MainForm_v2.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
+        //primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.show();
         primaryStage.setOnCloseRequest(event -> exitApplication(primaryStage));
     }

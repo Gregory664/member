@@ -239,4 +239,11 @@ public class MemberUtils {
         }
         return isEmpty;
     }
+
+    public static boolean checkBoxIDToBoolean(CheckBox checkBox) {
+        String checkBoxID = checkBox.getId();
+        String last = checkBoxID.substring(checkBoxID.length() - 1);
+        return last.equals("1");
+
+    }
 }

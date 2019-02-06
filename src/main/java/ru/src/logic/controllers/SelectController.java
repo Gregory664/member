@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
@@ -235,70 +236,70 @@ public class SelectController {
     @FXML
     public CheckBox checkBox_vedImport_1;
     @FXML
-    public CheckBox checkBox_vedImport_2;
+    public CheckBox checkBox_vedImport_0;
 
     @FXML
     public CheckBox checkBox_vedExport_1;
     @FXML
-    public CheckBox checkBox_vedExport_2;
+    public CheckBox checkBox_vedExport_0;
 
     @FXML
     public CheckBox checkBox_interactionOnline_1;
     @FXML
-    public CheckBox checkBox_interactionOnline_2;
+    public CheckBox checkBox_interactionOnline_0;
 
     @FXML
     public CheckBox checkBox_interactionOffline_1;
     @FXML
-    public CheckBox checkBox_interactionOffline_2;
+    public CheckBox checkBox_interactionOffline_0;
 
     @FXML
     public CheckBox checkBox_b2b_1;
     @FXML
-    public CheckBox checkBox_b2b_2;
+    public CheckBox checkBox_b2b_0;
 
     @FXML
     public CheckBox checkBox_b2c_1;
     @FXML
-    public CheckBox checkBox_b2c_2;
+    public CheckBox checkBox_b2c_0;
 
     @FXML
     public CheckBox checkBox_businessMissionVisiting_1;
     @FXML
-    public CheckBox checkBox_businessMissionVisiting_2;
+    public CheckBox checkBox_businessMissionVisiting_0;
 
     @FXML
     public CheckBox checkBox_businessMissionRegional_1;
     @FXML
-    public CheckBox checkBox_businessMissionRegional_2;
+    public CheckBox checkBox_businessMissionRegional_0;
 
     @FXML
     public CheckBox checkBox_mkas_1;
     @FXML
-    public CheckBox checkBox_mkas_2;
+    public CheckBox checkBox_mkas_0;
     @FXML
     public TitledPane title_sortParams;
 
     @FXML
     public CheckBox checkBox_needForYoungPersonnel_1;
     @FXML
-    public CheckBox checkBox_needForYoungPersonnel_2;
+    public CheckBox checkBox_needForYoungPersonnel_0;
     @FXML
     public CheckBox checkBox_discounts_1;
     @FXML
-    public CheckBox checkBox_discounts_2;
+    public CheckBox checkBox_discounts_0;
     @FXML
     public CheckBox checkBox_reliablePartners_1;
     @FXML
-    public CheckBox checkBox_reliablePartners_2;
+    public CheckBox checkBox_reliablePartners_0;
     @FXML
     public CheckBox checkBox_pilotProjects_1;
     @FXML
-    public CheckBox checkBox_pilotProjects_2;
+    public CheckBox checkBox_pilotProjects_0;
     @FXML
     public CheckBox checkBox_antiCorruptionCharter_1;
     @FXML
-    public CheckBox checkBox_antiCorruptionCharter_2;
+    public CheckBox checkBox_antiCorruptionCharter_0;
 
     @FXML
     public AnchorPane anchor_General;
@@ -398,18 +399,24 @@ public class SelectController {
     @FXML
     public CheckBox checkBox_newsletter_1;
     @FXML
-    public CheckBox checkBox_newsletter_2;
+    public CheckBox checkBox_newsletter_0;
 
     @FXML
     public CheckBox checkBox_committees_1;
     @FXML
-    public CheckBox checkBox_committees_2;
+    public CheckBox checkBox_committees_0;
 
     @FXML
     public CheckBox checkBox_corporateMember_1;
     @FXML
-    public CheckBox checkBox_corporateMember_2;
-    public Button btn_saveCSV;
+    public CheckBox checkBox_corporateMember_0;
+
+    @FXML
+    public MenuItem item_savePDF;
+    @FXML
+    public MenuItem item_saveCSV;
+    @FXML
+    public Button btn_close;
 
     private boolean isEmptyCBMemberStatus = false;
     private boolean isEmptyBusinessForm = false;
@@ -491,8 +498,8 @@ public class SelectController {
     public void initialize() {
         column_memberId.setCellValueFactory(new PropertyValueFactory<>("memberId"));
         column_memberSerial.setCellValueFactory(new PropertyValueFactory<>("memberSerial"));
-        column_contactPhone.setCellValueFactory(new PropertyValueFactory<>("memberStatus"));
-        column_memberStatus.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        column_contactPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        column_memberStatus.setCellValueFactory(new PropertyValueFactory<>("memberStatus"));
         column_memberShortName.setCellValueFactory(new PropertyValueFactory<>("memberShortName"));
 
         column_memberId.setStyle( "-fx-alignment: CENTER;");
@@ -500,11 +507,21 @@ public class SelectController {
         column_contactPhone.setStyle( "-fx-alignment: CENTER;");
         column_memberStatus.setStyle( "-fx-alignment: CENTER;");
 
+        countOfselect.setText("Количество организаций: " + list.size());
+        item_saveCSV.setDisable(true);
+        item_savePDF.setDisable(true);
 
         list.addListener(new ListChangeListener<FindMember>() {
             @Override
             public void onChanged(Change<? extends FindMember> c) {
                 countOfselect.setText("Количество организаций: " + list.size());
+                if (list.size() == 0) {
+                    item_saveCSV.setDisable(true);
+                    item_savePDF.setDisable(true);
+                } else {
+                    item_saveCSV.setDisable(false);
+                    item_savePDF.setDisable(false);
+                }
             }
         });
 
@@ -657,59 +674,59 @@ public class SelectController {
     }
     private void initializeAntiCorruptionCharter() {
         listAntiCorruptionCharter.add(checkBox_antiCorruptionCharter_1);
-        listAntiCorruptionCharter.add(checkBox_antiCorruptionCharter_2);
+        listAntiCorruptionCharter.add(checkBox_antiCorruptionCharter_0);
     }
     private void initializePilotProjects() {
         listPilotProjects.add(checkBox_pilotProjects_1);
-        listPilotProjects.add(checkBox_pilotProjects_2);
+        listPilotProjects.add(checkBox_pilotProjects_0);
     }
     private void initializeReliablePartners() {
         listReliablePartners.add(checkBox_reliablePartners_1);
-        listReliablePartners.add(checkBox_reliablePartners_2);
+        listReliablePartners.add(checkBox_reliablePartners_0);
     }
     private void initializeDiscounts() {
         listDiscounts.add(checkBox_discounts_1);
-        listDiscounts.add(checkBox_discounts_2);
+        listDiscounts.add(checkBox_discounts_0);
     }
     private void initializeNeedForYoungPersonnel() {
         listNeedForYoungPersonnel.add(checkBox_needForYoungPersonnel_1);
-        listNeedForYoungPersonnel.add(checkBox_needForYoungPersonnel_2);
+        listNeedForYoungPersonnel.add(checkBox_needForYoungPersonnel_0);
     }
     private void initializeMkas() {
         listMkas.add(checkBox_mkas_1);
-        listMkas.add(checkBox_mkas_2);
+        listMkas.add(checkBox_mkas_0);
     }
     private void initializeBusinessMissionRegional() {
         listBusinessMissionRegional.add(checkBox_businessMissionRegional_1);
-        listBusinessMissionRegional.add(checkBox_businessMissionRegional_2);
+        listBusinessMissionRegional.add(checkBox_businessMissionRegional_0);
     }
     private void initializeBusinessMissionVisiting() {
         listBusinessMissionVisiting.add(checkBox_businessMissionVisiting_1);
-        listBusinessMissionVisiting.add(checkBox_businessMissionVisiting_2);
+        listBusinessMissionVisiting.add(checkBox_businessMissionVisiting_0);
     }
     private void initializeB2c() {
         listB2c.add(checkBox_b2c_1);
-        listB2c.add(checkBox_b2c_2);
+        listB2c.add(checkBox_b2c_0);
     }
     private void initializeB2b() {
         listB2b.add(checkBox_b2b_1);
-        listB2b.add(checkBox_b2b_2);
+        listB2b.add(checkBox_b2b_0);
     }
     private void initializeInteractionOffline() {
         listInteractionOffline.add(checkBox_interactionOffline_1);
-        listInteractionOffline.add(checkBox_interactionOffline_2);
+        listInteractionOffline.add(checkBox_interactionOffline_0);
     }
     private void initializeInteractionOnline() {
         listInteractionOnline.add(checkBox_interactionOnline_1);
-        listInteractionOnline.add(checkBox_interactionOnline_2);
+        listInteractionOnline.add(checkBox_interactionOnline_0);
     }
     private void initializeVedExport() {
         listVedExport.add(checkBox_vedExport_1);
-        listVedExport.add(checkBox_vedExport_2);
+        listVedExport.add(checkBox_vedExport_0);
     }
     private void initializeVedImport() {
         listVedImport.add(checkBox_vedImport_1);
-        listVedImport.add(checkBox_vedImport_2);
+        listVedImport.add(checkBox_vedImport_0);
     }
     private void initializeEconomicSector() {
         listEconomicSector.add(checkBox_economicSector_1);
@@ -813,15 +830,15 @@ public class SelectController {
     }
     private void initializeNewsletter() {
         listNewsletter.add(checkBox_newsletter_1);
-        listNewsletter.add(checkBox_newsletter_2);
+        listNewsletter.add(checkBox_newsletter_0);
     }
     private void initializeCommittees() {
         listCommittees.add(checkBox_committees_1);
-        listCommittees.add(checkBox_committees_2);
+        listCommittees.add(checkBox_committees_0);
     }
     private void initializeCorporateMember() {
         listCorporateMember.add(checkBox_corporateMember_1);
-        listCorporateMember.add(checkBox_corporateMember_2);
+        listCorporateMember.add(checkBox_corporateMember_0);
     }
 
     private void addMemberStatusListener() {
@@ -1418,8 +1435,8 @@ public class SelectController {
 
         test.add(getWherePartFromList(listDebtStatus, "d.DEBT_STATUS", 3));
 
-        test.add(getWherePartFromList(listVedImport, "gi.VED_IMPORT", 4));
-        test.add(getWherePartFromList(listVedExport, "gi.VED_EXPORT", 4));
+        test.add(getWherePartFromList(listVedImport, "gi.VED_IMPORT", 2));
+        test.add(getWherePartFromList(listVedExport, "gi.VED_EXPORT", 2));
 
         test.add(getWherePartFromList(listInteractionOnline, "gi.INTERACTION_ONLINE",2));
         test.add(getWherePartFromList(listInteractionOffline, "gi.INTERACTION_OFFLINE", 2));
@@ -1434,8 +1451,8 @@ public class SelectController {
         test.add(getWherePartFromList(listDiscounts, "gi.DISCOUNTS", 2));
         test.add(getWherePartFromList(listNeedForYoungPersonnel, "gi.NEED_FOR_YOUNG_PERSONNEL", 2));
         test.add(getWherePartFromList(listNewsletter, "gi.NEWSLETTER", 2));
-        test.add(getWherePartFromList(listCommittees, "gi.COMMITTEES", 4));
-        test.add(getWherePartFromList(listCorporateMember, "gi.CORPORATE_MEMBER", 4));
+        test.add(getWherePartFromList(listCommittees, "gi.COMMITTEES", 2));
+        test.add(getWherePartFromList(listCorporateMember, "gi.CORPORATE_MEMBER", 2));
 
         test.add(getWherePartFromList(listLocation, "al.ADDRESS_LEGAL_REGION_ID;al.ADDRESS_LEGAL_DISTRICT", 5));
         test.add(getWherePartFromList(listMonth, "month(MEMBER_DATE_OF_ENTRY)", 6));
@@ -1475,16 +1492,19 @@ public class SelectController {
                     case 1:
                         someSelect.add(pattern + " = '" + checkBox.getText() + "'");
                         break;
-
                     case 2:
-                        someSelect.add(pattern + " = " + MemberUtils.interestingToBoolean(checkBox.getText()));
+                        someSelect.add(pattern + " = " + MemberUtils.checkBoxIDToBoolean(checkBox));
                         break;
+
+//                    case 2:
+//                        someSelect.add(pattern + " = " + MemberUtils.interestingToBoolean(checkBox.getText()));
+//                        break;
                     case 3:
                         someSelect.add(pattern + " = " + MemberUtils.debtToBoolean(checkBox.getText()));
                         break;
-                    case 4:
-                        someSelect.add(pattern + " = " + MemberUtils.yesNoToBoolean(checkBox.getText()));
-                        break;
+//                    case 4:
+//                        someSelect.add(pattern + " = " + MemberUtils.yesNoToBoolean(checkBox.getText()));
+//                        break;
                     case 5:
                         String[] splitPattern = pattern.split(";");
                         if (checkBox.getText().equals("Иногородние")) {
@@ -1585,12 +1605,10 @@ public class SelectController {
             if(i != list.size() - 1) result.append("(").append(list.get(i)).append(") AND ");
             else result.append(list.get(i));
         }
-
-
-
         return result.toString();
     }
 
+    @FXML
     public void saveToPDF(ActionEvent actionEvent) {
         ArrayList<String[]> listSelectedParams = new ArrayList<>();
         listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_memberStatus.getText(), listMemberStatus));
@@ -1627,7 +1645,7 @@ public class SelectController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf"));
-        File file = fileChooser.showSaveDialog(currentStage);
+        File file = fileChooser.showSaveDialog((Stage)btn_search.getScene().getWindow());
 
         if (file != null) {
             String path = file.getAbsolutePath();
@@ -1639,6 +1657,7 @@ public class SelectController {
 
     }
 
+    @FXML
     public void saveCSV(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("csv", "*.csv"));
@@ -1656,28 +1675,25 @@ public class SelectController {
     private void saveCSVFile(String pathName) {
         try {
             FileWriter writer = new FileWriter(pathName);
-
-            writer.append("Номер билета");
-            writer.append(";");
-            writer.append("Почта");
-            writer.append(";");
-            writer.append("Сокрашенное название организации");
-            writer.append("\n");
+            writer.append("Номер билета;Почта;Сокрашенное название организации\n");
 
             for (FindMember findMember: list) {
-                writer.append(findMember.getMemberId());
-                writer.append(";");
-                writer.append(findMember.getEmail());
-                writer.append(";");
-                writer.append(findMember.getMemberShortName());
-                writer.append("\n");
+                writer.append(findMember.getMemberId()).append(";");
+                writer.append(findMember.getEmail()).append(";");
+                writer.append(findMember.getMemberShortName()).append("\n");
             }
 
             writer.flush();
             writer.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void exitApplication(ActionEvent actionEvent) {
+        clearAllCheckBox(actionEvent);
+        Stage stage = (Stage) btn_close.getScene().getWindow();
+        stage.close();
     }
 }

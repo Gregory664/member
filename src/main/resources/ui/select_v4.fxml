@@ -21,7 +21,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.SelectController">
    <children>
-      <SplitPane dividerPositions="0.4254742547425474" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="740.0" prefWidth="1106.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.35772357723577236" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="740.0" prefWidth="1106.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minWidth="0.0" prefHeight="202.0" prefWidth="1104.0">
                <children>
@@ -48,7 +48,7 @@
                   <Label fx:id="countOfselect" text="Label" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
                </children>
             </AnchorPane>
-            <AnchorPane maxHeight="420.0" minHeight="420.0" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <TabPane layoutY="165.0" prefHeight="322.0" prefWidth="1104.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
@@ -56,7 +56,7 @@
                            <content>
                               <AnchorPane fx:id="anchor_General" prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <VBox layoutX="40.0" layoutY="14.0" maxHeight="180.0" maxWidth="450.0" minHeight="180.0" minWidth="450.0" prefHeight="180.0" prefWidth="450.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+                                    <VBox layoutX="40.0" layoutY="14.0" maxHeight="180.0" maxWidth="480.0" minHeight="180.0" minWidth="480.0" prefHeight="180.0" prefWidth="482.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
                                        <children>
                                           <GridPane>
                                              <columnConstraints>
@@ -75,8 +75,8 @@
                                           </GridPane>
                                           <GridPane hgap="4.0" vgap="4.0">
                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="205.0" prefWidth="205.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="263.0" />
+                                                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="220.0" minWidth="220.0" prefWidth="220.0" />
+                                                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" />
                                              </columnConstraints>
                                              <rowConstraints>
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
@@ -90,57 +90,87 @@
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_memberstatus_6" mnemonicParsing="false" text="Заявление на исключение" GridPane.columnIndex="1">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_memberstatus_8" mnemonicParsing="false" text="Потеря связи" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_memberstatus_9" mnemonicParsing="false" text="Смена формы собственности" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_memberstatus_10" mnemonicParsing="false" text="На исключение" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_memberstatus_2" mnemonicParsing="false" text="Актуально нестабильно" GridPane.rowIndex="1">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_memberstatus_3" mnemonicParsing="false" text="Актуально долг 1 год" GridPane.rowIndex="2">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_memberstatus_4" mnemonicParsing="false" text="Актуально долг 2 года" GridPane.rowIndex="3">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_memberstatus_5" mnemonicParsing="false" text="Актуально долг 3 года" GridPane.rowIndex="4">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_memberstatus_1" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" text="Актуально стабильно">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                              </children>
                                           </GridPane>
                                        </children>
                                     </VBox>
-                                    <VBox maxHeight="220.0" maxWidth="195.0" minHeight="220.0" minWidth="195.0" prefHeight="221.0" prefWidth="195.0" AnchorPane.leftAnchor="478.0" AnchorPane.topAnchor="14.0">
+                                    <VBox maxHeight="220.0" maxWidth="195.0" minHeight="220.0" minWidth="195.0" prefHeight="221.0" prefWidth="195.0" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="14.0">
                                        <children>
                                           <GridPane>
                                              <columnConstraints>
@@ -170,11 +200,17 @@
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_debt_status_2" mnemonicParsing="false" text="Отсутствует" GridPane.rowIndex="1">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                              </children>
                                           </GridPane>
@@ -208,22 +244,31 @@
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_location_2" mnemonicParsing="false" text="Воронежская область" GridPane.rowIndex="1">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_location_3" mnemonicParsing="false" text="Иногородние" GridPane.rowIndex="2">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                              </children>
                                           </GridPane>
                                        </children>
                                     </VBox>
-                                    <VBox AnchorPane.leftAnchor="687.0" AnchorPane.topAnchor="14.0">
+                                    <VBox prefHeight="200.0" prefWidth="220.0" AnchorPane.leftAnchor="717.0" AnchorPane.topAnchor="14.0">
                                        <children>
                                           <GridPane>
                                             <columnConstraints>
@@ -258,61 +303,97 @@
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_2" mnemonicParsing="false" text="Февраль" GridPane.rowIndex="1">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_3" mnemonicParsing="false" text="Март" GridPane.rowIndex="2">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_4" mnemonicParsing="false" text="Апрель" GridPane.rowIndex="3">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_5" mnemonicParsing="false" text="Май" GridPane.rowIndex="4">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_6" mnemonicParsing="false" text="Июнь" GridPane.rowIndex="5">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_7" mnemonicParsing="false" text="Июль" GridPane.columnIndex="1">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_8" mnemonicParsing="false" text="Август" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_9" mnemonicParsing="false" text="Сентябрь" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_10" mnemonicParsing="false" text="Октябрь" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_11" mnemonicParsing="false" text="Ноябрь" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_month_12" mnemonicParsing="false" text="Декабрь" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                              </children>
                                           </GridPane>
@@ -326,7 +407,7 @@
                           <content>
                             <AnchorPane fx:id="anchor_BusinessCharacteristics" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <VBox maxHeight="330.0" maxWidth="430.0" minHeight="330.0" minWidth="430.0" prefHeight="330.0" prefWidth="429.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+                                    <VBox maxHeight="404.0" maxWidth="430.0" minHeight="330.0" minWidth="430.0" prefHeight="404.0" prefWidth="430.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
                                        <children>
                                           <GridPane prefHeight="24.0" prefWidth="295.0">
                                              <columnConstraints>
@@ -345,11 +426,10 @@
                                           </GridPane>
                                           <GridPane hgap="4.0" vgap="4.0">
                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="190.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="230.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="190.0" prefWidth="203.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.0" minWidth="213.0" prefWidth="223.0" />
                                              </columnConstraints>
                                              <rowConstraints>
-                                                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
@@ -358,29 +438,90 @@
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="40.0" minHeight="25.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="40.0" minHeight="25.0" prefHeight="45.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <CheckBox fx:id="checkBox_economicSector_1" mnemonicParsing="false" text="Торговля" />
-                                                <CheckBox fx:id="checkBox_economicSector_2" mnemonicParsing="false" text="Услуги" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_economicSector_3" mnemonicParsing="false" text="Производство" GridPane.rowIndex="2" />
-                                                <CheckBox fx:id="checkBox_economicSector_4" mnemonicParsing="false" text="Сельскохозяйственная деятельность" wrapText="true" GridPane.rowIndex="4" />
-                                                <CheckBox fx:id="checkBox_economicSector_5" mnemonicParsing="false" text="Рыбный промысел" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_economicSector_6" mnemonicParsing="false" text="Лесное хозяйство" GridPane.rowIndex="6" />
-                                                <CheckBox fx:id="checkBox_economicSector_7" mnemonicParsing="false" text="Строительство" GridPane.rowIndex="7" />
-                                                <CheckBox fx:id="checkBox_economicSector_8" mnemonicParsing="false" text="Транспорт" GridPane.rowIndex="8" />
-                                                <CheckBox fx:id="checkBox_economicSector_9" mnemonicParsing="false" text="Связь" GridPane.rowIndex="9" />
-                                                <CheckBox fx:id="checkBox_economicSector_10" mnemonicParsing="false" text="Образование" GridPane.columnIndex="1" />
-                                                <CheckBox fx:id="checkBox_economicSector_11" mnemonicParsing="false" text="Недвижимость" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_economicSector_12" mnemonicParsing="false" text="Бытовое обслуживание" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <CheckBox fx:id="checkBox_economicSector_13" mnemonicParsing="false" text="Полиграфия и издательство" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <CheckBox fx:id="checkBox_economicSector_14" mnemonicParsing="false" text="Туризм" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <CheckBox fx:id="checkBox_economicSector_15" mnemonicParsing="false" text="Компьютерные услуги" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_economicSector_16" mnemonicParsing="false" text="Общественное питание" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                <CheckBox fx:id="checkBox_economicSector_17" mnemonicParsing="false" text="Переработка" GridPane.rowIndex="3" />
-                                                <CheckBox fx:id="checkBox_economicSector_18" mnemonicParsing="false" text="Медицина" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                                <CheckBox fx:id="checkBox_economicSector_19" mnemonicParsing="false" text="Общественная деятельность" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                                <CheckBox fx:id="checkBox_economicSector_20" mnemonicParsing="false" text="Иное" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                                <CheckBox fx:id="checkBox_economicSector_1" mnemonicParsing="false" text="Торговля">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_2" mnemonicParsing="false" text="Услуги" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_3" mnemonicParsing="false" text="Производство" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_4" mnemonicParsing="false" text="Сельскохозяйственная &#10;деятельность" wrapText="true" GridPane.rowIndex="8">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_5" mnemonicParsing="false" text="Рыбный промысел" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_6" mnemonicParsing="false" text="Лесное хозяйство" GridPane.rowIndex="5">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_7" mnemonicParsing="false" text="Строительство" GridPane.rowIndex="6">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_8" mnemonicParsing="false" text="Транспорт" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_9" mnemonicParsing="false" text="Связь" GridPane.rowIndex="7">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_10" mnemonicParsing="false" text="Образование" GridPane.columnIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_11" mnemonicParsing="false" text="Недвижимость" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_12" mnemonicParsing="false" text="Бытовое обслуживание" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_13" mnemonicParsing="false" text="Полиграфия и издательство" wrapText="true" GridPane.rowIndex="9">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_14" mnemonicParsing="false" text="Туризм" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_15" mnemonicParsing="false" text="Компьютерные услуги" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_16" mnemonicParsing="false" text="Общественное питание" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_17" mnemonicParsing="false" text="Переработка" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_18" mnemonicParsing="false" text="Медицина" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_19" mnemonicParsing="false" text="Общественная деятельность" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_economicSector_20" mnemonicParsing="false" text="Иное" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
                                              </children>
                                              <VBox.margin>
                                                 <Insets top="4.0" />
@@ -421,22 +562,70 @@
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <CheckBox fx:id="checkBox_organizationForm_1" mnemonicParsing="false" text="ООО" />
-                                                <CheckBox fx:id="checkBox_organizationForm_2" mnemonicParsing="false" text="ПАО" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_organizationForm_4" mnemonicParsing="false" text="ИАО" GridPane.rowIndex="3" />
-                                                <CheckBox fx:id="checkBox_organizationForm_3" mnemonicParsing="false" text="АО" GridPane.rowIndex="2" />
-                                                <CheckBox fx:id="checkBox_organizationForm_6" mnemonicParsing="false" text="ИП" GridPane.columnIndex="1" />
-                                                <CheckBox fx:id="checkBox_organizationForm_7" mnemonicParsing="false" text="НП" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_organizationForm_8" mnemonicParsing="false" text="ОАО" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <CheckBox fx:id="checkBox_organizationForm_9" mnemonicParsing="false" text="ЗАО" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <CheckBox fx:id="checkBox_organizationForm_5" mnemonicParsing="false" text="СРО" GridPane.rowIndex="4" />
-                                                <CheckBox fx:id="checkBox_organizationForm_10" mnemonicParsing="false" text="ФОНД" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <CheckBox fx:id="checkBox_organizationForm_12" mnemonicParsing="false" text="Союз" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_organizationForm_13" mnemonicParsing="false" text="Самозанятый" GridPane.rowIndex="6" />
-                                                <CheckBox fx:id="checkBox_organizationForm_14" mnemonicParsing="false" text="АНО" GridPane.rowIndex="7" />
-                                                <CheckBox fx:id="checkBox_organizationForm_15" mnemonicParsing="false" text="Объединение" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_organizationForm_16" mnemonicParsing="false" text="ОУ" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                <CheckBox fx:id="checkBox_organizationForm_17" mnemonicParsing="false" text="Госучреждение" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                <CheckBox fx:id="checkBox_organizationForm_1" mnemonicParsing="false" text="ООО">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_2" mnemonicParsing="false" text="ПАО" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_4" mnemonicParsing="false" text="ИАО" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_3" mnemonicParsing="false" text="АО" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_6" mnemonicParsing="false" text="ИП" GridPane.columnIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_7" mnemonicParsing="false" text="НП" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_8" mnemonicParsing="false" text="ОАО" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_9" mnemonicParsing="false" text="ЗАО" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_5" mnemonicParsing="false" text="СРО" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_10" mnemonicParsing="false" text="ФОНД" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_12" mnemonicParsing="false" text="Союз" GridPane.rowIndex="5">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_14" mnemonicParsing="false" text="АНО" GridPane.rowIndex="6">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_15" mnemonicParsing="false" text="Объединение" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_16" mnemonicParsing="false" text="ОУ" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_11" mnemonicParsing="false" text="Ассоциация" GridPane.rowIndex="7">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_13" mnemonicParsing="false" text="Самозанятый" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
                                              </children>
                                              <VBox.margin>
                                                 <Insets top="4.0" />
@@ -448,14 +637,20 @@
                                              </columnConstraints>
                                              <rowConstraints>
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <VBox.margin>
                                                 <Insets top="4.0" />
                                              </VBox.margin>
                                              <children>
-                                                <CheckBox fx:id="checkBox_organizationForm_11" mnemonicParsing="false" text="Ассоциация" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_organizationForm_18" mnemonicParsing="false" text="Бюджетное учреждение" />
+                                                <CheckBox fx:id="checkBox_organizationForm_18" mnemonicParsing="false" text="Бюджетное учреждение">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
+                                                <CheckBox fx:id="checkBox_organizationForm_17" mnemonicParsing="false" text="Госучреждение" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font></CheckBox>
                                              </children>
                                           </GridPane>
                                        </children>
@@ -492,21 +687,33 @@
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_businessForm_2" mnemonicParsing="false" text="Малый бизнес (15 - 100)" GridPane.rowIndex="1">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_businessForm_3" mnemonicParsing="false" text="Средний бизнес (101 - 250)" GridPane.rowIndex="2">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_businessForm_4" mnemonicParsing="false" text="Крупный бизнес ( &gt;250 )" GridPane.rowIndex="3">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                              </children>
                                           </GridPane>
@@ -539,11 +746,17 @@
                                                    <GridPane.margin>
                                                       <Insets left="7.0" />
                                                    </GridPane.margin>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_activityType_2" mnemonicParsing="false" text="Не коммерческая" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets left="7.0" />
                                                    </GridPane.margin>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                              </children>
                                           </GridPane>
@@ -573,9 +786,27 @@
                                                 <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
-                                                <CheckBox fx:id="checkBox_ownershipForm_1" mnemonicParsing="false" text="Частная" />
-                                                <CheckBox fx:id="checkBox_ownershipForm_2" mnemonicParsing="false" text="Государственная" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_ownershipForm_3" mnemonicParsing="false" text="Смешанная" GridPane.rowIndex="2" />
+                                                <CheckBox fx:id="checkBox_ownershipForm_1" mnemonicParsing="false" text="Частная">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <GridPane.margin>
+                                                      <Insets left="7.0" />
+                                                   </GridPane.margin></CheckBox>
+                                                <CheckBox fx:id="checkBox_ownershipForm_2" mnemonicParsing="false" text="Государственная" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <GridPane.margin>
+                                                      <Insets left="7.0" />
+                                                   </GridPane.margin></CheckBox>
+                                                <CheckBox fx:id="checkBox_ownershipForm_3" mnemonicParsing="false" text="Смешанная" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <GridPane.margin>
+                                                      <Insets left="7.0" />
+                                                   </GridPane.margin></CheckBox>
                                              </children>
                                           </GridPane>
                                        </children>
@@ -587,151 +818,154 @@
                            <content>
                               <AnchorPane fx:id="anchor_Interests" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <VBox layoutX="16.0" layoutY="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+                                    <VBox layoutX="59.0" layoutY="411.0" maxHeight="369.0" minWidth="360.0" prefHeight="357.0" prefWidth="936.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="14.0">
                                        <children>
                                           <GridPane hgap="4.0" vgap="4.0">
                                             <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="240.0" prefWidth="240.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="105.0" prefWidth="105.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="105.0" prefWidth="105.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="14.0" minWidth="14.0" prefWidth="14.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="240.0" prefWidth="240.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="105.0" prefWidth="105.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="105.0" prefWidth="105.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                              <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                              <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                              <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="14.0" minHeight="14.0" prefHeight="14.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="14.0" minHeight="14.0" prefHeight="14.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label fx:id="label_vedImport" text="Являются &#10;импортерами" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                <Label fx:id="label_vedImport" text="Являются импортерами" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_vedImport_1" mnemonicParsing="false" text="Да" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_vedImport_2" mnemonicParsing="false" text="Нет" GridPane.rowIndex="2" />
-                                                <Label fx:id="label_vedExport" text="Являются &#10;экспортерами" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_vedImport_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_vedImport_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_vedExport" text="Являются экспортерами" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_vedExport_1" mnemonicParsing="false" text="Да" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_vedExport_2" mnemonicParsing="false" text="Нет" GridPane.rowIndex="6" />
-                                                <Label fx:id="label_businessMissionVisiting" text="Выездные &#10;бизнес миссии" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_vedExport_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_vedExport_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_businessMissionVisiting" text="Выездные бизнес миссии" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_businessMissionVisiting_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_businessMissionVisiting_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label fx:id="label_businessMissionRegional" text="Региональные&#10;бизнес миссии" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_businessMissionVisiting_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_businessMissionVisiting_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_businessMissionRegional" text="Региональные бизнес миссии" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_businessMissionRegional_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_businessMissionRegional_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                <Label fx:id="label_interactionOnline" text="Участие online" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_businessMissionRegional_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_businessMissionRegional_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_interactionOnline" text="Участие online" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_interactionOnline_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_interactionOnline_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                                <Label fx:id="label_interactionOffline" text="Участие offline" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_interactionOnline_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_interactionOnline_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_interactionOffline" text="Участие offline" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_interactionOffline_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_interactionOffline_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                                                <Label fx:id="label_b2b" text="B2B" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_interactionOffline_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_interactionOffline_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_b2b" text="B2B" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_b2b_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_b2b_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                                <Label fx:id="label_b2c" text="B2C" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_b2b_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_b2b_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_b2c" text="B2C" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_b2c_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_b2c_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                                <Label fx:id="label_mkas" text="MKAS" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_b2c_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_b2c_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_mkas" text="MKAS" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_mkas_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_mkas_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                                <Label fx:id="label_needForYoungPersonnel" text="Потребность в&#10;молодых кадрах" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_mkas_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_mkas_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_newsletter" text="Информационная рассылка" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="label_discounts" text="Скидки другим&#10;членам ТПП" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_newsletter_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_newsletter_0" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_discounts" text="Скидки другим членам ТПП" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="label_reliablePartners" text="Реестр надежных &#10;партнеров" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_discounts_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_discounts_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_needForYoungPersonnel" text="Потребность в молодых кадрах" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="label_pilotProjects" text="Участие в пилотных &#10;проектах" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_needForYoungPersonnel_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_needForYoungPersonnel_0" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_reliablePartners" text="Реестр надежных партнеров" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="label_antiCorruptionCharter" text="Антикоррупционная &#10;хартия" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_reliablePartners_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_reliablePartners_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_pilotProjects" text="Участие в пилотных проектах" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_needForYoungPersonnel_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_needForYoungPersonnel_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                                                <CheckBox fx:id="checkBox_discounts_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_discounts_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                                                <CheckBox fx:id="checkBox_reliablePartners_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_reliablePartners_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-                                                <CheckBox fx:id="checkBox_pilotProjects_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                                                <CheckBox fx:id="checkBox_pilotProjects_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                                                <CheckBox fx:id="checkBox_antiCorruptionCharter_1" mnemonicParsing="false" text="Интересует" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-                                                <CheckBox fx:id="checkBox_antiCorruptionCharter_2" mnemonicParsing="false" text="Не интересует" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-                                                <Label fx:id="label_newsletter" text="Информационная рассылка" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_pilotProjects_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_pilotProjects_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_antiCorruptionCharter" text="Антикоррупционная хартия" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="label_committees" text="Участие в комитетах" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_antiCorruptionCharter_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_antiCorruptionCharter_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_committees" text="Участие в комитетах" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="label_corporateMember" text="Корпоративный член" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+                                                <CheckBox fx:id="checkBox_committees_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_committees_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                                                <Label fx:id="label_corporateMember" text="Корпоративный член" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <CheckBox fx:id="checkBox_newsletter_1" mnemonicParsing="false" text="Интересует" GridPane.rowIndex="9" />
-                                                <CheckBox fx:id="checkBox_newsletter_2" mnemonicParsing="false" text="Не интересует" GridPane.rowIndex="10" />
-                                                <CheckBox fx:id="checkBox_committees_1" mnemonicParsing="false" text="Да" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                                <CheckBox fx:id="checkBox_committees_2" mnemonicParsing="false" text="Нет" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                                                <CheckBox fx:id="checkBox_corporateMember_1" mnemonicParsing="false" text="Да" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                                                <CheckBox fx:id="checkBox_corporateMember_2" mnemonicParsing="false" text="Нет" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                                                <CheckBox fx:id="checkBox_corporateMember_1" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                                                <CheckBox fx:id="checkBox_corporateMember_0" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                                                <Label text="Да / &#10;Интересует" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                                <Label text="Нет /&#10;Не интересует" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                                <Label text="Да / &#10;Интересует" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                                <Label text="Нет /&#10;Не интересует" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                              </children>
                                           </GridPane>
                                        </children>
@@ -765,11 +999,17 @@
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_payment_2" mnemonicParsing="false" text="Не отплачен" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <Label text="Дата оплаты" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                                    <font>
@@ -795,11 +1035,17 @@
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </Label>
                                                 <Label text="по" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </Label>
                                              </children>
                                              <padding>
@@ -830,11 +1076,17 @@
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <CheckBox fx:id="checkBox_receiving_2" mnemonicParsing="false" text="Не получен" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </CheckBox>
                                                 <Label text="Дата получения" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                                    <font>
@@ -858,11 +1110,17 @@
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </Label>
                                                 <Label text="по" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                                    <padding>
                                                       <Insets left="7.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
                                                 </Label>
                                                 <DatePicker fx:id="date_receiving_1" disable="true" editable="false" maxWidth="120.0" minWidth="120.0" GridPane.columnIndex="1" />
                                                 <DatePicker fx:id="date_receiving_2" disable="true" editable="false" maxWidth="120.0" minWidth="120.0" GridPane.columnIndex="3" />

@@ -26,7 +26,6 @@ public class ListUtils {
         memberStatusList.add("На исключение");
         return memberStatusList;
     }
-
     public static ObservableList<String> getOrganizationForm() {
         ObservableList<String> organizationFormList = FXCollections.observableArrayList();
         organizationFormList.add("ООО");//
@@ -84,10 +83,10 @@ public class ListUtils {
     }
     public static ObservableList<String> getBusinessForm() {
         ObservableList<String> businessFormList = FXCollections.observableArrayList();
-        businessFormList.add("Микробизнес ( <15 )");
-        businessFormList.add("Малый бизнес (15 - 100)");
-        businessFormList.add("Средний бизнес (101 - 250)");
-        businessFormList.add("Крупный бизнес ( >250 )");
+        businessFormList.add("Микробизнес (<15)");
+        businessFormList.add("Малый бизнес (15-100)");
+        businessFormList.add("Средний бизнес (101-250)");
+        businessFormList.add("Крупный бизнес (>250)");
         return businessFormList;
     }
     public static ObservableList<String> getInteresting() {

@@ -471,16 +471,16 @@ public class CreateMemberFormController {
         MemberUtils.checkTextDigital(text_addressLegal_index, label_alarm_addressLegal_index, 6);
         MemberUtils.checkTextLength(text_addressLegal_town, label_alarm_addressLegal_town, 45);
         MemberUtils.checkTextLength(text_addressLegal_street, label_alarm_addressLegal_street, 45);
-        MemberUtils.checkTextLength(text_addressLegal_house, label_alarm_addressLegal_house, 45);
-        MemberUtils.checkTextLength(text_addressLegal_office, label_alarm_addressLegal_office, 45);
+        MemberUtils.checkTextLength(text_addressLegal_house, label_alarm_addressLegal_house, 6);
+        MemberUtils.checkTextLength(text_addressLegal_office, label_alarm_addressLegal_office, 6);
         MemberUtils.checkTextLength(text_addressLegal_changes, label_alarm_addressLegal_changes, 255);
 
         MemberUtils.checkTextDigital(text_addressActual_regionId, label_alarm_addressActual_regionId, 3);
         MemberUtils.checkTextDigital(text_addressActual_index, label_alarm_addressActual_index, 6);
         MemberUtils.checkTextLength(text_addressActual_town, label_alarm_addressActual_town, 45);
         MemberUtils.checkTextLength(text_addressActual_street, label_alarm_addressActual_street, 45);
-        MemberUtils.checkTextLength(text_addressActual_house, label_alarm_addressActual_house, 45);
-        MemberUtils.checkTextLength(text_addressActual_office, label_alarm_addressActual_office, 45);
+        MemberUtils.checkTextLength(text_addressActual_house, label_alarm_addressActual_house, 6);
+        MemberUtils.checkTextLength(text_addressActual_office, label_alarm_addressActual_office, 6);
         MemberUtils.checkTextLength(text_addressActual_changes, label_alarm_addressActual_changes, 255);
 
         MemberUtils.checkTextLength(text_socialNetworks_vkontakte,  label_alarm_socialNetworks_vkontakte, 45);
@@ -905,8 +905,10 @@ public class CreateMemberFormController {
                 text_relate_services.getText());
         if (date_relate_dateOfCreation.getValue() != null)
             relate.setDateOfCreation(date_relate_dateOfCreation.getValue());
-        if (text_relate_services.getText().length() > 0)
+        if (text_relate_services.getText() != null)
             relate.setServices(text_relate_services.getText());
+        if(text_relate_changes.getText() != null)
+            relate.setChanges(text_relate_changes.getText());
 
 
         GeneralInformation genInf = new GeneralInformation(
@@ -935,10 +937,12 @@ public class CreateMemberFormController {
                 MemberUtils.yesNoToBoolean(comboBox_generalInformation_corporateMember.getSelectionModel().getSelectedItem())
         );
 
-        if (text_generalInformation_investmentsTarget.getText().length() > 0)
+        if (text_generalInformation_investmentsTarget.getText() != null)
             genInf.setInvestmentsTarget(text_generalInformation_investmentsTarget.getText());
-        if (text_generalInformation_investmentsSize.getText().length() > 0)
+        if (text_generalInformation_investmentsSize.getText() != null)
             genInf.setInvestmentsSize(Integer.valueOf(text_generalInformation_investmentsSize.getText()));
+        if(text_generalInformation_changes.getText() != null)
+            genInf.setChanges(text_generalInformation_changes.getText());
 
 
         Director dir = new Director(
@@ -949,9 +953,9 @@ public class CreateMemberFormController {
                 text_director_email.getText()
         );
 
-        if (text_director_phoneCity.getText().length() > 0)
+        if (text_director_phoneCity.getText() != null)
             dir.setPhoneCity(text_director_phoneCity.getText());
-        if (text_director_changes.getText().length() > 0)
+        if (text_director_changes.getText() != null)
             dir.setChanges(text_director_changes.getText());
 
 
