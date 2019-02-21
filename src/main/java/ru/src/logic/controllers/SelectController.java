@@ -1476,7 +1476,7 @@ public class SelectController {
                "INNER JOIN GENERAL_INFORMATION gi ON m.MEMBER_ID=gi.MEMBER_ID " +
                "INNER JOIN ADDRESS_LEGAL al ON m.MEMBER_ID=al.MEMBER_ID " +
                "LEFT JOIN INVOICE i ON m.MEMBER_ID=i.MEMBER_ID " +
-               "INNER JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID";
+               "LEFT JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID";
         String whereQuery = "WHERE " + getAppendWhereQuery(test) + ";";
 
         return selectQuery + "\n" + fromQuery + "\n" + whereQuery;

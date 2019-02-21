@@ -1,6 +1,5 @@
 package ru.src.logic.controllers;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -39,16 +38,25 @@ public class CreateContactPersonController {
     public Button btnCancel;
 
     private ContactPerson contactPerson;
+
     public ContactPerson getContactPerson() {
         return contactPerson;
     }
-    public void setContactPerson(ContactPerson contactPerson) {
-        this.contactPerson = contactPerson;
-    }
 
     private Member member;
+
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    private boolean createContactPerson = false;
+
+    public boolean isCreateContactPerson() {
+        return createContactPerson;
+    }
+
+    public void setCreateContactPerson(boolean createContactPerson) {
+        this.createContactPerson = createContactPerson;
     }
 
     @FXML
@@ -62,32 +70,40 @@ public class CreateContactPersonController {
 
     private boolean isFieldsEmpty() {
         HashSet<Boolean> set = new HashSet<Boolean>();
-        set.add(MemberUtils.isEmptyField(text_contactPerson_fullName, label_alarm_contactPerson_fullName));
-        set.add(MemberUtils.isEmptyField(text_contactPerson_position, label_alarm_contactPerson_position));
-        set.add(MemberUtils.isEmptyField(text_contactPerson_phoneMobile, label_alarm_contactPerson_phoneMobile));
-        set.add(MemberUtils.isEmptyField(text_contactPerson_email, label_alarm_contactPerson_email));
+        set.add(MemberUtils.isEmptyField(text_contactPerson_fullName));
+        set.add(MemberUtils.isEmptyField(text_contactPerson_position));
+        set.add(MemberUtils.isEmptyField(text_contactPerson_phoneMobile));
+        set.add(MemberUtils.isEmptyField(text_contactPerson_email));
         return set.contains(true);
     }
 
     public void saveContactPerson(ActionEvent actionEvent) {
 
-        if(!isFieldsEmpty()) {
+        if (!isFieldsEmpty()) {
+            label_alarm_contactPerson_email.setTextFill(null);
+
             contactPerson = new ContactPerson(
                     this.member,
                     text_contactPerson_fullName.getText(),
                     text_contactPerson_position.getText(),
                     text_contactPerson_phoneMobile.getText(),
-                    text_contactPerson_email.getText());
+                    text_contactPerson_email.getText()
+            );
 
-            clearText();
-            clearStyle();
-
-            MemberUtils.informationDialog("Контакты успешно добавлены!");
+            createContactPerson = true;
             closeWindow(actionEvent);
+        } else {
+            label_alarm_contactPerson_fullName.setText(null);
+            label_alarm_contactPerson_position.setText(null);
+            label_alarm_contactPerson_phoneMobile.setText(null);
+
+            label_alarm_contactPerson_email.setTextFill(MemberUtils.EMPTY_COLOR);
+            label_alarm_contactPerson_email.setText("Заполните обязательные поля");
         }
+
     }
 
-    private void clearText() {
+    public void clearTextAndStyle() {
         text_contactPerson_fullName.clear();
         text_contactPerson_position.clear();
         text_contactPerson_phoneMobile.clear();
@@ -97,9 +113,7 @@ public class CreateContactPersonController {
         label_alarm_contactPerson_position.setText("");
         label_alarm_contactPerson_phoneMobile.setText("");
         label_alarm_contactPerson_email.setText("");
-    }
 
-    private void clearStyle() {
         text_contactPerson_fullName.setStyle(null);
         text_contactPerson_position.setStyle(null);
         text_contactPerson_phoneMobile.setStyle(null);
@@ -111,12 +125,14 @@ public class CreateContactPersonController {
         label_alarm_contactPerson_email.setStyle(null);
     }
 
+
+
+    @FXML
     public void closeWindow(ActionEvent actionEvent) {
-        clearText();
-        clearStyle();
+        clearTextAndStyle();
 
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.hide();
+        stage.close();
     }
 }

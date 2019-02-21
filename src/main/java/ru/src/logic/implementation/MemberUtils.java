@@ -7,7 +7,10 @@ import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 public class MemberUtils {
-    private static final String  EMPTY_COLOR = "#de9396";
+    //private static final String  EMPTY_COLOR = "#de9396";
+    public static final Color EMPTY_COLOR = Color.rgb(255, 0, 0);
+    public static final String EMPTY_COLOR2 = "255,0,0";
+    
 
     public static String isImportExport(boolean value) {
         return value ? "Да" : "Нет";
@@ -79,7 +82,7 @@ public class MemberUtils {
     }
 
     public static String extractId(String id) {
-        return id.substring(id.indexOf("(") + 3, id.length() - 1);
+        return id.substring(id.lastIndexOf("(") + 3, id.length() - 1);
     }
 
     public static void informationDialog(String message) {
@@ -98,6 +101,14 @@ public class MemberUtils {
         alert.showAndWait();
     }
 
+    public static void warningDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setContentText(message);
+        alert.setTitle("Ошибка!");
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
+
 
     public static void checkTextDigital(TextField textField, Label label, int maxLength) {
         Pattern p = Pattern.compile("\\d*");
@@ -110,7 +121,7 @@ public class MemberUtils {
                 if (!p.matcher(newValue).matches()) {
                     textField.setText(oldValue);
                     label.setText("Введите корректные символы");
-                    label.setTextFill(Color.ORANGE);
+                    label.setTextFill(EMPTY_COLOR);
                 }
 
             } else {
@@ -118,7 +129,20 @@ public class MemberUtils {
                 textField.setText(s);
 
                 label.setText("Поле достигло максимального значения");
-                label.setTextFill(Color.ORANGE);
+                label.setTextFill(EMPTY_COLOR);
+            }
+        });
+    }
+
+    public static void checkTextDigital(TextField textField, int maxLength) {
+        Pattern p = Pattern.compile("\\d*");
+
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(textField.getText().length() <= maxLength) {
+                if (!p.matcher(newValue).matches()) textField.setText(oldValue);
+            } else {
+                String s = textField.getText().substring(0, maxLength);
+                textField.setText(s);
             }
         });
     }
@@ -135,7 +159,7 @@ public class MemberUtils {
                 if (!p.matcher(newValue).matches()) {
                     textField.setText(oldValue);
                     label.setText("Введите номер в формате \"7XXXXXXX\"");
-                    label.setTextFill(Color.ORANGE);
+                    label.setTextFill(EMPTY_COLOR);
                 }
 
             } else {
@@ -143,7 +167,7 @@ public class MemberUtils {
                 textField.setText(s);
 
                 label.setText("Поле достигло максимального значения");
-                label.setTextFill(Color.ORANGE);
+                label.setTextFill(EMPTY_COLOR);
             }
         });
     }
@@ -155,7 +179,7 @@ public class MemberUtils {
                 String s = textField.getText().substring(0, maxLength);
                 textField.setText(s);
                 label.setText("Поле достигло максимального значения");
-                label.setTextFill(Color.ORANGE);
+                label.setTextFill(EMPTY_COLOR);
             } else {
                 label.setText(null);
                 label.setStyle(null);
@@ -170,7 +194,7 @@ public class MemberUtils {
                 String s = textField.getText().substring(0, maxLength);
                 textField.setText(s);
                 label.setText("Поле достигло максимального значения");
-                label.setTextFill(Color.ORANGE);
+                label.setTextFill(EMPTY_COLOR);
             } else {
                 label.setText(null);
                 label.setStyle(null);
@@ -179,62 +203,51 @@ public class MemberUtils {
     }
 
 
-    public static boolean isEmptyField(TextField text, Label labelText) {
+    public static boolean isEmptyField(TextField text) {
         boolean isEmpty;
         if(text.getText().length() == 0) {
-            text.setStyle("-fx-background-color: " + EMPTY_COLOR + ";");
-            labelText.setText("Обязательное поле");
-            labelText.setTextFill(Color.valueOf(EMPTY_COLOR));
+            text.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
             isEmpty = true;
         } else {
             text.setStyle(null);
-            labelText.setStyle(null);
-            labelText.setText("");
             isEmpty = false;
         }
         return isEmpty;
     }
 
-    public static boolean isEmptyField(TextArea text, Label labelText) {
+    public static boolean isEmptyField(TextArea text) {
         boolean isEmpty;
         if(text.getText().length() == 0) {
-            text.setStyle("-fx-background-color: " + EMPTY_COLOR + ";");
-            labelText.setText("Обязательное поле");
-            labelText.setTextFill(Color.valueOf(EMPTY_COLOR));
+            text.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
             isEmpty = true;
         } else {
             text.setStyle(null);
-            labelText.setStyle(null);
-            labelText.setText("");
             isEmpty = false;
+            
         }
         return isEmpty;
     }
 
-    public static boolean isEmptyField(DatePicker date, Label labelText) {
+    public static boolean isEmptyField(DatePicker date) {
         boolean isEmpty;
         if(date.getValue() == null) {
-            labelText.setText("Обязательное поле");
-            labelText.setTextFill(Color.valueOf(EMPTY_COLOR));
             isEmpty = true;
+            date.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
         } else {
-            labelText.setStyle(null);
-            labelText.setText("");
             isEmpty = false;
+            date.setStyle(null);
         }
         return isEmpty;
     }
 
-    public static boolean isEmptyField(ComboBox comboBox, Label labelText) {
+    public static boolean isEmptyField(ComboBox comboBox) {
         boolean isEmpty;
         if(comboBox.getValue() == null) {
-            labelText.setText("Обязательное поле");
-            labelText.setTextFill(Color.valueOf(EMPTY_COLOR));
+            comboBox.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
             isEmpty = true;
         }
         else {
-            labelText.setStyle(null);
-            labelText.setText("");
+            comboBox.setStyle(null);
             isEmpty = false;
         }
         return isEmpty;

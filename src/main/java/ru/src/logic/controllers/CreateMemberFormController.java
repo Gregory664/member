@@ -84,88 +84,11 @@ public class CreateMemberFormController {
     public ComboBox<String> comboBox_generalInformation_activityType;
     @FXML
     public ComboBox<String> comboBox_generalInformation_businessForm;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_vedImport;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_vedExport;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_interactionOnline;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_interactionOffline;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_b2b;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_b2c;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_businessMissionVisiting;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_businessMissionRegional;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_mkas;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_needForYoungPersonnel;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_discounts;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_reliablePartners;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_pilotProjects;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_antiCorruptionCharter;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_newsletter;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_committees;
-    @FXML
-    public ComboBox<String> comboBox_generalInformation_corporateMember;
-    @FXML
-    public Label label_alarm_generalInformation_organizationForm;
-    @FXML
-    public Label label_alarm_generalInformation_economicSector;
-    @FXML
-    public Label label_alarm_generalInformation_ownershipForm;
-    @FXML
-    public Label label_alarm_generalInformation_activityType;
-    @FXML
-    public Label label_alarm_generalInformation_businessForm;
-    @FXML
-    public Label label_alarm_generalInformation_vedImport;
-    @FXML
-    public Label label_alarm_generalInformation_vedExport;
+    
     @FXML
     public Label label_alarm_generalInformation_investmentsTarget;
     @FXML
     public Label label_alarm_generalInformation_investmentsSize;
-    @FXML
-    public Label label_alarm_generalInformation_interactionOnline;
-    @FXML
-    public Label label_alarm_generalInformation_interactionOffline;
-    @FXML
-    public Label label_alarm_generalInformation_b2b;
-    @FXML
-    public Label label_alarm_generalInformation_b2c;
-    @FXML
-    public Label label_alarm_generalInformation_businessMissionVisiting;
-    @FXML
-    public Label label_alarm_generalInformation_businessMissionRegional;
-    @FXML
-    public Label label_alarm_generalInformation_mkas;
-    @FXML
-    public Label label_alarm_generalInformation_needForYoungPersonnel;
-    @FXML
-    public Label label_alarm_generalInformation_discounts;
-    @FXML
-    public Label label_alarm_generalInformation_reliablePartners;
-    @FXML
-    public Label label_alarm_generalInformation_pilotProjects;
-    @FXML
-    public Label label_alarm_generalInformation_antiCorruptionCharter;
-    @FXML
-    public Label label_alarm_generalInformation_newsletter;
-    @FXML
-    public Label label_alarm_generalInformation_committees;
-    @FXML
-    public Label label_alarm_generalInformation_corporateMember;
     @FXML
     public Label label_alarm_generalInformation_changes;
 
@@ -396,20 +319,56 @@ public class CreateMemberFormController {
     public Button btn_saveMember;
     @FXML
     public Button btn_cancel;
+    @FXML
+    public CheckBox checkBox_generalInformation_vedImport;
+    @FXML
+    public CheckBox checkBox_generalInformation_vedExport;
+    @FXML
+    public CheckBox checkBox_generalInformation_interactionOnline;
+    @FXML
+    public CheckBox checkBox_generalInformation_interactionOffline;
+    @FXML
+    public CheckBox checkBox_generalInformation_b2b;
+    @FXML
+    public CheckBox checkBox_generalInformation_businessMissionVisiting;
+    @FXML
+    public CheckBox checkBox_generalInformation_businessMissionRegional;
+    @FXML
+    public CheckBox checkBox_generalInformation_mkas;
+    @FXML
+    public CheckBox checkBox_generalInformation_needForYoungPersonnel;
+    @FXML
+    public CheckBox checkBox_generalInformation_discounts;
+    @FXML
+    public CheckBox checkBox_generalInformation_b2c;
+    @FXML
+    public CheckBox checkBox_generalInformation_reliablePartners;
+    @FXML
+    public CheckBox checkBox_generalInformation_pilotProjects;
+    @FXML
+    public CheckBox checkBox_generalInformation_antiCorruptionCharter;
+    @FXML
+    public CheckBox checkBox_generalInformation_newsletter;
+    @FXML
+    public CheckBox checkBox_generalInformation_committees;
+    @FXML
+    public CheckBox checkBox_generalInformation_corporateMember;
+    @FXML
+    public MenuItem menuItem_duplicateAddress;
+    @FXML
+    public Label label_alarm_createMember;
 
     private Member member;
     public Member getMember() {
         return member;
     }
 
-    private ObservableList<String> memberStatus = ListUtils.getMemberStatusList();//
-    private ObservableList<String> organizationForm = ListUtils.getOrganizationForm();//
-    private ObservableList<String> economicSector = ListUtils.getEconomicSector();//
-    private ObservableList<String> ownershipForm = ListUtils.getOwnershipForm();//
+    private ObservableList<String> memberStatus = ListUtils.getMemberStatusList();
+    private ObservableList<String> organizationForm = ListUtils.getOrganizationForm();
+    private ObservableList<String> economicSector = ListUtils.getEconomicSector();
+    private ObservableList<String> ownershipForm = ListUtils.getOwnershipForm();
     private ObservableList<String> activityType = ListUtils.getActivityType();
     private ObservableList<String> businessForm = ListUtils.getBusinessForm();
-    private ObservableList<String> interesting = ListUtils.getInteresting();
-    private ObservableList<String> yesNo = ListUtils.getYesNo();
     private ObservableList<String> debd = ListUtils.getDedbStatusList();
     private ObservableList<String> district = ListUtils.getDistrict();
 
@@ -417,11 +376,17 @@ public class CreateMemberFormController {
     private ObservableList<String> region = FXCollections.observableArrayList();
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
+    private boolean isMemberCreate = false;
+    boolean isMemberCreate() {
+        return isMemberCreate;
+    }
+    void setMemberCreate(boolean memberCreate) {
+        isMemberCreate = memberCreate;
+    }
+
+
     @FXML
     public void initialize() {
-        clearText();
-        clearStyle();
-        clearServices();
 
         addCheckInfoListeners();
         fillAllComboBox();
@@ -446,6 +411,7 @@ public class CreateMemberFormController {
 
         MemberUtils.checkTextLength(text_generalInformation_investmentsTarget, label_alarm_generalInformation_investmentsTarget, 255);
         MemberUtils.checkTextDigital(text_generalInformation_investmentsSize, label_alarm_generalInformation_investmentsSize, 9);
+        MemberUtils.checkTextLength(text_generalInformation_changes, label_alarm_generalInformation_changes, 255);
 
         MemberUtils.checkTextLength(text_director_fullName, label_alarm_director_fullName, 255);
         MemberUtils.checkTextLength(text_director_position, label_alarm_director_position, 50);
@@ -483,7 +449,7 @@ public class CreateMemberFormController {
         MemberUtils.checkTextLength(text_addressActual_office, label_alarm_addressActual_office, 6);
         MemberUtils.checkTextLength(text_addressActual_changes, label_alarm_addressActual_changes, 255);
 
-        MemberUtils.checkTextLength(text_socialNetworks_vkontakte,  label_alarm_socialNetworks_vkontakte, 45);
+        MemberUtils.checkTextLength(text_socialNetworks_vkontakte, label_alarm_socialNetworks_vkontakte, 45);
         MemberUtils.checkTextLength(text_socialNetworks_facebook, label_alarm_socialNetworks_facebook, 45);
         MemberUtils.checkTextLength(text_socialNetworks_telegram, label_alarm_socialNetworks_telegram, 45);
         MemberUtils.checkTextLength(text_socialNetworks_whatsapp, label_alarm_socialNetworks_whatsapp, 45);
@@ -491,11 +457,7 @@ public class CreateMemberFormController {
         MemberUtils.checkTextLength(text_socialNetworks_skype, label_alarm_socialNetworks_skype, 45);
         MemberUtils.checkTextLength(text_socialNetworks_instagram, label_alarm_socialNetworks_instagram, 45);
         MemberUtils.checkTextLength(text_socialNetworks_twitter, label_alarm_socialNetworks_twitter, 45);
-        MemberUtils.checkTextLength(text_socialNetworks_youtube,label_alarm_socialNetworks_youtube, 45);
-    }
-
-    private void clearServices() {
-        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setSelected(false));
+        MemberUtils.checkTextLength(text_socialNetworks_youtube, label_alarm_socialNetworks_youtube, 45);
     }
 
     private void initServices() {
@@ -527,23 +489,7 @@ public class CreateMemberFormController {
         comboBox_generalInformation_ownershipForm.setItems(ownershipForm);
         comboBox_generalInformation_activityType.setItems(activityType);
         comboBox_generalInformation_businessForm.setItems(businessForm);
-        comboBox_generalInformation_vedExport.setItems(yesNo);
-        comboBox_generalInformation_vedImport.setItems(yesNo);
-        comboBox_generalInformation_interactionOnline.setItems(interesting);
-        comboBox_generalInformation_interactionOffline.setItems(interesting);
-        comboBox_generalInformation_b2b.setItems(interesting);
-        comboBox_generalInformation_b2c.setItems(interesting);
-        comboBox_generalInformation_businessMissionVisiting.setItems(interesting);
-        comboBox_generalInformation_businessMissionRegional.setItems(interesting);
-        comboBox_generalInformation_mkas.setItems(interesting);
-        comboBox_generalInformation_needForYoungPersonnel.setItems(interesting);
-        comboBox_generalInformation_discounts.setItems(interesting);
-        comboBox_generalInformation_reliablePartners.setItems(interesting);
-        comboBox_generalInformation_pilotProjects.setItems(interesting);
-        comboBox_generalInformation_antiCorruptionCharter.setItems(interesting);
-        comboBox_generalInformation_newsletter.setItems(interesting);
-        comboBox_generalInformation_committees.setItems(yesNo);
-        comboBox_generalInformation_corporateMember.setItems(yesNo);
+
         comboBox_debt_status.setItems(debd);
         comboBox_addressActual_district.setItems(district);
         comboBox_addressLegal_district.setItems(district);
@@ -553,342 +499,252 @@ public class CreateMemberFormController {
         comboBox_addressLegal_regionName.setItems(region);
     }
 
-    private void clearLabelAlarm() {
-        label_alarm_memberId.setText("");
-        label_alarm_memberSerial.setText("");
-        label_alarm_memberStatus.setText("");
-        label_alarm_memberDate.setText("");
-        label_alarm_memberShortName.setText("");
 
-        label_alarm_relate_fullName.setText("");
-        label_alarm_relate_dateOfCreation.setText("");
-        label_alarm_relate_size.setText("");
-        label_alarm_relate_services.setText("");
-        label_alarm_relate_changes.setText("");
+    private void clearObjects() {
+        comboBox_addressActual_district.getSelectionModel().clearSelection();
+        comboBox_addressLegal_district.getSelectionModel().clearSelection();
+        comboBox_addressLegal_regionName.getSelectionModel().clearSelection();
+        comboBox_debt_status.getSelectionModel().clearSelection();
+        comboBox_addressActual_regionName.getSelectionModel().clearSelection();
+        comboBox_generalInformation_businessForm.getSelectionModel().clearSelection();
+        comboBox_generalInformation_activityType.getSelectionModel().clearSelection();
+        comboBox_generalInformation_ownershipForm.getSelectionModel().clearSelection();
+        comboBox_generalInformation_economicSector.getSelectionModel().clearSelection();
+        comboBox_generalInformation_organizationForm.getSelectionModel().clearSelection();
+        comboBox_memberStatus.getSelectionModel().clearSelection();
 
-        label_alarm_generalInformation_organizationForm.setText("");
-        label_alarm_generalInformation_economicSector.setText("");
-        label_alarm_generalInformation_ownershipForm.setText("");
-        label_alarm_generalInformation_activityType.setText("");
-        label_alarm_generalInformation_businessForm.setText("");
-        label_alarm_generalInformation_vedExport.setText("");
-        label_alarm_generalInformation_investmentsTarget.setText("");
-        label_alarm_generalInformation_investmentsSize.setText("");
-        label_alarm_generalInformation_interactionOnline.setText("");
-        label_alarm_generalInformation_interactionOffline.setText("");
-        label_alarm_generalInformation_b2b.setText("");
-        label_alarm_generalInformation_b2c.setText("");
-        label_alarm_generalInformation_businessMissionVisiting.setText("");
-        label_alarm_generalInformation_businessMissionRegional.setText("");
-        label_alarm_generalInformation_mkas.setText("");
-        label_alarm_generalInformation_changes.setText("");
-        label_alarm_generalInformation_vedImport.setText("");
-        label_alarm_generalInformation_needForYoungPersonnel.setText("");
-        label_alarm_generalInformation_discounts.setText("");
-        label_alarm_generalInformation_reliablePartners.setText("");
-        label_alarm_generalInformation_pilotProjects.setText("");
-        label_alarm_generalInformation_antiCorruptionCharter.setText("");
-        label_alarm_generalInformation_newsletter.setText("");
-        label_alarm_generalInformation_committees.setText("");
-        label_alarm_generalInformation_corporateMember.setText("");
-
-        label_alarm_director_fullName.setText("");
-        label_alarm_director_position.setText("");
-        label_alarm_director_phoneMobile.setText("");
-        label_alarm_director_phoneCity.setText("");
-        label_alarm_director_email.setText("");
-        label_alarm_director_birthday.setText("");
-        label_alarm_director_changes.setText("");
-
-        label_alarm_contact_phone.setText("");
-        label_alarm_contact_fax.setText("");
-        label_alarm_contact_site.setText("");
-        label_alarm_contact_email.setText("");
-        label_alarm_contact_changes.setText("");
-
-        label_alarm_accoutingInformation_ogrn.setText("");
-        label_alarm_accoutingInformation_kpp.setText("");
-        label_alarm_accoutingInformation_tin.setText("");
-
-        label_alarm_debt_status.setText("");
-        label_alarm_debt_period.setText("");
-        label_alarm_debt_comment.setText("");
-
-        label_alarm_addressLegal_regionId.setText("");
-        label_alarm_addressLegal_regionName.setText("");
-        label_alarm_addressLegal_index.setText("");
-        label_alarm_addressLegal_town.setText("");
-        label_alarm_addressLegal_street.setText("");
-        label_alarm_addressLegal_house.setText("");
-        label_alarm_addressLegal_office.setText("");
-        label_alarm_addressLegal_district.setText("");
-        label_alarm_addressLegal_changes.setText("");
-
-        label_alarm_addressActual_regionId.setText("");
-        label_alarm_addressActual_regionName.setText("");
-        label_alarm_addressActual_index.setText("");
-        label_alarm_addressActual_town.setText("");
-        label_alarm_addressActual_street.setText("");
-        label_alarm_addressActual_house.setText("");
-        label_alarm_addressActual_office.setText("");
-        label_alarm_addressActual_district.setText("");
-        label_alarm_addressActual_changes.setText("");
-
-        label_alarm_socialNetworks_vkontakte.setText("");
-        label_alarm_socialNetworks_facebook.setText("");
-        label_alarm_socialNetworks_telegram.setText("");
-        label_alarm_socialNetworks_whatsapp.setText("");
-        label_alarm_socialNetworks_viber.setText("");
-        label_alarm_socialNetworks_skype.setText("");
-        label_alarm_socialNetworks_instagram.setText("");
-        label_alarm_socialNetworks_twitter.setText("");
-        label_alarm_socialNetworks_youtube.setText("");
-    }
-
-    private void clearText() {
-        text_memberId.setText("");
-        text_memberSerial.setText("");
-        text_memberShortName.setText("");
-
-        text_relate_fullName.setText("");
-        text_relate_size.setText("");
-        text_relate_services.setText("");
-        text_relate_changes.setText("");
-
-        text_generalInformation_investmentsTarget.setText("");
-        text_generalInformation_investmentsSize.setText("");
-        text_generalInformation_changes.setText("");
-
-        text_director_fullName.setText("");
-        text_director_position.setText("");
-        text_director_phoneMobile.setText("");
-        text_director_phoneCity.setText("");
-        text_director_email.setText("");
-        date_director_birthday.setValue(null);
-        text_director_changes.setText("");
-
-        text_contact_phone.setText("");
-        text_contact_fax.setText("");
-        text_contact_site.setText("");
-        text_contact_email.setText("");
-        text_contact_changes.setText("");
-
-        text_accoutingInformation_ogrn.setText("");
-        text_accoutingInformation_kpp.setText("");
-        text_accoutingInformation_tin.setText("");
-
-        text_debt_period.setText("");
-        text_debt_comment.setText("");
-
-        text_addressLegal_regionId.setText("");
-        text_addressLegal_index.setText("");
-        text_addressLegal_town.setText("");
-        text_addressLegal_street.setText("");
-        text_addressLegal_house.setText("");
-        text_addressLegal_office.setText("");
-        text_addressLegal_changes.setText("");
-
-        text_addressActual_regionId.setText("");
-        text_addressActual_index.setText("");
-        text_addressActual_town.setText("");
-        text_addressActual_street.setText("");
-        text_addressActual_house.setText("");
-        text_addressActual_office.setText("");
-        text_addressActual_changes.setText("");
-
-        text_socialNetworks_vkontakte.setText("");
-        text_socialNetworks_facebook.setText("");
-        text_socialNetworks_telegram.setText("");
-        text_socialNetworks_whatsapp.setText("");
-        text_socialNetworks_viber.setText("");
-        text_socialNetworks_skype.setText("");
-        text_socialNetworks_instagram.setText("");
-        text_socialNetworks_twitter.setText("");
-        text_socialNetworks_youtube.setText("");
-    }
-
-    private void clearStyle() {
         text_memberId.setStyle(null);
         text_memberSerial.setStyle(null);
-        comboBox_memberStatus.setStyle(null);
         date_memberDate.setStyle(null);
+        comboBox_memberStatus.setStyle(null);
         text_memberShortName.setStyle(null);
 
         text_relate_fullName.setStyle(null);
-        date_relate_dateOfCreation.setStyle(null);
         text_relate_size.setStyle(null);
         text_relate_services.setStyle(null);
-        text_relate_changes.setStyle(null);
 
-        text_generalInformation_investmentsTarget.setStyle(null);
-        text_generalInformation_investmentsSize.setStyle(null);
-        text_generalInformation_changes.setStyle(null);
+        comboBox_generalInformation_organizationForm.setStyle(null);
+        comboBox_generalInformation_economicSector.setStyle(null);
+        comboBox_generalInformation_ownershipForm.setStyle(null);
+        comboBox_generalInformation_activityType.setStyle(null);
+        comboBox_generalInformation_businessForm.setStyle(null);
 
         text_director_fullName.setStyle(null);
         text_director_position.setStyle(null);
         text_director_phoneMobile.setStyle(null);
-        text_director_phoneCity.setStyle(null);
         text_director_email.setStyle(null);
-        date_director_birthday.setStyle(null);
-        text_director_changes.setStyle(null);
 
         text_contact_phone.setStyle(null);
-        text_contact_fax.setStyle(null);
-        text_contact_site.setStyle(null);
         text_contact_email.setStyle(null);
-        text_contact_changes.setStyle(null);
 
         text_accoutingInformation_ogrn.setStyle(null);
         text_accoutingInformation_kpp.setStyle(null);
         text_accoutingInformation_tin.setStyle(null);
 
-        text_debt_period.setStyle(null);
-        text_debt_comment.setStyle(null);
+        comboBox_debt_status.setStyle(null);
 
-        text_addressLegal_regionId.setStyle(null);
+        comboBox_addressLegal_regionName.setStyle(null);
         text_addressLegal_index.setStyle(null);
         text_addressLegal_town.setStyle(null);
         text_addressLegal_street.setStyle(null);
         text_addressLegal_house.setStyle(null);
-        text_addressLegal_office.setStyle(null);
-        text_addressLegal_changes.setStyle(null);
 
-        text_addressActual_regionId.setStyle(null);
+        comboBox_addressActual_regionName.setStyle(null);
         text_addressActual_index.setStyle(null);
         text_addressActual_town.setStyle(null);
         text_addressActual_street.setStyle(null);
         text_addressActual_house.setStyle(null);
-        text_addressActual_office.setStyle(null);
-        text_addressActual_changes.setStyle(null);
 
-        text_socialNetworks_vkontakte.setStyle(null);
-        text_socialNetworks_facebook.setStyle(null);
-        text_socialNetworks_telegram.setStyle(null);
-        text_socialNetworks_whatsapp.setStyle(null);
-        text_socialNetworks_viber.setStyle(null);
-        text_socialNetworks_skype.setStyle(null);
-        text_socialNetworks_instagram.setStyle(null);
-        text_socialNetworks_twitter.setStyle(null);
-        text_socialNetworks_youtube.setStyle(null);
+        date_relate_dateOfCreation.setValue(null);
+        date_memberDate.setValue(null);
+        date_director_birthday.setValue(null);
 
     }
 
-    private void clearLabelAlarmStyle() {
-        label_alarm_memberId.setStyle(null);
-        label_alarm_memberSerial.setStyle(null);
-        label_alarm_memberStatus.setStyle(null);
-        label_alarm_memberDate.setStyle(null);
-        label_alarm_memberShortName.setStyle(null);
+    private void clearLabelAlarm() {
+        label_alarm_memberId.setText(null);
+        label_alarm_memberSerial.setText(null);
+        label_alarm_memberStatus.setText(null);
+        label_alarm_memberDate.setText(null);
+        label_alarm_memberShortName.setText(null);
 
-        label_alarm_relate_fullName.setStyle(null);
-        label_alarm_relate_dateOfCreation.setStyle(null);
-        label_alarm_relate_size.setStyle(null);
-        label_alarm_relate_services.setStyle(null);
-        label_alarm_relate_changes.setStyle(null);
+        label_alarm_relate_fullName.setText(null);
+        label_alarm_relate_dateOfCreation.setText(null);
+        label_alarm_relate_size.setText(null);
+        label_alarm_relate_services.setText(null);
+        label_alarm_relate_changes.setText(null);
 
-        label_alarm_generalInformation_organizationForm.setStyle(null);
-        label_alarm_generalInformation_economicSector.setStyle(null);
-        label_alarm_generalInformation_ownershipForm.setStyle(null);
-        label_alarm_generalInformation_activityType.setStyle(null);
-        label_alarm_generalInformation_businessForm.setStyle(null);
-        label_alarm_generalInformation_vedExport.setStyle(null);
-        label_alarm_generalInformation_investmentsTarget.setStyle(null);
-        label_alarm_generalInformation_investmentsSize.setStyle(null);
-        label_alarm_generalInformation_interactionOnline.setStyle(null);
-        label_alarm_generalInformation_interactionOffline.setStyle(null);
-        label_alarm_generalInformation_b2b.setStyle(null);
-        label_alarm_generalInformation_b2c.setStyle(null);
-        label_alarm_generalInformation_businessMissionVisiting.setStyle(null);
-        label_alarm_generalInformation_businessMissionRegional.setStyle(null);
-        label_alarm_generalInformation_mkas.setStyle(null);
-        label_alarm_generalInformation_changes.setStyle(null);
-        label_alarm_generalInformation_vedImport.setStyle(null);
-        label_alarm_generalInformation_needForYoungPersonnel.setStyle(null);
-        label_alarm_generalInformation_discounts.setStyle(null);
-        label_alarm_generalInformation_reliablePartners.setStyle(null);
-        label_alarm_generalInformation_pilotProjects.setStyle(null);
-        label_alarm_generalInformation_antiCorruptionCharter.setStyle(null);
-        label_alarm_generalInformation_newsletter.setStyle(null);
-        label_alarm_generalInformation_committees.setStyle(null);
-        label_alarm_generalInformation_corporateMember.setStyle(null);
+        label_alarm_generalInformation_investmentsTarget.setText(null);
+        label_alarm_generalInformation_investmentsSize.setText(null);
+        label_alarm_generalInformation_changes.setText(null);
 
-        label_alarm_director_fullName.setStyle(null);
-        label_alarm_director_position.setStyle(null);
-        label_alarm_director_phoneMobile.setStyle(null);
-        label_alarm_director_phoneCity.setStyle(null);
-        label_alarm_director_email.setStyle(null);
-        label_alarm_director_birthday.setStyle(null);
-        label_alarm_director_changes.setStyle(null);
+        label_alarm_director_fullName.setText(null);
+        label_alarm_director_position.setText(null);
+        label_alarm_director_phoneMobile.setText(null);
+        label_alarm_director_phoneCity.setText(null);
+        label_alarm_director_email.setText(null);
+        label_alarm_director_birthday.setText(null);
+        label_alarm_director_changes.setText(null);
 
-        label_alarm_contact_phone.setStyle(null);
-        label_alarm_contact_fax.setStyle(null);
-        label_alarm_contact_site.setStyle(null);
-        label_alarm_contact_email.setStyle(null);
-        label_alarm_contact_changes.setStyle(null);
+        label_alarm_contact_phone.setText(null);
+        label_alarm_contact_fax.setText(null);
+        label_alarm_contact_site.setText(null);
+        label_alarm_contact_email.setText(null);
+        label_alarm_contact_changes.setText(null);
 
-        label_alarm_accoutingInformation_ogrn.setStyle(null);
-        label_alarm_accoutingInformation_kpp.setStyle(null);
-        label_alarm_accoutingInformation_tin.setStyle(null);
+        label_alarm_accoutingInformation_ogrn.setText(null);
+        label_alarm_accoutingInformation_kpp.setText(null);
+        label_alarm_accoutingInformation_tin.setText(null);
 
-        label_alarm_debt_status.setStyle(null);
-        label_alarm_debt_period.setStyle(null);
-        label_alarm_debt_comment.setStyle(null);
+        label_alarm_debt_status.setText(null);
+        label_alarm_debt_period.setText(null);
+        label_alarm_debt_comment.setText(null);
 
-        label_alarm_addressLegal_regionId.setStyle(null);
-        label_alarm_addressLegal_regionName.setStyle(null);
-        label_alarm_addressLegal_index.setStyle(null);
-        label_alarm_addressLegal_town.setStyle(null);
-        label_alarm_addressLegal_street.setStyle(null);
-        label_alarm_addressLegal_house.setStyle(null);
-        label_alarm_addressLegal_office.setStyle(null);
-        label_alarm_addressLegal_district.setStyle(null);
-        label_alarm_addressLegal_changes.setStyle(null);
+        label_alarm_addressLegal_regionId.setText(null);
+        label_alarm_addressLegal_regionName.setText(null);
+        label_alarm_addressLegal_index.setText(null);
+        label_alarm_addressLegal_town.setText(null);
+        label_alarm_addressLegal_street.setText(null);
+        label_alarm_addressLegal_house.setText(null);
+        label_alarm_addressLegal_office.setText(null);
+        label_alarm_addressLegal_district.setText(null);
+        label_alarm_addressLegal_changes.setText(null);
 
-        label_alarm_addressActual_regionId.setStyle(null);
-        label_alarm_addressActual_regionName.setStyle(null);
-        label_alarm_addressActual_index.setStyle(null);
-        label_alarm_addressActual_town.setStyle(null);
-        label_alarm_addressActual_street.setStyle(null);
-        label_alarm_addressActual_house.setStyle(null);
-        label_alarm_addressActual_office.setStyle(null);
-        label_alarm_addressActual_district.setStyle(null);
-        label_alarm_addressActual_changes.setStyle(null);
+        label_alarm_addressActual_regionId.setText(null);
+        label_alarm_addressActual_regionName.setText(null);
+        label_alarm_addressActual_index.setText(null);
+        label_alarm_addressActual_town.setText(null);
+        label_alarm_addressActual_street.setText(null);
+        label_alarm_addressActual_house.setText(null);
+        label_alarm_addressActual_office.setText(null);
+        label_alarm_addressActual_district.setText(null);
+        label_alarm_addressActual_changes.setText(null);
 
-        label_alarm_socialNetworks_vkontakte.setStyle(null);
-        label_alarm_socialNetworks_facebook.setStyle(null);
-        label_alarm_socialNetworks_telegram.setStyle(null);
-        label_alarm_socialNetworks_whatsapp.setStyle(null);
-        label_alarm_socialNetworks_viber.setStyle(null);
-        label_alarm_socialNetworks_skype.setStyle(null);
-        label_alarm_socialNetworks_instagram.setStyle(null);
-        label_alarm_socialNetworks_twitter.setStyle(null);
-        label_alarm_socialNetworks_youtube.setStyle(null);
+        label_alarm_socialNetworks_vkontakte.setText(null);
+        label_alarm_socialNetworks_facebook.setText(null);
+        label_alarm_socialNetworks_telegram.setText(null);
+        label_alarm_socialNetworks_whatsapp.setText(null);
+        label_alarm_socialNetworks_viber.setText(null);
+        label_alarm_socialNetworks_skype.setText(null);
+        label_alarm_socialNetworks_instagram.setText(null);
+        label_alarm_socialNetworks_twitter.setText(null);
+        label_alarm_socialNetworks_youtube.setText(null);
+
+        label_alarm_createMember.setText(null);
     }
 
-    private boolean isMemberCreate = false;
+    private void clearText() {
 
-    boolean isMemberCreate() {
-        return isMemberCreate;
+        text_memberId.clear();
+        text_memberSerial.clear();
+        text_memberShortName.clear();
+
+        text_relate_fullName.clear();
+        text_relate_size.clear();
+        text_relate_services.clear();
+        text_relate_changes.clear();
+
+        text_generalInformation_investmentsTarget.clear();
+        text_generalInformation_investmentsSize.clear();
+        text_generalInformation_changes.clear();
+
+        text_director_fullName.clear();
+        text_director_position.clear();
+        text_director_phoneMobile.clear();
+        text_director_phoneCity.clear();
+        text_director_email.clear();
+        text_director_changes.clear();
+
+        text_contact_phone.clear();
+        text_contact_fax.clear();
+        text_contact_site.clear();
+        text_contact_email.clear();
+        text_contact_changes.clear();
+
+        text_accoutingInformation_ogrn.clear();
+        text_accoutingInformation_kpp.clear();
+        text_accoutingInformation_tin.clear();
+
+        text_debt_period.clear();
+        text_debt_comment.clear();
+
+        text_addressLegal_regionId.clear();
+        text_addressLegal_index.clear();
+        text_addressLegal_town.clear();
+        text_addressLegal_street.clear();
+        text_addressLegal_house.clear();
+        text_addressLegal_office.clear();
+        text_addressLegal_changes.clear();
+
+        text_addressActual_regionId.clear();
+        text_addressActual_index.clear();
+        text_addressActual_town.clear();
+        text_addressActual_street.clear();
+        text_addressActual_house.clear();
+        text_addressActual_office.clear();
+        text_addressActual_changes.clear();
+
+        text_socialNetworks_vkontakte.clear();
+        text_socialNetworks_facebook.clear();
+        text_socialNetworks_telegram.clear();
+        text_socialNetworks_whatsapp.clear();
+        text_socialNetworks_viber.clear();
+        text_socialNetworks_skype.clear();
+        text_socialNetworks_instagram.clear();
+        text_socialNetworks_twitter.clear();
+        text_socialNetworks_youtube.clear();
     }
 
-    void setMemberCreate(boolean memberCreate) {
-        isMemberCreate = memberCreate;
+    private void clearInterest() {
+        checkBox_generalInformation_vedImport.setSelected(false);
+        checkBox_generalInformation_vedExport.setSelected(false);
+        checkBox_generalInformation_interactionOnline.setSelected(false);
+        checkBox_generalInformation_interactionOffline.setSelected(false);
+        checkBox_generalInformation_b2b.setSelected(false);
+        checkBox_generalInformation_b2c.setSelected(false);
+        checkBox_generalInformation_businessMissionVisiting.setSelected(false);
+        checkBox_generalInformation_businessMissionRegional.setSelected(false);
+        checkBox_generalInformation_mkas.setSelected(false);
+        checkBox_generalInformation_needForYoungPersonnel.setSelected(false);
+        checkBox_generalInformation_discounts.setSelected(false);
+        checkBox_generalInformation_reliablePartners.setSelected(false);
+        checkBox_generalInformation_pilotProjects.setSelected(false);
+        checkBox_generalInformation_antiCorruptionCharter.setSelected(false);
+        checkBox_generalInformation_newsletter.setSelected(false);
+        checkBox_generalInformation_committees.setSelected(false);
+        checkBox_generalInformation_corporateMember.setSelected(false);
     }
+
+    private void clearServices() {
+        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setSelected(false));
+    }
+
+    public void clearAll() {
+        clearObjects();
+        clearLabelAlarm();
+        clearText();
+        clearInterest();
+        clearServices();
+    }
+
 
     @FXML
     public void saveMember(ActionEvent actionEvent) {
-        if(!isFieldsEmpty()) {
-            if(!DBConnection.isMemberExists(text_memberId.getText())) {
+        if (!isFieldsEmpty()) {
+            label_alarm_createMember.setTextFill(null);
+
+            if (!DBConnection.isMemberExists(text_memberId.getText())) {
                 setMemberParams();
                 isMemberCreate = true;
-                clearText();
-                clearStyle();
                 closeWindow(actionEvent);
             } else {
                 MemberUtils.alertDialog("Организация с таким номером билета уже существует!");
             }
+            clearAll();
+        } else {
+            label_alarm_createMember.setText("Заполните обязательные поля");
+            label_alarm_createMember.setTextFill(MemberUtils.EMPTY_COLOR);
         }
-
     }
 
     private void setMemberParams() {
@@ -907,7 +763,7 @@ public class CreateMemberFormController {
             relate.setDateOfCreation(date_relate_dateOfCreation.getValue());
         if (text_relate_services.getText() != null)
             relate.setServices(text_relate_services.getText());
-        if(text_relate_changes.getText() != null)
+        if (text_relate_changes.getText() != null)
             relate.setChanges(text_relate_changes.getText());
 
 
@@ -918,32 +774,32 @@ public class CreateMemberFormController {
                 comboBox_generalInformation_ownershipForm.getSelectionModel().getSelectedItem(),
                 comboBox_generalInformation_activityType.getSelectionModel().getSelectedItem(),
                 comboBox_generalInformation_businessForm.getSelectionModel().getSelectedItem(),
-                MemberUtils.yesNoToBoolean(comboBox_generalInformation_vedImport.getSelectionModel().getSelectedItem()),
-                MemberUtils.yesNoToBoolean(comboBox_generalInformation_vedExport.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_interactionOffline.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_interactionOnline.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_b2b.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_b2c.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_businessMissionVisiting.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_businessMissionRegional.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_mkas.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_needForYoungPersonnel.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_discounts.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_reliablePartners.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_pilotProjects.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_antiCorruptionCharter.getSelectionModel().getSelectedItem()),
-                MemberUtils.interestingToBoolean(comboBox_generalInformation_newsletter.getSelectionModel().getSelectedItem()),
-                MemberUtils.yesNoToBoolean(comboBox_generalInformation_committees.getSelectionModel().getSelectedItem()),
-                MemberUtils.yesNoToBoolean(comboBox_generalInformation_corporateMember.getSelectionModel().getSelectedItem())
+                checkBox_generalInformation_vedImport.isSelected(),
+                checkBox_generalInformation_vedExport.isSelected(),
+                checkBox_generalInformation_interactionOffline.isSelected(),
+                checkBox_generalInformation_interactionOnline.isSelected(),
+                checkBox_generalInformation_b2b.isSelected(),
+                checkBox_generalInformation_b2c.isSelected(),
+                checkBox_generalInformation_businessMissionVisiting.isSelected(),
+                checkBox_generalInformation_businessMissionRegional.isSelected(),
+                checkBox_generalInformation_mkas.isSelected(),
+                checkBox_generalInformation_needForYoungPersonnel.isSelected(),
+                checkBox_generalInformation_discounts.isSelected(),
+                checkBox_generalInformation_reliablePartners.isSelected(),
+                checkBox_generalInformation_pilotProjects.isSelected(),
+                checkBox_generalInformation_antiCorruptionCharter.isSelected(),
+                checkBox_generalInformation_newsletter.isSelected(),
+                checkBox_generalInformation_committees.isSelected(),
+                checkBox_generalInformation_corporateMember.isSelected()
         );
 
         if (text_generalInformation_investmentsTarget.getText() != null)
             genInf.setInvestmentsTarget(text_generalInformation_investmentsTarget.getText());
-        if (text_generalInformation_investmentsSize.getText() != null)
-            genInf.setInvestmentsSize(Integer.valueOf(text_generalInformation_investmentsSize.getText()));
-        if(text_generalInformation_changes.getText() != null)
+        if (text_generalInformation_investmentsSize.getText() != null) {
+            genInf.setInvestmentsSize(text_generalInformation_investmentsSize.getText());
+        }
+        if (text_generalInformation_changes.getText() != null)
             genInf.setChanges(text_generalInformation_changes.getText());
-
 
         Director dir = new Director(
                 member,
@@ -1022,9 +878,9 @@ public class CreateMemberFormController {
                 MemberUtils.debtToBoolean(comboBox_debt_status.getSelectionModel().getSelectedItem())
         );
 
-        if(text_debt_period.getText().length() > 0)
+        if (text_debt_period.getText().length() > 0)
             debt.setPeriod(text_debt_period.getText());
-        if(text_debt_comment.getText().length() > 0)
+        if (text_debt_comment.getText().length() > 0)
             debt.setComment(text_debt_comment.getText());
 
 
@@ -1059,7 +915,7 @@ public class CreateMemberFormController {
 
         List<Services> services = new ArrayList<>();
         servicesCheckBoxMap.forEach((integer, checkBox) -> {
-            if(checkBox.isSelected()) {
+            if (checkBox.isSelected()) {
                 services.add(new Services(integer, checkBox.getText()));
             }
         });
@@ -1076,145 +932,117 @@ public class CreateMemberFormController {
         member.setContactPerson(new ArrayList<>());
         member.setInvoice(new ArrayList<>());
         member.setServices(services);
-
     }
 
     private boolean isFieldsEmpty() {
         HashSet<Boolean> set = new HashSet<>();
 
-        set.add(MemberUtils.isEmptyField(text_memberId, label_alarm_memberId));
-        set.add(MemberUtils.isEmptyField(text_memberSerial, label_alarm_memberSerial));
-        set.add(MemberUtils.isEmptyField(date_memberDate, label_alarm_memberDate));
-        set.add(MemberUtils.isEmptyField(comboBox_memberStatus, label_alarm_memberStatus));
-        set.add(MemberUtils.isEmptyField(text_memberShortName, label_alarm_memberShortName));
+        set.add(MemberUtils.isEmptyField(text_memberId));
+        set.add(MemberUtils.isEmptyField(text_memberSerial));
+        set.add(MemberUtils.isEmptyField(date_memberDate));
+        set.add(MemberUtils.isEmptyField(comboBox_memberStatus));
+        set.add(MemberUtils.isEmptyField(text_memberShortName));
 
-        set.add(MemberUtils.isEmptyField(text_relate_fullName, label_alarm_relate_fullName));
-        //MemberUtils.isEmptyField(isEmpty, date_relate_dateOfCreation, label_alarm_relate_dateOfCreation);
-        set.add(MemberUtils.isEmptyField(text_relate_size, label_alarm_relate_size));
-        set.add(MemberUtils.isEmptyField(text_relate_services, label_alarm_relate_services));
-        //MemberUtils.isEmptyField(isEmpty, text_relate_changes, label_alarm_relate_changes);
+        set.add(MemberUtils.isEmptyField(text_relate_fullName));
+        set.add(MemberUtils.isEmptyField(text_relate_size));
+        set.add(MemberUtils.isEmptyField(text_relate_services));
 
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_organizationForm, label_alarm_generalInformation_organizationForm));
-        set.add( MemberUtils.isEmptyField(comboBox_generalInformation_economicSector, label_alarm_generalInformation_economicSector));
-        //MemberUtils.isEmptyField(isEmpty, text_generalInformation_investmentsTarget, label_alarm_generalInformation_investmentsTarget);
-        //MemberUtils.isEmptyField(isEmpty, text_generalInformation_investmentsSize, label_alarm_generalInformation_investmentsSize);
-        //MemberUtils.isEmptyField(isEmpty, text_generalInformation_changes, label_alarm_generalInformation_changes);
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_ownershipForm, label_alarm_generalInformation_ownershipForm));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_activityType, label_alarm_generalInformation_activityType));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_businessForm, label_alarm_generalInformation_businessForm));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_vedImport, label_alarm_generalInformation_vedImport));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_vedExport, label_alarm_generalInformation_vedExport));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_interactionOnline, label_alarm_generalInformation_interactionOnline));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_interactionOffline, label_alarm_generalInformation_interactionOffline));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_b2b, label_alarm_generalInformation_b2b));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_b2c, label_alarm_generalInformation_b2c));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_businessMissionVisiting, label_alarm_generalInformation_businessMissionVisiting));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_businessMissionRegional, label_alarm_generalInformation_businessMissionRegional));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_mkas, label_alarm_generalInformation_mkas));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_needForYoungPersonnel, label_alarm_generalInformation_needForYoungPersonnel));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_discounts, label_alarm_generalInformation_discounts));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_reliablePartners, label_alarm_generalInformation_reliablePartners));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_pilotProjects, label_alarm_generalInformation_pilotProjects));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_antiCorruptionCharter, label_alarm_generalInformation_antiCorruptionCharter));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_newsletter, label_alarm_generalInformation_newsletter));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_committees, label_alarm_generalInformation_committees));
-        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_corporateMember, label_alarm_generalInformation_corporateMember));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_organizationForm));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_economicSector));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_ownershipForm));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_activityType));
+        set.add(MemberUtils.isEmptyField(comboBox_generalInformation_businessForm));
 
+        set.add(MemberUtils.isEmptyField(text_director_fullName));
+        set.add(MemberUtils.isEmptyField(text_director_position));
+        set.add(MemberUtils.isEmptyField(text_director_phoneMobile));
+        set.add(MemberUtils.isEmptyField(text_director_email));
 
-        set.add(MemberUtils.isEmptyField(text_director_fullName, label_alarm_director_fullName));
-        set.add(MemberUtils.isEmptyField(text_director_position, label_alarm_director_position));
-        set.add(MemberUtils.isEmptyField(text_director_phoneMobile, label_alarm_director_phoneMobile));
-        //MemberUtils.isEmptyField(isEmpty, text_director_phoneCity, label_alarm_director_phoneCity);
-        set.add(MemberUtils.isEmptyField(text_director_email, label_alarm_director_email));
-        //MemberUtils.isEmptyField(isEmpty, date_director_birthday, label_alarm_director_birthday);
-        //MemberUtils.isEmptyField(isEmpty, text_director_changes, label_alarm_director_changes);
+        set.add(MemberUtils.isEmptyField(text_contact_phone));
+        set.add(MemberUtils.isEmptyField(text_contact_email));
 
-        set.add(MemberUtils.isEmptyField(text_contact_phone, label_alarm_contact_phone));
-        //MemberUtils.isEmptyField(isEmpty, text_contact_fax, label_alarm_contact_fax);
-        //MemberUtils.isEmptyField(isEmpty, text_contact_site, label_alarm_contact_site);
-        set.add(MemberUtils.isEmptyField(text_contact_email, label_alarm_contact_email));
-        //MemberUtils.isEmptyField(isEmpty, text_contact_changes, label_alarm_contact_changes);
+        set.add(MemberUtils.isEmptyField(text_accoutingInformation_ogrn));
+        set.add(MemberUtils.isEmptyField(text_accoutingInformation_kpp));
+        set.add(MemberUtils.isEmptyField(text_accoutingInformation_tin));
 
-        set.add(MemberUtils.isEmptyField(text_accoutingInformation_ogrn, label_alarm_accoutingInformation_ogrn));
-        set.add(MemberUtils.isEmptyField(text_accoutingInformation_kpp, label_alarm_accoutingInformation_kpp));
-        set.add(MemberUtils.isEmptyField(text_accoutingInformation_tin, label_alarm_accoutingInformation_tin));
+        set.add(MemberUtils.isEmptyField(comboBox_debt_status));
 
-        //MemberUtils.isEmptyField(isEmpty, text_debt_period, label_alarm_debt_period);
-        //MemberUtils.isEmptyField(isEmpty, text_debt_comment, label_alarm_debt_comment);
-        set.add(MemberUtils.isEmptyField(comboBox_debt_status, label_alarm_debt_status));
+        set.add(MemberUtils.isEmptyField(comboBox_addressLegal_regionName));
+        set.add(MemberUtils.isEmptyField(text_addressLegal_index));
+        set.add(MemberUtils.isEmptyField(text_addressLegal_town));
+        set.add(MemberUtils.isEmptyField(text_addressLegal_street));
+        set.add(MemberUtils.isEmptyField(text_addressLegal_house));
 
-        //MemberUtils.isEmptyField(isEmpty, text_addressLegal_regionId, label_alarm_addressLegal_regionId);
-        set.add(MemberUtils.isEmptyField(comboBox_addressLegal_regionName, label_alarm_addressLegal_regionName));
-        set.add(MemberUtils.isEmptyField(text_addressLegal_index, label_alarm_addressLegal_index));
-        set.add(MemberUtils.isEmptyField(text_addressLegal_town, label_alarm_addressLegal_town));
-        set.add(MemberUtils.isEmptyField(text_addressLegal_street, label_alarm_addressLegal_street));
-        set.add(MemberUtils.isEmptyField(text_addressLegal_house, label_alarm_addressLegal_house));
-        //MemberUtils.isEmptyField(isEmpty, text_addressLegal_office, label_alarm_addressLegal_office);
-       // MemberUtils.isEmptyField(isEmpty, comboBox_addressLegal_district, label_alarm_addressLegal_district);
-        //MemberUtils.isEmptyField(isEmpty, text_addressLegal_changes, label_alarm_addressLegal_changes);
-
-        //MemberUtils.isEmptyField(isEmpty, text_addressActual_regionId, label_alarm_addressActual_regionId);
-        set.add(MemberUtils.isEmptyField(comboBox_addressActual_regionName, label_alarm_addressActual_regionName));
-        set.add(MemberUtils.isEmptyField(text_addressActual_index, label_alarm_addressActual_index));
-        set.add(MemberUtils.isEmptyField(text_addressActual_town, label_alarm_addressActual_town));
-        set.add(MemberUtils.isEmptyField(text_addressActual_street, label_alarm_addressActual_street));
-        set.add(MemberUtils.isEmptyField(text_addressActual_house, label_alarm_addressActual_house));
+        set.add(MemberUtils.isEmptyField(comboBox_addressActual_regionName));
+        set.add(MemberUtils.isEmptyField(text_addressActual_index));
+        set.add(MemberUtils.isEmptyField(text_addressActual_town));
+        set.add(MemberUtils.isEmptyField(text_addressActual_street));
+        set.add(MemberUtils.isEmptyField(text_addressActual_house));
 
         return set.contains(true);
     }
 
     @FXML
     public void closeWindow(ActionEvent actionEvent) {
-        clearText();
-        clearStyle();
-        clearLabelAlarm();
-        clearLabelAlarmStyle();
-        clearServices();
+        clearAll();
 
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.hide();
+        stage.close();
     }
 
     public void editAddressLegalRegionId() {
         Integer id = -1;
-        String regionName = comboBox_addressLegal_regionName.getValue();
+        if(comboBox_addressLegal_regionName.getSelectionModel().getSelectedIndex() != -1) {
+            String regionName = comboBox_addressLegal_regionName.getValue();
 
-        for(Map.Entry<Integer, String> entry: regionMap.entrySet()) {
-            if(entry.getValue().equals(regionName)) {
-                id = entry.getKey();
+            for (Map.Entry<Integer, String> entry : regionMap.entrySet()) {
+                if (entry.getValue().equals(regionName)) {
+                    id = entry.getKey();
+                }
             }
-        }
 
-        text_addressLegal_regionId.setText(id.toString());
+            text_addressLegal_regionId.setText(id.toString());
 
-        if(regionName.equals("Воронежская область")) {
-            comboBox_addressLegal_district.setDisable(false);
-        }
-        else {
-            comboBox_addressLegal_district.setDisable(true);
-            comboBox_addressLegal_district.getSelectionModel().select(null);
-        }
+            if (regionName.equals("Воронежская область")) {
+                comboBox_addressLegal_district.setDisable(false);
+            } else {
+                comboBox_addressLegal_district.setDisable(true);
+                comboBox_addressLegal_district.getSelectionModel().select(null);
+            }
+        } else text_addressLegal_regionId.clear();
     }
 
     public void editAddressActualRegionId() {
         Integer id = -1;
-        String regionName = comboBox_addressActual_regionName.getValue();
+        if(comboBox_addressActual_regionName.getSelectionModel().getSelectedIndex() != -1) {
+            String regionName = comboBox_addressActual_regionName.getValue();
 
-        for(Map.Entry<Integer, String> entry: regionMap.entrySet()) {
-            if(entry.getValue().equals(regionName)) {
-                id = entry.getKey();
+            for (Map.Entry<Integer, String> entry : regionMap.entrySet()) {
+                if (entry.getValue().equals(regionName)) {
+                    id = entry.getKey();
+                }
             }
-        }
 
-        text_addressActual_regionId.setText(id.toString());
+            text_addressActual_regionId.setText(id.toString());
 
-        if(regionName.equals("Воронежская область")) {
-            comboBox_addressActual_district.setDisable(false);
-        }
-        else {
-            comboBox_addressActual_district.setDisable(true);
-            comboBox_addressActual_district.getSelectionModel().select(null);
-        }
+            if (regionName.equals("Воронежская область")) {
+                comboBox_addressActual_district.setDisable(false);
+            } else {
+                comboBox_addressActual_district.setDisable(true);
+                comboBox_addressActual_district.getSelectionModel().select(null);
+            }
+        } else text_addressActual_regionId.clear();
+    }
+
+    public void duplicateAddress(ActionEvent actionEvent) {
+        comboBox_addressActual_regionName.getSelectionModel().select(comboBox_addressLegal_regionName.getSelectionModel().getSelectedItem());
+        text_addressActual_index.setText(text_addressLegal_index.getText());
+        text_addressActual_town.setText(text_addressLegal_town.getText());
+        text_addressActual_street.setText(text_addressLegal_street.getText());
+        text_addressActual_house.setText(text_addressLegal_house.getText());
+        text_addressActual_office.setText(text_addressLegal_office.getText());
+        comboBox_addressLegal_district.getSelectionModel().select(comboBox_addressActual_district.getSelectionModel().getSelectedItem());
+        text_addressActual_changes.setText(text_addressLegal_changes.getText());
     }
 }

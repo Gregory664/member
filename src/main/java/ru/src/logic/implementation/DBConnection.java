@@ -1,16 +1,22 @@
 package ru.src.logic.implementation;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import ru.src.logic.interfaces.MemberLogic;
+import ru.src.model.DateOfCreationOrganization;
+import ru.src.model.DirectorCalendar;
 import ru.src.model.FindMember;
 import ru.src.model.Member;
+import ru.src.model.Personal.Director;
 import ru.src.model.buh.Invoice;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -154,6 +160,72 @@ public class DBConnection implements MemberLogic {
             System.out.println(e.getMessage());
         }
         return findMembers;
+    }
+
+    public static ObservableList<DirectorCalendar> getDirectorCalendar(Integer month) {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+
+        ObservableList<DirectorCalendar> directorCalendars = FXCollections.observableArrayList();
+        List<String> result;
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            String queryString =
+                    "SELECT d.DIRECTOR_BIRTHDAY, " +
+                    "d.DIRECTOR_FULL_NAME, " +
+                    "m.MEMBER_ID, " +
+                    "m.MEMBER_SHORT_NAME\n" +
+                    "FROM MEMBER m, DIRECTOR d\n" +
+                    "where m.MEMBER_ID = d.MEMBER_ID AND MONTH(d.DIRECTOR_BIRTHDAY) = " + month + ";";
+            Query query = session.createSQLQuery(queryString);
+            result = query.list();
+            transaction.commit();
+
+            for (Object o : result) {
+                Object[] g = (Object[]) o;
+                String[] date = g[0].toString().split("-");
+                LocalDate birthday = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
+                String fio = g[1].toString();
+                String memberId = g[2].toString();
+                String shortName = g[3].toString();
+                directorCalendars.add(new DirectorCalendar(memberId, fio, shortName, birthday));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return directorCalendars;
+    }
+
+    public static ObservableList<DateOfCreationOrganization> getOrganization(int month) {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+
+        ObservableList<DateOfCreationOrganization> organizations = FXCollections.observableArrayList();
+        List<String> result;
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            String queryString =
+                    "SELECT r.RELATE_DATE_OF_CREATION, " +
+                            "m.MEMBER_ID, " +
+                            "m.MEMBER_SHORT_NAME\n" +
+                            "FROM MEMBER m, RELATE r\n" +
+                            "where m.MEMBER_ID = r.MEMBER_ID AND MONTH(r.RELATE_DATE_OF_CREATION) = " + month + ";";
+            Query query = session.createSQLQuery(queryString);
+            result = query.list();
+            transaction.commit();
+
+            for (Object o : result) {
+                Object[] g = (Object[]) o;
+                String[] date = g[0].toString().split("-");
+                LocalDate dateOfCreation = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
+                String memberId = g[1].toString();
+                String shortName = g[2].toString();
+                organizations.add(new DateOfCreationOrganization(dateOfCreation, memberId,shortName));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return organizations;
     }
 }
 

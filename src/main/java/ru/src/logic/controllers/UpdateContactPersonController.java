@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.model.Personal.ContactPerson;
 
+import java.util.HashSet;
+
 public class UpdateContactPersonController {
     @FXML
     public TextField text_contactPerson_fullName;
@@ -40,6 +42,17 @@ public class UpdateContactPersonController {
     public Button btnSave;
     @FXML
     public Button btnCancel;
+    private boolean updateContactPerson = false;
+    private ContactPerson contactPerson;
+
+
+    public boolean isUpdateContactPerson() {
+        return updateContactPerson;
+    }
+
+    public void setUpdateContactPerson(boolean updateContactPerson) {
+        this.updateContactPerson = updateContactPerson;
+    }
 
     @FXML
     public void initialize() {
@@ -58,42 +71,69 @@ public class UpdateContactPersonController {
         text_contactPerson_fullName.setText(contactPerson.getFullName());
         text_contactPerson_position.setText(contactPerson.getPosition());
         text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
-        if(contactPerson.getPhoneCity() != null)
+        if (contactPerson.getPhoneCity() != null)
             text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
-        if(contactPerson.getChanges() != null)
+        if (contactPerson.getChanges() != null)
             text_contactPerson_changes.setText(contactPerson.getChanges());
-        text_contactPerson_email.setText(contactPerson.getEmail());
-
-    }
-
-    private ContactPerson contactPerson;
-
-    public ContactPerson getContactPerson() {
-        clearText();
-        return contactPerson;
+        if (contactPerson.getEmail() != null)
+            text_contactPerson_email.setText(contactPerson.getEmail());
     }
 
     public void updateContactPerson(ActionEvent actionEvent) {
-        contactPerson.setFullName(text_contactPerson_fullName.getText());
-        contactPerson.setPosition(text_contactPerson_position.getText());
-        contactPerson.setPhoneMobile(text_contactPerson_phoneMobile.getText());
-        contactPerson.setPhoneCity(text_contactPerson_phoneCity.getText());
-        contactPerson.setEmail(text_contactPerson_email.getText());
-        contactPerson.setChanges(text_contactPerson_changes.getText());
+        if(!isFieldsEmpty()) {
+            contactPerson.setPhoneMobile(text_contactPerson_phoneMobile.getText());
+            contactPerson.setPhoneCity(text_contactPerson_phoneCity.getText());
+            contactPerson.setEmail(text_contactPerson_email.getText());
+            contactPerson.setChanges(text_contactPerson_changes.getText());
 
-        MemberUtils.informationDialog("Данные контактного лица успешно обновлены!");
-        closeWindow(actionEvent);
+            updateContactPerson = true;
+            closeWindow(actionEvent);
+        }
+        else {
+            label_alarm_contactPerson_fullName.setText(null);
+            label_alarm_contactPerson_position.setText(null);
+            label_alarm_contactPerson_phoneMobile.setText(null);
+            label_alarm_contactPerson_email.setText(null);
+
+            label_alarm_contactPerson_changes.setTextFill(MemberUtils.EMPTY_COLOR);
+            label_alarm_contactPerson_changes.setText("Заполните обязательные поля");
+        }
+    }
+
+    private boolean isFieldsEmpty() {
+        HashSet<Boolean> set = new HashSet<Boolean>();
+        set.add(MemberUtils.isEmptyField(text_contactPerson_fullName));
+        set.add(MemberUtils.isEmptyField(text_contactPerson_position));
+        set.add(MemberUtils.isEmptyField(text_contactPerson_phoneMobile));
+        set.add(MemberUtils.isEmptyField(text_contactPerson_email));
+        return set.contains(true);
     }
 
     public void closeWindow(ActionEvent actionEvent) {
-        clearText();
+        clearTextAndStyle();
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.hide();
     }
 
-    private void clearText() {
-        text_contactPerson_phoneCity.setText("");
-        text_contactPerson_changes.setText("");
+    public void clearTextAndStyle() {
+        text_contactPerson_fullName.clear();
+        text_contactPerson_position.clear();
+        text_contactPerson_phoneMobile.clear();
+        text_contactPerson_email.clear();
+        text_contactPerson_phoneCity.clear();
+        text_contactPerson_changes.clear();
+
+        label_alarm_contactPerson_fullName.setText(null);
+        label_alarm_contactPerson_position.setText(null);
+        label_alarm_contactPerson_phoneMobile.setText(null);
+        label_alarm_contactPerson_email.setText(null);
+        label_alarm_contactPerson_phoneCity.setText(null);
+        label_alarm_contactPerson_changes.setText(null);
+
+        text_contactPerson_fullName.setStyle(null);
+        text_contactPerson_position.setStyle(null);
+        text_contactPerson_phoneMobile.setStyle(null);
+        text_contactPerson_email.setStyle(null);
     }
 }

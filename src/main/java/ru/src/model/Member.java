@@ -21,7 +21,7 @@ import java.util.*;
 public class Member {
 
     @Id
-    @Column(name = "MEMBER_ID", nullable = false)
+    @Column(name = "MEMBER_ID", nullable = false, length = 10)
     private String memberId;
 
     @Column(name = "MEMBER_SERIAL", nullable = false)

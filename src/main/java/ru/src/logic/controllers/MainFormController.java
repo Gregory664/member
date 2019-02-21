@@ -1,25 +1,22 @@
 package ru.src.logic.controllers;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.Organizations;
+import ru.src.logic.implementation.PDFUtils;
 import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
 import ru.src.model.General.GeneralInformation;
@@ -87,76 +84,41 @@ public class MainFormController {
     @FXML
     public TextField text_generalInformation_investmentsSize;
     @FXML
+    public CheckBox checkBox_generalInformation_vedImport;
+    @FXML
+    public CheckBox checkBox_generalInformation_vedExport;
+    @FXML
+    public CheckBox checkBox_generalInformation_interactionOnline;
+    @FXML
+    public CheckBox checkBox_generalInformation_interactionOffline;
+    @FXML
+    public CheckBox checkBox_generalInformation_b2b;
+    @FXML
+    public CheckBox checkBox_generalInformation_businessMissionVisiting;
+    @FXML
+    public CheckBox checkBox_generalInformation_businessMissionRegional;
+    @FXML
+    public CheckBox checkBox_generalInformation_mkas;
+    @FXML
+    public CheckBox checkBox_generalInformation_needForYoungPersonnel;
+    @FXML
+    public CheckBox checkBox_generalInformation_discounts;
+    @FXML
+    public CheckBox checkBox_generalInformation_b2c;
+    @FXML
+    public CheckBox checkBox_generalInformation_reliablePartners;
+    @FXML
+    public CheckBox checkBox_generalInformation_pilotProjects;
+    @FXML
+    public CheckBox checkBox_generalInformation_antiCorruptionCharter;
+    @FXML
+    public CheckBox checkBox_generalInformation_newsletter;
+    @FXML
+    public CheckBox checkBox_generalInformation_committees;
+    @FXML
+    public CheckBox checkBox_generalInformation_corporateMember;
+    @FXML
     public TextArea text_generalInformation_changes;
-    @FXML
-    public CheckBox checkBox_vedImport_1;
-    @FXML
-    public CheckBox checkBox_vedImport_0;
-    @FXML
-    public CheckBox checkBox_vedExport_1;
-    @FXML
-    public CheckBox checkBox_vedExport_0;
-    @FXML
-    public CheckBox checkBox_businessMissionVisiting_1;
-    @FXML
-    public CheckBox checkBox_businessMissionVisiting_0;
-    @FXML
-    public CheckBox checkBox_businessMissionRegional_1;
-    @FXML
-    public CheckBox checkBox_businessMissionRegional_0;
-    @FXML
-    public CheckBox checkBox_interactionOnline_1;
-    @FXML
-    public CheckBox checkBox_interactionOnline_0;
-    @FXML
-    public CheckBox checkBox_interactionOffline_1;
-    @FXML
-    public CheckBox checkBox_interactionOffline_0;
-    @FXML
-    public CheckBox checkBox_b2b_1;
-    @FXML
-    public CheckBox checkBox_b2b_0;
-    @FXML
-    public CheckBox checkBox_b2c_1;
-    @FXML
-    public CheckBox checkBox_b2c_0;
-    @FXML
-    public CheckBox checkBox_mkas_1;
-    @FXML
-    public CheckBox checkBox_mkas_0;
-    @FXML
-    public CheckBox checkBox_newsletter_1;
-    @FXML
-    public CheckBox checkBox_newsletter_0;
-    @FXML
-    public CheckBox checkBox_discounts_1;
-    @FXML
-    public CheckBox checkBox_discounts_0;
-    @FXML
-    public CheckBox checkBox_needForYoungPersonnel_1;
-    @FXML
-    public CheckBox checkBox_needForYoungPersonnel_0;
-    @FXML
-    public CheckBox checkBox_reliablePartners_1;
-    @FXML
-    public CheckBox checkBox_reliablePartners_0;
-    @FXML
-    public CheckBox checkBox_pilotProjects_1;
-    @FXML
-    public CheckBox checkBox_pilotProjects_0;
-    @FXML
-    public CheckBox checkBox_antiCorruptionCharter_1;
-    @FXML
-    public CheckBox checkBox_antiCorruptionCharter_0;
-    @FXML
-    public CheckBox checkBox_committees_1;
-    @FXML
-    public CheckBox checkBox_committees_0;
-    @FXML
-    public CheckBox checkBox_corporateMember_1;
-    @FXML
-    public CheckBox checkBox_corporateMember_0;
-
 
     @FXML
     public TextField text_director_fullName;
@@ -274,11 +236,11 @@ public class MainFormController {
     @FXML
     public TextArea text_invoice_comment;
     @FXML
-    public TextField text_invoice_dateCreation;
+    public DatePicker date_invoice_dateCreation;
     @FXML
-    public TextField text_invoice_dateReceiving;
+    public DatePicker date_invoice_dateReceiving;
     @FXML
-    public TextField text_invoice_orderDate;
+    public DatePicker date_invoice_orderDate;
 
     @FXML
     public TextField text_socialNetworks_vkontakte;
@@ -348,7 +310,13 @@ public class MainFormController {
     @FXML
     public MenuItem item_openSelect;
     @FXML
-    public MenuItem item_calendar;
+    public MenuItem item_directorCalendar;
+    @FXML
+    public MenuItem item_orgCalendar;
+    @FXML
+    public MenuItem menu_saveMember;
+    @FXML
+    public MenuItem menu_addMember2;
 
 
     private Organizations memberOrganizations = new Organizations();
@@ -365,6 +333,7 @@ public class MainFormController {
     private Stage updateMemberFormStage;
     private Stage selectStage;
     private Stage directorCalendarStage;
+    private Stage dateOfCreationOrganizationStage;
 
     private FXMLLoader createInvoicefxmlLoader = new FXMLLoader();
     private FXMLLoader updateInvoicefxmlLoader = new FXMLLoader();
@@ -374,6 +343,8 @@ public class MainFormController {
     private FXMLLoader updateMemberFormfxmlloader = new FXMLLoader();
     private FXMLLoader selectFormfxmlloader = new FXMLLoader();
     private FXMLLoader directorCalendarfxmlloader = new FXMLLoader();
+    private FXMLLoader dateOfCreationOrganizationfxmlloader = new FXMLLoader();
+
 
 
     private Parent createInvoice;
@@ -384,6 +355,7 @@ public class MainFormController {
     private Parent updateMemberForm;
     private Parent selectForm;
     private Parent directorCalendar;
+    private Parent dateOfCreationOrganization;
 
     private CreateInvoiceController createInvoiceController;
     private UpdateInvoiceController updateInvoiceController;
@@ -393,29 +365,27 @@ public class MainFormController {
     private UpdateMemberFormController updateMemberFormController;
     private SelectController selectController;
     private DirectorCalendarController directorCalendarController;
-
-    private ArrayList<CheckBox> listVedImport = new ArrayList<>();
-    private ArrayList<CheckBox> listVedExport = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listInteractionOnline = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listInteractionOffline = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listB2b = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listB2c = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listBusinessMissionVisiting = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listBusinessMissionRegional = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listMkas = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listNeedForYoungPersonnel = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listDiscounts = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listReliablePartners = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listPilotProjects = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listAntiCorruptionCharter = new ArrayList<>();
-    private ArrayList<CheckBox> listNewsletter = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listCommittees = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listCorporateMember = new ArrayList<CheckBox>();
-
-
+    private DateOfCreationCalendarController dateOfCreationCalendarController;
 
     @FXML
     public void initialize() {
+
+        date_relate_dateOfCreation.setStyle("-fx-opacity: 1");
+        date_relate_dateOfCreation.getEditor().setStyle("-fx-opacity: 1");
+
+        date_director_birthday.setStyle("-fx-opacity: 1");
+        date_director_birthday.getEditor().setStyle("-fx-opacity: 1");
+
+        date_invoice_dateCreation.setStyle("-fx-opacity: 1");
+        date_invoice_dateCreation.getEditor().setStyle("-fx-opacity: 1");
+
+        date_invoice_orderDate.setStyle("-fx-opacity: 1");
+        date_invoice_orderDate.getEditor().setStyle("-fx-opacity: 1");
+
+        date_invoice_dateReceiving.setStyle("-fx-opacity: 1");
+        date_invoice_dateReceiving.getEditor().setStyle("-fx-opacity: 1");
+
+
 
         column_memberId.setCellValueFactory(new PropertyValueFactory<>("memberId"));
         column_memberDate.setCellValueFactory(new PropertyValueFactory<>("memberDate"));
@@ -443,24 +413,8 @@ public class MainFormController {
         initSelectFormLoader();
         initServices();
         initDirectorCalendar();
-
-        initializeVedImport();
-        initializeVedExport();
-        initializeInteractionOnline();
-        initializeInteractionOffline();
-        initializeB2b();
-        initializeB2c();
-        initializeBusinessMissionVisiting();
-        initializeBusinessMissionRegional();
-        initializeMkas();
-        initializeNeedForYoungPersonnel();
-        initializeDiscounts();
-        initializeReliablePartners();
-        initializePilotProjects();
-        initializeAntiCorruptionCharter();
-        initializeNewsletter();
-        initializeCommittees();
-        initializeCorporateMember();
+        initDateOfCreationOrganization();
+        
         initInterestCheckBox();
 
         menu_addMember.setDisable(false);
@@ -469,94 +423,34 @@ public class MainFormController {
     }
 
     private void initInterestCheckBox() {
-        listVedImport.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listVedExport.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listInteractionOnline.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listInteractionOffline.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listB2b.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listB2c.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listBusinessMissionVisiting.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listBusinessMissionRegional.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listMkas.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listNeedForYoungPersonnel.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listDiscounts.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listReliablePartners.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listPilotProjects.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listAntiCorruptionCharter.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listNewsletter.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listCommittees.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
-        listCorporateMember.forEach(checkBox -> checkBox.setStyle("-fx-opacity: 1"));
+        checkBox_generalInformation_vedExport.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_vedExport.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_interactionOffline.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_interactionOnline.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_b2b.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_b2c.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_businessMissionVisiting.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_businessMissionRegional.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_mkas.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_needForYoungPersonnel.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_discounts.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_reliablePartners.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_pilotProjects.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_antiCorruptionCharter.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_newsletter.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_committees.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_corporateMember.setStyle("-fx-opacity: 1");
     }
 
-    private void initializeVedExport() {
-        listVedExport.add(checkBox_vedExport_0);
-        listVedExport.add(checkBox_vedExport_1);
+    private void initDateOfCreationOrganization() {
+        try {
+            dateOfCreationOrganizationfxmlloader.setLocation(getClass().getResource("/ui/DateOfCreationCalendar.fxml"));
+            dateOfCreationOrganization = dateOfCreationOrganizationfxmlloader.load();
+            dateOfCreationCalendarController = dateOfCreationOrganizationfxmlloader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    private void initializeVedImport() {
-        listVedImport.add(checkBox_vedImport_0);
-        listVedImport.add(checkBox_vedImport_1);
-    }
-    private void initializeAntiCorruptionCharter() {
-        listAntiCorruptionCharter.add(checkBox_antiCorruptionCharter_0);
-        listAntiCorruptionCharter.add(checkBox_antiCorruptionCharter_1);
-    }
-    private void initializePilotProjects() {
-        listPilotProjects.add(checkBox_pilotProjects_0);
-        listPilotProjects.add(checkBox_pilotProjects_1);
-    }
-    private void initializeReliablePartners() {
-        listReliablePartners.add(checkBox_reliablePartners_0);
-        listReliablePartners.add(checkBox_reliablePartners_1);
-    }
-    private void initializeDiscounts() {
-        listDiscounts.add(checkBox_discounts_0);
-        listDiscounts.add(checkBox_discounts_1);
-    }
-    private void initializeNeedForYoungPersonnel() {
-        listNeedForYoungPersonnel.add(checkBox_needForYoungPersonnel_0);
-        listNeedForYoungPersonnel.add(checkBox_needForYoungPersonnel_1);
-    }
-    private void initializeMkas() {
-        listMkas.add(checkBox_mkas_0);
-        listMkas.add(checkBox_mkas_1);
-    }
-    private void initializeBusinessMissionRegional() {
-        listBusinessMissionRegional.add(checkBox_businessMissionRegional_0);
-        listBusinessMissionRegional.add(checkBox_businessMissionRegional_1);
-    }
-    private void initializeBusinessMissionVisiting() {
-        listBusinessMissionVisiting.add(checkBox_businessMissionVisiting_0);
-        listBusinessMissionVisiting.add(checkBox_businessMissionVisiting_1);
-    }
-    private void initializeB2c() {
-        listB2c.add(checkBox_b2c_0);
-        listB2c.add(checkBox_b2c_1);
-    }
-    private void initializeB2b() {
-        listB2b.add(checkBox_b2b_0);
-        listB2b.add(checkBox_b2b_1);
-    }
-    private void initializeInteractionOffline() {
-        listInteractionOffline.add(checkBox_interactionOffline_0);
-        listInteractionOffline.add(checkBox_interactionOffline_1);
-    }
-    private void initializeInteractionOnline() {
-        listInteractionOnline.add(checkBox_interactionOnline_0);
-        listInteractionOnline.add(checkBox_interactionOnline_1);
-    }
-    private void initializeNewsletter() {
-        listNewsletter.add(checkBox_newsletter_0);
-        listNewsletter.add(checkBox_newsletter_1);
-    }
-    private void initializeCommittees() {
-        listCommittees.add(checkBox_committees_0);
-        listCommittees.add(checkBox_committees_1);
-    }
-    private void initializeCorporateMember() {
-        listCorporateMember.add(checkBox_corporateMember_0);
-        listCorporateMember.add(checkBox_corporateMember_1);
-    }
-
 
     private void initDirectorCalendar() {
         try {
@@ -594,7 +488,7 @@ public class MainFormController {
 
     private void initSelectFormLoader() {
         try {
-            selectFormfxmlloader.setLocation(getClass().getResource("/ui/select_v4.fxml"));
+            selectFormfxmlloader.setLocation(getClass().getResource("/ui/Select.fxml"));
             selectForm = selectFormfxmlloader.load();
             selectController = selectFormfxmlloader.getController();
             selectController.setCurrentStage(selectStage);
@@ -670,16 +564,20 @@ public class MainFormController {
 
     private void initListeners() {
 
-
         memberOrganizations.getMembers().addListener(new ListChangeListener<Member>() {
             @Override
             public void onChanged(Change<? extends Member> c) {
                 countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
+                clearAll();
             }
         });
 
         //Слушатель, заполняющий все поля по нажатию на строку таблицы
         table_members.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(text_Search.getText().equals("")) {
+                text_Search.setStyle(null);
+            }
+
             if(newValue != null){
                 menu_addMember.setDisable(false);
                 menu_deleteMember.setDisable(false);
@@ -696,8 +594,10 @@ public class MainFormController {
         });
     }
 
+
+
     private void fillAllInformation(Member member) {
-        fillRelate(member.getRelate());
+        fillRelate(member.getRelate());//
         fillGeneralInformation(member.getGeneralInformation());
         fillDirector(member.getDirector());
         fillContact(member.getContact());
@@ -715,6 +615,7 @@ public class MainFormController {
 
     private void fillServices(List<Services> services) {
         clearServices();
+
         if(services != null) {
             services.forEach(services1 -> {
                 servicesCheckBoxMap.get(services1.getServicesId()).setSelected(true);
@@ -722,13 +623,9 @@ public class MainFormController {
         }
     }
 
-    private void clearServices() {
-        servicesCheckBoxMap.forEach((integer, checkBox) -> {
-            checkBox.setSelected(false);
-        });
-    }
-
     private void fillSocialNetworks(SocialNetworks socialNetworks) {
+        clearSocialNetworks();
+
         text_socialNetworks_vkontakte.setText(socialNetworks.getVkontakte());
         text_socialNetworks_facebook.setText(socialNetworks.getFacebook());
         text_socialNetworks_telegram.setText(socialNetworks.getWhatsapp());
@@ -741,6 +638,8 @@ public class MainFormController {
     }
 
     private void fillRelate(Relate relate) {
+        clearRelate();
+
         text_relate_fullName.setText(relate.getFullName());
         date_relate_dateOfCreation.setValue(relate.getDateOfCreation());
         text_relate_size.setText(relate.getSize().toString());
@@ -749,60 +648,47 @@ public class MainFormController {
     }
 
     private void fillGeneralInformation(GeneralInformation generalInformation) {
+        clearGeneralInformation();
         clearInterestCheckBox();
+
         text_generalInformation_organizationForm.setText(generalInformation.getOrganizationForm());
         text_generalInformation_economicSector.setText(generalInformation.getEconomicSector());
         text_generalInformation_ownershipForm.setText(generalInformation.getOwnershipForm());
         text_generalInformation_activityType.setText(generalInformation.getActivityType());
         text_generalInformation_businessForm.setText(generalInformation.getBusinessForm());
-        selectCheckBox(listVedImport, generalInformation.isVedImport());
-        selectCheckBox(listVedExport, generalInformation.isVedExport());
 
-        if(generalInformation.getInvestmentsTarget() != null)
+        if (generalInformation.getInvestmentsTarget() != null) {
             text_generalInformation_investmentsTarget.setText(generalInformation.getInvestmentsTarget());
-        if(generalInformation.getInvestmentsSize() != null)
-            text_generalInformation_investmentsSize.setText(generalInformation.getInvestmentsSize().toString());
+        }
+        if (generalInformation.getInvestmentsSize() != null) {
+            text_generalInformation_investmentsSize.setText(generalInformation.getInvestmentsSize());
+        }
 
-        selectCheckBox(listInteractionOffline, generalInformation.isInteractionOffline());
-        selectCheckBox(listInteractionOnline, generalInformation.isInteractionOnline());
-        selectCheckBox(listB2b, generalInformation.isB2b());
-        selectCheckBox(listB2c, generalInformation.isB2c());
-        selectCheckBox(listBusinessMissionVisiting, generalInformation.isBusinessMissionVisiting());
-        selectCheckBox(listBusinessMissionRegional, generalInformation.isBusinessMissionRegional());
-        selectCheckBox(listMkas, generalInformation.isMkas());
-        selectCheckBox(listNeedForYoungPersonnel, generalInformation.isNeedForYoungPersonnel());
-        selectCheckBox(listDiscounts, generalInformation.isDiscounts());
-        selectCheckBox(listReliablePartners, generalInformation.isReliablePartners());
-        selectCheckBox(listPilotProjects, generalInformation.isPilotProjects());
-        selectCheckBox(listAntiCorruptionCharter, generalInformation.isAntiCorruptionCharter());
-        selectCheckBox(listNewsletter, generalInformation.isNewsletter());
-        selectCheckBox(listCommittees, generalInformation.isCommittees());
-        selectCheckBox(listCorporateMember, generalInformation.isCorporateMember());
+        checkBox_generalInformation_vedExport.setSelected(generalInformation.isVedExport());
+        checkBox_generalInformation_vedExport.setSelected(generalInformation.isVedImport());
+        checkBox_generalInformation_interactionOffline.setSelected(generalInformation.isInteractionOffline());
+        checkBox_generalInformation_interactionOnline.setSelected(generalInformation.isInteractionOnline());
+        checkBox_generalInformation_b2b.setSelected(generalInformation.isB2b());
+        checkBox_generalInformation_b2c.setSelected(generalInformation.isB2c());
+        checkBox_generalInformation_businessMissionVisiting.setSelected(generalInformation.isBusinessMissionVisiting());
+        checkBox_generalInformation_businessMissionRegional.setSelected(generalInformation.isBusinessMissionRegional());
+        checkBox_generalInformation_mkas.setSelected(generalInformation.isMkas());
+        checkBox_generalInformation_needForYoungPersonnel.setSelected(generalInformation.isNeedForYoungPersonnel());
+        checkBox_generalInformation_discounts.setSelected(generalInformation.isDiscounts());
+        checkBox_generalInformation_reliablePartners.setSelected(generalInformation.isReliablePartners());
+        checkBox_generalInformation_pilotProjects.setSelected(generalInformation.isPilotProjects());
+        checkBox_generalInformation_antiCorruptionCharter.setSelected(generalInformation.isAntiCorruptionCharter());
+        checkBox_generalInformation_newsletter.setSelected(generalInformation.isNewsletter());
+        checkBox_generalInformation_committees.setSelected(generalInformation.isCommittees());
+        checkBox_generalInformation_corporateMember.setSelected(generalInformation.isCorporateMember());
+
         text_generalInformation_changes.setText(generalInformation.getChanges());
 
     }
 
-    private void clearInterestCheckBox() {
-        listVedImport.forEach(checkBox -> checkBox.setSelected(false));
-        listVedExport.forEach(checkBox -> checkBox.setSelected(false));
-        listInteractionOnline.forEach(checkBox -> checkBox.setSelected(false));
-        listInteractionOffline.forEach(checkBox -> checkBox.setSelected(false));
-        listB2b.forEach(checkBox -> checkBox.setSelected(false));
-        listB2c.forEach(checkBox -> checkBox.setSelected(false));
-        listBusinessMissionVisiting.forEach(checkBox -> checkBox.setSelected(false));
-        listBusinessMissionRegional.forEach(checkBox -> checkBox.setSelected(false));
-        listMkas.forEach(checkBox -> checkBox.setSelected(false));
-        listNeedForYoungPersonnel.forEach(checkBox -> checkBox.setSelected(false));
-        listDiscounts.forEach(checkBox -> checkBox.setSelected(false));
-        listReliablePartners.forEach(checkBox -> checkBox.setSelected(false));
-        listPilotProjects.forEach(checkBox -> checkBox.setSelected(false));
-        listAntiCorruptionCharter.forEach(checkBox -> checkBox.setSelected(false));
-        listNewsletter.forEach(checkBox -> checkBox.setSelected(false));
-        listCommittees.forEach(checkBox -> checkBox.setSelected(false));
-        listCorporateMember.forEach(checkBox -> checkBox.setSelected(false));
-    }
-
     private void fillDirector(Director director) {
+        clearDirector();
+
         text_director_position.setText(director.getPosition());
         text_director_fullName.setText(director.getFullName());
         text_director_phoneMobile.setText(director.getPhoneMobile());
@@ -813,6 +699,8 @@ public class MainFormController {
     }
 
     private void fillContact(Contact contact) {
+        clearContact();
+
         text_contact_phone.setText(contact.getPhone());
         text_contact_fax.setText(contact.getFax());
         text_contact_site.setText(contact.getSite());
@@ -821,18 +709,24 @@ public class MainFormController {
     }
 
     private void fillAccoutingInformation(AccoutingInformation accoutingInformation) {
+        clearAccoutingInformation();
+
         text_accoutingInformation_ogrn.setText(accoutingInformation.getOgrn());
         text_accoutingInformation_kpp.setText(accoutingInformation.getKpp());
         text_accoutingInformation_tin.setText(accoutingInformation.getTin());
     }
 
     private void fillDebt(Debt debt) {
+        clearDebt();
+
         text_debt_status.setText(MemberUtils.isDebt(debt.getStatus()));
         text_debt_period.setText(debt.getPeriod());
         text_debt_comment.setText(debt.getComment());
     }
 
     private void fillAddressLegal(AddressLegal addressLegal) {
+        clearAddressLegal();
+
         text_addressLegal_regionId.setText(addressLegal.getRegionId().toString());
         text_addressLegal_regionName.setText(addressLegal.getRegionName());
         text_addressLegal_index.setText(addressLegal.getIndex().toString());
@@ -845,6 +739,8 @@ public class MainFormController {
     }
 
     private void fillAddressActual(AddressActual addressActual) {
+        clearAddressActual();
+
         text_addressActual_regionId.setText(addressActual.getRegionId().toString());
         text_addressActual_regionName.setText(addressActual.getRegionName());
         text_addressActual_index.setText(addressActual.getIndex().toString());
@@ -859,53 +755,52 @@ public class MainFormController {
     private void fillInvoices(List<Invoice> invoiceList) {
         invoiceHashMap.clear();
         clearInvoiceFields();
-        for(Invoice invoice: invoiceList) {
-            invoiceHashMap.put(invoice.getInvoiceId(), invoice);
-        }
-        ObservableList<String> observableList = FXCollections.observableArrayList();
-        invoiceHashMap.forEach((k, v) -> observableList.add(v.getInvoiceNumber().toString() + " (id" + k + ")"));
+        if(invoiceList != null) {
+            for (Invoice invoice : invoiceList) {
+                invoiceHashMap.put(invoice.getInvoiceId(), invoice);
+            }
+            ObservableList<String> observableList = FXCollections.observableArrayList();
+            invoiceHashMap.forEach((k, v) -> observableList.add(v.getInvoiceNumber().toString() + " (id" + k + ")"));
 
-
-
-        cmbBox_invoiceId.setItems(observableList);
-        btn_add_invoice.setDisable(false);
-        if(invoiceHashMap.size() > 0) {
-            cmbBox_invoiceId.getSelectionModel().select(0);
-            cmbBox_invoiceId.setDisable(false);
-            btn_rename_invoice.setDisable(false);
-            btn_remove_invoice.setDisable(false);
-        } else {
-            cmbBox_invoiceId.setDisable(true);
-            btn_rename_invoice.setDisable(true);
-            btn_remove_invoice.setDisable(true);
+            cmbBox_invoiceId.setItems(observableList);
+            btn_add_invoice.setDisable(false);
+            if (invoiceHashMap.size() > 0) {
+                cmbBox_invoiceId.getSelectionModel().select(0);
+                cmbBox_invoiceId.setDisable(false);
+                btn_rename_invoice.setDisable(false);
+                btn_remove_invoice.setDisable(false);
+            } else {
+                cmbBox_invoiceId.setDisable(true);
+                btn_rename_invoice.setDisable(true);
+                btn_remove_invoice.setDisable(true);
+            }
         }
     }
 
     private void fillContactPersons(List<ContactPerson> contactPeople) {
         contactPersonHashMap.clear();
         clearContactPersonFields();
-        for (ContactPerson contactPerson : contactPeople) {
-            contactPersonHashMap.put(contactPerson.getContactPersonId(), contactPerson);
+
+        if(contactPeople != null) {
+            for (ContactPerson contactPerson : contactPeople) {
+                contactPersonHashMap.put(contactPerson.getContactPersonId(), contactPerson);
+            }
+            ObservableList<String> observableList = FXCollections.observableArrayList();
+            contactPersonHashMap.forEach((k, v) -> observableList.add(v.getFullName() + " (id" + k + ")"));
+
+            cmbBox_contactPersonId.setItems(observableList);
+            btn_add_contactPerson.setDisable(false);
+            if (contactPersonHashMap.size() > 0) {
+                cmbBox_contactPersonId.getSelectionModel().select(0);
+                cmbBox_contactPersonId.setDisable(false);
+                btn_remove_contactPerson.setDisable(false);
+                btn_rename_contactPerson.setDisable(false);
+            } else {
+                cmbBox_contactPersonId.setDisable(true);
+                btn_remove_contactPerson.setDisable(true);
+                btn_rename_contactPerson.setDisable(true);
+            }
         }
-        ObservableList<String> observableList = FXCollections.observableArrayList();
-        contactPersonHashMap.forEach((k, v) -> observableList.add(v.getFullName() + " (id" + k + ")"));
-
-        cmbBox_contactPersonId.setItems(observableList);
-        btn_add_contactPerson.setDisable(false);
-        if (contactPersonHashMap.size() > 0) {
-            cmbBox_contactPersonId.getSelectionModel().select(0);
-            cmbBox_contactPersonId.setDisable(false);
-            btn_remove_contactPerson.setDisable(false);
-            btn_rename_contactPerson.setDisable(false);
-        } else {
-            cmbBox_contactPersonId.setDisable(true);
-            btn_remove_contactPerson.setDisable(true);
-            btn_rename_contactPerson.setDisable(true);
-        }
-    }
-
-    public void setMemberParams(MouseEvent mouseEvent) {
-
     }
 
     public void fillSelectedInvoice(ActionEvent actionEvent) {
@@ -913,29 +808,17 @@ public class MainFormController {
 
         if(invoiceHashMap.size() > 0) {
 
-            Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
+            Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue()));
 
-            text_invoice_dateCreation.setText(MemberUtils.dateToString(invoice.getDateCreation()));
+            date_invoice_dateCreation.setValue(invoice.getDateCreation());
             text_invoice_statusReceiving.setText(MemberUtils.isReceive(invoice.getStatusReceiving()));
-            text_invoice_dateReceiving.setText(MemberUtils.dateToString(invoice.getDateReceiving()));
+            date_invoice_dateReceiving.setValue(invoice.getDateReceiving());
             text_invoice_orderId.setText(invoice.getOrderId());
-            text_invoice_orderDate.setText(MemberUtils.dateToString(invoice.getOrderDate()));
+            date_invoice_orderDate.setValue(invoice.getOrderDate());
             text_invoice_price.setText(String.valueOf(invoice.getPrice()));
             text_invoice_statusPayment.setText(MemberUtils.isPayment(invoice.getStatusPayment()));
             text_invoice_comment.setText(invoice.getComment());
-
         }
-    }
-
-    private void clearInvoiceFields() {
-        text_invoice_dateCreation.clear();
-        text_invoice_statusReceiving.clear();
-        text_invoice_dateReceiving.clear();
-        text_invoice_orderId.clear();
-        text_invoice_orderDate.clear();
-        text_invoice_price.clear();
-        text_invoice_statusPayment.clear();
-        text_invoice_comment.clear();
     }
 
     public void fillSelectedPerson(ActionEvent actionEvent) {
@@ -943,7 +826,7 @@ public class MainFormController {
         clearContactPersonFields();
 
         if(contactPersonHashMap.size() > 0) {
-            ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue().toString()));
+            ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue()));
 
             text_contactPerson_position.setText(contactPerson.getPosition());
             text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
@@ -953,26 +836,20 @@ public class MainFormController {
         }
     }
 
-    private void clearContactPersonFields() {
-        text_contactPerson_position.clear();
-        text_contactPerson_phoneMobile.clear();
-        text_contactPerson_phoneCity.clear();
-        text_contactPerson_email.clear();
-        text_contactPerson_changes.clear();
-    }
 
 
     public void createInvoice(ActionEvent actionEvent) {
-        if(createInvoiceStage == null) {
+        if (createInvoiceStage == null) {
             createInvoiceStage = new Stage();
             createInvoiceStage.setResizable(false);
             createInvoiceStage.setScene(new Scene(createInvoice));
             createInvoiceStage.initModality(Modality.APPLICATION_MODAL);
             createInvoiceStage.initOwner(mainStage);
-
+            createInvoiceStage.setTitle("Добавление счета");
         }
+
         Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-        if(member.getInvoice() == null){
+        if (member.getInvoice() == null) {
             List<Invoice> invoices = new ArrayList<>();
             member.setInvoice(invoices);
         }
@@ -980,22 +857,17 @@ public class MainFormController {
         createInvoiceController.setMember(member);
         createInvoiceStage.showAndWait();
 
-        if(DBConnection.isInvoiceExists(createInvoiceController.getInvoice().getInvoiceId())) {
-            member.getInvoice().add(createInvoiceController.getInvoice());
+        if (createInvoiceController.isCreateInvoice()) {
+            if (DBConnection.isInvoiceExists(createInvoiceController.getInvoice().getInvoiceId())) {
+                createInvoiceController.setCreateInvoice(false);
+                member.getInvoice().add(createInvoiceController.getInvoice());
 
-            DBConnection.updateMember(member);
-            memberOrganizations.updateMember(member);
-            MemberUtils.informationDialog("Счет успешно добавлен!");
+                DBConnection.updateMember(member);
+                memberOrganizations.updateMember(member);
+                MemberUtils.informationDialog("Счет успешно добавлен!");
+            } else MemberUtils.warningDialog("Такой счет уже существует!");
         }
-        if(!createInvoiceController.isCreateInvoice()){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Ошибка!");
-            alert.setHeaderText(null);
-            alert.setContentText("Такой счет уже существует!");
-            alert.showAndWait();
-        }
-
-
+        createInvoiceController.clearTextAndStyle();
     }
 
     public void deleteInvoice(ActionEvent actionEvent) {
@@ -1025,6 +897,7 @@ public class MainFormController {
             updateInvoiceStage.setScene(new Scene(updateInvoice));
             updateInvoiceStage.initModality(Modality.APPLICATION_MODAL);
             updateInvoiceStage.initOwner(mainStage);
+            updateInvoiceStage.setTitle("Редактирование счета");
         }
         Member member = (Member) table_members.getSelectionModel().getSelectedItem();
         Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
@@ -1051,27 +924,30 @@ public class MainFormController {
             createContactPersonStage.setResizable(false);
             createContactPersonStage.setScene(new Scene(createContactPerson));
             createContactPersonStage.initModality(Modality.APPLICATION_MODAL);
+            createContactPersonStage.setTitle("Добавление контактного лица");
             createContactPersonStage.initOwner(mainStage);
         }
 
         Member member = (Member) table_members.getSelectionModel().getSelectedItem();
 
-        if(member.getContactPerson() == null) {
+        if (member.getContactPerson() == null) {
             List<ContactPerson> people = new ArrayList<>();
             member.setContactPerson(people);
         }
 
         createContactPersonController.setMember(member);
+
         createContactPersonStage.showAndWait();
 
-        ContactPerson newContactPerson = createContactPersonController.getContactPerson();
-        if(newContactPerson != null) {
+        if(createContactPersonController.isCreateContactPerson()) {
+            createContactPersonController.setCreateContactPerson(false);
+
             member.getContactPerson().add(createContactPersonController.getContactPerson());
             DBConnection.updateMember(member);
             memberOrganizations.updateMember(member);
+            MemberUtils.informationDialog("Контактное лицо успешно добавлено!");
         }
-
-
+        createContactPersonController.clearTextAndStyle();
     }
 
     public void removeContactPerson(ActionEvent actionEvent) {
@@ -1094,29 +970,27 @@ public class MainFormController {
     }
 
     public void renameContactPerson(ActionEvent actionEvent) {
-        if(updateContactPersonStage == null) {
+        if (updateContactPersonStage == null) {
             updateContactPersonStage = new Stage();
             updateContactPersonStage.setResizable(false);
             updateContactPersonStage.setScene(new Scene(updateContactPerson));
             updateContactPersonStage.initModality(Modality.APPLICATION_MODAL);
             updateContactPersonStage.initOwner(mainStage);
+            updateContactPersonStage.setTitle("Редактирование данных контактного лица");
         }
 
         Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-        ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue().toString()));
+        ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue()));
         updateContactPersonController.setContactPerson(contactPerson);
         updateContactPersonStage.showAndWait();
 
-        int searchIndex = -1;
-        for(ContactPerson person: member.getContactPerson()) {
-            if(person.getContactPersonId().equals(contactPerson.getContactPersonId())) {
-                searchIndex = member.getContactPerson().indexOf(person);
-            }
+        if (updateContactPersonController.isUpdateContactPerson()) {
+            updateContactPersonController.setUpdateContactPerson(false);
+            DBConnection.updateMember(member);
+            memberOrganizations.updateMember(member);
+            MemberUtils.informationDialog("Данные контактного лица успешно обновлены!");
         }
-        member.getContactPerson().set(searchIndex, contactPerson);
-        DBConnection.updateMember(member);
-        memberOrganizations.updateMember(member);
-
+        updateContactPersonController.clearTextAndStyle();
     }
 
 
@@ -1126,6 +1000,7 @@ public class MainFormController {
             createMemberFormStage.setScene(new Scene(createMemberForm));
             createMemberFormStage.initModality(Modality.APPLICATION_MODAL);
             createMemberFormStage.initOwner(mainStage);
+            createMemberFormStage.setTitle("Добавление организации");
         }
 
         createMemberFormStage.showAndWait();
@@ -1137,10 +1012,12 @@ public class MainFormController {
             memberOrganizations.addMember(newMember);
             MemberUtils.informationDialog("Организация успешно добавлена!");
         }
+        createMemberFormController.clearAll();
     }
 
     public void deleteMember(ActionEvent actionEvent) {
         Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+        member.setServices(null);
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Удаление организации");
@@ -1158,12 +1035,12 @@ public class MainFormController {
     }
 
     public void renameMember(ActionEvent actionEvent) {
-
         if (updateMemberFormStage == null) {
             updateMemberFormStage = new Stage();
             updateMemberFormStage.setScene(new Scene(updateMemberForm));
             updateMemberFormStage.initModality(Modality.APPLICATION_MODAL);
             updateMemberFormStage.initOwner(mainStage);
+            updateMemberFormStage.setTitle("Редактирование данных организации");
         }
 
         updateMemberFormController.setMember((Member) table_members.getSelectionModel().getSelectedItem());
@@ -1178,12 +1055,37 @@ public class MainFormController {
             MemberUtils.informationDialog("Данные организации успешно обновлены!");
         } else MemberUtils.informationDialog("Данные организации остались без изменений!");
 
-
+        updateMemberFormController.clearAll();
     }
 
 
-    double x = 0;
-    double y = 0;
+    public void openCalendar(ActionEvent actionEvent) {
+        if(directorCalendarStage == null) {
+            directorCalendarStage = new Stage();
+            directorCalendarStage.setScene(new Scene(directorCalendar));
+            directorCalendarStage.initModality(Modality.APPLICATION_MODAL);
+            directorCalendarStage.setTitle("Календарь руководства");
+            //selectStage.initStyle(StageStyle.UNDECORATED);
+            directorCalendarStage.initOwner(mainStage);
+        }
+
+        directorCalendarStage.showAndWait();
+    }
+
+    public void openOrgCalendar(ActionEvent actionEvent) {
+        if(dateOfCreationOrganizationStage == null) {
+            dateOfCreationOrganizationStage = new Stage();
+            dateOfCreationOrganizationStage.setScene(new Scene(dateOfCreationOrganization));
+            dateOfCreationOrganizationStage.initModality(Modality.APPLICATION_MODAL);
+            dateOfCreationOrganizationStage.setTitle("Календарь организации");
+            //selectStage.initStyle(StageStyle.UNDECORATED);
+            dateOfCreationOrganizationStage.initOwner(mainStage);
+        }
+
+        dateOfCreationOrganizationStage.showAndWait();
+    }
+
+
     @FXML
     public void openSelect(ActionEvent actionEvent) {
         if(selectStage == null) {
@@ -1191,27 +1093,8 @@ public class MainFormController {
             selectStage.setScene(new Scene(selectForm));
             selectStage.initModality(Modality.APPLICATION_MODAL);
             selectStage.setTitle("Сортировка");
-            //selectStage.initStyle(StageStyle.UNDECORATED);
             selectStage.initOwner(mainStage);
         }
-
-
-
-//        selectForm.setOnMousePressed(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                x = event.getSceneX();
-//                y = event.getSceneY();
-//            }
-//        });
-
-//        selectForm.setOnMouseDragged(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                selectStage.setX(event.getScreenX() - x);
-//                selectStage.setY(event.getScreenY() - y);
-//            }
-//        });
 
         selectStage.showAndWait();
     }
@@ -1223,22 +1106,179 @@ public class MainFormController {
         stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
-    public void openCalendar(ActionEvent actionEvent) {
-        if(directorCalendarStage == null) {
-            directorCalendarStage = new Stage();
-            directorCalendarStage.setScene(new Scene(directorCalendar));
-            directorCalendarStage.initModality(Modality.APPLICATION_MODAL);
-            directorCalendarStage.setTitle("Календарь");
-            //selectStage.initStyle(StageStyle.UNDECORATED);
-            directorCalendarStage.initOwner(mainStage);
+    private void clearAll() {
+        clearInterestCheckBox();
+        clearRelate();
+        clearGeneralInformation();
+        clearDirector();
+        clearContact();
+        clearAccoutingInformation();
+        clearDebt();
+        clearAddressLegal();
+        clearAddressActual();
+        clearSocialNetworks();
+        clearInvoiceFields();
+        clearContactPersonFields();
+        clearServices();
+    }
+
+    private void clearInterestCheckBox() {
+        checkBox_generalInformation_vedExport.setSelected(false);
+        checkBox_generalInformation_vedExport.setSelected(false);
+        checkBox_generalInformation_interactionOffline.setSelected(false);
+        checkBox_generalInformation_interactionOnline.setSelected(false);
+        checkBox_generalInformation_b2b.setSelected(false);
+        checkBox_generalInformation_b2c.setSelected(false);
+        checkBox_generalInformation_businessMissionVisiting.setSelected(false);
+        checkBox_generalInformation_businessMissionRegional.setSelected(false);
+        checkBox_generalInformation_mkas.setSelected(false);
+        checkBox_generalInformation_needForYoungPersonnel.setSelected(false);
+        checkBox_generalInformation_discounts.setSelected(false);
+        checkBox_generalInformation_reliablePartners.setSelected(false);
+        checkBox_generalInformation_pilotProjects.setSelected(false);
+        checkBox_generalInformation_antiCorruptionCharter.setSelected(false);
+        checkBox_generalInformation_newsletter.setSelected(false);
+        checkBox_generalInformation_committees.setSelected(false);
+        checkBox_generalInformation_corporateMember.setSelected(false);
+    }
+
+    private void clearRelate() {
+        text_relate_fullName.clear();
+        date_relate_dateOfCreation.getEditor().clear();
+        text_relate_size.clear();
+        text_relate_services.clear();
+        text_relate_changes.clear();
+    }
+
+    private void clearGeneralInformation() {
+        text_generalInformation_organizationForm.clear();
+        text_generalInformation_economicSector.clear();
+        text_generalInformation_ownershipForm.clear();
+        text_generalInformation_activityType.clear();
+        text_generalInformation_businessForm.clear();
+
+        text_generalInformation_investmentsTarget.clear();
+        text_generalInformation_investmentsSize.clear();
+        text_generalInformation_changes.clear();
+    }
+
+    private void clearDirector() {
+        text_director_position.clear();
+        text_director_fullName.clear();
+        text_director_phoneMobile.clear();
+        text_director_email.clear();
+        text_director_phoneCity.clear();
+        date_director_birthday.getEditor().clear();
+        text_director_changes.clear();
+    }
+
+    private void clearContact() {
+        text_contact_phone.clear();
+        text_contact_fax.clear();
+        text_contact_site.clear();
+        text_contact_email.clear();
+        text_contact_changes.clear();
+    }
+
+    private void clearAccoutingInformation() {
+        text_accoutingInformation_ogrn.clear();
+        text_accoutingInformation_kpp.clear();
+        text_accoutingInformation_tin.clear();
+    }
+
+    private void clearDebt() {
+        text_debt_status.clear();
+        text_debt_period.clear();
+        text_debt_comment.clear();
+    }
+
+    private void clearAddressLegal() {
+        text_addressLegal_regionId.clear();
+        text_addressLegal_regionName.clear();
+        text_addressLegal_index.clear();
+        text_addressLegal_town.clear();
+        text_addressLegal_street.clear();
+        text_addressLegal_house.clear();
+        text_addressLegal_office.clear();
+        text_addressLegal_district.clear();
+        text_addressLegal_changes.clear();
+    }
+
+    private void clearAddressActual() {
+        text_addressActual_regionId.clear();
+        text_addressActual_regionName.clear();
+        text_addressActual_index.clear();
+        text_addressActual_town.clear();
+        text_addressActual_street.clear();
+        text_addressActual_house.clear();
+        text_addressActual_office.clear();
+        text_addressActual_district.clear();
+        text_addressActual_changes.clear();
+    }
+
+    private void clearSocialNetworks() {
+        text_socialNetworks_vkontakte.clear();
+        text_socialNetworks_facebook.clear();
+        text_socialNetworks_telegram.clear();
+        text_socialNetworks_whatsapp.clear();
+        text_socialNetworks_viber.clear();
+        text_socialNetworks_skype.clear();
+        text_socialNetworks_instagram.clear();
+        text_socialNetworks_twitter.clear();
+        text_socialNetworks_youtube.clear();
+    }
+
+    private void clearInvoiceFields() {
+        date_invoice_dateCreation.setValue(null);
+        text_invoice_statusReceiving.clear();
+        date_invoice_dateReceiving.setValue(null);
+        text_invoice_orderId.clear();
+        date_invoice_orderDate.setValue(null);
+        text_invoice_price.clear();
+        text_invoice_statusPayment.clear();
+        text_invoice_comment.clear();
+    }
+
+    private void clearContactPersonFields() {
+        text_contactPerson_position.clear();
+        text_contactPerson_phoneMobile.clear();
+        text_contactPerson_phoneCity.clear();
+        text_contactPerson_email.clear();
+        text_contactPerson_changes.clear();
+    }
+
+    private void clearServices() {
+        servicesCheckBoxMap.forEach((integer, checkBox) -> {
+            checkBox.setSelected(false);
+        });
+    }
+
+
+    public void searchInTable(ActionEvent actionEvent) {
+
+        String id = text_Search.getText();
+        int searchIndex = 0;
+        for(Member member: memberOrganizations.getMembers()) {
+            if(member.getMemberId().equals(id)) break;
+            searchIndex++;
         }
-
-        directorCalendarStage.showAndWait();
+        if(searchIndex < memberOrganizations.getMembers().size()) {
+            text_Search.setStyle(null);
+            table_members.requestFocus();
+            table_members.getFocusModel().focus(searchIndex);
+            table_members.scrollTo(searchIndex);
+            table_members.getSelectionModel().select(searchIndex);
+        } else {
+            table_members.requestFocus();
+            text_Search.setStyle("-fx-border-color: rgb(" + MemberUtils.EMPTY_COLOR2 + ");");
+        }
     }
 
-    ///
-    private void selectCheckBox(ArrayList<CheckBox> checkBoxes, boolean value) {
-        int index = (value) ? 1 : 0;
-        checkBoxes.get(index).setSelected(true);
+    public void saveMemberToPDF(ActionEvent actionEvent) {
+        String path = "/home/green/member.pdf";
+        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+        PDFUtils.saveMemberToPDF(path, member);
     }
+
+
 }
