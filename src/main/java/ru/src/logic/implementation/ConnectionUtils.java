@@ -2,63 +2,122 @@ package ru.src.logic.implementation;
 
 import ru.src.model.Connection;
 
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.*;
 import javax.xml.stream.events.XMLEvent;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class ConnectionUtils {
     private static Connection connection;
-    private static InputStream inputStream = ConnectionUtils.class.getResourceAsStream("/settings/connection.xml");
-    private static final XMLInputFactory FACTORY = XMLInputFactory.newInstance();
-    private static XMLStreamReader READER;
 
-    static synchronized Connection getConnection() {
+
+    private static InputStream inputStream;
+    private static OutputStream outputStream;
+
+    private static XMLInputFactory readerFactory = XMLInputFactory.newInstance();
+    private static XMLStreamReader reader;
+
+    private static XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+    private static XMLStreamWriter writer;
+    private static String path = System.getProperty("user.home") + "/.member/connection.xml";
+
+
+
+
+    public static synchronized Connection getConnection() {
         if (connection == null) {
             connection = Connection.initialize();
             try {
-                READER = FACTORY.createXMLStreamReader(inputStream);
-                while (READER.hasNext()) {
 
-                    int event = READER.next();
+                inputStream = new FileInputStream(new File(path));
+                reader = readerFactory.createXMLStreamReader(inputStream);
+                while (reader.hasNext()) {
 
-                    if(event == XMLEvent.START_ELEMENT && "HOSTNAME".equals(READER.getLocalName())) {
-                        connection.setHostname(READER.getElementText());
+                    int event = reader.next();
+
+                    if(event == XMLEvent.START_ELEMENT && "HOSTNAME".equals(reader.getLocalName())) {
+                        connection.setHostname(reader.getElementText());
                     }
-                    if(event == XMLEvent.START_ELEMENT && "DATABASE".equals(READER.getLocalName())) {
-                        connection.setDatabase(READER.getElementText());
+                    if(event == XMLEvent.START_ELEMENT && "DATABASE".equals(reader.getLocalName())) {
+                        connection.setDatabase(reader.getElementText());
                     }
-                    if(event == XMLEvent.START_ELEMENT && "PORT".equals(READER.getLocalName())) {
-                        connection.setPort(READER.getElementText());
+                    if(event == XMLEvent.START_ELEMENT && "PORT".equals(reader.getLocalName())) {
+                        connection.setPort(reader.getElementText());
                     }
-                    if(event == XMLEvent.START_ELEMENT && "USERNAME".equals(READER.getLocalName())) {
-                        connection.setUsername(READER.getElementText());
+                    if(event == XMLEvent.START_ELEMENT && "USERNAME".equals(reader.getLocalName())) {
+                        connection.setUsername(reader.getElementText());
                     }
-                    if(event == XMLEvent.START_ELEMENT && "PASSWORD".equals(READER.getLocalName())) {
-                        connection.setPassword(READER.getElementText());
+                    if(event == XMLEvent.START_ELEMENT && "PASSWORD".equals(reader.getLocalName())) {
+                        connection.setPassword(reader.getElementText());
                     }
                 }
-            } catch (XMLStreamException e) {
-                e.printStackTrace();
+            } catch (XMLStreamException | FileNotFoundException e) {
+                MemberUtils.warningDialog("Проверьте настройки соединения!");
+            }
+            finally {
+                try {
+                    inputStream.close();
+                    reader.close();
+                } catch (IOException | XMLStreamException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return connection;
     }
 
-    static synchronized void setConnection(String hostname, String database, String port, String username, String password) {
-        if(HibernateUtils.isActive) {
-            HibernateUtils.closeSessionFactory();
+    public static synchronized void setConnection(String hostname, String database, String port, String username, String password) {
 
-            connection.setHostname(hostname);
-            connection.setDatabase(database);
-            connection.setPort(port);
-            connection.setUsername(username);
-            connection.setPassword(password);
+        connection.setHostname(hostname);
+        connection.setDatabase(database);
+        connection.setPort(port);
+        connection.setUsername(username);
+        connection.setPassword(password);
+
+        try {
 
 
-                //TODO запишем в файл
+            outputStream = new FileOutputStream(new File(path));
+            writer = outputFactory.createXMLStreamWriter(outputStream);
 
+            writer.writeStartDocument("utf-8", "1.0");
+            writer.writeStartElement("CONNECTION");
+
+            writer.writeStartElement("HOSTNAME");
+            writer.writeCharacters(connection.getHostname());
+            writer.writeEndElement();
+
+            writer.writeStartElement("DATABASE");
+            writer.writeCharacters(connection.getDatabase());
+            writer.writeEndElement();
+
+            writer.writeStartElement("PORT");
+            writer.writeCharacters(connection.getPort());
+            writer.writeEndElement();
+
+            writer.writeStartElement("USERNAME");
+            writer.writeCharacters(connection.getUsername());
+            writer.writeEndElement();
+
+            writer.writeStartElement("PASSWORD");
+            writer.writeCharacters(connection.getPassword());
+            writer.writeEndElement();
+
+            writer.writeEndElement();
+            writer.writeEndDocument();
+            writer.flush();
+
+        } catch (XMLStreamException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                writer.close();
+                outputStream.close();
+            }
+            catch (IOException | XMLStreamException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

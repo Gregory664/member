@@ -10,13 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import ru.src.logic.implementation.DBConnection;
-import ru.src.logic.implementation.MemberUtils;
-import ru.src.logic.implementation.Organizations;
-import ru.src.logic.implementation.PDFUtils;
+import ru.src.logic.implementation.*;
 import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
 import ru.src.model.General.GeneralInformation;
@@ -317,9 +315,14 @@ public class MainFormController {
     public MenuItem menu_saveMember;
     @FXML
     public MenuItem menu_addMember2;
+    @FXML
+    public MenuItem menu_connection;
+    @FXML
+    public Label label_alarm_connection;
 
 
-    private Organizations memberOrganizations = new Organizations();
+    public static Organizations memberOrganizations = new Organizations();
+
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
@@ -334,16 +337,18 @@ public class MainFormController {
     private Stage selectStage;
     private Stage directorCalendarStage;
     private Stage dateOfCreationOrganizationStage;
+    private Stage connectionStage;
 
-    private FXMLLoader createInvoicefxmlLoader = new FXMLLoader();
-    private FXMLLoader updateInvoicefxmlLoader = new FXMLLoader();
-    private FXMLLoader createContactPersonfxmlLoader = new FXMLLoader();
-    private FXMLLoader updateContactPersonfxmlLoafer = new FXMLLoader();
-    private FXMLLoader createMemberFormfxmlloader = new FXMLLoader();
-    private FXMLLoader updateMemberFormfxmlloader = new FXMLLoader();
-    private FXMLLoader selectFormfxmlloader = new FXMLLoader();
-    private FXMLLoader directorCalendarfxmlloader = new FXMLLoader();
-    private FXMLLoader dateOfCreationOrganizationfxmlloader = new FXMLLoader();
+    private FXMLLoader createInvoiceFxmlLoader = new FXMLLoader();
+    private FXMLLoader updateInvoiceFxmlLoader = new FXMLLoader();
+    private FXMLLoader createContactPersonFxmlLoader = new FXMLLoader();
+    private FXMLLoader updateContactPersonFxmlLoafer = new FXMLLoader();
+    private FXMLLoader createMemberFormFxmlLoader = new FXMLLoader();
+    private FXMLLoader updateMemberFormFxmlLoader = new FXMLLoader();
+    private FXMLLoader selectFormFxmlLoader = new FXMLLoader();
+    private FXMLLoader directorCalendarFxmlLoader = new FXMLLoader();
+    private FXMLLoader dateOfCreationOrganizationFxmlLoader = new FXMLLoader();
+    private FXMLLoader connectionSettingsfxmlloader = new FXMLLoader();
 
 
 
@@ -356,6 +361,7 @@ public class MainFormController {
     private Parent selectForm;
     private Parent directorCalendar;
     private Parent dateOfCreationOrganization;
+    private Parent connectionSettings;
 
     private CreateInvoiceController createInvoiceController;
     private UpdateInvoiceController updateInvoiceController;
@@ -366,6 +372,7 @@ public class MainFormController {
     private SelectController selectController;
     private DirectorCalendarController directorCalendarController;
     private DateOfCreationCalendarController dateOfCreationCalendarController;
+    private ConnectionSettingsController connectionSettingsController;
 
     @FXML
     public void initialize() {
@@ -403,6 +410,7 @@ public class MainFormController {
 
         table_members.setItems(memberOrganizations.getMembers());
         countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
+        chechConnection(label_alarm_connection, HibernateUtils.isActive);
 
         initCreateInvoiceLoader();
         initUpdateInvoiceLoader();
@@ -414,12 +422,23 @@ public class MainFormController {
         initServices();
         initDirectorCalendar();
         initDateOfCreationOrganization();
+        initConnectionSettings();
         
         initInterestCheckBox();
 
         menu_addMember.setDisable(false);
         menu_deleteMember.setDisable(true);
         menu_renameMember.setDisable(true);
+    }
+
+    private void initConnectionSettings() {
+        try {
+            connectionSettingsfxmlloader.setLocation(getClass().getResource("/ui/connectionSettings.fxml"));
+            connectionSettings = connectionSettingsfxmlloader.load();
+            connectionSettingsController = connectionSettingsfxmlloader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initInterestCheckBox() {
@@ -444,9 +463,9 @@ public class MainFormController {
 
     private void initDateOfCreationOrganization() {
         try {
-            dateOfCreationOrganizationfxmlloader.setLocation(getClass().getResource("/ui/DateOfCreationCalendar.fxml"));
-            dateOfCreationOrganization = dateOfCreationOrganizationfxmlloader.load();
-            dateOfCreationCalendarController = dateOfCreationOrganizationfxmlloader.getController();
+            dateOfCreationOrganizationFxmlLoader.setLocation(getClass().getResource("/ui/DateOfCreationCalendar.fxml"));
+            dateOfCreationOrganization = dateOfCreationOrganizationFxmlLoader.load();
+            dateOfCreationCalendarController = dateOfCreationOrganizationFxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -454,9 +473,9 @@ public class MainFormController {
 
     private void initDirectorCalendar() {
         try {
-            directorCalendarfxmlloader.setLocation(getClass().getResource("/ui/directorCalendar.fxml"));
-            directorCalendar = directorCalendarfxmlloader.load();
-            directorCalendarController = directorCalendarfxmlloader.getController();
+            directorCalendarFxmlLoader.setLocation(getClass().getResource("/ui/directorCalendar.fxml"));
+            directorCalendar = directorCalendarFxmlLoader.load();
+            directorCalendarController = directorCalendarFxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -488,9 +507,9 @@ public class MainFormController {
 
     private void initSelectFormLoader() {
         try {
-            selectFormfxmlloader.setLocation(getClass().getResource("/ui/Select.fxml"));
-            selectForm = selectFormfxmlloader.load();
-            selectController = selectFormfxmlloader.getController();
+            selectFormFxmlLoader.setLocation(getClass().getResource("/ui/Select.fxml"));
+            selectForm = selectFormFxmlLoader.load();
+            selectController = selectFormFxmlLoader.getController();
             selectController.setCurrentStage(selectStage);
 
         } catch (IOException e) {
@@ -500,9 +519,9 @@ public class MainFormController {
 
     private void initCreateContactPersonLoader() {
         try {
-            createContactPersonfxmlLoader.setLocation(getClass().getResource("/ui/ContactPerson/CreateContactPerson.fxml"));
-            createContactPerson = createContactPersonfxmlLoader.load();
-            createContactPersonController = createContactPersonfxmlLoader.getController();
+            createContactPersonFxmlLoader.setLocation(getClass().getResource("/ui/ContactPerson/CreateContactPerson.fxml"));
+            createContactPerson = createContactPersonFxmlLoader.load();
+            createContactPersonController = createContactPersonFxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -510,9 +529,9 @@ public class MainFormController {
 
     private void initUpdateContactPersonLoader() {
         try {
-            updateContactPersonfxmlLoafer.setLocation(getClass().getResource("/ui/ContactPerson/UpdateContactPerson.fxml"));
-            updateContactPerson = updateContactPersonfxmlLoafer.load();
-            updateContactPersonController = updateContactPersonfxmlLoafer.getController();
+            updateContactPersonFxmlLoafer.setLocation(getClass().getResource("/ui/ContactPerson/UpdateContactPerson.fxml"));
+            updateContactPerson = updateContactPersonFxmlLoafer.load();
+            updateContactPersonController = updateContactPersonFxmlLoafer.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -520,9 +539,9 @@ public class MainFormController {
 
     private void initCreateInvoiceLoader() {
         try {
-            createInvoicefxmlLoader.setLocation(getClass().getResource("/ui/Invoice/CreateInvoiceForm.fxml"));
-            createInvoice = createInvoicefxmlLoader.load();
-            createInvoiceController = createInvoicefxmlLoader.getController();
+            createInvoiceFxmlLoader.setLocation(getClass().getResource("/ui/Invoice/CreateInvoiceForm.fxml"));
+            createInvoice = createInvoiceFxmlLoader.load();
+            createInvoiceController = createInvoiceFxmlLoader.getController();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -531,9 +550,9 @@ public class MainFormController {
 
     private void initUpdateInvoiceLoader() {
         try {
-            updateInvoicefxmlLoader.setLocation(getClass().getResource("/ui/Invoice/UpdateInvoiceForm.fxml"));
-            updateInvoice = updateInvoicefxmlLoader.load();
-            updateInvoiceController = updateInvoicefxmlLoader.getController();
+            updateInvoiceFxmlLoader.setLocation(getClass().getResource("/ui/Invoice/UpdateInvoiceForm.fxml"));
+            updateInvoice = updateInvoiceFxmlLoader.load();
+            updateInvoiceController = updateInvoiceFxmlLoader.getController();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -542,9 +561,9 @@ public class MainFormController {
 
     private void initCreateMemberFormLoader() {
         try {
-            createMemberFormfxmlloader.setLocation(getClass().getResource("/ui/CreateMemberForm.fxml"));
-            createMemberForm = createMemberFormfxmlloader.load();
-            createMemberFormController = createMemberFormfxmlloader.getController();
+            createMemberFormFxmlLoader.setLocation(getClass().getResource("/ui/CreateMemberForm.fxml"));
+            createMemberForm = createMemberFormFxmlLoader.load();
+            createMemberFormController = createMemberFormFxmlLoader.getController();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -553,9 +572,9 @@ public class MainFormController {
 
     private void initUpdateMemberFormLoader() {
         try {
-            updateMemberFormfxmlloader.setLocation(getClass().getResource("/ui/UpdateMemberForm.fxml"));
-            updateMemberForm = updateMemberFormfxmlloader.load();
-            updateMemberFormController = updateMemberFormfxmlloader.getController();
+            updateMemberFormFxmlLoader.setLocation(getClass().getResource("/ui/UpdateMemberForm.fxml"));
+            updateMemberForm = updateMemberFormFxmlLoader.load();
+            updateMemberFormController = updateMemberFormFxmlLoader.getController();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -563,18 +582,18 @@ public class MainFormController {
     }
 
     private void initListeners() {
-
         memberOrganizations.getMembers().addListener(new ListChangeListener<Member>() {
             @Override
             public void onChanged(Change<? extends Member> c) {
                 countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
-                clearAll();
+                //clearAll();
+                chechConnection(label_alarm_connection, HibernateUtils.isActive);
             }
         });
 
         //Слушатель, заполняющий все поля по нажатию на строку таблицы
         table_members.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(text_Search.getText().equals("")) {
+           if(text_Search.getText().equals("")) {
                 text_Search.setStyle(null);
             }
 
@@ -592,6 +611,8 @@ public class MainFormController {
                 menu_renameMember.setDisable(true);
             }
         });
+
+
     }
 
 
@@ -1085,7 +1106,17 @@ public class MainFormController {
         dateOfCreationOrganizationStage.showAndWait();
     }
 
+    public void openConnectionSettings(ActionEvent actionEvent) {
+        if(connectionStage == null) {
+            connectionStage = new Stage();
+            connectionStage.setScene(new Scene(connectionSettings));
+            connectionStage.setTitle("Настройки соединения");
+        }
+        connectionSettingsController.initialize();
+        connectionStage.show();
+       // connectionSettingsController.clear();
 
+    }
     @FXML
     public void openSelect(ActionEvent actionEvent) {
         if(selectStage == null) {
@@ -1097,6 +1128,16 @@ public class MainFormController {
         }
 
         selectStage.showAndWait();
+    }
+
+    private void chechConnection(Label alarm, boolean isActiveConnection) {
+        if(isActiveConnection) {
+            label_alarm_connection.setText("установленно");
+            label_alarm_connection.setTextFill(Color.GREEN);
+        } else {
+            label_alarm_connection.setText("не установленно");
+            label_alarm_connection.setTextFill(Color.RED);
+        }
     }
 
 
@@ -1279,6 +1320,7 @@ public class MainFormController {
         Member member = (Member) table_members.getSelectionModel().getSelectedItem();
         PDFUtils.saveMemberToPDF(path, member);
     }
+
 
 
 }
