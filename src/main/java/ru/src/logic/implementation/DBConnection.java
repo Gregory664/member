@@ -5,20 +5,16 @@ import javafx.collections.ObservableList;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import ru.src.logic.interfaces.MemberLogic;
 import ru.src.model.DateOfCreationOrganization;
 import ru.src.model.DirectorCalendar;
 import ru.src.model.FindMember;
 import ru.src.model.Member;
-import ru.src.model.Personal.Director;
 import ru.src.model.buh.Invoice;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DBConnection implements MemberLogic {
@@ -137,7 +133,7 @@ public class DBConnection implements MemberLogic {
     public static List<FindMember> getQueryList(String queryString) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
         List<String> result;
-        List<FindMember> findMembers = new ArrayList<FindMember>();
+        List<FindMember> findMembers = new ArrayList<>();
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Query query = session.createSQLQuery(queryString);
@@ -196,7 +192,7 @@ public class DBConnection implements MemberLogic {
         return directorCalendars;
     }
 
-    public static ObservableList<DateOfCreationOrganization> getOrganization(int month) {
+    public static ObservableList<DateOfCreationOrganization> getOrganizationCalendar(int month) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
         ObservableList<DateOfCreationOrganization> organizations = FXCollections.observableArrayList();
@@ -226,6 +222,47 @@ public class DBConnection implements MemberLogic {
             System.out.println(e.getMessage());
         }
         return organizations;
+    }
+
+    public static Integer getCountOfOrganizationBirthdayToday() {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        Integer result = -1;
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Integer currentMonth = LocalDate.now().getMonth().getValue();
+            Integer currentDay = LocalDate.now().getDayOfMonth();
+            String queryString =
+                    "SELECT Count(*)\n" +
+                    "FROM RELATE\n" +
+                    "WHERE month(RELATE_DATE_OF_CREATION) = " + currentMonth +
+                        " AND day(RELATE_DATE_OF_CREATION) = " + currentDay + ";";
+            Query query = session.createSQLQuery(queryString);
+            result = Integer.valueOf(query.list().get(0).toString());
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    public static Integer getCountOfDirectorBirthdayToday() {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        Integer result = -1;
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Integer currentMonth = LocalDate.now().getMonth().getValue();
+            Integer currentDay = LocalDate.now().getDayOfMonth();
+            String queryString =
+                    "SELECT Count(*)\n" + "FROM DIRECTOR\n" +
+                    "WHERE month(DIRECTOR_BIRTHDAY) = " + currentMonth +
+                    " AND day(DIRECTOR_BIRTHDAY) = " + currentDay + ";";
+            Query query = session.createSQLQuery(queryString);
+            result = Integer.valueOf(query.list().get(0).toString());
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 }
 

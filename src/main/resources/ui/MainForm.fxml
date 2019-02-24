@@ -25,7 +25,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.MainFormController">
    <children>
       <SplitPane dividerPositions="0.43958868894601544" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="1024.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -43,8 +42,7 @@
                       <Menu mnemonicParsing="false" text="Инстументы">
                         <items>
                           <MenuItem fx:id="item_openSelect" mnemonicParsing="false" onAction="#openSelect" text="Сортировка" />
-                              <MenuItem fx:id="item_directorCalendar" mnemonicParsing="false" onAction="#openCalendar" text="Календарь руководства" />
-                              <MenuItem fx:id="item_orgCalendar" mnemonicParsing="false" onAction="#openOrgCalendar" text="Календарь организации" />
+                              <MenuItem fx:id="item_Calendar" mnemonicParsing="false" onAction="#openCalendar" text="Календарь" />
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Настройки">
@@ -63,7 +61,7 @@
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" prefWidth="82.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="950.0" minWidth="10.0" prefWidth="610.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="610.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -75,7 +73,7 @@
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Label fx:id="label_notification_calendar" onMouseClicked="#openNotification" text="Label" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                        <Label fx:id="label_notification_calendar" onMouseClicked="#openNotification" underline="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                            <font>
                               <Font size="14.0" />
                            </font>

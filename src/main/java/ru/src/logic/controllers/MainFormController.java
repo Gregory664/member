@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -308,20 +309,21 @@ public class MainFormController {
     @FXML
     public MenuItem item_openSelect;
     @FXML
-    public MenuItem item_directorCalendar;
-    @FXML
-    public MenuItem item_orgCalendar;
-    @FXML
     public MenuItem menu_saveMember;
     @FXML
     public MenuItem menu_addMember2;
     @FXML
     public MenuItem menu_connection;
     @FXML
+    public MenuItem item_Calendar;
+    @FXML
     public Label label_alarm_connection;
+    @FXML
+    public Label label_notification_calendar;
 
 
     public static Organizations memberOrganizations = new Organizations();
+
 
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
@@ -335,9 +337,9 @@ public class MainFormController {
     private Stage createMemberFormStage;
     private Stage updateMemberFormStage;
     private Stage selectStage;
-    private Stage directorCalendarStage;
-    private Stage dateOfCreationOrganizationStage;
     private Stage connectionStage;
+    private Stage calendarStage;
+    private Stage calendarNotificationStage;
 
     private FXMLLoader createInvoiceFxmlLoader = new FXMLLoader();
     private FXMLLoader updateInvoiceFxmlLoader = new FXMLLoader();
@@ -346,11 +348,9 @@ public class MainFormController {
     private FXMLLoader createMemberFormFxmlLoader = new FXMLLoader();
     private FXMLLoader updateMemberFormFxmlLoader = new FXMLLoader();
     private FXMLLoader selectFormFxmlLoader = new FXMLLoader();
-    private FXMLLoader directorCalendarFxmlLoader = new FXMLLoader();
-    private FXMLLoader dateOfCreationOrganizationFxmlLoader = new FXMLLoader();
     private FXMLLoader connectionSettingsfxmlloader = new FXMLLoader();
-
-
+    private FXMLLoader calendarNotificationFxmlLoader = new FXMLLoader();
+    private FXMLLoader calendarFxmlLoader = new FXMLLoader();
 
     private Parent createInvoice;
     private Parent updateInvoice;
@@ -359,9 +359,9 @@ public class MainFormController {
     private Parent createMemberForm;
     private Parent updateMemberForm;
     private Parent selectForm;
-    private Parent directorCalendar;
-    private Parent dateOfCreationOrganization;
     private Parent connectionSettings;
+    private Parent calendarNotification;
+    private Parent calendar;
 
     private CreateInvoiceController createInvoiceController;
     private UpdateInvoiceController updateInvoiceController;
@@ -370,9 +370,9 @@ public class MainFormController {
     private CreateMemberFormController createMemberFormController;
     private UpdateMemberFormController updateMemberFormController;
     private SelectController selectController;
-    private DirectorCalendarController directorCalendarController;
-    private DateOfCreationCalendarController dateOfCreationCalendarController;
+    private CalendarController calendarController;
     private ConnectionSettingsController connectionSettingsController;
+    private CalendarNotificationController calendarNotificationController;
 
     @FXML
     public void initialize() {
@@ -410,7 +410,8 @@ public class MainFormController {
 
         table_members.setItems(memberOrganizations.getMembers());
         countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
-        chechConnection(label_alarm_connection, HibernateUtils.isActive);
+        checkConnection(label_alarm_connection, HibernateUtils.isActive);
+        checkBirthday(label_notification_calendar);
 
         initCreateInvoiceLoader();
         initUpdateInvoiceLoader();
@@ -420,15 +421,34 @@ public class MainFormController {
         initUpdateMemberFormLoader();
         initSelectFormLoader();
         initServices();
-        initDirectorCalendar();
-        initDateOfCreationOrganization();
+        initCalendar();
         initConnectionSettings();
+        initCalendatNotification();
         
         initInterestCheckBox();
 
         menu_addMember.setDisable(false);
         menu_deleteMember.setDisable(true);
         menu_renameMember.setDisable(true);
+    }
+
+    private void initCalendatNotification() {
+        try {
+            calendarNotificationFxmlLoader.setLocation(getClass().getResource("/ui/calendarNotification.fxml"));
+            calendarNotification = calendarNotificationFxmlLoader.load();
+            calendarNotificationController = calendarNotificationFxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkBirthday(Label label) {
+        Integer directorBirthday = DBConnection.getCountOfDirectorBirthdayToday();
+        Integer organizationBirthday = DBConnection.getCountOfOrganizationBirthdayToday();
+        if(directorBirthday > 0 || organizationBirthday > 0) {
+            label.setTextFill(Color.RED);
+            label.setText("Новое событие!");
+        }
     }
 
     private void initConnectionSettings() {
@@ -461,21 +481,18 @@ public class MainFormController {
         checkBox_generalInformation_corporateMember.setStyle("-fx-opacity: 1");
     }
 
-    private void initDateOfCreationOrganization() {
+    private void initCalendar() {
         try {
-            dateOfCreationOrganizationFxmlLoader.setLocation(getClass().getResource("/ui/DateOfCreationCalendar.fxml"));
-            dateOfCreationOrganization = dateOfCreationOrganizationFxmlLoader.load();
-            dateOfCreationCalendarController = dateOfCreationOrganizationFxmlLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            calendarFxmlLoader.setLocation(getClass().getResource("/ui/Calendar.fxml"));
+            calendar = calendarFxmlLoader.load();
+            calendarController = calendarFxmlLoader.getController();
 
-    private void initDirectorCalendar() {
-        try {
-            directorCalendarFxmlLoader.setLocation(getClass().getResource("/ui/directorCalendar.fxml"));
-            directorCalendar = directorCalendarFxmlLoader.load();
-            directorCalendarController = directorCalendarFxmlLoader.getController();
+            calendarStage = new Stage();
+            calendarStage.setScene(new Scene(calendar));
+            calendarStage.initModality(Modality.APPLICATION_MODAL);
+            calendarStage.setTitle("Календарь");
+            //selectStage.initStyle(StageStyle.UNDECORATED);
+            calendarStage.initOwner(mainStage);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -587,7 +604,7 @@ public class MainFormController {
             public void onChanged(Change<? extends Member> c) {
                 countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
                 //clearAll();
-                chechConnection(label_alarm_connection, HibernateUtils.isActive);
+                checkConnection(label_alarm_connection, HibernateUtils.isActive);
             }
         });
 
@@ -1081,30 +1098,31 @@ public class MainFormController {
 
 
     public void openCalendar(ActionEvent actionEvent) {
-        if(directorCalendarStage == null) {
-            directorCalendarStage = new Stage();
-            directorCalendarStage.setScene(new Scene(directorCalendar));
-            directorCalendarStage.initModality(Modality.APPLICATION_MODAL);
-            directorCalendarStage.setTitle("Календарь руководства");
+        if(calendarStage == null) {
+            calendarStage = new Stage();
+            calendarStage.setScene(new Scene(calendar));
+            //calendarStage.initModality(Modality.APPLICATION_MODAL);
+            calendarStage.setTitle("Календарь");
             //selectStage.initStyle(StageStyle.UNDECORATED);
-            directorCalendarStage.initOwner(mainStage);
+            //calendarStage.initOwner(mainStage);
         }
 
-        directorCalendarStage.showAndWait();
+        calendarStage.showAndWait();
     }
 
-    public void openOrgCalendar(ActionEvent actionEvent) {
-        if(dateOfCreationOrganizationStage == null) {
-            dateOfCreationOrganizationStage = new Stage();
-            dateOfCreationOrganizationStage.setScene(new Scene(dateOfCreationOrganization));
-            dateOfCreationOrganizationStage.initModality(Modality.APPLICATION_MODAL);
-            dateOfCreationOrganizationStage.setTitle("Календарь организации");
-            //selectStage.initStyle(StageStyle.UNDECORATED);
-            dateOfCreationOrganizationStage.initOwner(mainStage);
+    public void openNotification(MouseEvent mouseEvent) {
+
+        if (calendarNotificationStage == null) {
+            calendarNotificationStage = new Stage();
+            calendarNotificationStage.setScene(new Scene(calendarNotification));
+            calendarNotificationStage.setTitle("Уведомление!");
+            calendarNotificationStage.setResizable(false);
         }
+        calendarNotificationController.setCalendarParams(calendarStage, calendarController);
+        calendarNotificationStage.showAndWait();
 
-        dateOfCreationOrganizationStage.showAndWait();
     }
+
 
     public void openConnectionSettings(ActionEvent actionEvent) {
         if(connectionStage == null) {
@@ -1130,7 +1148,7 @@ public class MainFormController {
         selectStage.showAndWait();
     }
 
-    private void chechConnection(Label alarm, boolean isActiveConnection) {
+    private void checkConnection(Label alarm, boolean isActiveConnection) {
         if(isActiveConnection) {
             label_alarm_connection.setText("установленно");
             label_alarm_connection.setTextFill(Color.GREEN);
