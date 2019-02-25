@@ -486,13 +486,14 @@ public class MainFormController {
             calendarFxmlLoader.setLocation(getClass().getResource("/ui/Calendar.fxml"));
             calendar = calendarFxmlLoader.load();
             calendarController = calendarFxmlLoader.getController();
+            calendarController.setParams(table_members);
 
             calendarStage = new Stage();
             calendarStage.setScene(new Scene(calendar));
-            calendarStage.initModality(Modality.APPLICATION_MODAL);
+            //calendarStage.initModality(Modality.APPLICATION_MODAL);
             calendarStage.setTitle("Календарь");
             //selectStage.initStyle(StageStyle.UNDECORATED);
-            calendarStage.initOwner(mainStage);
+            //calendarStage.initOwner(mainStage);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1107,7 +1108,7 @@ public class MainFormController {
             //calendarStage.initOwner(mainStage);
         }
 
-        calendarStage.showAndWait();
+        calendarStage.show();
     }
 
     public void openNotification(MouseEvent mouseEvent) {
@@ -1119,7 +1120,7 @@ public class MainFormController {
             calendarNotificationStage.setResizable(false);
         }
         calendarNotificationController.setCalendarParams(calendarStage, calendarController);
-        calendarNotificationStage.showAndWait();
+        calendarNotificationStage.show();
 
     }
 

@@ -6,10 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.ListUtils;
 import ru.src.model.DateOfCreationOrganization;
 import ru.src.model.DirectorCalendar;
+import ru.src.model.Member;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -47,6 +49,11 @@ public class CalendarController {
 
     private ObservableList<String> month = FXCollections.observableArrayList();
     private HashMap<Integer, String> monthMap = ListUtils.getMonth();
+    private TableView mainFormTable;
+
+    public void setParams(TableView params) {
+        this.mainFormTable = params;
+    }
 
     @FXML
     public void initialize() {
@@ -67,6 +74,8 @@ public class CalendarController {
         column_organizationShortName.setStyle("-fx-alignment: CENTER;");
 
         initComboBox();
+
+
     }
 
     private void initComboBox() {
@@ -104,6 +113,32 @@ public class CalendarController {
             case 1:
                 tabPane.getSelectionModel().select(1);
                 break;
+        }
+    }
+
+    public void openMainTableFromDirector(MouseEvent mouseEvent) {
+        if(mouseEvent.getClickCount() == 2) {
+            String memberId = table_director.getSelectionModel().getSelectedItem().getMemberId();
+            mainFormTable.getItems().forEach(o -> {
+                if(o instanceof Member) {
+                    if(((Member) o).getMemberId().equals(memberId)) {
+                        mainFormTable.getSelectionModel().select(o);
+                    }
+                }
+            });
+        }
+    }
+
+    public void openMainTableFromOrganization(MouseEvent mouseEvent) {
+        if(mouseEvent.getClickCount() == 2) {
+            String memberId = table_organization.getSelectionModel().getSelectedItem().getMemberId();
+            mainFormTable.getItems().forEach(o -> {
+                if(o instanceof Member) {
+                    if(((Member) o).getMemberId().equals(memberId)) {
+                        mainFormTable.getSelectionModel().select(o);
+                    }
+                }
+            });
         }
     }
 }
