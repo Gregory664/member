@@ -45,7 +45,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class test {
     public static void main(String[] args) {
-        
-
+        List<User> userList = DBConnection.getAllUser();
+        System.out.println("123");
+        userList.forEach(user -> {
+            System.out.println(user);
+        });
+        System.out.println("123");
+        ObservableList<User> users = FXCollections.observableArrayList();
+        users.addAll(userList);
+        users.forEach(user -> {
+            System.out.println(user);
+        });
     }
 }

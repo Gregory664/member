@@ -337,7 +337,7 @@ public class MainFormController {
     private Stage createMemberFormStage;
     private Stage updateMemberFormStage;
     private Stage selectStage;
-    private Stage connectionStage;
+    private Stage settingsStage;
     private Stage calendarStage;
     private Stage calendarNotificationStage;
 
@@ -348,7 +348,7 @@ public class MainFormController {
     private FXMLLoader createMemberFormFxmlLoader = new FXMLLoader();
     private FXMLLoader updateMemberFormFxmlLoader = new FXMLLoader();
     private FXMLLoader selectFormFxmlLoader = new FXMLLoader();
-    private FXMLLoader connectionSettingsfxmlloader = new FXMLLoader();
+    private FXMLLoader SettingsFxmlLoader = new FXMLLoader();
     private FXMLLoader calendarNotificationFxmlLoader = new FXMLLoader();
     private FXMLLoader calendarFxmlLoader = new FXMLLoader();
 
@@ -359,7 +359,7 @@ public class MainFormController {
     private Parent createMemberForm;
     private Parent updateMemberForm;
     private Parent selectForm;
-    private Parent connectionSettings;
+    private Parent settings;
     private Parent calendarNotification;
     private Parent calendar;
 
@@ -371,7 +371,7 @@ public class MainFormController {
     private UpdateMemberFormController updateMemberFormController;
     private SelectController selectController;
     private CalendarController calendarController;
-    private ConnectionSettingsController connectionSettingsController;
+    private SettingsController settingsController;
     private CalendarNotificationController calendarNotificationController;
 
     @FXML
@@ -422,7 +422,7 @@ public class MainFormController {
         initSelectFormLoader();
         initServices();
         initCalendar();
-        initConnectionSettings();
+        initSettings();
         initCalendatNotification();
         
         initInterestCheckBox();
@@ -451,11 +451,11 @@ public class MainFormController {
         }
     }
 
-    private void initConnectionSettings() {
+    private void initSettings() {
         try {
-            connectionSettingsfxmlloader.setLocation(getClass().getResource("/ui/connectionSettings.fxml"));
-            connectionSettings = connectionSettingsfxmlloader.load();
-            connectionSettingsController = connectionSettingsfxmlloader.getController();
+            SettingsFxmlLoader.setLocation(getClass().getResource("/ui/Settings.fxml"));
+            settings = SettingsFxmlLoader.load();
+            settingsController = SettingsFxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1125,14 +1125,14 @@ public class MainFormController {
     }
 
 
-    public void openConnectionSettings(ActionEvent actionEvent) {
-        if(connectionStage == null) {
-            connectionStage = new Stage();
-            connectionStage.setScene(new Scene(connectionSettings));
-            connectionStage.setTitle("Настройки соединения");
+    public void openSettings(ActionEvent actionEvent) {
+        if(settingsStage == null) {
+            settingsStage = new Stage();
+            settingsStage.setScene(new Scene(settings));
+            settingsStage.setTitle("Настройки");
         }
-        connectionSettingsController.initialize();
-        connectionStage.show();
+        settingsController.initialize();
+        settingsStage.show();
        // connectionSettingsController.clear();
 
     }

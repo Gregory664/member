@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.HibernateUtils;
 
@@ -22,6 +23,8 @@ public class Solution extends Application {
         primaryStage.setScene(new Scene(root));
         //primaryStage.initStyle(StageStyle.TRANSPARENT);
         //primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/icon.png")));
+        //primaryStage.setFullScreenExitKeyCombination(KeyCombination.valueOf("F11"));
+        primaryStage.setMaximized(true);
         primaryStage.show();
         primaryStage.setOnCloseRequest(event -> exitApplication(primaryStage));
     }

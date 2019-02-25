@@ -1,50 +1,85 @@
 package ru.src.logic.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
 import ru.src.logic.implementation.ConnectionUtils;
+import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.HibernateUtils;
 import ru.src.logic.implementation.MemberException;
 import ru.src.model.Connection;
+import ru.src.model.User;
 
-public class ConnectionSettingsController {
+import java.util.HashMap;
+import java.util.List;
+
+public class SettingsController {
     @FXML
     public TextField text_hostName;
     @FXML
     public TextField text_userName;
     @FXML
-    public PasswordField passField_password;
-    @FXML
     public TextField text_port;
     @FXML
     public TextField text_dataBase;
     @FXML
-    public Button button_saveConnection;
-    @FXML
-    public Button button_close;
+    public PasswordField passField_password;
     @FXML
     public Button button_show;
     @FXML
     public TextField text_password;
+    @FXML
+    public Button button_saveConnection;
+    @FXML
+    public Button button_close;
+
+    @FXML
+    public TableView<User> table_users;
+    @FXML
+    public TableColumn<User, String> column_login;
+    @FXML
+    public TableColumn<User, String> column_fullName;
+    @FXML
+    public MenuItem item_addUser;
+    @FXML
+    public MenuItem item_editUser;
+    @FXML
+    public MenuItem item_deleteUser;
 
     private Connection connection;
+    private ObservableList<User> users;
+    private HashMap<String, User> userHashMap = new HashMap<>();
+
     @FXML
     public void initialize() {
-        fillParams();
+        fillConnectionParams();
 
         text_password.clear();
         text_password.setVisible(false);
 
+        column_login.setCellValueFactory(new PropertyValueFactory<>("login"));
+        column_fullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+
+        users = FXCollections.observableArrayList();
+        users.addAll(DBConnection.getAllUser());
+
+        users.forEach(user -> {
+            userHashMap.put(user.getLogin(), user);
+        });
+
+        table_users.setItems(users);
+
+
     }
 
-    private void fillParams() {
+    private void fillConnectionParams() {
         connection = ConnectionUtils.getConnection();
         text_hostName.setText(connection.getHostname());
         text_dataBase.setText(connection.getDatabase());
@@ -93,7 +128,7 @@ public class ConnectionSettingsController {
         stage.hide();
     }
 
-    public void show(ActionEvent actionEvent) {
+    public void showPasswordChar(ActionEvent actionEvent) {
 
         if(!text_password.isVisible()){
             text_password.setText(passField_password.getText());
