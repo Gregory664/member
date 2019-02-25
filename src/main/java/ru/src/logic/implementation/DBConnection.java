@@ -7,10 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.src.logic.interfaces.MemberLogic;
-import ru.src.model.DateOfCreationOrganization;
-import ru.src.model.DirectorCalendar;
-import ru.src.model.FindMember;
-import ru.src.model.Member;
+import ru.src.model.*;
 import ru.src.model.buh.Invoice;
 
 import java.time.LocalDate;
@@ -19,6 +16,19 @@ import java.util.List;
 
 public class DBConnection implements MemberLogic {
 
+
+    public static Member getMember(String memberId) {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        Member member = null;
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            member = session.get(Member.class, memberId);
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return member;
+    }
 
     public static void addMember(Member member) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
@@ -53,6 +63,22 @@ public class DBConnection implements MemberLogic {
         }
     }
 
+    public static boolean isMemberExists(String id) {
+        boolean result = false;
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Member member = session.get(Member.class, id);
+            transaction.commit();
+            if(member == null) result = false;
+            else result = true;
+        }
+        catch (Exception e) {
+            result = false;
+        }
+        return result;
+    }
+
     public static List<Member> getAllMembers() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
         List<Member> members = new ArrayList<>();
@@ -75,30 +101,6 @@ public class DBConnection implements MemberLogic {
 
     }
 
-    public static Member getMember(String memberId) {
-        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Member member = null;
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            member = session.get(Member.class, memberId);
-            transaction.commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return member;
-    }
-
-    public static void addInvoice(Invoice invoice) {
-        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.save(invoice);
-            transaction.commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public static boolean isInvoiceExists(String id) {
         boolean result = false;
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
@@ -112,22 +114,7 @@ public class DBConnection implements MemberLogic {
             result = false;
         }
         return result;
-    }
 
-    public static boolean isMemberExists(String id) {
-        boolean result = false;
-        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        try(Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            Member member = session.get(Member.class, id);
-            transaction.commit();
-            if(member == null) result = false;
-            else result = true;
-        }
-        catch (Exception e) {
-            result = false;
-        }
-        return result;
     }
 
     public static List<FindMember> getQueryList(String queryString) {
@@ -264,5 +251,92 @@ public class DBConnection implements MemberLogic {
         }
         return result;
     }
+
+
+    public static User getUser(String login) {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        User user = null;
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            user = session.get(User.class, login);
+            transaction.commit();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return user;
+    }
+
+    public static void addUser(User user) {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(user);
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void updateUser(User user) {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.update(user);
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void removeUser(User user) {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.delete(user);
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static Boolean isUserLoginExist(String login) {
+        boolean isExist = false;
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            String queryString =
+                    "SELECT COUNT(*)\n" +
+                    "FROM USER\n" +
+                    "WHERE USER.USER_LOGIN = " + login + ";";
+            Query query = session.createSQLQuery(queryString);
+            int count = Integer.parseInt(query.list().get(0).toString());
+            isExist = count == 1;
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return isExist;
+    }
+
+    public static Boolean isUserPasswordExist(String login, String password) {
+        boolean isExist = false;
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            String queryString = "SELECT COUNT(*)\n" +
+                    "FROM USER\n" +
+                    "WHERE USER.USER_LOGIN = " + login +
+                    " AND USER.USER_PASSWORD = " + password + ";";
+            Query query = session.createSQLQuery(queryString);
+            Integer count = Integer.valueOf(query.list().get(0).toString());
+            isExist = count == 1;
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return isExist;
+    }
+
 }
 
