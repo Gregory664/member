@@ -2,6 +2,8 @@ package ru.src.logic.implementation;
 
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import org.bouncycastle.jcajce.provider.digest.SHA3;
+import org.bouncycastle.util.encoders.Hex;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;
@@ -259,4 +261,11 @@ public class MemberUtils {
         return last.equals("1");
 
     }
+
+    public static String getPasswordHash(String password) {
+        SHA3.Digest512 digest512 = new SHA3.Digest512();
+        byte[] digest = digest512.digest(password.getBytes());
+        return Hex.toHexString(digest);
+    }
+
 }

@@ -1,5 +1,7 @@
 package ru.src.model;
 
+import ru.src.logic.implementation.MemberUtils;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,7 +25,7 @@ public class User {
 
     public User(String login, String password, Boolean isAdmin, String fullName, String position) {
         this.login = login;
-        this.password = password;
+        this.password = MemberUtils.getPasswordHash(password);
         this.isAdmin = isAdmin;
         this.fullName = fullName;
         this.position = position;
@@ -34,7 +36,7 @@ public class User {
     }
 
     public void setLogin(String login) {
-        this.login = login;
+        this.login = MemberUtils.getPasswordHash(login);
     }
 
     public String getPassword() {
