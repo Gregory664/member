@@ -2,23 +2,23 @@ package ru.src.logic.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.hibernate.HibernateException;
-import ru.src.logic.implementation.ConnectionUtils;
-import ru.src.logic.implementation.DBConnection;
-import ru.src.logic.implementation.HibernateUtils;
-import ru.src.logic.implementation.MemberException;
+import ru.src.logic.controllers.user.CreateUserController;
+import ru.src.logic.implementation.*;
 import ru.src.model.Connection;
 import ru.src.model.User;
 
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 public class SettingsController {
     @FXML
@@ -57,6 +57,11 @@ public class SettingsController {
     private ObservableList<User> users;
     private HashMap<String, User> userHashMap = new HashMap<>();
 
+    private Stage createUserStage;
+    private Parent createUser;
+    private FXMLLoader createUserFXMLLoader = new FXMLLoader();
+    private CreateUserController createUserController;
+
     @FXML
     public void initialize() {
         fillConnectionParams();
@@ -76,7 +81,19 @@ public class SettingsController {
 
         table_users.setItems(users);
 
+        initCreateUserForm();
 
+
+    }
+
+    private void initCreateUserForm() {
+        try {
+            createUserFXMLLoader.setLocation(getClass().getResource("/ui/User/CreateUser.fxml"));
+            createUser = createUserFXMLLoader.load();
+            createUserController = createUserFXMLLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void fillConnectionParams() {
@@ -145,5 +162,32 @@ public class SettingsController {
         System.out.println("text " + text_password.isVisible());
         System.out.println("pass " + passField_password.isVisible());
 
+    }
+
+
+    public void addUser(ActionEvent actionEvent) {
+        if(createUserStage == null) {
+            createUserStage = new Stage();
+            createUserStage.setScene(new Scene(createUser));
+        }
+        createUserStage.showAndWait();
+
+        if(createUserController.getUserCreate()) {
+            User newUser = createUserController.getNewUser();
+            createUserController.Clear();
+            try {
+                users.add(newUser);
+                DBConnection.addUser(newUser);
+                MemberUtils.informationDialog("Пользователь успешно добавлен!");
+            } catch (Exception e) {
+                MemberUtils.warningDialog("Возникла ошибка : \n" + e.getMessage());
+            }
+        }
+    }
+
+    public void editUser(ActionEvent actionEvent) {
+    }
+
+    public void deleteUser(ActionEvent actionEvent) {
     }
 }

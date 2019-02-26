@@ -15,6 +15,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import ru.src.logic.controllers.contactPerson.CreateContactPersonController;
+import ru.src.logic.controllers.contactPerson.UpdateContactPersonController;
+import ru.src.logic.controllers.invoice.CreateInvoiceController;
+import ru.src.logic.controllers.invoice.UpdateInvoiceController;
 import ru.src.logic.implementation.*;
 import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
@@ -348,7 +352,7 @@ public class MainFormController {
     private FXMLLoader createMemberFormFxmlLoader = new FXMLLoader();
     private FXMLLoader updateMemberFormFxmlLoader = new FXMLLoader();
     private FXMLLoader selectFormFxmlLoader = new FXMLLoader();
-    private FXMLLoader SettingsFxmlLoader = new FXMLLoader();
+    private FXMLLoader settingsFxmlLoader = new FXMLLoader();
     private FXMLLoader calendarNotificationFxmlLoader = new FXMLLoader();
     private FXMLLoader calendarFxmlLoader = new FXMLLoader();
 
@@ -393,7 +397,6 @@ public class MainFormController {
         date_invoice_dateReceiving.getEditor().setStyle("-fx-opacity: 1");
 
 
-
         column_memberId.setCellValueFactory(new PropertyValueFactory<>("memberId"));
         column_memberDate.setCellValueFactory(new PropertyValueFactory<>("memberDate"));
         column_memberSerial.setCellValueFactory(new PropertyValueFactory<>("memberSerial"));
@@ -424,7 +427,7 @@ public class MainFormController {
         initCalendar();
         initSettings();
         initCalendatNotification();
-        
+
         initInterestCheckBox();
 
         menu_addMember.setDisable(false);
@@ -445,7 +448,7 @@ public class MainFormController {
     private void checkBirthday(Label label) {
         Integer directorBirthday = DBConnection.getCountOfDirectorBirthdayToday();
         Integer organizationBirthday = DBConnection.getCountOfOrganizationBirthdayToday();
-        if(directorBirthday > 0 || organizationBirthday > 0) {
+        if (directorBirthday > 0 || organizationBirthday > 0) {
             label.setTextFill(Color.RED);
             label.setText("Новое событие!");
         }
@@ -453,9 +456,9 @@ public class MainFormController {
 
     private void initSettings() {
         try {
-            SettingsFxmlLoader.setLocation(getClass().getResource("/ui/Settings.fxml"));
-            settings = SettingsFxmlLoader.load();
-            settingsController = SettingsFxmlLoader.getController();
+            settingsFxmlLoader.setLocation(getClass().getResource("/ui/Settings.fxml"));
+            settings = settingsFxmlLoader.load();
+            settingsController = settingsFxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1131,7 +1134,8 @@ public class MainFormController {
             settingsStage.setScene(new Scene(settings));
             settingsStage.setTitle("Настройки");
         }
-        settingsController.initialize();
+        //settingsController.initialize();
+
         settingsStage.show();
        // connectionSettingsController.clear();
 

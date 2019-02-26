@@ -1,4 +1,4 @@
-package ru.src.logic.controllers;
+package ru.src.logic.controllers.invoice;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

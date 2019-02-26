@@ -1,4 +1,4 @@
-package ru.src.logic.controllers;
+package ru.src.logic.controllers.invoice;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

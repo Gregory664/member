@@ -18,7 +18,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="404.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.SettingsController">
    <children>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -148,9 +147,9 @@
                            <contextMenu>
                               <ContextMenu>
                                 <items>
-                                  <MenuItem fx:id="item_addUser" mnemonicParsing="false" text="Добавить" />
-                                    <MenuItem fx:id="item_editUser" mnemonicParsing="false" text="Редактировать" />
-                                    <MenuItem fx:id="item_deleteUser" mnemonicParsing="false" text="Удалить" />
+                                  <MenuItem fx:id="item_addUser" mnemonicParsing="false" onAction="#addUser" text="Добавить" />
+                                    <MenuItem fx:id="item_editUser" mnemonicParsing="false" onAction="#editUser" text="Редактировать" />
+                                    <MenuItem fx:id="item_deleteUser" mnemonicParsing="false" onAction="#deleteUser" text="Удалить" />
                                 </items>
                               </ContextMenu>
                            </contextMenu>
