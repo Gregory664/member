@@ -5,11 +5,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import ru.src.model.User;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 public class ListUtils {
     public static ObservableList<String> getMemberStatusList() {
@@ -280,13 +282,21 @@ public class ListUtils {
         }
     }
 
-
-
     public static void removeAllNullObjectFromList(ArrayList list) {
         int index = list.lastIndexOf(null);
         if(index != -1) {
             list.remove(null);
             removeAllNullObjectFromList(list);
         }
+    }
+
+    public static void updateUser(ObservableList<User> users, User user) {
+        int searchIndex = 0;
+        for (User searchUser: users) {
+            if(searchUser.getLogin().equals(user.getLogin())) {
+                searchIndex = users.indexOf(searchUser);
+            }
+        }
+        users.set(searchIndex, user);
     }
 }

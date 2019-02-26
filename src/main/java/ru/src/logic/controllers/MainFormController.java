@@ -317,7 +317,7 @@ public class MainFormController {
     @FXML
     public MenuItem menu_addMember2;
     @FXML
-    public MenuItem menu_connection;
+    public Menu menu_settings;
     @FXML
     public MenuItem item_Calendar;
     @FXML
@@ -327,6 +327,7 @@ public class MainFormController {
 
 
     public static Organizations memberOrganizations = new Organizations();
+
 
 
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
@@ -465,7 +466,7 @@ public class MainFormController {
     }
 
     private void initInterestCheckBox() {
-        checkBox_generalInformation_vedExport.setStyle("-fx-opacity: 1");
+        checkBox_generalInformation_vedImport.setStyle("-fx-opacity: 1");
         checkBox_generalInformation_vedExport.setStyle("-fx-opacity: 1");
         checkBox_generalInformation_interactionOffline.setStyle("-fx-opacity: 1");
         checkBox_generalInformation_interactionOnline.setStyle("-fx-opacity: 1");
