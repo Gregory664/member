@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.FindFormController">
+   <children>
+      <VBox layoutX="162.0" layoutY="118.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+         </padding>
+         <children>
+            <GridPane hgap="14.0" vgap="14.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="550.0" minWidth="550.0" prefWidth="423.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ComboBox fx:id="comboBox_params" maxHeight="30.0" maxWidth="581.0" minHeight="30.0" minWidth="544.0" onAction="#selectParams" prefHeight="30.0" prefWidth="581.0" promptText="Выберите параметр поиска" />
+               </children>
+            </GridPane>
+            <GridPane hgap="14.0" vgap="14.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="436.0" minWidth="436.0" prefWidth="433.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="97.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <VBox.margin>
+                  <Insets top="14.0" />
+               </VBox.margin>
+               <children>
+                  <Button fx:id="btn_search" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#search" text="Поиск" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="text_searchText" maxHeight="30.0" minHeight="30.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+            <GridPane hgap="14.0" vgap="14.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="165.0" prefWidth="165.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="257.0" minWidth="257.0" prefWidth="254.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="43.0" minWidth="43.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="43.0" minWidth="43.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="btn_last" maxHeight="30.0" maxWidth="43.0" minHeight="30.0" minWidth="43.0" mnemonicParsing="false" onAction="#last" text="↑" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn_next" maxHeight="30.0" maxWidth="43.0" minHeight="30.0" minWidth="43.0" mnemonicParsing="false" onAction="#next" text="↓" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Label text="Найдено совпадений:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="label_count" text="0" GridPane.columnIndex="1" />
+               </children>
+               <VBox.margin>
+                  <Insets top="14.0" />
+               </VBox.margin>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+   </padding>
+</AnchorPane>

@@ -10,6 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -42,6 +45,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class MainFormController {
+
 
     @FXML
     public TextField text_Search;
@@ -327,7 +331,7 @@ public class MainFormController {
 
 
     public static Organizations memberOrganizations = new Organizations();
-
+    public MenuItem item_find;
 
 
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
@@ -345,6 +349,7 @@ public class MainFormController {
     private Stage settingsStage;
     private Stage calendarStage;
     private Stage calendarNotificationStage;
+    private Stage findFormStage;
 
     private FXMLLoader createInvoiceFxmlLoader = new FXMLLoader();
     private FXMLLoader updateInvoiceFxmlLoader = new FXMLLoader();
@@ -356,6 +361,7 @@ public class MainFormController {
     private FXMLLoader settingsFxmlLoader = new FXMLLoader();
     private FXMLLoader calendarNotificationFxmlLoader = new FXMLLoader();
     private FXMLLoader calendarFxmlLoader = new FXMLLoader();
+    private FXMLLoader findFormFXMLLoader = new FXMLLoader();
 
     private Parent createInvoice;
     private Parent updateInvoice;
@@ -367,6 +373,7 @@ public class MainFormController {
     private Parent settings;
     private Parent calendarNotification;
     private Parent calendar;
+    private Parent findForm;
 
     private CreateInvoiceController createInvoiceController;
     private UpdateInvoiceController updateInvoiceController;
@@ -378,6 +385,7 @@ public class MainFormController {
     private CalendarController calendarController;
     private SettingsController settingsController;
     private CalendarNotificationController calendarNotificationController;
+    private FindFormController findFormController;
 
     @FXML
     public void initialize() {
@@ -427,6 +435,7 @@ public class MainFormController {
         initServices();
         initCalendar();
         initSettings();
+        initFindForm();
         initCalendatNotification();
 
         initInterestCheckBox();
@@ -434,6 +443,20 @@ public class MainFormController {
         menu_addMember.setDisable(false);
         menu_deleteMember.setDisable(true);
         menu_renameMember.setDisable(true);
+
+        table_members.setStyle("-fx-selection-bar: -fx-accent; -fx-selection-bar-non-focused: -fx-accent;");
+
+        item_find.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN));
+    }
+
+    private void initFindForm() {
+        try {
+            findFormFXMLLoader.setLocation(getClass().getResource("/ui/FindForm.fxml"));
+            findForm = findFormFXMLLoader.load();
+            findFormController = findFormFXMLLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initCalendatNotification() {
@@ -1128,6 +1151,17 @@ public class MainFormController {
 
     }
 
+    public void openFind(ActionEvent actionEvent) {
+        if(findFormStage == null) {
+            findFormStage = new Stage();
+            findFormStage.setScene(new Scene(findForm));
+            findFormStage.setResizable(false);
+            findFormStage.setTitle("Поиск");
+        }
+        findFormController.setParams(table_members);
+        findFormStage.showAndWait();
+        findFormController.clear();
+    }
 
     public void openSettings(ActionEvent actionEvent) {
         if(settingsStage == null) {
@@ -1141,7 +1175,7 @@ public class MainFormController {
        // connectionSettingsController.clear();
 
     }
-    @FXML
+
     public void openSelect(ActionEvent actionEvent) {
         if(selectStage == null) {
             selectStage = new Stage();

@@ -43,6 +43,7 @@
                         <items>
                           <MenuItem fx:id="item_openSelect" mnemonicParsing="false" onAction="#openSelect" text="Сортировка" />
                               <MenuItem fx:id="item_Calendar" mnemonicParsing="false" onAction="#openCalendar" text="Календарь" />
+                              <MenuItem fx:id="item_find" mnemonicParsing="false" onAction="#openFind" text="Поиск" />
                         </items>
                       </Menu>
                       <Menu fx:id="menu_settings" mnemonicParsing="false" onAction="#openSettings" text="Настройки" />

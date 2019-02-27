@@ -299,4 +299,13 @@ public class ListUtils {
         }
         users.set(searchIndex, user);
     }
+
+    public static ObservableList<String> getFindParamsList() {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        list.add("Номер билета");
+        list.add("Полное название");
+        list.add("Сокращенное название");
+        list.add("ФИО руководителя");
+        return list;
+    }
 }
