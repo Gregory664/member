@@ -103,6 +103,7 @@ public class FindFormController {
         } else {
             btn_last.setDisable(true);
             btn_next.setDisable(true);
+            tableView.getSelectionModel().clearSelection();
         }
 
         label_count.setText(String.valueOf(findParams.size()));

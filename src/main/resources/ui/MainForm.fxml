@@ -44,9 +44,9 @@
                           <MenuItem fx:id="item_openSelect" mnemonicParsing="false" onAction="#openSelect" text="Сортировка" />
                               <MenuItem fx:id="item_Calendar" mnemonicParsing="false" onAction="#openCalendar" text="Календарь" />
                               <MenuItem fx:id="item_find" mnemonicParsing="false" onAction="#openFind" text="Поиск" />
+                              <MenuItem fx:id="item_settings" mnemonicParsing="false" onAction="#openSettings" text="Настройки" />
                         </items>
                       </Menu>
-                      <Menu fx:id="menu_settings" mnemonicParsing="false" onAction="#openSettings" text="Настройки" />
                         <Menu mnemonicParsing="false" text="Помощь">
                           <items>
                             <MenuItem mnemonicParsing="false" text="Action 1" />

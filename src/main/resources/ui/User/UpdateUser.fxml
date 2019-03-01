@@ -116,7 +116,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button maxHeight="30.0" maxWidth="130.0" minHeight="30.0" minWidth="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" text="Смена пароля" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Button fx:id="btn_updatePassword" maxHeight="30.0" maxWidth="130.0" minHeight="30.0" minWidth="130.0" mnemonicParsing="false" onAction="#updatePassword" prefHeight="30.0" prefWidth="130.0" text="Смена пароля" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>

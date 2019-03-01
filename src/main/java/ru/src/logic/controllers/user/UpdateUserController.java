@@ -2,7 +2,10 @@ package ru.src.logic.controllers.user;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -11,6 +14,7 @@ import javafx.stage.Stage;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.model.User;
 
+import java.io.IOException;
 import java.util.HashSet;
 
 public class UpdateUserController {
@@ -41,6 +45,24 @@ public class UpdateUserController {
     }
     public User getUser() {
         return user;
+    }
+
+    private Stage updatePasswordStage;
+    private Parent updatePassword;
+    private FXMLLoader updatePasswordFXMLLoader = new FXMLLoader();
+    private UpdatePasswordController updatePasswordController;
+
+    @FXML
+    public void initialize() {
+        try {
+            updatePasswordFXMLLoader.setLocation(getClass().getResource("/ui/User/UpdatePassword.fxml"));
+            updatePassword = updatePasswordFXMLLoader.load();
+            updatePasswordController = updatePasswordFXMLLoader.getController();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void fillFields() {
@@ -82,5 +104,21 @@ public class UpdateUserController {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.hide();
+    }
+
+    public void updatePassword(ActionEvent actionEvent) {
+        if(updatePasswordStage == null) {
+            updatePasswordStage = new Stage();
+            updatePasswordStage.setScene(new Scene(updatePassword));
+            updatePasswordStage.setResizable(false);
+            updatePasswordStage.setTitle("Смена пароля");
+        }
+        updatePasswordStage.showAndWait();
+        if(updatePasswordController.isPasswordUpdate()) {
+            isUpdateUser = true;
+            user.setPassword(MemberUtils.getPasswordHash(updatePasswordController.getPassword()));
+            MemberUtils.informationDialog("Пароль успешно обновлен");
+        }
+        updatePasswordController.clear();
     }
 }
