@@ -760,7 +760,7 @@ public class CreateMemberFormController {
                 Integer.valueOf(text_relate_size.getText()),
                 text_relate_services.getText());
         if (date_relate_dateOfCreation.getValue() != null)
-            relate.setDateOfCreation(date_relate_dateOfCreation.getValue());
+            relate.setDateOfCreation(date_relate_dateOfCreation.getValue().plusDays(1));
         if (text_relate_services.getText() != null)
             relate.setServices(text_relate_services.getText());
         if (text_relate_changes.getText() != null)

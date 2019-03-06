@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class HibernateUtils {
     private static SessionFactory sessionFactory;
     public static boolean isActive = false;
-
+    private static Connection connection;
 
     private HibernateUtils() {
     }
@@ -24,7 +24,7 @@ public class HibernateUtils {
 
 
             if (sessionFactory == null || sessionFactory.isClosed()) {
-                Connection connection = ConnectionUtils.getConnection();
+                connection = ConnectionUtils.getConnection();
                 String url = "jdbc:mysql://" +
                         connection.getHostname() + ":" +
                         connection.getPort() + "/" +
@@ -38,6 +38,7 @@ public class HibernateUtils {
                 sessionFactory = configuration.configure().buildSessionFactory();
                 isActive = true;
             }
+        System.out.println(connection);
             return sessionFactory;
     }
 

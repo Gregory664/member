@@ -10,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -33,6 +35,7 @@ import ru.src.model.Personal.Director;
 import ru.src.model.Personal.Relate;
 import ru.src.model.Services;
 import ru.src.model.SocialNetworks;
+import ru.src.model.User;
 import ru.src.model.buh.AccoutingInformation;
 import ru.src.model.buh.Debt;
 import ru.src.model.buh.Invoice;
@@ -329,10 +332,19 @@ public class MainFormController {
     @FXML
     public Label label_notification_calendar;
 
+    @FXML
+    public MenuItem item_find;
+    @FXML
+    public MenuItem item_settings;
+    @FXML
+    public Label label_name;
+    @FXML
+    public Label label_position;
+    @FXML
+    public ImageView image;
+
 
     public static Organizations memberOrganizations = new Organizations();
-    public MenuItem item_find;
-
 
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
@@ -386,6 +398,20 @@ public class MainFormController {
     private SettingsController settingsController;
     private CalendarNotificationController calendarNotificationController;
     private FindFormController findFormController;
+
+    private User user;
+    public void setUser(User user) {
+        this.user = user;
+        label_name.setText(user.getFullName());
+        label_position.setText(user.getPosition());
+        setAccess(user.getAdmin());
+    }
+
+    public void setAccess(Boolean isAdmin) {
+        if(!isAdmin) {
+            item_settings.setDisable(true);
+        }
+    }
 
     @FXML
     public void initialize() {
@@ -447,6 +473,8 @@ public class MainFormController {
         table_members.setStyle("-fx-selection-bar: -fx-accent; -fx-selection-bar-non-focused: -fx-accent;");
 
         item_find.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN));
+
+        image.setImage(new Image(getClass().getResourceAsStream("/img/image.png")));
     }
 
     private void initFindForm() {
@@ -638,11 +666,7 @@ public class MainFormController {
 
         //Слушатель, заполняющий все поля по нажатию на строку таблицы
         table_members.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-           if(text_Search.getText().equals("")) {
-                text_Search.setStyle(null);
-            }
-
-            if(newValue != null){
+             if(newValue != null){
                 menu_addMember.setDisable(false);
                 menu_deleteMember.setDisable(false);
                 menu_renameMember.setDisable(false);
@@ -656,11 +680,7 @@ public class MainFormController {
                 menu_renameMember.setDisable(true);
             }
         });
-
-
     }
-
-
 
     private void fillAllInformation(Member member) {
         fillRelate(member.getRelate());//
@@ -675,8 +695,6 @@ public class MainFormController {
         fillInvoices(member.getInvoice());
         fillSocialNetworks(member.getSocialNetworks());
         fillServices(member.getServices());
-
-
     }
 
     private void fillServices(List<Services> services) {

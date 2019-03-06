@@ -1,5 +1,6 @@
 package ru.src.logic.controllers;
 
+import com.sun.javaws.Main;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -67,10 +68,10 @@ public class SettingsController {
     private FXMLLoader createUserFXMLLoader = new FXMLLoader();
     private CreateUserController createUserController;
 
-    private Stage updateUserStage;
-    private Parent updateUser;
-    private FXMLLoader updateUserFXMLLoader = new FXMLLoader();
-    private UpdateUserController updateUserController;
+//    private Stage updateUserStage;
+//    private Parent updateUser;
+//    private FXMLLoader updateUserFXMLLoader = new FXMLLoader();
+//    private UpdateUserController updateUserController;
 
     @FXML
     public void initialize() {
@@ -101,9 +102,6 @@ public class SettingsController {
         table_users.setItems(users);
 
         initCreateUserForm();
-        initUpdateUserForm();
-
-
     }
 
     private void checkCountOfUsers() {
@@ -127,15 +125,6 @@ public class SettingsController {
         }
     }
 
-    private void initUpdateUserForm() {
-        try {
-            updateUserFXMLLoader.setLocation(getClass().getResource("/ui/User/UpdateUser.fxml"));
-            updateUser = updateUserFXMLLoader.load();
-            updateUserController = updateUserFXMLLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void fillConnectionParams() {
         connection = ConnectionUtils.getConnection();
@@ -205,7 +194,6 @@ public class SettingsController {
 
     }
 
-
     public void addUser(ActionEvent actionEvent) {
         if(createUserStage == null) {
             createUserStage = new Stage();
@@ -229,14 +217,23 @@ public class SettingsController {
     }
 
     public void editUser(ActionEvent actionEvent) {
-        if (updateUserStage == null) {
-            updateUserStage = new Stage();
-            updateUserStage.setScene(new Scene(updateUser));
-            updateUserStage.setResizable(false);
-            updateUserStage.setTitle("Изменение пользователя");
+        Stage updateUserStage = null;
+        Parent updateUser = null;
+        FXMLLoader updateUserFXMLLoader = new FXMLLoader();
+        UpdateUserController updateUserController = null;
+        try {
+            updateUserFXMLLoader.setLocation(getClass().getResource("/ui/User/UpdateUser.fxml"));
+            updateUser = updateUserFXMLLoader.load();
+            updateUserController = updateUserFXMLLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        updateUserStage = new Stage();
+        updateUserStage.setScene(new Scene(updateUser));
+        updateUserStage.setResizable(false);
+        updateUserStage.setTitle("Изменение пользователя");
+
         User selectedUser = table_users.getSelectionModel().getSelectedItem();
-        System.out.println("selected user : " + selectedUser);
         updateUserController.setUser(selectedUser);
         updateUserStage.showAndWait();
 
@@ -245,7 +242,7 @@ public class SettingsController {
             DBConnection.updateUser(selectedUser);
             MemberUtils.informationDialog("Пользователь успешно обновлен!");
         }
-        updateUserController.Clear();
+        //updateUserController.Clear();
     }
 
     public void deleteUser(ActionEvent actionEvent) {

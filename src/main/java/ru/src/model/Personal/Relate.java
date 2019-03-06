@@ -1,5 +1,6 @@
 package ru.src.model.Personal;
 
+import org.hibernate.annotations.CreationTimestamp;
 import ru.src.model.Member;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,6 +22,7 @@ public class Relate implements Serializable {
     private Integer size;
 
     @Column(name = "RELATE_DATE_OF_CREATION")
+    @CreationTimestamp
     private LocalDate dateOfCreation;
 
     @Column(name = "RELATE_SERVICES", nullable = false)

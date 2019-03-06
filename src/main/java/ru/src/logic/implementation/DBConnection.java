@@ -308,7 +308,7 @@ public class DBConnection implements MemberLogic {
             String queryString =
                     "SELECT COUNT(*)\n" +
                     "FROM USER\n" +
-                    "WHERE USER.USER_LOGIN = " + login + ";";
+                    "WHERE USER.USER_LOGIN = '" + login + "';";
             Query query = session.createSQLQuery(queryString);
             int count = Integer.parseInt(query.list().get(0).toString());
             isExist = count == 1;
@@ -326,8 +326,8 @@ public class DBConnection implements MemberLogic {
             Transaction transaction = session.beginTransaction();
             String queryString = "SELECT COUNT(*)\n" +
                     "FROM USER\n" +
-                    "WHERE USER.USER_LOGIN = " + login +
-                    " AND USER.USER_PASSWORD = " + password + ";";
+                    "WHERE USER.USER_LOGIN = '" + login + "'" +
+                    " AND USER.USER_PASSWORD = '" + password + "';";
             Query query = session.createSQLQuery(queryString);
             Integer count = Integer.valueOf(query.list().get(0).toString());
             isExist = count == 1;

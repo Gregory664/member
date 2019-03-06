@@ -10,7 +10,14 @@ import ru.src.logic.implementation.*;
 
 public class test {
     public static void main(String[] args) {
-
+//        DBConnection.addUser(new User("test",
+//                MemberUtils.getPasswordHash("test"),
+//                true,
+//                "Иванов Иван Иванович",
+//                "Руководитель отдела"));
+        System.out.println(DBConnection.getUser("test"));
+        System.out.println(DBConnection.isUserLoginExist("test"));
+        HibernateUtils.closeSessionFactory();
     }
 
 }

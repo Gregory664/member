@@ -18,13 +18,11 @@ public class Solution extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("/ui/MainForm.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/ui/LoginForm.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
-        //primaryStage.initStyle(StageStyle.TRANSPARENT);
-        //primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/icon.png")));
-        //primaryStage.setFullScreenExitKeyCombination(KeyCombination.valueOf("F11"));
-        primaryStage.setMaximized(true);
+
+        primaryStage.setResizable(false);
         primaryStage.show();
         primaryStage.setOnCloseRequest(event -> exitApplication(primaryStage));
     }

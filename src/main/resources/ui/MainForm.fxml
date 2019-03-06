@@ -18,16 +18,18 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.MainFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.MainFormController">
    <children>
-      <SplitPane dividerPositions="0.43958868894601544" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="1024.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.5730688935281837" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="1024.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
             <VBox>
                <children>
@@ -54,32 +56,48 @@
                         </Menu>
                     </menus>
                   </MenuBar>
-                  <GridPane hgap="14.0" vgap="14.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" prefWidth="82.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="610.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <HBox>
                      <children>
-                        <TextField fx:id="text_Search" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="345.0" />
-                        <Button fx:id="btn_Search" maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onAction="#searchInTable" text="Поиск" GridPane.columnIndex="1">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Label fx:id="label_notification_calendar" onMouseClicked="#openNotification" underline="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
+                        <ImageView fx:id="image" fitHeight="108.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                        <GridPane hgap="14.0" vgap="14.0" HBox.hgrow="ALWAYS">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="610.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label fx:id="label_notification_calendar" onMouseClicked="#openNotification" underline="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="label_name" text="Label" GridPane.halignment="RIGHT">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="label_position" text="Label" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets right="14.0" />
+                           </padding>
+                        </GridPane>
                      </children>
                      <padding>
-                        <Insets left="14.0" right="14.0" top="14.0" />
+                        <Insets left="14.0" top="14.0" />
                      </padding>
-                  </GridPane>
+                  </HBox>
                 <AnchorPane minWidth="0.0" prefHeight="271.0" prefWidth="1022.0" VBox.vgrow="ALWAYS">
                      <children>
                         <TableView fx:id="table_members" layoutX="14.0" layoutY="51.0" prefHeight="334.0" prefWidth="994.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
@@ -108,7 +126,7 @@
             </VBox>
             <AnchorPane minHeight="395.0" prefWidth="1200.0">
                <children>
-                  <TabPane layoutY="39.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="512.0" prefWidth="1278.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TabPane layoutY="127.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="406.0" prefWidth="1098.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
                       <Tab closable="false" text="Расширенная информация">
                            <content>

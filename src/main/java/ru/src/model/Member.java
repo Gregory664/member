@@ -1,5 +1,6 @@
 package ru.src.model;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.ManyToAny;
 import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
@@ -31,6 +32,7 @@ public class Member {
     private String memberStatus;
 
     @Column(name = "MEMBER_DATE_OF_ENTRY", nullable = false)
+    @CreationTimestamp
     private LocalDate memberDate;
 
     @Column(name = "MEMBER_SHORT_NAME", nullable = false)
