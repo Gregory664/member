@@ -32,7 +32,6 @@ public class Member {
     private String memberStatus;
 
     @Column(name = "MEMBER_DATE_OF_ENTRY", nullable = false)
-    @CreationTimestamp
     private LocalDate memberDate;
 
     @Column(name = "MEMBER_SHORT_NAME", nullable = false)

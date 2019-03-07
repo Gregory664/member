@@ -19,7 +19,7 @@ public class Solution extends Application {
 
 
         Parent root = FXMLLoader.load(getClass().getResource("/ui/LoginForm.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Вход в ИС ТПП ВО");
         primaryStage.setScene(new Scene(root));
 
         primaryStage.setResizable(false);

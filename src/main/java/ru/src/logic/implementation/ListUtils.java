@@ -68,6 +68,7 @@ public class ListUtils {
         economicSectorList.add("Туризм");
         economicSectorList.add("Компьютерные услуги");
         economicSectorList.add("Общественное питание");
+        economicSectorList.add("Иное");
         return economicSectorList;
     }
     public static ObservableList<String> getOwnershipForm() {
@@ -306,6 +307,7 @@ public class ListUtils {
         list.add("Полное название");
         list.add("Сокращенное название");
         list.add("ФИО руководителя");
+        list.add("Деятельность/Услуги");
         return list;
     }
 }

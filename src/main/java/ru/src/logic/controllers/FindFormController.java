@@ -96,6 +96,17 @@ public class FindFormController {
                     }
                 }
                 break;
+            case 4:
+                for (Object member: tableView.getItems()) {
+                    if(member instanceof Member) {
+                        String services = ((Member) member).getRelate().getServices().toLowerCase();
+                        if(services.contains(text_searchText.getText().toLowerCase())) {
+                            findParams.add(searchIndex);
+                        }
+                        ++searchIndex;
+                    }
+                }
+                break;
         }
         if(findParams.size() > 1) {
             btn_last.setDisable(false);

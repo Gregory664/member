@@ -17,6 +17,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -40,6 +41,7 @@ import ru.src.model.buh.AccoutingInformation;
 import ru.src.model.buh.Debt;
 import ru.src.model.buh.Invoice;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -1090,8 +1092,10 @@ public class MainFormController {
         createMemberFormStage.showAndWait();
 
         Member newMember = createMemberFormController.getMember();
+
         if(createMemberFormController.isMemberCreate()) {
             createMemberFormController.setMemberCreate(false);
+
             DBConnection.addMember(newMember);
             memberOrganizations.addMember(newMember);
             MemberUtils.informationDialog("Организация успешно добавлена!");
@@ -1370,31 +1374,19 @@ public class MainFormController {
         });
     }
 
-
-    public void searchInTable(ActionEvent actionEvent) {
-
-        String id = text_Search.getText();
-        int searchIndex = 0;
-        for(Member member: memberOrganizations.getMembers()) {
-            if(member.getMemberId().equals(id)) break;
-            searchIndex++;
-        }
-        if(searchIndex < memberOrganizations.getMembers().size()) {
-            text_Search.setStyle(null);
-            table_members.requestFocus();
-            table_members.getFocusModel().focus(searchIndex);
-            table_members.scrollTo(searchIndex);
-            table_members.getSelectionModel().select(searchIndex);
-        } else {
-            table_members.requestFocus();
-            text_Search.setStyle("-fx-border-color: rgb(" + MemberUtils.EMPTY_COLOR2 + ");");
-        }
-    }
-
     public void saveMemberToPDF(ActionEvent actionEvent) {
-        String path = "/home/green/member.pdf";
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf"));
+        File file = fileChooser.showSaveDialog((Stage)btn_add_invoice.getScene().getWindow());
         Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-        PDFUtils.saveMemberToPDF(path, member);
+
+        if (file != null) {
+            String path = file.getAbsolutePath();
+            if (!path.contains(".")) {
+                path += ".pdf";
+                PDFUtils.saveMemberToPDF(path, member);
+            } else PDFUtils.saveMemberToPDF(path, member);
+        }
     }
 
 

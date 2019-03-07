@@ -52,10 +52,9 @@ public class CreateUserController {
 
     public void saveUser(ActionEvent actionEvent) {
         if(!isEmptyFields()) {
-            String password = text_password.isVisible() ? text_password.getText() : passField_password.getText();
             newUser = new User(
                     text_login.getText(),
-                    MemberUtils.getPasswordHash(password),
+                    MemberUtils.getPasswordHash(text_password.isVisible() ? text_password.getText() : passField_password.getText()),
                     isAdmin.isSelected(),
                     text_fullName.getText(),
                     text_position.getText()

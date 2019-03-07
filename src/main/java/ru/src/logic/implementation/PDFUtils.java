@@ -3,6 +3,7 @@ package ru.src.logic.implementation;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.apache.pdfbox.io.IOUtils;
+import rst.pdfbox.layout.text.NewLine;
 import ru.src.model.FindMember;
 import ru.src.model.Member;
 
@@ -369,7 +370,7 @@ public class PDFUtils {
             }
             document.add(addressLegal);
 
-            document.add(new Paragraph("Юридический адрес\n\n", FONT_HEADER));
+            document.add(new Paragraph("Фактический адрес\n\n", FONT_HEADER));
             PdfPTable addressActual = new PdfPTable(2);
             addressActual.setTotalWidth(new float[] {150, 400});
             addressActual.setLockedWidth(true);
@@ -401,6 +402,15 @@ public class PDFUtils {
             }
             document.add(addressActual);
             document.add(new Paragraph("", FONT_ROW));
+            document.add(Chunk.NEWLINE);
+            PdfPTable agree = new PdfPTable(2);
+            agree.setTotalWidth(new float[] {50, 500});
+            agree.setLockedWidth(true);
+            agree.addCell(getCell("", FONT_ROW));
+            agree.addCell(getCell("Даю свое согласие на обработку персональных данных", FONT_ROW));
+            agree.completeRow();
+
+            document.add(agree);
 
 
 

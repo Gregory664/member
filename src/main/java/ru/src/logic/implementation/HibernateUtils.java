@@ -20,15 +20,12 @@ public class HibernateUtils {
     }
 
     public static synchronized SessionFactory getSessionFactory() throws HibernateException{
-
-
-
             if (sessionFactory == null || sessionFactory.isClosed()) {
                 connection = ConnectionUtils.getConnection();
                 String url = "jdbc:mysql://" +
                         connection.getHostname() + ":" +
                         connection.getPort() + "/" +
-                        connection.getDatabase() + "?serverTimezone=UTC";
+                        connection.getDatabase();// + "?serverTimezone=UTC";
                 String username = connection.getUsername();
                 String password = connection.getPassword();
                 Configuration configuration = new Configuration()

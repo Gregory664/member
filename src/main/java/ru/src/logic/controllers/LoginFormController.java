@@ -68,7 +68,6 @@ public class LoginFormController {
                 KeyCombination.SHIFT_DOWN));
     }
 
-
     public void enter(ActionEvent actionEvent) {
         String login = text_login.getText();
         String password = MemberUtils.getPasswordHash(passField_password.getText());
