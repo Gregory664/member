@@ -1495,7 +1495,6 @@ public class SelectController {
                     case 2:
                         someSelect.add(pattern + " = " + MemberUtils.checkBoxIDToBoolean(checkBox));
                         break;
-
 //                    case 2:
 //                        someSelect.add(pattern + " = " + MemberUtils.interestingToBoolean(checkBox.getText()));
 //                        break;

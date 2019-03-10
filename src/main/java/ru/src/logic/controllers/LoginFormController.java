@@ -71,9 +71,9 @@ public class LoginFormController {
     public void enter(ActionEvent actionEvent) {
         String login = text_login.getText();
         String password = MemberUtils.getPasswordHash(passField_password.getText());
+        //TODO get user/pass and store in "userCredential.object" to compare in future
         if(DBConnection.isUserLoginExist(login)) {
             label_alarm.setText(null);
-
             if(DBConnection.isUserPasswordExist(login, MemberUtils.getPasswordHash(password))) {
                 user = DBConnection.getUser(login);
                 if(mainFormStage == null) {

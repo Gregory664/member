@@ -20,6 +20,7 @@ public class HibernateUtils {
     }
 
     public static synchronized SessionFactory getSessionFactory() throws HibernateException{
+
             if (sessionFactory == null || sessionFactory.isClosed()) {
                 connection = ConnectionUtils.getConnection();
                 String url = "jdbc:mysql://" +
@@ -32,7 +33,11 @@ public class HibernateUtils {
                         .setProperty("hibernate.connection.url", url)
                         .setProperty("hibernate.connection.username", username)
                         .setProperty("hibernate.connection.password", password);
-                sessionFactory = configuration.configure().buildSessionFactory();
+                try {
+                    sessionFactory = configuration.configure().buildSessionFactory();
+                } catch (Exception e) {
+                    MemberUtils.warningDialog("Ошибка!\n" + e.getMessage());
+                }
                 isActive = true;
             }
         System.out.println(connection);

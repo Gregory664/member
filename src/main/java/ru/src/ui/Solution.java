@@ -28,7 +28,7 @@ public class Solution extends Application {
     }
 
     private void exitApplication(Stage primaryStage) {
-        HibernateUtils.closeSessionFactory();
+        if(HibernateUtils.isActive) HibernateUtils.closeSessionFactory();
         primaryStage.close();
     }
 }

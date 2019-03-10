@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -345,8 +346,27 @@ public class MainFormController {
     @FXML
     public ImageView image;
 
+    @FXML
+    public ContextMenu contextMenu_table_members;
+    @FXML
+    public RowConstraints row_phone;
+    @FXML
+    public RowConstraints row_cityPhone;
+    @FXML
+    public RowConstraints row_email;
+    @FXML
+    public RowConstraints row_birthday;
+    @FXML
+    public RowConstraints row_changes;
+    @FXML
+    public Tab tab_contactPerson;
+    @FXML
+    public Tab tab_invoice;
 
     public static Organizations memberOrganizations = new Organizations();
+    public MenuItem menu_logOut;
+    public TabPane tabPane;
+
 
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
@@ -411,8 +431,41 @@ public class MainFormController {
 
     public void setAccess(Boolean isAdmin) {
         if(!isAdmin) {
-            item_settings.setDisable(true);
-        }
+            label_notification_calendar.setVisible(false);
+           menu_renameMember.setVisible(false);
+           menu_deleteMember.setVisible(false);
+           menu_addMember.setVisible(false);
+           menu_saveMember.setVisible(false);
+           menu_addMember2.setVisible(false);
+
+
+            item_Calendar.setVisible(false);
+            item_settings.setVisible(false);
+
+            row_birthday.setMinHeight(0);
+            row_birthday.setMaxHeight(0);
+
+            row_changes.setMinHeight(0);
+            row_changes.setMaxHeight(0);
+
+            row_cityPhone.setMinHeight(0);
+            row_cityPhone.setMaxHeight(0);
+
+            row_email.setMinHeight(0);
+            row_email.setMaxHeight(0);
+
+            row_phone.setMinHeight(0);
+            row_phone.setMaxHeight(0);
+
+            tabPane.getTabs().remove(7);
+            tabPane.getTabs().remove(7);
+//            tab_contactPerson.setClosable(true);
+//            tab_invoice.setClosable(true);
+
+
+        } else label_notification_calendar.setVisible(true);
+
+        if(user.getAdmin()) checkBirthday(label_notification_calendar);
     }
 
     @FXML
@@ -451,14 +504,18 @@ public class MainFormController {
         table_members.setItems(memberOrganizations.getMembers());
         countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
         checkConnection(label_alarm_connection, HibernateUtils.isActive);
-        checkBirthday(label_notification_calendar);
 
-        initCreateInvoiceLoader();
-        initUpdateInvoiceLoader();
-        initCreateContactPersonLoader();
-        initUpdateContactPersonLoader();
-        initCreateMemberFormLoader();
-        initUpdateMemberFormLoader();
+
+        //if(user.getAdmin()) {
+            initCreateInvoiceLoader();
+            initUpdateInvoiceLoader();
+            initCreateContactPersonLoader();
+            initUpdateContactPersonLoader();
+            initCreateMemberFormLoader();
+            initUpdateMemberFormLoader();
+        //}
+
+
         initSelectFormLoader();
         initServices();
         initCalendar();
@@ -668,23 +725,31 @@ public class MainFormController {
 
         //Слушатель, заполняющий все поля по нажатию на строку таблицы
         table_members.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-             if(newValue != null){
-                menu_addMember.setDisable(false);
-                menu_deleteMember.setDisable(false);
-                menu_renameMember.setDisable(false);
+            if (newValue != null) {
+                if (user.getAdmin()) {
+                    menu_addMember.setDisable(false);
+                    menu_deleteMember.setDisable(false);
+                    menu_renameMember.setDisable(false);
+                }
 
                 Member member = (Member) table_members.getSelectionModel().getSelectedItem();
                 fillAllInformation(member);
-            }
-            else {
-                menu_addMember.setDisable(false);
-                menu_deleteMember.setDisable(true);
-                menu_renameMember.setDisable(true);
+            } else {
+                if (user.getAdmin()) {
+                    menu_addMember.setDisable(false);
+                    menu_deleteMember.setDisable(true);
+                    menu_renameMember.setDisable(true);
+                }
             }
         });
     }
 
     private void fillAllInformation(Member member) {
+        if(user.getAdmin()) {
+            fillContactPersons(member.getContactPerson());
+            fillInvoices(member.getInvoice());
+        }
+
         fillRelate(member.getRelate());//
         fillGeneralInformation(member.getGeneralInformation());
         fillDirector(member.getDirector());
@@ -693,8 +758,6 @@ public class MainFormController {
         fillDebt(member.getDebt());
         fillAddressLegal(member.getAddressLegal());
         fillAddressActual(member.getAddressActual());
-        fillContactPersons(member.getContactPerson());
-        fillInvoices(member.getInvoice());
         fillSocialNetworks(member.getSocialNetworks());
         fillServices(member.getServices());
     }
@@ -921,7 +984,6 @@ public class MainFormController {
             text_contactPerson_changes.setText(contactPerson.getChanges());
         }
     }
-
 
 
     public void createInvoice(ActionEvent actionEvent) {
@@ -1224,6 +1286,7 @@ public class MainFormController {
     @FXML
     private void exitApplication(ActionEvent actionEvent) {
         Stage stage = (Stage) table_members.getScene().getWindow();
+        stage.close();
         stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
@@ -1388,7 +1451,5 @@ public class MainFormController {
             } else PDFUtils.saveMemberToPDF(path, member);
         }
     }
-
-
 
 }
