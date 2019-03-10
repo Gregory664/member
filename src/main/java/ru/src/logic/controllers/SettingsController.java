@@ -1,10 +1,8 @@
 package ru.src.logic.controllers;
 
-import com.sun.javaws.Main;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -159,12 +157,12 @@ public class SettingsController {
         HibernateUtils.closeSessionFactory();
         try {
             MainFormController.memberOrganizations.refresh();
-            HibernateUtils.isActive = true;
+            HibernateUtils.setActive(true);
             closeApp(actionEvent);
         }
         catch (HibernateException e) {
             MemberException.getCheckSqlException(e);
-            HibernateUtils.isActive = false;
+            HibernateUtils.setActive(false);
         }
     }
 

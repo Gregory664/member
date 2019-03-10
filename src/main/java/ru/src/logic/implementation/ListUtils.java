@@ -2,293 +2,96 @@ package ru.src.logic.implementation;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import ru.src.model.User;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListUtils {
+
+    private static final ObservableList<String> memberStatusList = fillMemberStatusList();
+    private static final ObservableList<String> organizationFormList = fillOrganizationFormList();
+    private static final ObservableList<String> economicSectorList = fillEconomicSectorList();
+    private static final ObservableList<String> ownershipFormList = fillOwnershipFormList();
+    private static final ObservableList<String> activityTypeList = fillActivityTypeList();
+    private static final ObservableList<String> businessFormList = fillBusinessFormList();
+    private static final ObservableList<String> interestingList = fillInterestingList();
+    private static final ObservableList<String> vedList = fillVedList();
+    private static final ObservableList<String> getDedbStatusList = fillDedbStatusList();
+    private static final ObservableList<String> districtList = fillDistrictList();
+    private static final HashMap<Integer, String> regionMap = fillRegionMap();
+    private static final HashMap<Integer, String> months = fillMonths();
+    private static final ObservableList<String> findParamsList = fillFindParamsList();
+
     public static ObservableList<String> getMemberStatusList() {
-        ObservableList<String> memberStatusList = FXCollections.observableArrayList();
-        memberStatusList.add("Актуально стабильно");
-        memberStatusList.add("Актуально нестабильно");
-        memberStatusList.add("Актуально долг 1 год");
-        memberStatusList.add("Актуально долг 2 года");
-        memberStatusList.add("Актуально долг 3 года");
-        memberStatusList.add("Заявление на исключение");
-        memberStatusList.add("Деятельность прекращена");
-        memberStatusList.add("Потеря связи");
-        memberStatusList.add("Смена формы собственности");
-        memberStatusList.add("На исключение");
         return memberStatusList;
     }
+
     public static ObservableList<String> getOrganizationForm() {
-        ObservableList<String> organizationFormList = FXCollections.observableArrayList();
-        organizationFormList.add("ООО");//
-        organizationFormList.add("ПАО");//
-        organizationFormList.add("АО");//
-        organizationFormList.add("ИАО");//
-        organizationFormList.add("ИП");//
-        organizationFormList.add("НП");//
-        organizationFormList.add("ОАО");//
-        organizationFormList.add("ЗАО");//
-        organizationFormList.add("СРО");//
-        organizationFormList.add("ФОНД");//
-        organizationFormList.add("Ассоциация");//
-        organizationFormList.add("Союз");//
-        organizationFormList.add("Объединение");//
-        organizationFormList.add("Самозанятый");//
-        organizationFormList.add("ОУ");//
-        organizationFormList.add("АНО");//
-        organizationFormList.add("Бюджетное учреждение");//
-        organizationFormList.add("Госучреждение");//
         return organizationFormList;
     }
+
     public static ObservableList<String> getEconomicSector() {
-        ObservableList<String> economicSectorList = FXCollections.observableArrayList();
-        economicSectorList.add("Торговля");
-        economicSectorList.add("Услуги");
-        economicSectorList.add("Производство");
-        economicSectorList.add("Сельскохозяйственная деятельность");
-        economicSectorList.add("Рыбный промысел");
-        economicSectorList.add("Лесное хозяйство");
-        economicSectorList.add("Строительство");
-        economicSectorList.add("Транспорт");
-        economicSectorList.add("Связь");
-        economicSectorList.add("Образование");
-        economicSectorList.add("Недвижимость");
-        economicSectorList.add("Бытовое обслуживание");
-        economicSectorList.add("Полиграфия и издательство");
-        economicSectorList.add("Туризм");
-        economicSectorList.add("Компьютерные услуги");
-        economicSectorList.add("Общественное питание");
-        economicSectorList.add("Иное");
         return economicSectorList;
     }
+
     public static ObservableList<String> getOwnershipForm() {
-        ObservableList<String> ownershipFormList = FXCollections.observableArrayList();
-        ownershipFormList.add("Частная");
-        ownershipFormList.add("Государственная");
-        ownershipFormList.add("Смешанная");
         return ownershipFormList;
     }
+
     public static ObservableList<String> getActivityType() {
-        ObservableList<String> activityTypeList = FXCollections.observableArrayList();
-        activityTypeList.add("Коммерческая");
-        activityTypeList.add("Не коммерческая");
         return activityTypeList;
     }
+
     public static ObservableList<String> getBusinessForm() {
-        ObservableList<String> businessFormList = FXCollections.observableArrayList();
-        businessFormList.add("Микробизнес (<15)");
-        businessFormList.add("Малый бизнес (15-100)");
-        businessFormList.add("Средний бизнес (101-250)");
-        businessFormList.add("Крупный бизнес (>250)");
         return businessFormList;
     }
+
     public static ObservableList<String> getInteresting() {
-        ObservableList<String> interestingList = FXCollections.observableArrayList();
-        interestingList.add("Интересует");
-        interestingList.add("Не интересует");
         return interestingList;
     }
-    public static ObservableList<String> getYesNo() {
-        ObservableList<String> vedList = FXCollections.observableArrayList();
-        vedList.add("Да");
-        vedList.add("Нет");
-        return vedList;
 
+    public static ObservableList<String> getYesNo() {
+        return vedList;
     }
+
     public static ObservableList<String> getDedbStatusList() {
-        ObservableList<String> getDedbStatusList = FXCollections.observableArrayList();
-        getDedbStatusList.add("Имеется");
-        getDedbStatusList.add("Отсутствует");
         return getDedbStatusList;
     }
+
     public static ObservableList<String> getDistrict() {
-        ObservableList<String> districtList = FXCollections.observableArrayList();
-        districtList.add("Аннинский район");
-        districtList.add("Бобровский район");
-        districtList.add("Богучарский район");
-        districtList.add("Борисоглебск Городской округ");
-        districtList.add("Бутурлиновский район");
-        districtList.add("Верхнемамонский район");
-        districtList.add("Верхнехавский район");
-        districtList.add("Воробьевский район");
-        districtList.add("Воронеж Городской округ");
-        districtList.add("Грибановский район");
-        districtList.add("Калачеевский район");
-        districtList.add("Каменский район");
-        districtList.add("Кантемировский район");
-        districtList.add("Каширский район");
-        districtList.add("Лискинский район");
-        districtList.add("Нижнедевицкий район");
-        districtList.add("Нововоронеж Городской округ");
-        districtList.add("Новоусманский район");
-        districtList.add("Новохоперский район");
-        districtList.add("Ольховатский район");
-        districtList.add("Острогожский район");
-        districtList.add("Павловский район");
-        districtList.add("Панинский район");
-        districtList.add("Петропавловский район");
-        districtList.add("Поворинский район");
-        districtList.add("Подгоренский район");
-        districtList.add("Рамонский район");
-        districtList.add("Репьевский район");
-        districtList.add("Россошанский район");
-        districtList.add("Семилукский район");
-        districtList.add("Таловский район");
-        districtList.add("Терновский район");
-        districtList.add("Хохольский район");
-        districtList.add("Эртильский район");
         return districtList;
     }
+
     public static HashMap<Integer, String> getRegionMap() {
-        HashMap<Integer, String> regionMap = new HashMap<>();
-        regionMap.put(1, "Республика Адыгея");
-        regionMap.put(2, "Республика Башкортостан");
-        regionMap.put(3, "Республика Бурятия");
-        regionMap.put(4, "Республика Алтай");
-        regionMap.put(5, "Республика Дагестан");
-        regionMap.put(6, "Республика Ингушетия");
-        regionMap.put(7, "Кабардино-Балкарская Республика");
-        regionMap.put(8, "Республика Калмыкия");
-        regionMap.put(9, "Карачаево-Черкесская Республика");
-        regionMap.put(10, "Республика Карелия");
-        regionMap.put(11, "Республика Коми");
-        regionMap.put(12, "Республика Марий Эл");
-        regionMap.put(13, "Республика Мордовия");
-        regionMap.put(14, "Республика Саха (Якутия)");
-        regionMap.put(15, "Республика Северная Осетия - Алания");
-        regionMap.put(16, "Республика Татарстан (Татарстан)");
-        regionMap.put(17, "Республика Тыва");
-        regionMap.put(18, "Удмуртская Республика");
-        regionMap.put(19, "Республика Хакасия");
-        regionMap.put(20, "Чеченская Республика");
-        regionMap.put(21, "Чувашская Республика - Чувашия");
-        regionMap.put(22, "Алтайский край");
-        regionMap.put(23, "Краснодарский край");
-        regionMap.put(24, "Красноярский край");
-        regionMap.put(25, "Приморский край");
-        regionMap.put(26, "Ставропольский край");
-        regionMap.put(27, "Хабаровский край");
-        regionMap.put(28, "Амурская область");
-        regionMap.put(29, "Архангельская область");
-        regionMap.put(30, "Астраханская область");
-        regionMap.put(31, "Белгородская область");
-        regionMap.put(32, "Брянская область");
-        regionMap.put(33, "Владимирская область");
-        regionMap.put(34, "Волгоградская область");
-        regionMap.put(35, "Вологодская область");
-        regionMap.put(36, "Воронежская область");
-        regionMap.put(37, "Ивановская область");
-        regionMap.put(38, "Иркутская область");
-        regionMap.put(39, "Калининградская область");
-        regionMap.put(40, "Калужская область");
-        regionMap.put(41, "Камчатская область");
-        regionMap.put(42, "Кемеровская область");
-        regionMap.put(43, "Кировская область");
-        regionMap.put(44, "Костромская область");
-        regionMap.put(45, "Курганская область");
-        regionMap.put(46, "Курская область");
-        regionMap.put(47, "Ленинградская область");
-        regionMap.put(48, "Липецкая область");
-        regionMap.put(49, "Магаданская область");
-        regionMap.put(50, "Московская область");
-        regionMap.put(51, "Мурманская область");
-        regionMap.put(52, "Нижегородская область");
-        regionMap.put(53, "Новгородская область");
-        regionMap.put(54, "Новосибирская область");
-        regionMap.put(55, "Омская область");
-        regionMap.put(56, "Оренбургская область");
-        regionMap.put(57, "Орловская область");
-        regionMap.put(58, "Пензенская область");
-        regionMap.put(59, "Пермская область");
-        regionMap.put(60, "Псковская область");
-        regionMap.put(61, "Ростовская область");
-        regionMap.put(62, "Рязанская область");
-        regionMap.put(63, "Самарская область");
-        regionMap.put(64, "Саратовская область");
-        regionMap.put(65, "Сахалинская область");
-        regionMap.put(66, "Свердловская область");
-        regionMap.put(67, "Смоленская область");
-        regionMap.put(68, "Тамбовская область");
-        regionMap.put(69, "Тверская область");
-        regionMap.put(70, "Томская область");
-        regionMap.put(71, "Тульская область");
-        regionMap.put(72, "Тюменская область");
-        regionMap.put(73, "Ульяновская область");
-        regionMap.put(74, "Челябинская область");
-        regionMap.put(75, "Читинская область");
-        regionMap.put(76, "Ярославская область");
-        regionMap.put(77, "г. Москва");
-        regionMap.put(78, "г. Санкт-Петербург");
-        regionMap.put(79, "Еврейская автономная область");
-        regionMap.put(80, "Агинский Бурятский автономный округ");
-        regionMap.put(81, "Коми-Пермяцкий автономный округ");
-        regionMap.put(82, "Корякский автономный округ");
-        regionMap.put(83, "Ненецкий автономный округ");
-        regionMap.put(84, "Таймырский (Долгано-Ненецкий) автономный округ");
-        regionMap.put(85, "Усть-Ордынский Бурятский автономный округ");
-        regionMap.put(86, "Ханты-Мансийский автономный округ - Югра");
-        regionMap.put(87, "Чукотский автономный округ");
-        regionMap.put(89, "Ямало-Ненецкий автономный округ");
-        regionMap.put(91, "Республика Крым");
-        regionMap.put(92, "г. Севастополь");
-        regionMap.put(99, "Иные территории, включая город и космодром Байконур");
         return regionMap;
     }
+
     public static HashMap<Integer, String> getMonth() {
-        HashMap<Integer, String> month = new HashMap<Integer, String>();
-        month.put(1, "Январь");
-        month.put(2, "Февраль");
-        month.put(3, "Март");
-        month.put(4, "Апрель");
-        month.put(5, "Май");
-        month.put(6, "Июнь");
-        month.put(7, "Июль");
-        month.put(8, "Август");
-        month.put(9, "Сентябрь");
-        month.put(10, "Октябрь");
-        month.put(11, "Ноябрь");
-        month.put(12, "Декабрь");
-        return month;
+        return months;
     }
+
+    public static ObservableList<String> getFindParamsList() {
+        return findParamsList;
+    }
+
     public static String[] getDataFromCheckBoxMassive(String title, ArrayList<CheckBox> checkBoxes) {
         String[] result = new String[2];
-        ArrayList<String> selectedCheckBox = new ArrayList<String>();
-        for (CheckBox box : checkBoxes) {
-            if (box.isSelected()) {
-                selectedCheckBox.add(box.getText());
-            }
+        List<String> selectedCheckBox = checkBoxes.stream()
+                .filter(checkBox -> checkBox.isSelected())
+                .map(checkBox -> checkBox.getText())
+                .collect(Collectors.toList());
+
+        if (selectedCheckBox.size() == 0) {
+            return null;
         }
 
-        if (selectedCheckBox.size() == 0) return null;
-        else {
-            result[0] = title;
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < selectedCheckBox.size(); i++) {
-                if (i != selectedCheckBox.size() - 1) {
-                    stringBuilder.append(selectedCheckBox.get(i)).append(", ");
-                } else stringBuilder.append(selectedCheckBox.get(i)).append(".");
-            }
-            result[1] = stringBuilder.toString();
-            return result;
-        }
-    }
-
-    public static void removeAllNullObjectFromList(ArrayList list) {
-        int index = list.lastIndexOf(null);
-        if(index != -1) {
-            list.remove(null);
-            removeAllNullObjectFromList(list);
-        }
+        result[0] = title;
+        result[1] = String.join(", ", selectedCheckBox) + ".";
+        return result;
     }
 
     public static void updateUser(ObservableList<User> users, User user) {
@@ -301,13 +104,270 @@ public class ListUtils {
         users.set(searchIndex, user);
     }
 
-    public static ObservableList<String> getFindParamsList() {
-        ObservableList<String> list = FXCollections.observableArrayList();
-        list.add("Номер билета");
-        list.add("Полное название");
-        list.add("Сокращенное название");
-        list.add("ФИО руководителя");
-        list.add("Деятельность/Услуги");
-        return list;
+    private static ObservableList<String> fillFindParamsList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("Номер билета");
+        result.add("Полное название");
+        result.add("Сокращенное название");
+        result.add("ФИО руководителя");
+        result.add("Деятельность/Услуги");
+        return result;
+    }
+
+    private static ObservableList<String> fillMemberStatusList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("Актуально стабильно");
+        result.add("Актуально нестабильно");
+        result.add("Актуально долг 1 год");
+        result.add("Актуально долг 2 года");
+        result.add("Актуально долг 3 года");
+        result.add("Заявление на исключение");
+        result.add("Деятельность прекращена");
+        result.add("Потеря связи");
+        result.add("Смена формы собственности");
+        result.add("На исключение");
+        return result;
+    }
+
+    private static ObservableList<String> fillOrganizationFormList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("ООО");
+        result.add("ПАО");
+        result.add("АО");
+        result.add("ИАО");
+        result.add("ИП");
+        result.add("НП");
+        result.add("ОАО");
+        result.add("ЗАО");
+        result.add("СРО");
+        result.add("ФОНД");
+        result.add("Ассоциация");
+        result.add("Союз");
+        result.add("Объединение");
+        result.add("Самозанятый");
+        result.add("ОУ");
+        result.add("АНО");
+        result.add("Бюджетное учреждение");
+        result.add("Госучреждение");
+        return result;
+    }
+
+    private static ObservableList<String> fillEconomicSectorList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("Торговля");
+        result.add("Услуги");
+        result.add("Производство");
+        result.add("Сельскохозяйственная деятельность");
+        result.add("Рыбный промысел");
+        result.add("Лесное хозяйство");
+        result.add("Строительство");
+        result.add("Транспорт");
+        result.add("Связь");
+        result.add("Образование");
+        result.add("Недвижимость");
+        result.add("Бытовое обслуживание");
+        result.add("Полиграфия и издательство");
+        result.add("Туризм");
+        result.add("Компьютерные услуги");
+        result.add("Общественное питание");
+        result.add("Иное");
+        return result;
+    }
+
+    private static ObservableList<String> fillOwnershipFormList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("Частная");
+        result.add("Государственная");
+        result.add("Смешанная");
+        return result;
+    }
+
+    private static ObservableList<String> fillActivityTypeList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("Коммерческая");
+        result.add("Не коммерческая");
+        return result;
+    }
+
+    private static ObservableList<String> fillBusinessFormList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("Микробизнес (<15)");
+        result.add("Малый бизнес (15-100)");
+        result.add("Средний бизнес (101-250)");
+        result.add("Крупный бизнес (>250)");
+        return result;
+    }
+
+    private static ObservableList<String> fillInterestingList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("Интересует");
+        result.add("Не интересует");
+        return result;
+    }
+
+    private static ObservableList<String> fillVedList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("Да");
+        result.add("Нет");
+        return result;
+    }
+
+    private static ObservableList<String> fillDedbStatusList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("Имеется");
+        result.add("Отсутствует");
+        return result;
+    }
+
+    private static ObservableList<String> fillDistrictList() {
+        ObservableList<String> result = FXCollections.observableArrayList();
+        result.add("Аннинский район");
+        result.add("Бобровский район");
+        result.add("Богучарский район");
+        result.add("Борисоглебск Городской округ");
+        result.add("Бутурлиновский район");
+        result.add("Верхнемамонский район");
+        result.add("Верхнехавский район");
+        result.add("Воробьевский район");
+        result.add("Воронеж Городской округ");
+        result.add("Грибановский район");
+        result.add("Калачеевский район");
+        result.add("Каменский район");
+        result.add("Кантемировский район");
+        result.add("Каширский район");
+        result.add("Лискинский район");
+        result.add("Нижнедевицкий район");
+        result.add("Нововоронеж Городской округ");
+        result.add("Новоусманский район");
+        result.add("Новохоперский район");
+        result.add("Ольховатский район");
+        result.add("Острогожский район");
+        result.add("Павловский район");
+        result.add("Панинский район");
+        result.add("Петропавловский район");
+        result.add("Поворинский район");
+        result.add("Подгоренский район");
+        result.add("Рамонский район");
+        result.add("Репьевский район");
+        result.add("Россошанский район");
+        result.add("Семилукский район");
+        result.add("Таловский район");
+        result.add("Терновский район");
+        result.add("Хохольский район");
+        result.add("Эртильский район");
+        return result;
+    }
+
+    private static HashMap<Integer, String> fillRegionMap() {
+        HashMap<Integer, String> result = new HashMap();
+        result.put(1, "Республика Адыгея");
+        result.put(2, "Республика Башкортостан");
+        result.put(3, "Республика Бурятия");
+        result.put(4, "Республика Алтай");
+        result.put(5, "Республика Дагестан");
+        result.put(6, "Республика Ингушетия");
+        result.put(7, "Кабардино-Балкарская Республика");
+        result.put(8, "Республика Калмыкия");
+        result.put(9, "Карачаево-Черкесская Республика");
+        result.put(10, "Республика Карелия");
+        result.put(11, "Республика Коми");
+        result.put(12, "Республика Марий Эл");
+        result.put(13, "Республика Мордовия");
+        result.put(14, "Республика Саха (Якутия)");
+        result.put(15, "Республика Северная Осетия - Алания");
+        result.put(16, "Республика Татарстан (Татарстан)");
+        result.put(17, "Республика Тыва");
+        result.put(18, "Удмуртская Республика");
+        result.put(19, "Республика Хакасия");
+        result.put(20, "Чеченская Республика");
+        result.put(21, "Чувашская Республика - Чувашия");
+        result.put(22, "Алтайский край");
+        result.put(23, "Краснодарский край");
+        result.put(24, "Красноярский край");
+        result.put(25, "Приморский край");
+        result.put(26, "Ставропольский край");
+        result.put(27, "Хабаровский край");
+        result.put(28, "Амурская область");
+        result.put(29, "Архангельская область");
+        result.put(30, "Астраханская область");
+        result.put(31, "Белгородская область");
+        result.put(32, "Брянская область");
+        result.put(33, "Владимирская область");
+        result.put(34, "Волгоградская область");
+        result.put(35, "Вологодская область");
+        result.put(36, "Воронежская область");
+        result.put(37, "Ивановская область");
+        result.put(38, "Иркутская область");
+        result.put(39, "Калининградская область");
+        result.put(40, "Калужская область");
+        result.put(41, "Камчатская область");
+        result.put(42, "Кемеровская область");
+        result.put(43, "Кировская область");
+        result.put(44, "Костромская область");
+        result.put(45, "Курганская область");
+        result.put(46, "Курская область");
+        result.put(47, "Ленинградская область");
+        result.put(48, "Липецкая область");
+        result.put(49, "Магаданская область");
+        result.put(50, "Московская область");
+        result.put(51, "Мурманская область");
+        result.put(52, "Нижегородская область");
+        result.put(53, "Новгородская область");
+        result.put(54, "Новосибирская область");
+        result.put(55, "Омская область");
+        result.put(56, "Оренбургская область");
+        result.put(57, "Орловская область");
+        result.put(58, "Пензенская область");
+        result.put(59, "Пермская область");
+        result.put(60, "Псковская область");
+        result.put(61, "Ростовская область");
+        result.put(62, "Рязанская область");
+        result.put(63, "Самарская область");
+        result.put(64, "Саратовская область");
+        result.put(65, "Сахалинская область");
+        result.put(66, "Свердловская область");
+        result.put(67, "Смоленская область");
+        result.put(68, "Тамбовская область");
+        result.put(69, "Тверская область");
+        result.put(70, "Томская область");
+        result.put(71, "Тульская область");
+        result.put(72, "Тюменская область");
+        result.put(73, "Ульяновская область");
+        result.put(74, "Челябинская область");
+        result.put(75, "Читинская область");
+        result.put(76, "Ярославская область");
+        result.put(77, "г. Москва");
+        result.put(78, "г. Санкт-Петербург");
+        result.put(79, "Еврейская автономная область");
+        result.put(80, "Агинский Бурятский автономный округ");
+        result.put(81, "Коми-Пермяцкий автономный округ");
+        result.put(82, "Корякский автономный округ");
+        result.put(83, "Ненецкий автономный округ");
+        result.put(84, "Таймырский (Долгано-Ненецкий) автономный округ");
+        result.put(85, "Усть-Ордынский Бурятский автономный округ");
+        result.put(86, "Ханты-Мансийский автономный округ - Югра");
+        result.put(87, "Чукотский автономный округ");
+        result.put(89, "Ямало-Ненецкий автономный округ");
+        result.put(91, "Республика Крым");
+        result.put(92, "г. Севастополь");
+        result.put(99, "Иные территории, включая город и космодром Байконур");
+        return result;
+    }
+
+    private static HashMap<Integer, String> fillMonths() {
+        HashMap<Integer, String> result = new HashMap();
+        result.put(1, "Январь");
+        result.put(2, "Февраль");
+        result.put(3, "Март");
+        result.put(4, "Апрель");
+        result.put(5, "Май");
+        result.put(6, "Июнь");
+        result.put(7, "Июль");
+        result.put(8, "Август");
+        result.put(9, "Сентябрь");
+        result.put(10, "Октябрь");
+        result.put(11, "Ноябрь");
+        result.put(12, "Декабрь");
+        return result;
     }
 }

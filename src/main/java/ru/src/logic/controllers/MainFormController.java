@@ -503,7 +503,7 @@ public class MainFormController {
 
         table_members.setItems(memberOrganizations.getMembers());
         countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
-        checkConnection(label_alarm_connection, HibernateUtils.isActive);
+        checkConnection(label_alarm_connection, HibernateUtils.isActive());
 
 
         //if(user.getAdmin()) {
@@ -719,7 +719,7 @@ public class MainFormController {
             public void onChanged(Change<? extends Member> c) {
                 countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
                 //clearAll();
-                checkConnection(label_alarm_connection, HibernateUtils.isActive);
+                checkConnection(label_alarm_connection, HibernateUtils.isActive());
             }
         });
 

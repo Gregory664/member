@@ -1,11 +1,11 @@
 package ru.src.model;
 
 public class Connection {
-    private String hostname;
-    private String database;
-    private String port;
-    private String username;
-    private String password;
+    private static String hostname;
+    private static String database;
+    private static String port;
+    private static String username;
+    private static String password;
 
     private Connection() { }
 
