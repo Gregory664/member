@@ -2,10 +2,10 @@ package ru.src.logic.implementation;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-
 import ru.src.logic.interfaces.MemberLogic;
 import ru.src.model.Member;
+
+import java.util.Optional;
 
 public class Organizations implements MemberLogic {
 
@@ -32,13 +32,11 @@ public class Organizations implements MemberLogic {
     }
 
     public void updateMember(Member member) {
-        int searchIndex = 0;
-        for(Member searchMember: members) {
-            if(searchMember.getMemberId().equals(member.getMemberId())) {
-                searchIndex = members.indexOf(searchMember);
-            }
+        Optional<Member> memberToModify = members.stream().filter(defaultMember -> defaultMember.getMemberId().equals(member.getMemberId())).findFirst();
+        if(memberToModify.isPresent()) {
+            int index = members.indexOf(memberToModify.get());
+            members.set(index, member);
         }
-        members.set(searchIndex, member);
     }
 
     public void refresh() {
