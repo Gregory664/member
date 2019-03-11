@@ -43,11 +43,6 @@ public class PDFUtils {
         }
     }
 
-    //TODO dont sure that here should be a second main class in application
-    public static void main(String[] args) throws IOException {
-
-    }
-
     public static void savePDFfromFindResult(String pathName, List<FindMember> findMembers, ArrayList<String[]> params) {
 
         Document document = new Document(PageSize.A4, 20, 20, 20, 20);

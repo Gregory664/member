@@ -251,9 +251,9 @@ public class SettingsController {
         alert.setContentText("Вы действительно хотите пользователя:\n" +
                 selectedUser.getFullName() + " ?");
 
-        Optional<ButtonType> optional = alert.showAndWait();
+        Optional<ButtonType> response = alert.showAndWait();
 
-        if(optional.get() == ButtonType.OK) {
+        if(response.isPresent() && response.get() == ButtonType.OK) {
             DBConnection.removeUser(selectedUser);
             users.remove(selectedUser);
             MemberUtils.informationDialog("Пользователь успешно удален!");

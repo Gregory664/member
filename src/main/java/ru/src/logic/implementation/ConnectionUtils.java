@@ -20,10 +20,10 @@ public class ConnectionUtils {
             while (reader.hasNext()) {
 
                 int event = reader.next();
-                String readerName = reader.getLocalName();
-                String readerValue = reader.getElementText();
 
                 if (event == XMLEvent.START_ELEMENT) {
+                    String readerName = reader.getLocalName();
+                    String readerValue = reader.getElementText();
                     switch (readerName) {
                         case "HOSTNAME":
                             connection.setHostname(readerValue);
