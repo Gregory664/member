@@ -363,7 +363,7 @@ public class MainFormController {
     @FXML
     public Tab tab_invoice;
 
-    public static Organizations memberOrganizations = new Organizations();
+    private static Organizations memberOrganizations = new Organizations();
     public MenuItem menu_logOut;
     public TabPane tabPane;
 
