@@ -1651,8 +1651,8 @@ public class SelectController {
             String path = file.getAbsolutePath();
             if (!path.contains(".")) {
                 path += ".pdf";
-                PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
-            } else PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
+            }
+            PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
         }
 
     }
@@ -1667,14 +1667,13 @@ public class SelectController {
             String path = file.getAbsolutePath();
             if (!path.contains(".")) {
                 path += ".csv";
-                saveCSVFile(path);
-            } else saveCSVFile(path);
+            }
+            saveCSVFile(path);
         }
     }
 
     private void saveCSVFile(String pathName) {
-        try {
-            FileWriter writer = new FileWriter(pathName);
+        try (FileWriter writer = new FileWriter(pathName)) {
             writer.append("Номер билета;Почта;Сокрашенное название организации\n");
 
             for (FindMember findMember: list) {
@@ -1684,7 +1683,6 @@ public class SelectController {
             }
 
             writer.flush();
-            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

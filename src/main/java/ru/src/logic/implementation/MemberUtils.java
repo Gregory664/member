@@ -207,7 +207,7 @@ public class MemberUtils {
 
     public static boolean isEmptyField(TextField text) {
         boolean isEmpty;
-        if(text.getText().length() == 0) {
+        if(text.getText().isEmpty()) {
             text.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
             isEmpty = true;
         } else {
@@ -219,7 +219,7 @@ public class MemberUtils {
 
     public static boolean isEmptyField(TextArea text) {
         boolean isEmpty;
-        if(text.getText().length() == 0) {
+        if(text.getText().isEmpty()) {
             text.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
             isEmpty = true;
         } else {
