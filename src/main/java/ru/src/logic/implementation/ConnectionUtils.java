@@ -23,22 +23,21 @@ public class ConnectionUtils {
 
                 if (event == XMLEvent.START_ELEMENT) {
                     String readerName = reader.getLocalName();
-                    String readerValue = reader.getElementText();
                     switch (readerName) {
                         case "HOSTNAME":
-                            connection.setHostname(readerValue);
+                            connection.setHostname(reader.getElementText());
                             break;
                         case "DATABASE":
-                            connection.setDatabase(readerValue);
+                            connection.setDatabase(reader.getElementText());
                             break;
                         case "PORT":
-                            connection.setPort(readerValue);
+                            connection.setPort(reader.getElementText());
                             break;
                         case "USERNAME":
-                            connection.setUsername(readerValue);
+                            connection.setUsername(reader.getElementText());
                             break;
                         case "PASSWORD":
-                            connection.setPassword(readerValue);
+                            connection.setPassword(reader.getElementText());
                             break;
                     }
                 }
