@@ -5,65 +5,56 @@ import ru.src.model.Connection;
 import javax.xml.stream.*;
 import javax.xml.stream.events.XMLEvent;
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public class ConnectionUtils {
-    private static Connection connection;
 
+    private static Connection connection = Connection.initialize();
 
-    private static InputStream inputStream;
-    private static OutputStream outputStream;
-
-    private static XMLInputFactory readerFactory = XMLInputFactory.newInstance();
+    private static final String path = System.getProperty("user.home") + "/.member/connection.xml";
     private static XMLStreamReader reader;
-
-    private static XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
     private static XMLStreamWriter writer;
-    private static String path = System.getProperty("user.home") + "/.member/connection.xml";
-
-
-
 
     public static synchronized Connection getConnection() {
-        if (connection == null) {
-            connection = Connection.initialize();
-            try {
+        try (InputStream inputStream = new FileInputStream(new File(path))) {
+            reader = XMLInputFactory.newInstance().createXMLStreamReader(inputStream);
+            while (reader.hasNext()) {
 
-                inputStream = new FileInputStream(new File(path));
-                reader = readerFactory.createXMLStreamReader(inputStream);
-                while (reader.hasNext()) {
+                int event = reader.next();
 
-                    int event = reader.next();
-
-                    if(event == XMLEvent.START_ELEMENT && "HOSTNAME".equals(reader.getLocalName())) {
-                        connection.setHostname(reader.getElementText());
-                    }
-                    if(event == XMLEvent.START_ELEMENT && "DATABASE".equals(reader.getLocalName())) {
-                        connection.setDatabase(reader.getElementText());
-                    }
-                    if(event == XMLEvent.START_ELEMENT && "PORT".equals(reader.getLocalName())) {
-                        connection.setPort(reader.getElementText());
-                    }
-                    if(event == XMLEvent.START_ELEMENT && "USERNAME".equals(reader.getLocalName())) {
-                        connection.setUsername(reader.getElementText());
-                    }
-                    if(event == XMLEvent.START_ELEMENT && "PASSWORD".equals(reader.getLocalName())) {
-                        connection.setPassword(reader.getElementText());
+                if (event == XMLEvent.START_ELEMENT) {
+                    String readerName = reader.getLocalName();
+                    String readerValue = reader.getElementText();
+                    switch (readerName) {
+                        case "HOSTNAME":
+                            connection.setHostname(readerValue);
+                            break;
+                        case "DATABASE":
+                            connection.setDatabase(readerValue);
+                            break;
+                        case "PORT":
+                            connection.setPort(readerValue);
+                            break;
+                        case "USERNAME":
+                            connection.setUsername(readerValue);
+                            break;
+                        case "PASSWORD":
+                            connection.setPassword(readerValue);
+                            break;
                     }
                 }
-            } catch (XMLStreamException | FileNotFoundException e) {
-                MemberUtils.warningDialog("Проверьте настройки соединения!");
             }
-            finally {
-                try {
-                    inputStream.close();
-                    reader.close();
-                } catch (IOException | XMLStreamException e) {
-                    e.printStackTrace();
-                }
+        } catch (XMLStreamException | FileNotFoundException e) {
+            MemberUtils.warningDialog("Проверьте настройки соединения!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                reader.close();
+            } catch (XMLStreamException e) {
+                e.printStackTrace();
             }
         }
+
         return connection;
     }
 
@@ -75,11 +66,8 @@ public class ConnectionUtils {
         connection.setUsername(username);
         connection.setPassword(password);
 
-        try {
-
-
-            outputStream = new FileOutputStream(new File(path));
-            writer = outputFactory.createXMLStreamWriter(outputStream);
+        try (OutputStream outputStream = new FileOutputStream(new File(path))) {
+            writer = XMLOutputFactory.newInstance().createXMLStreamWriter(outputStream);
 
             writer.writeStartDocument("utf-8", "1.0");
             writer.writeStartElement("CONNECTION");
@@ -113,9 +101,7 @@ public class ConnectionUtils {
         } finally {
             try {
                 writer.close();
-                outputStream.close();
-            }
-            catch (IOException | XMLStreamException e) {
+            } catch (XMLStreamException e) {
                 e.printStackTrace();
             }
         }

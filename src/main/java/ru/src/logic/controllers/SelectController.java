@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SelectController {
     @FXML
@@ -1462,7 +1463,7 @@ public class SelectController {
         test.add(getWherePartFromList(listPayment, "i.INVOICE_STATUS_OF_PAYMENT", 7));
         test.add(getWherePartFromServices());
 
-        ListUtils.removeAllNullObjectFromList(test);
+        test.removeIf(Objects::isNull);
 
         String selectQuery = "SELECT DISTINCT m.MEMBER_ID, " +
                 "m.MEMBER_SERIAL, " +
@@ -1640,7 +1641,7 @@ public class SelectController {
         listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_receiving.getText(), listReceiving));
         listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive("Интересующие услуги", new ArrayList<>(servicesCheckBoxMap.values())));
 
-        ListUtils.removeAllNullObjectFromList(listSelectedParams);
+        listSelectedParams.removeIf(Objects::isNull);
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf"));
@@ -1650,8 +1651,8 @@ public class SelectController {
             String path = file.getAbsolutePath();
             if (!path.contains(".")) {
                 path += ".pdf";
-                PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
-            } else PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
+            }
+            PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
         }
 
     }
@@ -1666,14 +1667,13 @@ public class SelectController {
             String path = file.getAbsolutePath();
             if (!path.contains(".")) {
                 path += ".csv";
-                saveCSVFile(path);
-            } else saveCSVFile(path);
+            }
+            saveCSVFile(path);
         }
     }
 
     private void saveCSVFile(String pathName) {
-        try {
-            FileWriter writer = new FileWriter(pathName);
+        try (FileWriter writer = new FileWriter(pathName)) {
             writer.append("Номер билета;Почта;Сокрашенное название организации\n");
 
             for (FindMember findMember: list) {
@@ -1683,7 +1683,6 @@ public class SelectController {
             }
 
             writer.flush();
-            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -64,14 +64,13 @@ public class DBConnection implements MemberLogic {
     }
 
     public static boolean isMemberExists(String id) {
-        boolean result = false;
+        boolean result;
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
         try(Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Member member = session.get(Member.class, id);
             transaction.commit();
-            if(member == null) result = false;
-            else result = true;
+            return member != null;
         }
         catch (Exception e) {
             result = false;
@@ -102,13 +101,13 @@ public class DBConnection implements MemberLogic {
     }
 
     public static boolean isInvoiceExists(String id) {
-        boolean result = false;
+        boolean result;
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
         try(Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Invoice invoice = session.get(Invoice.class, id);
             transaction.commit();
-            result = true;
+            return invoice != null;
         }
         catch (Exception e) {
             result = false;

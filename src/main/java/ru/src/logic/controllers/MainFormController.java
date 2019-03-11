@@ -503,7 +503,7 @@ public class MainFormController {
 
         table_members.setItems(memberOrganizations.getMembers());
         countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
-        checkConnection(label_alarm_connection, HibernateUtils.isActive);
+        checkConnection(label_alarm_connection, HibernateUtils.isActive());
 
 
         //if(user.getAdmin()) {
@@ -719,7 +719,7 @@ public class MainFormController {
             public void onChanged(Change<? extends Member> c) {
                 countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
                 //clearAll();
-                checkConnection(label_alarm_connection, HibernateUtils.isActive);
+                checkConnection(label_alarm_connection, HibernateUtils.isActive());
             }
         });
 
@@ -1024,9 +1024,9 @@ public class MainFormController {
         alert.setHeaderText(null);
         alert.setContentText("Вы действительно хотите удалить счет?");
 
-        Optional<ButtonType> optional = alert.showAndWait();
+        Optional<ButtonType> response = alert.showAndWait();
 
-        if(optional.get() == ButtonType.OK) {
+        if(response.isPresent() && response.get() == ButtonType.OK) {
 
             Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
             Member member = (Member) table_members.getSelectionModel().getSelectedItem();
@@ -1104,9 +1104,9 @@ public class MainFormController {
         alert.setHeaderText(null);
         alert.setContentText("Вы действительно хотите удалить контактное лицо?");
 
-        Optional<ButtonType> optional = alert.showAndWait();
+        Optional<ButtonType> response = alert.showAndWait();
 
-        if(optional.get() == ButtonType.OK) {
+        if(response.isPresent() && response.get() == ButtonType.OK) {
             ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue().toString()));
             Member member = (Member) table_members.getSelectionModel().getSelectedItem();
             member.getContactPerson().remove(contactPerson);
@@ -1175,9 +1175,9 @@ public class MainFormController {
         alert.setContentText("Вы действительно хотите удалить организацию: " +
                         member.getMemberShortName() + " ?");
 
-        Optional<ButtonType> optional = alert.showAndWait();
+        Optional<ButtonType> response = alert.showAndWait();
 
-        if(optional.get() == ButtonType.OK) {
+        if(response.isPresent() && response.get() == ButtonType.OK) {
             DBConnection.removeMember(member);
             memberOrganizations.removeMember(member);
             MemberUtils.informationDialog("Организация успешно удалена");
@@ -1447,8 +1447,8 @@ public class MainFormController {
             String path = file.getAbsolutePath();
             if (!path.contains(".")) {
                 path += ".pdf";
-                PDFUtils.saveMemberToPDF(path, member);
-            } else PDFUtils.saveMemberToPDF(path, member);
+            }
+            PDFUtils.saveMemberToPDF(path, member);
         }
     }
 

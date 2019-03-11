@@ -1,12 +1,10 @@
 package ru.src.logic.controllers;
 
-import com.sun.javaws.Main;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ru.src.logic.implementation.ListUtils;
-import ru.src.logic.implementation.Organizations;
 import ru.src.model.Member;
 
 import java.util.ArrayList;
