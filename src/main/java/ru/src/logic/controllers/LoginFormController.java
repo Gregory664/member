@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.HibernateUtils;
 import ru.src.logic.implementation.MemberUtils;
-import ru.src.model.Member;
 import ru.src.model.User;
 
 import java.io.IOException;
@@ -46,20 +45,8 @@ public class LoginFormController {
         return user;
     }
 
-    private boolean enter = false;
-    public boolean isEnter() {
-        return enter;
-    }
-
     @FXML
     public void initialize() {
-        try {
-            mainFormFXMLLoader.setLocation(getClass().getResource("/ui/MainForm.fxml"));
-            mainForm = mainFormFXMLLoader.load();
-            mainFormController = mainFormFXMLLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         menu.setVisible(false);
 
         item_settings.setAccelerator(new KeyCodeCombination(KeyCode.ENTER,
@@ -69,22 +56,19 @@ public class LoginFormController {
     }
 
     public void enter(ActionEvent actionEvent) {
+        label_alarm.setText(null);
         String login = text_login.getText();
         String password = MemberUtils.getPasswordHash(passField_password.getText());
-        //TODO get user/pass and store in "userCredential.object" to compare in future
-        if(DBConnection.isUserLoginExist(login)) {
-            label_alarm.setText(null);
-            if(DBConnection.isUserPasswordExist(login, MemberUtils.getPasswordHash(password))) {
+
+        Boolean isLoginExist = DBConnection.isUserLoginExist(login);
+        Boolean isLoginPasswordPairExist = DBConnection.isUserPasswordExist(login, password);
+
+        if(isLoginExist) {
+            if(isLoginPasswordPairExist) {
                 user = DBConnection.getUser(login);
-                if(mainFormStage == null) {
-                    mainFormStage = new Stage();
-                    mainFormStage.setScene(new Scene(mainForm));
-                    mainFormStage.setMaximized(true);
-                    mainFormStage.setTitle("ИС ТПП ВО");
-                }
-                Node node = (Node) actionEvent.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
-                stage.close();
+                initializeMainForm();
+                checkInitMainFormStage();
+                closeCurrentStage(actionEvent);
                 mainFormController.setUser(user);
                 mainFormStage.show();
                 mainFormStage.setOnCloseRequest(event -> exitApp(actionEvent));
@@ -98,23 +82,46 @@ public class LoginFormController {
         }
     }
 
-    public void exitApp(ActionEvent actionEvent) {
+    private void initializeMainForm() {
+        try {
+            mainFormFXMLLoader.setLocation(getClass().getResource("/ui/MainForm.fxml"));
+            mainForm = mainFormFXMLLoader.load();
+            mainFormController = mainFormFXMLLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void closeCurrentStage(ActionEvent actionEvent) {
+        Node node = (Node) actionEvent.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.close();
+    }
+
+    private void checkInitMainFormStage() {
+        if(mainFormStage == null) {
+            mainFormStage = new Stage();
+            mainFormStage.setScene(new Scene(mainForm));
+            mainFormStage.setMaximized(true);
+            mainFormStage.setTitle("ИС ТПП ВО");
+        }
+    }
+
+    private void exitApp(ActionEvent actionEvent) {
         HibernateUtils.closeSessionFactory();
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
 
-    public void openSettings(ActionEvent actionEvent) {
-        Stage settingsStage = null;
+    public void openSettings() {
+        Stage settingsStage;
         FXMLLoader settingsFxmlLoader = new FXMLLoader();
         Parent settings = null;
-        SettingsController settingsController = null;
-        try {
 
+        try {
             settingsFxmlLoader.setLocation(getClass().getResource("/ui/Settings.fxml"));
             settings = settingsFxmlLoader.load();
-            settingsController = settingsFxmlLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,9 +130,6 @@ public class LoginFormController {
         settingsStage.setScene(new Scene(settings));
         settingsStage.setTitle("Настройки");
 
-        //settingsController.initialize();
-
         settingsStage.show();
-        // connectionSettingsController.clear();
     }
 }
