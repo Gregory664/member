@@ -1,5 +1,7 @@
 package ru.src.logic.implementation;
 
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
 import ru.src.model.Connection;
 
 import javax.xml.stream.*;
@@ -14,7 +16,7 @@ public class ConnectionUtils {
     private static XMLStreamReader reader;
     private static XMLStreamWriter writer;
 
-    public static synchronized Connection getConnection() {
+    public static Connection getConnection() {
         try (InputStream inputStream = new FileInputStream(new File(path))) {
             reader = XMLInputFactory.newInstance().createXMLStreamReader(inputStream);
             while (reader.hasNext()) {
@@ -57,7 +59,7 @@ public class ConnectionUtils {
         return connection;
     }
 
-    public static synchronized void setConnection(String hostname, String database, String port, String username, String password) {
+    public static void setConnection(String hostname, String database, String port, String username, String password) {
 
         connection.setHostname(hostname);
         connection.setDatabase(database);
@@ -104,5 +106,10 @@ public class ConnectionUtils {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void checkConnection() {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        System.out.println("Connection successful");
     }
 }
