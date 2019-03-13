@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.MemberUtils;
-import ru.src.model.Member;
 import ru.src.model.User;
 
 import java.util.HashSet;
@@ -34,20 +33,13 @@ public class CreateUserController {
     public PasswordField passField_password;
 
     private User newUser;
-    private Boolean isUserCreate = false;
-
-    public Boolean getUserCreate() {
-        return isUserCreate;
-    }
-
     public User getNewUser() {
         return newUser;
     }
 
-    @FXML
-    public void initialize() {
-        text_password.setVisible(false);
-        passField_password.setVisible(true);
+    private Boolean userCreate = false;
+    public Boolean isUserCreate() {
+        return userCreate;
     }
 
     public void saveUser(ActionEvent actionEvent) {
@@ -59,8 +51,8 @@ public class CreateUserController {
                     text_fullName.getText(),
                     text_position.getText()
             );
-            isUserCreate = true;
-            closeApp(actionEvent);
+            userCreate = true;
+            closeCurrentStage(actionEvent);
         }
         else {
             label_alarm_user.setTextFill(MemberUtils.EMPTY_COLOR);
@@ -68,13 +60,13 @@ public class CreateUserController {
         }
     }
 
-    public void closeApp(ActionEvent actionEvent) {
+    private void closeCurrentStage(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.hide();
+        stage.close();
     }
 
-    public void showPasswordChar(ActionEvent actionEvent) {
+    public void showPasswordChar() {
         if(!text_password.isVisible()){
             text_password.setText(passField_password.getText());
             text_password.setVisible(true);
@@ -97,15 +89,5 @@ public class CreateUserController {
         set.add(MemberUtils.isEmptyField(text_fullName));
         set.add(MemberUtils.isEmptyField(text_position));
         return set.contains(true);
-    }
-
-    public void Clear() {
-        text_password.clear();
-        text_login.clear();
-        text_fullName.clear();
-        text_position.clear();
-        passField_password.clear();
-        isAdmin.setSelected(false);
-        isUserCreate = false;
     }
 }
