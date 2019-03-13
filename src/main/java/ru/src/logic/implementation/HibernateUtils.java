@@ -7,33 +7,40 @@ import ru.src.model.Connection;
 
 public class HibernateUtils {
     private static SessionFactory sessionFactory;
+
     private static boolean active = false;
-    private static Connection connection;
+
+    public static boolean isActive() {
+        return active;
+    }
 
     private HibernateUtils() {
     }
 
-    public static synchronized SessionFactory getSessionFactory() throws HibernateException{
+    static synchronized SessionFactory getSessionFactory() {
+        if (sessionFactory == null || sessionFactory.isClosed()) {
+            Connection connection = ConnectionUtils.getConnection();
+            String url = "jdbc:mysql://" +
+                    connection.getHostname() + ":" +
+                    connection.getPort() + "/" +
+                    connection.getDatabase();
 
-            if (sessionFactory == null || sessionFactory.isClosed()) {
-                connection = ConnectionUtils.getConnection();
-                String url = "jdbc:mysql://" +
-                        connection.getHostname() + ":" +
-                        connection.getPort() + "/" +
-                        connection.getDatabase();// + "?serverTimezone=UTC";
-                Configuration configuration = new Configuration()
-                        .setProperty("hibernate.connection.url", url)
-                        .setProperty("hibernate.connection.username", connection.getUsername())
-                        .setProperty("hibernate.connection.password", connection.getPassword());
-                try {
-                    sessionFactory = configuration.configure().buildSessionFactory();
-                } catch (Exception e) {
-                    MemberUtils.warningDialog("Ошибка!\n" + e.getMessage());
-                }
+            Configuration configuration = new Configuration()
+                    .setProperty("hibernate.connection.url", url)
+                    .setProperty("hibernate.connection.username", connection.getUsername())
+                    .setProperty("hibernate.connection.password", connection.getPassword());
+
+            try {
+                sessionFactory = configuration.configure().buildSessionFactory();
                 active = true;
+            } catch (Exception e) {
+                if(e instanceof HibernateException)
+                    MemberException.getCheckSqlException((HibernateException) e);
+                else
+                    MemberUtils.warningDialog("Ошибка!\n" + e.getMessage());
             }
-        System.out.println(connection);
-            return sessionFactory;
+        }
+        return sessionFactory;
     }
 
     public static void closeSessionFactory() {
@@ -41,11 +48,6 @@ public class HibernateUtils {
         active = false;
     }
 
-    public static boolean isActive() {
-        return active;
-    }
 
-    public static void setActive(boolean isActive) {
-        active = isActive;
-    }
+
 }
