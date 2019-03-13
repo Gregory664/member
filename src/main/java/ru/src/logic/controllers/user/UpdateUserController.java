@@ -2,10 +2,7 @@ package ru.src.logic.controllers.user;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -13,7 +10,6 @@ import javafx.stage.Stage;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.model.User;
 
-import java.io.IOException;
 import java.util.HashSet;
 
 public class UpdateUserController {
@@ -42,9 +38,9 @@ public class UpdateUserController {
     @FXML
     public Button btn_updatePassword;
 
-    private Boolean isUpdateUser = false;
+    private Boolean updateUser = false;
     public Boolean getUpdateUser() {
-        return isUpdateUser;
+        return updateUser;
     }
 
     private User user;
@@ -81,30 +77,18 @@ public class UpdateUserController {
         return set.contains(true);
     }
 
-    public void Clear() {
-        label_alarm_user.setText(null);
-        text_login.clear();
-        text_fullName.clear();
-        text_position.clear();
-        passField_password.clear();
-        passField_password2.clear();
-        isAdmin.setSelected(false);
-        isUpdateUser = false;
-    }
-
     public void updateUser(ActionEvent actionEvent) {
         if(!isEmptyFields()) {
             if(passField_password.getText().equals(passField_password2.getText())) {
                 user.setFullName(text_fullName.getText());
                 user.setPosition(text_position.getText());
                 user.setAdmin(isAdmin.isSelected());
-                System.out.println(passField_password2.getText());
                 if (grid_password.isVisible()) user.setPassword(MemberUtils.getPasswordHash(passField_password2.getText()));
-                isUpdateUser = true;
-                closeApp(actionEvent);
+                updateUser = true;
+                closeCurrentStage(actionEvent);
             } else {
                 label_alarm_user.setText("Пароли не совпадают");
-                isUpdateUser = false;
+                updateUser = false;
             }
         } else  {
             label_alarm_user.setTextFill(MemberUtils.EMPTY_COLOR);
@@ -112,7 +96,7 @@ public class UpdateUserController {
         }
     }
 
-    public void closeApp(ActionEvent actionEvent) {
+    public void closeCurrentStage(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
@@ -135,7 +119,7 @@ public class UpdateUserController {
         passField_password2.clear();
     }
 
-    public void resizeWindows(double heigth, ActionEvent actionEvent) {
+    private void resizeWindows(double heigth, ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.setMinHeight(heigth);
