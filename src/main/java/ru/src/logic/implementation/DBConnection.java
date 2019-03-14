@@ -107,13 +107,12 @@ public class DBConnection implements MemberLogic {
             Transaction transaction = session.beginTransaction();
             Invoice invoice = session.get(Invoice.class, id);
             transaction.commit();
-            return invoice != null;
+            result = invoice != null;
         }
         catch (Exception e) {
-            result = false;
+            result = true;
         }
         return result;
-
     }
 
     public static List<FindMember> getQueryList(String queryString) {
