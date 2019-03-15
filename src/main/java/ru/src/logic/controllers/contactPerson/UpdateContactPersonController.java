@@ -42,16 +42,12 @@ public class UpdateContactPersonController {
     public Button btnSave;
     @FXML
     public Button btnCancel;
+
     private boolean updateContactPerson = false;
+
     private ContactPerson contactPerson;
-
-
     public boolean isUpdateContactPerson() {
         return updateContactPerson;
-    }
-
-    public void setUpdateContactPerson(boolean updateContactPerson) {
-        this.updateContactPerson = updateContactPerson;
     }
 
     @FXML
@@ -71,14 +67,12 @@ public class UpdateContactPersonController {
         text_contactPerson_fullName.setText(contactPerson.getFullName());
         text_contactPerson_position.setText(contactPerson.getPosition());
         text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
-        if (contactPerson.getPhoneCity() != null)
-            text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
-        if (contactPerson.getChanges() != null)
-            text_contactPerson_changes.setText(contactPerson.getChanges());
-        if (contactPerson.getEmail() != null)
-            text_contactPerson_email.setText(contactPerson.getEmail());
+        if (contactPerson.getPhoneCity() != null) text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
+        if (contactPerson.getChanges() != null) text_contactPerson_changes.setText(contactPerson.getChanges());
+        if (contactPerson.getEmail() != null) text_contactPerson_email.setText(contactPerson.getEmail());
     }
 
+    @FXML
     public void updateContactPerson(ActionEvent actionEvent) {
         if(!isFieldsEmpty()) {
             contactPerson.setPhoneMobile(text_contactPerson_phoneMobile.getText());
@@ -101,7 +95,7 @@ public class UpdateContactPersonController {
     }
 
     private boolean isFieldsEmpty() {
-        HashSet<Boolean> set = new HashSet<Boolean>();
+        HashSet<Boolean> set = new HashSet<>();
         set.add(MemberUtils.isEmptyField(text_contactPerson_fullName));
         set.add(MemberUtils.isEmptyField(text_contactPerson_position));
         set.add(MemberUtils.isEmptyField(text_contactPerson_phoneMobile));
@@ -109,31 +103,10 @@ public class UpdateContactPersonController {
         return set.contains(true);
     }
 
+    @FXML
     public void closeWindow(ActionEvent actionEvent) {
-        clearTextAndStyle();
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.hide();
-    }
-
-    public void clearTextAndStyle() {
-        text_contactPerson_fullName.clear();
-        text_contactPerson_position.clear();
-        text_contactPerson_phoneMobile.clear();
-        text_contactPerson_email.clear();
-        text_contactPerson_phoneCity.clear();
-        text_contactPerson_changes.clear();
-
-        label_alarm_contactPerson_fullName.setText(null);
-        label_alarm_contactPerson_position.setText(null);
-        label_alarm_contactPerson_phoneMobile.setText(null);
-        label_alarm_contactPerson_email.setText(null);
-        label_alarm_contactPerson_phoneCity.setText(null);
-        label_alarm_contactPerson_changes.setText(null);
-
-        text_contactPerson_fullName.setStyle(null);
-        text_contactPerson_position.setStyle(null);
-        text_contactPerson_phoneMobile.setStyle(null);
-        text_contactPerson_email.setStyle(null);
     }
 }
