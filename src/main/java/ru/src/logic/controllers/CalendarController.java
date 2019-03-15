@@ -2,7 +2,6 @@ package ru.src.logic.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -12,9 +11,8 @@ import ru.src.logic.implementation.ListUtils;
 import ru.src.model.DateOfCreationOrganization;
 import ru.src.model.DirectorCalendar;
 import ru.src.model.Member;
-
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.Optional;
 
 public class CalendarController {
     @FXML
@@ -46,17 +44,18 @@ public class CalendarController {
     @FXML
     public TableColumn<DateOfCreationOrganization, String> column_organizationShortName;
 
+    private ObservableList<String> month = FXCollections.observableArrayList(ListUtils.getMonth().values());
+    private TableView<Member> mainFormTable;
 
-    private ObservableList<String> month = FXCollections.observableArrayList();
-    private HashMap<Integer, String> monthMap = ListUtils.getMonth();
-    private TableView mainFormTable;
-
-    public void setParams(TableView params) {
+    void setParams(TableView params) {
         this.mainFormTable = params;
     }
 
     @FXML
     public void initialize() {
+        comboBox_directorMonth.getItems().addAll(month);
+        comboBox_organizationMonth.getItems().addAll(month);
+
         column_directorBirthday.setCellValueFactory(new PropertyValueFactory<>("birthday"));
         column_directorName.setCellValueFactory(new PropertyValueFactory<>("fio"));
         column_directorMemberId.setCellValueFactory(new PropertyValueFactory<>("memberId"));
@@ -72,39 +71,29 @@ public class CalendarController {
         column_organizationDateOfCreation.setStyle("-fx-alignment: CENTER;");
         column_organizationMemberId.setStyle("-fx-alignment: CENTER;");
         column_organizationShortName.setStyle("-fx-alignment: CENTER;");
+    } 
 
-        initComboBox();
-
-
-    }
-
-    private void initComboBox() {
-        month.addAll(monthMap.values());
-        comboBox_directorMonth.getItems().addAll(month);
-        comboBox_organizationMonth.getItems().addAll(month);
-    }
-
-    public void selectOrganizationMonth(ActionEvent actionEvent) {
+    public void selectOrganizationMonth() {
         int month = comboBox_organizationMonth.getSelectionModel().getSelectedIndex();
         ObservableList<DateOfCreationOrganization> organizations = DBConnection.getOrganizationCalendar(++month);
         table_organization.getItems().clear();
         if (organizations != null)
             table_organization.setItems(organizations);
-    }
+    } 
 
-    public void selectDirectorMonth(ActionEvent actionEvent) {
+    public void selectDirectorMonth() {
         int month = comboBox_directorMonth.getSelectionModel().getSelectedIndex();
         ObservableList<DirectorCalendar> directorCalendars = DBConnection.getDirectorCalendar(++month);
         table_director.getItems().clear();
         if (directorCalendars != null)
             table_director.setItems(directorCalendars);
-    }
+    } 
 
-    public void setCurrentMonth(int tab) {
+    void setCurrentMonth(int tab) {
         comboBox_directorMonth.getSelectionModel().select(LocalDate.now().getMonth().getValue() - 1);
         comboBox_organizationMonth.getSelectionModel().select(LocalDate.now().getMonth().getValue() - 1);
-        selectDirectorMonth(new ActionEvent());
-        selectOrganizationMonth(new ActionEvent());
+        selectDirectorMonth();
+        selectOrganizationMonth();
 
         switch (tab) {
             case 0:
@@ -114,31 +103,27 @@ public class CalendarController {
                 tabPane.getSelectionModel().select(1);
                 break;
         }
-    }
+    } 
 
     public void openMainTableFromDirector(MouseEvent mouseEvent) {
         if(mouseEvent.getClickCount() == 2) {
             String memberId = table_director.getSelectionModel().getSelectedItem().getMemberId();
-            mainFormTable.getItems().forEach(o -> {
-                if(o instanceof Member) {
-                    if(((Member) o).getMemberId().equals(memberId)) {
-                        mainFormTable.getSelectionModel().select(o);
-                    }
-                }
-            });
+
+            Optional<Member> selectedMember = mainFormTable.getItems().stream()
+                    .filter(member -> member.getMemberId().equals(memberId))
+                    .findFirst();
+            selectedMember.ifPresent(member -> mainFormTable.getSelectionModel().select(member));
         }
-    }
+    } 
 
     public void openMainTableFromOrganization(MouseEvent mouseEvent) {
         if(mouseEvent.getClickCount() == 2) {
             String memberId = table_organization.getSelectionModel().getSelectedItem().getMemberId();
-            mainFormTable.getItems().forEach(o -> {
-                if(o instanceof Member) {
-                    if(((Member) o).getMemberId().equals(memberId)) {
-                        mainFormTable.getSelectionModel().select(o);
-                    }
-                }
-            });
+
+            Optional<Member> selectedMember = mainFormTable.getItems().stream()
+                    .filter(member -> member.getMemberId().equals(memberId))
+                    .findFirst();
+            selectedMember.ifPresent(member -> mainFormTable.getSelectionModel().select(member));
         }
-    }
+    } 
 }
