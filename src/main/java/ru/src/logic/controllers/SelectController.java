@@ -20,16 +20,10 @@ import ru.src.logic.implementation.ListUtils;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.PDFUtils;
 import ru.src.model.FindMember;
-import sun.security.krb5.internal.crypto.Des;
-
-import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class SelectController {
     @FXML
@@ -278,8 +272,6 @@ public class SelectController {
     public CheckBox checkBox_mkas_1;
     @FXML
     public CheckBox checkBox_mkas_0;
-    @FXML
-    public TitledPane title_sortParams;
 
     @FXML
     public CheckBox checkBox_needForYoungPersonnel_1;
@@ -359,8 +351,6 @@ public class SelectController {
     public DatePicker date_receiving_1;
     @FXML
     public DatePicker date_receiving_2;
-    @FXML
-    public Button btn_save;
 
     @FXML
     public CheckBox checkBox_services_1;
@@ -448,52 +438,40 @@ public class SelectController {
     private boolean isEmptyMonth = false;
     private boolean isEmptyPayment = false;
     private boolean isEmptyReceiving = false;
-    private boolean isEmptyDateReceiving = false;
 
-
-    private ArrayList<CheckBox> listMemberStatus = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listBusinessForm = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listDebtStatus = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listOrganizationForm = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listOwnershipForm = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listActivityType = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listEconomicSector = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listVedImport = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listVedExport = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listInteractionOnline = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listInteractionOffline = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listB2b = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listB2c = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listBusinessMissionVisiting = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listBusinessMissionRegional = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listMkas = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listNeedForYoungPersonnel = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listDiscounts = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listReliablePartners = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listPilotProjects = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listAntiCorruptionCharter = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listLocation = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listMonth = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listPayment = new ArrayList<CheckBox>();
-    private ArrayList<DatePicker> listDatePayment = new ArrayList<DatePicker>();
-    private ArrayList<CheckBox> listReceiving = new ArrayList<CheckBox>();
-    private ArrayList<DatePicker> listDateReceiving = new ArrayList<DatePicker>();
-    private ArrayList<CheckBox> listNewsletter = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listCommittees = new ArrayList<CheckBox>();
-    private ArrayList<CheckBox> listCorporateMember = new ArrayList<CheckBox>();
-
+    private ArrayList<CheckBox> listMemberStatus = new ArrayList<>();
+    private ArrayList<CheckBox> listBusinessForm = new ArrayList<>();
+    private ArrayList<CheckBox> listDebtStatus = new ArrayList<>();
+    private ArrayList<CheckBox> listOrganizationForm = new ArrayList<>();
+    private ArrayList<CheckBox> listOwnershipForm = new ArrayList<>();
+    private ArrayList<CheckBox> listActivityType = new ArrayList<>();
+    private ArrayList<CheckBox> listEconomicSector = new ArrayList<>();
+    private ArrayList<CheckBox> listVedImport = new ArrayList<>();
+    private ArrayList<CheckBox> listVedExport = new ArrayList<>();
+    private ArrayList<CheckBox> listInteractionOnline = new ArrayList<>();
+    private ArrayList<CheckBox> listInteractionOffline = new ArrayList<>();
+    private ArrayList<CheckBox> listB2b = new ArrayList<>();
+    private ArrayList<CheckBox> listB2c = new ArrayList<>();
+    private ArrayList<CheckBox> listBusinessMissionVisiting = new ArrayList<>();
+    private ArrayList<CheckBox> listBusinessMissionRegional = new ArrayList<>();
+    private ArrayList<CheckBox> listMkas = new ArrayList<>();
+    private ArrayList<CheckBox> listNeedForYoungPersonnel = new ArrayList<>();
+    private ArrayList<CheckBox> listDiscounts = new ArrayList<>();
+    private ArrayList<CheckBox> listReliablePartners = new ArrayList<>();
+    private ArrayList<CheckBox> listPilotProjects = new ArrayList<>();
+    private ArrayList<CheckBox> listAntiCorruptionCharter = new ArrayList<>();
+    private ArrayList<CheckBox> listLocation = new ArrayList<>();
+    private ArrayList<CheckBox> listMonth = new ArrayList<>();
+    private ArrayList<CheckBox> listPayment = new ArrayList<>();
+    private ArrayList<DatePicker> listDatePayment = new ArrayList<>();
+    private ArrayList<CheckBox> listReceiving = new ArrayList<>();
+    private ArrayList<DatePicker> listDateReceiving = new ArrayList<>();
+    private ArrayList<CheckBox> listNewsletter = new ArrayList<>();
+    private ArrayList<CheckBox> listCommittees = new ArrayList<>();
+    private ArrayList<CheckBox> listCorporateMember = new ArrayList<>();
 
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
-
-    Boolean[] listOfFlags = new Boolean[16];
-
     private ObservableList<FindMember> list = FXCollections.observableArrayList();
-
-    private Stage currentStage;
-
-    public void setCurrentStage(Stage currentStage) {
-        this.currentStage = currentStage;
-    }
 
     @FXML
     public void initialize() {
@@ -503,60 +481,29 @@ public class SelectController {
         column_memberStatus.setCellValueFactory(new PropertyValueFactory<>("memberStatus"));
         column_memberShortName.setCellValueFactory(new PropertyValueFactory<>("memberShortName"));
 
-        column_memberId.setStyle( "-fx-alignment: CENTER;");
-        column_memberSerial.setStyle( "-fx-alignment: CENTER;");
-        column_contactPhone.setStyle( "-fx-alignment: CENTER;");
-        column_memberStatus.setStyle( "-fx-alignment: CENTER;");
+        column_memberId.setStyle("-fx-alignment: CENTER;");
+        column_memberSerial.setStyle("-fx-alignment: CENTER;");
+        column_contactPhone.setStyle("-fx-alignment: CENTER;");
+        column_memberStatus.setStyle("-fx-alignment: CENTER;");
+
+        table_select.setPlaceholder(new Label("Нет данных, удовлетворяющих критериям"));
 
         countOfselect.setText("Количество организаций: " + list.size());
         item_saveCSV.setDisable(true);
         item_savePDF.setDisable(true);
 
-        list.addListener(new ListChangeListener<FindMember>() {
-            @Override
-            public void onChanged(Change<? extends FindMember> c) {
-                countOfselect.setText("Количество организаций: " + list.size());
-                if (list.size() == 0) {
-                    item_saveCSV.setDisable(true);
-                    item_savePDF.setDisable(true);
-                } else {
-                    item_saveCSV.setDisable(false);
-                    item_savePDF.setDisable(false);
-                }
+        list.addListener((ListChangeListener<FindMember>) c -> {
+            countOfselect.setText("Количество организаций: " + list.size());
+            if (list.size() == 0) {
+                item_saveCSV.setDisable(true);
+                item_savePDF.setDisable(true);
+            } else {
+                item_saveCSV.setDisable(false);
+                item_savePDF.setDisable(false);
             }
         });
 
-        initializeListMemberStatus();
-        initializeBusinessForm();
-        initializeDebtStatus();
-        initializeOrganizationForm();
-        initializeOwnershipForm();
-        initializeActivityType();
-        initializeEconomicSector();
-        initializeVedImport();
-        initializeVedExport();
-        initializeInteractionOnline();
-        initializeInteractionOffline();
-        initializeB2b();
-        initializeB2c();
-        initializeBusinessMissionVisiting();
-        initializeBusinessMissionRegional();
-        initializeMkas();
-        initializeNeedForYoungPersonnel();
-        initializeDiscounts();
-        initializeReliablePartners();
-        initializePilotProjects();
-        initializeAntiCorruptionCharter();
-        initializeLocation();
-        initializeMonth();
-        initializePayment();
-        initializeDatePayment();
-        initializeReceiving();
-        initializeDateReceiving();
-        initializeServices();
-        initializeNewsletter();
-        initializeCommittees();
-        initializeCorporateMember();
+        addEachCheckBoxesToEachLists();
 
         addMemberStatusListener();
         addBusinessFormListener();
@@ -590,8 +537,8 @@ public class SelectController {
         addSelectAllGeneralCheckBox();
         addSelectAllBusinessCharacteristicsCheckBox();
         addSelectAllInterestsCheckBox();
-
     }
+
 
     private void addSelectAllInterestsCheckBox() {
         anchor_Interests.setOnMouseClicked(event -> {
@@ -646,15 +593,14 @@ public class SelectController {
         });
     }
 
-    private void initializeDatePayment() {
+
+    private void addEachCheckBoxesToEachLists() {
         listDatePayment.add(date_payment_1);
         listDatePayment.add(date_payment_2);
-    }
-    private void initializePayment() {
+
         listPayment.add(checkBox_payment_1);
         listPayment.add(checkBox_payment_2);
-    }
-    private void initializeMonth() {
+
         listMonth.add(checkBox_month_1);
         listMonth.add(checkBox_month_2);
         listMonth.add(checkBox_month_3);
@@ -667,69 +613,53 @@ public class SelectController {
         listMonth.add(checkBox_month_10);
         listMonth.add(checkBox_month_11);
         listMonth.add(checkBox_month_12);
-    }
-    private void initializeLocation() {
+
         listLocation.add(checkBox_location_1);
         listLocation.add(checkBox_location_2);
         listLocation.add(checkBox_location_3);
-    }
-    private void initializeAntiCorruptionCharter() {
+
         listAntiCorruptionCharter.add(checkBox_antiCorruptionCharter_1);
         listAntiCorruptionCharter.add(checkBox_antiCorruptionCharter_0);
-    }
-    private void initializePilotProjects() {
+
         listPilotProjects.add(checkBox_pilotProjects_1);
         listPilotProjects.add(checkBox_pilotProjects_0);
-    }
-    private void initializeReliablePartners() {
+
         listReliablePartners.add(checkBox_reliablePartners_1);
         listReliablePartners.add(checkBox_reliablePartners_0);
-    }
-    private void initializeDiscounts() {
+
         listDiscounts.add(checkBox_discounts_1);
         listDiscounts.add(checkBox_discounts_0);
-    }
-    private void initializeNeedForYoungPersonnel() {
+
         listNeedForYoungPersonnel.add(checkBox_needForYoungPersonnel_1);
         listNeedForYoungPersonnel.add(checkBox_needForYoungPersonnel_0);
-    }
-    private void initializeMkas() {
+
         listMkas.add(checkBox_mkas_1);
         listMkas.add(checkBox_mkas_0);
-    }
-    private void initializeBusinessMissionRegional() {
+
         listBusinessMissionRegional.add(checkBox_businessMissionRegional_1);
         listBusinessMissionRegional.add(checkBox_businessMissionRegional_0);
-    }
-    private void initializeBusinessMissionVisiting() {
+
         listBusinessMissionVisiting.add(checkBox_businessMissionVisiting_1);
         listBusinessMissionVisiting.add(checkBox_businessMissionVisiting_0);
-    }
-    private void initializeB2c() {
+
         listB2c.add(checkBox_b2c_1);
         listB2c.add(checkBox_b2c_0);
-    }
-    private void initializeB2b() {
+
         listB2b.add(checkBox_b2b_1);
         listB2b.add(checkBox_b2b_0);
-    }
-    private void initializeInteractionOffline() {
+
         listInteractionOffline.add(checkBox_interactionOffline_1);
         listInteractionOffline.add(checkBox_interactionOffline_0);
-    }
-    private void initializeInteractionOnline() {
+
         listInteractionOnline.add(checkBox_interactionOnline_1);
         listInteractionOnline.add(checkBox_interactionOnline_0);
-    }
-    private void initializeVedExport() {
+
         listVedExport.add(checkBox_vedExport_1);
         listVedExport.add(checkBox_vedExport_0);
-    }
-    private void initializeVedImport() {
+
         listVedImport.add(checkBox_vedImport_1);
         listVedImport.add(checkBox_vedImport_0);
-    }
-    private void initializeEconomicSector() {
+
         listEconomicSector.add(checkBox_economicSector_1);
         listEconomicSector.add(checkBox_economicSector_2);
         listEconomicSector.add(checkBox_economicSector_3);
@@ -750,17 +680,14 @@ public class SelectController {
         listEconomicSector.add(checkBox_economicSector_18);
         listEconomicSector.add(checkBox_economicSector_19);
         listEconomicSector.add(checkBox_economicSector_20);
-    }
-    private void initializeActivityType() {
+
         listActivityType.add(checkBox_activityType_1);
         listActivityType.add(checkBox_activityType_2);
-    }
-    private void initializeOwnershipForm() {
+
         listOwnershipForm.add(checkBox_ownershipForm_1);
         listOwnershipForm.add(checkBox_ownershipForm_2);
         listOwnershipForm.add(checkBox_ownershipForm_3);
-    }
-    private void initializeOrganizationForm() {
+
         listOrganizationForm.add(checkBox_organizationForm_1);
         listOrganizationForm.add(checkBox_organizationForm_2);
         listOrganizationForm.add(checkBox_organizationForm_3);
@@ -779,18 +706,15 @@ public class SelectController {
         listOrganizationForm.add(checkBox_organizationForm_16);
         listOrganizationForm.add(checkBox_organizationForm_17);
         listOrganizationForm.add(checkBox_organizationForm_18);
-    }
-    private void initializeDebtStatus() {
+
         listDebtStatus.add(checkBox_debt_status_1);
         listDebtStatus.add(checkBox_debt_status_2);
-    }
-    private void initializeBusinessForm() {
+
         listBusinessForm.add(checkBox_businessForm_1);
         listBusinessForm.add(checkBox_businessForm_2);
         listBusinessForm.add(checkBox_businessForm_3);
         listBusinessForm.add(checkBox_businessForm_4);
-    }
-    private void initializeListMemberStatus() {
+
         listMemberStatus.add(checkBox_memberstatus_1);
         listMemberStatus.add(checkBox_memberstatus_2);
         listMemberStatus.add(checkBox_memberstatus_3);
@@ -801,16 +725,13 @@ public class SelectController {
         listMemberStatus.add(checkBox_memberstatus_8);
         listMemberStatus.add(checkBox_memberstatus_9);
         listMemberStatus.add(checkBox_memberstatus_10);
-    }
-    private void initializeReceiving() {
+
         listReceiving.add(checkBox_receiving_1);
         listReceiving.add(checkBox_receiving_2);
-    }
-    private void initializeDateReceiving() {
+
         listDateReceiving.add(date_receiving_1);
         listDateReceiving.add(date_receiving_2);
-    }
-    private void initializeServices() {
+
         servicesCheckBoxMap.put(1, checkBox_services_1);
         servicesCheckBoxMap.put(2, checkBox_services_2);
         servicesCheckBoxMap.put(3, checkBox_services_3);
@@ -828,25 +749,22 @@ public class SelectController {
         servicesCheckBoxMap.put(15, checkBox_services_15);
         servicesCheckBoxMap.put(16, checkBox_services_16);
         servicesCheckBoxMap.put(17, checkBox_services_17);
-    }
-    private void initializeNewsletter() {
+
         listNewsletter.add(checkBox_newsletter_1);
         listNewsletter.add(checkBox_newsletter_0);
-    }
-    private void initializeCommittees() {
+
         listCommittees.add(checkBox_committees_1);
         listCommittees.add(checkBox_committees_0);
-    }
-    private void initializeCorporateMember() {
+
         listCorporateMember.add(checkBox_corporateMember_1);
         listCorporateMember.add(checkBox_corporateMember_0);
     }
 
     private void addMemberStatusListener() {
         label_memberStatus.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyCBMemberStatus) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyCBMemberStatus) {
                         selectMemberStatus(true);
                         isEmptyCBMemberStatus = true;
                     } else {
@@ -857,11 +775,12 @@ public class SelectController {
             }
         });
     }
+
     private void addBusinessFormListener() {
         label_businessForm.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyBusinessForm) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyBusinessForm) {
                         selectBusinessForm(true);
                         isEmptyBusinessForm = true;
                     } else {
@@ -872,11 +791,12 @@ public class SelectController {
             }
         });
     }
+
     private void addDebtStatusListener() {
         label_debt_status.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyDebtStatus) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyDebtStatus) {
                         selectDebtStatus(true);
                         isEmptyDebtStatus = true;
                     } else {
@@ -887,11 +807,12 @@ public class SelectController {
             }
         });
     }
+
     private void addOrganizationFormListener() {
         label_organizationForm.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyOrganizationForm) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyOrganizationForm) {
                         selectOrganizationForm(true);
                         isEmptyOrganizationForm = true;
                     } else {
@@ -902,11 +823,12 @@ public class SelectController {
             }
         });
     }
+
     private void addOwnershipFormListener() {
         label_ownershipForm.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyOwnershipForm) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyOwnershipForm) {
                         selectOwnershipForm(true);
                         isEmptyOwnershipForm = true;
                     } else {
@@ -917,11 +839,12 @@ public class SelectController {
             }
         });
     }
+
     private void addActivityTypeListener() {
         label_activityType.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyActivityTypeForm) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyActivityTypeForm) {
                         selectActivityType(true);
                         isEmptyActivityTypeForm = true;
                     } else {
@@ -932,11 +855,12 @@ public class SelectController {
             }
         });
     }
+
     private void addEconomicSectorListener() {
         label_economicSector.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyEconomicSector) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyEconomicSector) {
                         selectEconomicSector(true);
                         isEmptyEconomicSector = true;
                     } else {
@@ -947,11 +871,12 @@ public class SelectController {
             }
         });
     }
+
     private void addVedImportListener() {
         label_vedImport.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyVedImport) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyVedImport) {
                         selectVedImport(true);
                         isEmptyVedImport = true;
                     } else {
@@ -962,11 +887,12 @@ public class SelectController {
             }
         });
     }
+
     private void addVedExportExportListener() {
         label_vedExport.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyVedExport) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyVedExport) {
                         selectVedExport(true);
                         isEmptyVedExport = true;
                     } else {
@@ -977,11 +903,12 @@ public class SelectController {
             }
         });
     }
+
     private void addInteractionOnlineListener() {
         label_interactionOnline.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyInteractionOnline) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyInteractionOnline) {
                         selectInteractionOnline(true);
                         isEmptyInteractionOnline = true;
                     } else {
@@ -992,11 +919,12 @@ public class SelectController {
             }
         });
     }
+
     private void addInteractionOfflineListener() {
         label_interactionOffline.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyInteractionOffline) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyInteractionOffline) {
                         selectInteractionOffline(true);
                         isEmptyInteractionOffline = true;
                     } else {
@@ -1007,11 +935,12 @@ public class SelectController {
             }
         });
     }
+
     private void addB2bListener() {
         label_b2b.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyB2b) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyB2b) {
                         selectB2b(true);
                         isEmptyB2b = true;
                     } else {
@@ -1022,11 +951,12 @@ public class SelectController {
             }
         });
     }
+
     private void addB2cListener() {
         label_b2c.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyB2c) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyB2c) {
                         selectB2c(true);
                         isEmptyB2c = true;
                     } else {
@@ -1037,11 +967,12 @@ public class SelectController {
             }
         });
     }
+
     private void addBusinessMissionVisitingListener() {
         label_businessMissionVisiting.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyBusinessMissionVisiting) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyBusinessMissionVisiting) {
                         selectBusinessMissionVisiting(true);
                         isEmptyBusinessMissionVisiting = true;
                     } else {
@@ -1052,11 +983,12 @@ public class SelectController {
             }
         });
     }
+
     private void addbusinessMissionRegionalListener() {
         label_businessMissionRegional.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptybusinessMissionRegional) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptybusinessMissionRegional) {
                         selectBusinessMissionRegional(true);
                         isEmptybusinessMissionRegional = true;
                     } else {
@@ -1067,11 +999,12 @@ public class SelectController {
             }
         });
     }
+
     private void addMkasListener() {
         label_mkas.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyMkas) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyMkas) {
                         selectMkas(true);
                         isEmptyMkas = true;
                     } else {
@@ -1083,11 +1016,12 @@ public class SelectController {
         });
 
     }
+
     private void addLocationListener() {
         label_location.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyLocation) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyLocation) {
                         selectLocation(true);
                         isEmptyLocation = true;
                     } else {
@@ -1098,11 +1032,12 @@ public class SelectController {
             }
         });
     }
+
     private void addAntiCorruptionCharterListener() {
         label_antiCorruptionCharter.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyAntiCorruptionCharter) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyAntiCorruptionCharter) {
                         selectAntiCorruptionCharter(true);
                         isEmptyAntiCorruptionCharter = true;
                     } else {
@@ -1113,11 +1048,12 @@ public class SelectController {
             }
         });
     }
+
     private void addPilotProjectsListener() {
         label_pilotProjects.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyPilotProjects) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyPilotProjects) {
                         selectPilotProjects(true);
                         isEmptyPilotProjects = true;
                     } else {
@@ -1128,11 +1064,12 @@ public class SelectController {
             }
         });
     }
+
     private void addReliablePartnersListener() {
         label_reliablePartners.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyReliablePartners) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyReliablePartners) {
                         selectReliablePartners(true);
                         isEmptyReliablePartners = true;
                     } else {
@@ -1143,11 +1080,12 @@ public class SelectController {
             }
         });
     }
+
     private void addDiscountsListener() {
         label_discounts.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyDiscounts) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyDiscounts) {
                         selectDiscounts(true);
                         isEmptyDiscounts = true;
                     } else {
@@ -1158,11 +1096,12 @@ public class SelectController {
             }
         });
     }
+
     private void addNeedForYoungPersonnelListener() {
         label_needForYoungPersonnel.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyNeedForYoungPersonnel) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyNeedForYoungPersonnel) {
                         selectNeedForYoungPersonnel(true);
                         isEmptyNeedForYoungPersonnel = true;
                     } else {
@@ -1173,11 +1112,12 @@ public class SelectController {
             }
         });
     }
+
     private void addCorporateMemberListener() {
         label_corporateMember.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyCorporateMember) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyCorporateMember) {
                         selectCorporateMember(true);
                         isEmptyCorporateMember = true;
                     } else {
@@ -1188,11 +1128,12 @@ public class SelectController {
             }
         });
     }
+
     private void addCommitteesListener() {
         label_committees.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyCommittees) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyCommittees) {
                         selectCommittees(true);
                         isEmptyCommittees = true;
                     } else {
@@ -1203,11 +1144,12 @@ public class SelectController {
             }
         });
     }
+
     private void addNewsletterListener() {
         label_newsletter.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyNewsletter) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyNewsletter) {
                         selectNewsletter(true);
                         isEmptyNewsletter = true;
                     } else {
@@ -1218,11 +1160,12 @@ public class SelectController {
             }
         });
     }
+
     private void addMonthListener() {
         label_month.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyMonth) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyMonth) {
                         selectMonth(true);
                         isEmptyMonth = true;
                     } else {
@@ -1233,11 +1176,12 @@ public class SelectController {
             }
         });
     }
+
     private void addPaymentListener() {
         label_payment.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyPayment) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyPayment) {
                         selectPayment(true);
                         isEmptyPayment = true;
                     } else {
@@ -1249,20 +1193,21 @@ public class SelectController {
         });
 
         checkBox_payment_1.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue) disableDatePayment(false);
+            if (newValue) disableDatePayment(false);
             else disableDatePayment(true);
         });
 
         checkBox_payment_2.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue) disableDatePayment(false);
+            if (newValue) disableDatePayment(false);
             else disableDatePayment(true);
         });
     }
+
     private void addReceivingListener() {
         label_receiving.setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                if(event.getClickCount() == 2){
-                    if(!isEmptyReceiving) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    if (!isEmptyReceiving) {
                         selectReceiving(true);
                         isEmptyReceiving = true;
                     } else {
@@ -1274,157 +1219,194 @@ public class SelectController {
         });
 
         checkBox_receiving_1.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue) disableDateReceiving(false);
+            if (newValue) disableDateReceiving(false);
             else disableDateReceiving(true);
         });
 
         checkBox_receiving_2.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue) disableDateReceiving(false);
+            if (newValue) disableDateReceiving(false);
             else disableDateReceiving(true);
         });
     }
 
-    private void selectAllCheckBox(boolean value) {
-        selectMemberStatus(value);
-        selectBusinessForm(value);
-        selectDebtStatus(value);
-        selectOrganizationForm(value);
-        selectOwnershipForm(value);
-        selectActivityType(value);
-        selectEconomicSector(value);
-        selectVedImport(value);
-        selectVedExport(value);
-        selectInteractionOnline(value);
-        selectInteractionOffline(value);
-        selectB2b(value);
-        selectB2c(value);
-        selectBusinessMissionVisiting(value);
-        selectBusinessMissionRegional(value);
-        selectMkas(value);
-        selectNeedForYoungPersonnel(value);
-        selectDiscounts(value);
-        selectReliablePartners(value);
-        selectPilotProjects(value);
-        selectAntiCorruptionCharter(value);
-        selectLocation(value);
-        selectMonth(value);
-        selectPayment(value);
-        selectReceiving(value);
-        selectServices(value);
-        selectNewsletter(value);
-        selectCommittees(value);
-        selectCorporateMember(value);
+
+    private void unSelectAllCheckBox() {
+        selectMemberStatus(false);
+        selectBusinessForm(false);
+        selectDebtStatus(false);
+        selectOrganizationForm(false);
+        selectOwnershipForm(false);
+        selectActivityType(false);
+        selectEconomicSector(false);
+        selectVedImport(false);
+        selectVedExport(false);
+        selectInteractionOnline(false);
+        selectInteractionOffline(false);
+        selectB2b(false);
+        selectB2c(false);
+        selectBusinessMissionVisiting(false);
+        selectBusinessMissionRegional(false);
+        selectMkas(false);
+        selectNeedForYoungPersonnel(false);
+        selectDiscounts(false);
+        selectReliablePartners(false);
+        selectPilotProjects(false);
+        selectAntiCorruptionCharter(false);
+        selectLocation(false);
+        selectMonth(false);
+        selectPayment(false);
+        selectReceiving(false);
+        unSelectServices();
+        selectNewsletter(false);
+        selectCommittees(false);
+        selectCorporateMember(false);
     }
 
     private void selectMemberStatus(boolean value) {
         listMemberStatus.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectBusinessForm(boolean value) {
         listBusinessForm.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectDebtStatus(boolean value) {
         listDebtStatus.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectOrganizationForm(boolean value) {
         listOrganizationForm.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectOwnershipForm(boolean value) {
         listOwnershipForm.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectActivityType(boolean value) {
         listActivityType.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectEconomicSector(boolean value) {
         listEconomicSector.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectVedImport(boolean value) {
         listVedImport.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectVedExport(boolean value) {
         listVedExport.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectInteractionOnline(boolean value) {
         listInteractionOnline.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectInteractionOffline(boolean value) {
         listInteractionOffline.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectB2b(boolean value) {
         listB2b.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectB2c(boolean value) {
         listB2c.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectBusinessMissionVisiting(boolean value) {
         listBusinessMissionVisiting.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectBusinessMissionRegional(boolean value) {
         listBusinessMissionRegional.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectMkas(boolean value) {
         listMkas.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectAntiCorruptionCharter(boolean value) {
         listAntiCorruptionCharter.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectPilotProjects(boolean value) {
         listPilotProjects.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectReliablePartners(boolean value) {
         listReliablePartners.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectDiscounts(boolean value) {
         listDiscounts.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectNeedForYoungPersonnel(boolean value) {
         listNeedForYoungPersonnel.forEach(checkBox -> checkBox.setSelected(value));
 
     }
+
     private void selectNewsletter(boolean value) {
         listNewsletter.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectCommittees(boolean value) {
         listCommittees.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectCorporateMember(boolean value) {
         listCorporateMember.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectLocation(boolean value) {
         listLocation.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectMonth(boolean value) {
         listMonth.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectPayment(boolean value) {
         listPayment.forEach(checkBox -> checkBox.setSelected(value));
     }
+
     private void selectReceiving(boolean value) {
         listReceiving.forEach(checkBox -> checkBox.setSelected(value));
     }
-    private void selectServices(boolean value) {
-        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setSelected(value));
+
+    private void unSelectServices() {
+        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setSelected(false));
     }
+
     private void disableDatePayment(boolean value) {
-        listDatePayment.forEach(datePicker -> datePicker.setDisable(value));
+        listDatePayment.forEach(datePicker -> {
+            datePicker.setDisable(value);
+            datePicker.getEditor().clear();
+        });
     }
+
     private void disableDateReceiving(boolean value) {
-        listDateReceiving.forEach(datePicker -> datePicker.setDisable(value));
+        listDateReceiving.forEach(datePicker -> {
+            datePicker.setDisable(value);
+            datePicker.getEditor().clear();
+        });
     }
 
 
-    public void clearAllCheckBox(ActionEvent actionEvent) {
-        selectAllCheckBox(false);
+    public void clearAllFields() {
+        unSelectAllCheckBox();
         list.clear();
     }
 
-    public void search(ActionEvent actionEvent) {
+    @FXML
+    public void search() {
         list.clear();
         list.addAll(DBConnection.getQueryList(getResultQuery()));
         table_select.setItems(list);
     }
 
     private String getResultQuery() {
-
         ArrayList<String> test = new ArrayList<>();
 
         test.add(getWherePartFromList(listMemberStatus, "m.MEMBER_STATUS", 1));
@@ -1439,7 +1421,7 @@ public class SelectController {
         test.add(getWherePartFromList(listVedImport, "gi.VED_IMPORT", 2));
         test.add(getWherePartFromList(listVedExport, "gi.VED_EXPORT", 2));
 
-        test.add(getWherePartFromList(listInteractionOnline, "gi.INTERACTION_ONLINE",2));
+        test.add(getWherePartFromList(listInteractionOnline, "gi.INTERACTION_ONLINE", 2));
         test.add(getWherePartFromList(listInteractionOffline, "gi.INTERACTION_OFFLINE", 2));
         test.add(getWherePartFromList(listB2b, "gi.B2B", 2));
         test.add(getWherePartFromList(listB2c, "gi.B2C", 2));
@@ -1472,23 +1454,22 @@ public class SelectController {
                 "m.MEMBER_SHORT_NAME, " +
                 "c.CONTACT_EMAIL";
         String fromQuery = "FROM MEMBER m \n" +
-               "INNER JOIN CONTACT c ON m.MEMBER_ID=c.MEMBER_ID " +
-               "INNER JOIN DEBT d ON m.MEMBER_ID=d.MEMBER_ID " +
-               "INNER JOIN GENERAL_INFORMATION gi ON m.MEMBER_ID=gi.MEMBER_ID " +
-               "INNER JOIN ADDRESS_LEGAL al ON m.MEMBER_ID=al.MEMBER_ID " +
-               "LEFT JOIN INVOICE i ON m.MEMBER_ID=i.MEMBER_ID " +
-               "LEFT JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID";
+                "INNER JOIN CONTACT c ON m.MEMBER_ID=c.MEMBER_ID " +
+                "INNER JOIN DEBT d ON m.MEMBER_ID=d.MEMBER_ID " +
+                "INNER JOIN GENERAL_INFORMATION gi ON m.MEMBER_ID=gi.MEMBER_ID " +
+                "INNER JOIN ADDRESS_LEGAL al ON m.MEMBER_ID=al.MEMBER_ID " +
+                "LEFT JOIN INVOICE i ON m.MEMBER_ID=i.MEMBER_ID " +
+                "LEFT JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID";
         String whereQuery = "WHERE " + getAppendWhereQuery(test) + ";";
-
         return selectQuery + "\n" + fromQuery + "\n" + whereQuery;
     }
 
     private String getWherePartFromList(ArrayList<CheckBox> checkBoxes, String pattern, int flag) {
         String result = "";
 
-        ArrayList<String> someSelect = new ArrayList<String>();
-        for (CheckBox checkBox: checkBoxes) {
-            if(checkBox.isSelected()) {
+        ArrayList<String> someSelect = new ArrayList<>();
+        for (CheckBox checkBox : checkBoxes) {
+            if (checkBox.isSelected()) {
                 switch (flag) {
                     case 1:
                         someSelect.add(pattern + " = '" + checkBox.getText() + "'");
@@ -1496,15 +1477,9 @@ public class SelectController {
                     case 2:
                         someSelect.add(pattern + " = " + MemberUtils.checkBoxIDToBoolean(checkBox));
                         break;
-//                    case 2:
-//                        someSelect.add(pattern + " = " + MemberUtils.interestingToBoolean(checkBox.getText()));
-//                        break;
                     case 3:
                         someSelect.add(pattern + " = " + MemberUtils.debtToBoolean(checkBox.getText()));
                         break;
-//                    case 4:
-//                        someSelect.add(pattern + " = " + MemberUtils.yesNoToBoolean(checkBox.getText()));
-//                        break;
                     case 5:
                         String[] splitPattern = pattern.split(";");
                         if (checkBox.getText().equals("Иногородние")) {
@@ -1517,15 +1492,12 @@ public class SelectController {
                             someSelect.add(splitPattern[0] + " = 36 AND " + splitPattern[1] + " != 'Воронеж Городской округ'");
                         }
                         break;
-
                     case 6:
-                        Integer month = 0;
-                        for (Map.Entry<Integer, String> entry : ListUtils.getMonth().entrySet()) {
-                            if (entry.getValue().equals(checkBox.getText())) {
-                                month = entry.getKey();
-                            }
-                        }
-                        someSelect.add(pattern + " = " + month.toString());
+                        OptionalInt monthNumber = ListUtils.getMonth().entrySet().stream()
+                                .filter(entry -> entry.getValue().equals(checkBox.getText()))
+                                .mapToInt(Map.Entry::getKey)
+                                .findFirst();
+                        if(monthNumber.isPresent()) someSelect.add(pattern + " = " + monthNumber.getAsInt());
                         break;
                     case 7:
                         someSelect.add(pattern + " = " + MemberUtils.paymentToBoolean(checkBox.getText()));
@@ -1537,72 +1509,69 @@ public class SelectController {
             }
         }
 
-        if(!(someSelect.size() == 0)) {
+        if (someSelect.size() == 0) result = null;
+        else {
             for (int i = 0; i < someSelect.size(); i++) {
                 if (i != someSelect.size() - 1) result += someSelect.get(i) + " OR ";
                 else result += someSelect.get(i);
             }
-            return result;
         }
-        else return null;
-
+        return result;
     }
 
     private String getWherePartFromDate(ArrayList<DatePicker> datePickers, String pattern) {
         String result = "";
 
-        ArrayList<String> someSelect = new ArrayList<String>();
+        ArrayList<String> someSelect = new ArrayList<>();
         String[] splitPattern = pattern.split(";");
 
-        if(checkBox_payment_1.isSelected() && !checkBox_payment_2.isSelected()) {
+        if (checkBox_payment_1.isSelected() && !checkBox_payment_2.isSelected()) {
             if (!(datePickers.get(0).getValue() == null))
                 someSelect.add(splitPattern[0] + " >= '" + datePickers.get(0).getValue().toString() + "'");
             if (!(datePickers.get(1).getValue() == null))
                 someSelect.add(splitPattern[0] + " <= '" + datePickers.get(1).getValue().toString() + "'");
         }
-        if(!checkBox_payment_1.isSelected() && checkBox_payment_2.isSelected()) {
+        if (!checkBox_payment_1.isSelected() && checkBox_payment_2.isSelected()) {
             if (!(datePickers.get(0).getValue() == null))
                 someSelect.add(splitPattern[1] + " >= '" + datePickers.get(0).getValue().toString() + "'");
             if (!(datePickers.get(1).getValue() == null))
                 someSelect.add(splitPattern[1] + " <= '" + datePickers.get(1).getValue().toString() + "'");
         }
 
-        if (!(someSelect.size() == 0)) {
+        if (someSelect.size() == 0) result = null;
+        else {
             for (int i = 0; i < someSelect.size(); i++) {
                 if (i != someSelect.size() - 1) result += someSelect.get(i) + " AND ";
                 else result += someSelect.get(i);
             }
-            return result;
-        } else return null;
-
+        }
+        return result;
     }
 
     private String getWherePartFromServices() {
         StringBuilder result = new StringBuilder();
         StringBuilder numbers = new StringBuilder();
         int numbersCount = 0;
-        for (Map.Entry<Integer, CheckBox> entry: servicesCheckBoxMap.entrySet()) {
-            if(entry.getValue().isSelected()) {
+        for (Map.Entry<Integer, CheckBox> entry : servicesCheckBoxMap.entrySet()) {
+            if (entry.getValue().isSelected()) {
                 numbersCount++;
                 numbers.append(entry.getKey()).append(",");
             }
         }
-        if(numbersCount != 0) {
+        if (numbersCount != 0) {
             numbers.deleteCharAt(numbers.length() - 1);
             return result.append("ms.SERVICES_ID IN(")
                     .append(numbers)
                     .append(") GROUP BY m.MEMBER_ID HAVING COUNT(*)=")
                     .append(numbersCount).toString();
         } else return null;
-
     }
 
     private String getAppendWhereQuery(ArrayList<String> list) {
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < list.size(); i++) {
-
-            if(i != list.size() - 1) result.append("(").append(list.get(i)).append(") AND ");
+            if (i != list.size() - 1) result.append("(").append(list.get(i)).append(") AND ");
             else result.append(list.get(i));
         }
         return result.toString();
@@ -1645,13 +1614,12 @@ public class SelectController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf"));
-        File file = fileChooser.showSaveDialog((Stage)btn_search.getScene().getWindow());
+        File file = fileChooser.showSaveDialog(getCurrentStage(actionEvent));
 
         if (file != null) {
             String path = file.getAbsolutePath();
-            if (!path.contains(".")) {
+            if (!path.contains("."))
                 path += ".pdf";
-            }
             PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
         }
 
@@ -1661,13 +1629,12 @@ public class SelectController {
     public void saveCSV(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("csv", "*.csv"));
-        File file = fileChooser.showSaveDialog(currentStage);
+        File file = fileChooser.showSaveDialog(getCurrentStage(actionEvent));
 
         if (file != null) {
             String path = file.getAbsolutePath();
-            if (!path.contains(".")) {
+            if (!path.contains("."))
                 path += ".csv";
-            }
             saveCSVFile(path);
         }
     }
@@ -1676,7 +1643,7 @@ public class SelectController {
         try (FileWriter writer = new FileWriter(pathName)) {
             writer.append("Номер билета;Почта;Сокрашенное название организации\n");
 
-            for (FindMember findMember: list) {
+            for (FindMember findMember : list) {
                 writer.append(findMember.getMemberId()).append(";");
                 writer.append(findMember.getEmail()).append(";");
                 writer.append(findMember.getMemberShortName()).append("\n");
@@ -1689,9 +1656,14 @@ public class SelectController {
     }
 
     @FXML
-    private void exitApplication(ActionEvent actionEvent) {
-        clearAllCheckBox(actionEvent);
-        Stage stage = (Stage) btn_close.getScene().getWindow();
+    private void closeCurrentStage(ActionEvent actionEvent) {
+        Node node = (Node) actionEvent.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
+    }
+
+    private Stage getCurrentStage(ActionEvent actionEvent) {
+        Node node = (Node) actionEvent.getSource();
+        return (Stage) node.getScene().getWindow();
     }
 }
