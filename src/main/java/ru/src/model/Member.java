@@ -1,7 +1,5 @@
 package ru.src.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.ManyToAny;
 import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
 import ru.src.model.General.GeneralInformation;
@@ -12,7 +10,6 @@ import ru.src.model.Personal.Relate;
 import ru.src.model.buh.AccoutingInformation;
 import ru.src.model.buh.Debt;
 import ru.src.model.buh.Invoice;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -64,7 +61,7 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private Contact contact;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member")
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member", orphanRemoval = true)
     private List<ContactPerson> contactPerson;
 
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
@@ -84,8 +81,6 @@ public class Member {
             joinColumns = { @JoinColumn(name = "MEMBER_ID") },
             inverseJoinColumns = { @JoinColumn(name = "SERVICES_ID")})
     private List<Services> services;
-
-
 
     private Member() {
 
