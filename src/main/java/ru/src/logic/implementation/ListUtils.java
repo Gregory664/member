@@ -65,6 +65,15 @@ public class ListUtils {
         return FIND_PARAMS_LIST;
     }
 
+    public static ObservableList<String> getPayment() {
+        return PAYMENT_LIST;
+    }
+
+    public static ObservableList<String> getReceive() {
+        return RECEIVE_LIST;
+    }
+
+
     public static String[] getDataFromCheckBoxMassive(String title, List<CheckBox> checkBoxes) {
         String[] result = new String[2];
         List<String> selectedCheckBox = checkBoxes.stream()
@@ -83,7 +92,7 @@ public class ListUtils {
 
     public static void updateUser(ObservableList<User> usersList, User modifiedUser) {
         Optional<User> userToModify = usersList.stream().filter(defaultUser -> defaultUser.getLogin().equals(modifiedUser.getLogin())).findFirst();
-        if(userToModify.isPresent()) {
+        if (userToModify.isPresent()) {
             int index = usersList.indexOf(userToModify.get());
             usersList.set(index, modifiedUser);
         }

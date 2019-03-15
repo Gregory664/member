@@ -19,6 +19,8 @@ public class ListConstants {
     public static final HashMap<Integer, String> REGION_MAP = new HashMap<>();
     public static final HashMap<Integer, String> MONTHS_LIST = new HashMap<>();
     public static final ObservableList<String> FIND_PARAMS_LIST = FXCollections.observableArrayList();
+    public static final ObservableList<String> PAYMENT_LIST = FXCollections.observableArrayList();
+    public static final ObservableList<String> RECEIVE_LIST = FXCollections.observableArrayList();
 
     static {
         MEMBER_STATUS_LIST.add("Актуально стабильно");
@@ -235,5 +237,11 @@ public class ListConstants {
         FIND_PARAMS_LIST.add("Сокращенное название");
         FIND_PARAMS_LIST.add("ФИО руководителя");
         FIND_PARAMS_LIST.add("Деятельность/Услуги");
+
+        PAYMENT_LIST.add("Отплачен");
+        PAYMENT_LIST.add("Не отплачен");
+
+        RECEIVE_LIST.add("Получен");
+        RECEIVE_LIST.add("Не получен");
     }
 }
