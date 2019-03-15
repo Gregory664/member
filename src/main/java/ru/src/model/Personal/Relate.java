@@ -22,7 +22,6 @@ public class Relate implements Serializable {
     private Integer size;
 
     @Column(name = "RELATE_DATE_OF_CREATION")
-    @CreationTimestamp
     private LocalDate dateOfCreation;
 
     @Column(name = "RELATE_SERVICES", nullable = false)
