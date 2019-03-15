@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class FindFormController {
     @FXML
-    public ComboBox comboBox_params;
+    public ComboBox<String> comboBox_params;
     @FXML
     public Button btn_search;
     @FXML
@@ -42,8 +42,8 @@ public class FindFormController {
         label_count.setText(null);
 
     }
-
-    public void search(ActionEvent actionEvent) {
+    @FXML
+    public void search() {
 
         findParams.clear();
         int searchIndex = 0;
@@ -62,10 +62,10 @@ public class FindFormController {
                 }
                 break;
             case 1:
-                for (Object member: tableView.getItems()) {
-                    if(member instanceof Member) {
+                for (Object member : tableView.getItems()) {
+                    if (member instanceof Member) {
                         String memberFullName = ((Member) member).getRelate().getFullName().toLowerCase();
-                        if(memberFullName.contains(text_searchText.getText().toLowerCase())) {
+                        if (memberFullName.contains(text_searchText.getText().toLowerCase())) {
                             findParams.add(searchIndex);
                         }
                         ++searchIndex;
@@ -73,10 +73,10 @@ public class FindFormController {
                 }
                 break;
             case 2:
-                for (Object member: tableView.getItems()) {
-                    if(member instanceof Member) {
+                for (Object member : tableView.getItems()) {
+                    if (member instanceof Member) {
                         String memberShortName = ((Member) member).getMemberShortName().toLowerCase();
-                        if(memberShortName.contains(text_searchText.getText().toLowerCase())) {
+                        if (memberShortName.contains(text_searchText.getText().toLowerCase())) {
                             findParams.add(searchIndex);
                         }
                         ++searchIndex;
@@ -84,10 +84,10 @@ public class FindFormController {
                 }
                 break;
             case 3:
-                for (Object member: tableView.getItems()) {
-                    if(member instanceof Member) {
+                for (Object member : tableView.getItems()) {
+                    if (member instanceof Member) {
                         String memberDirectorFullName = ((Member) member).getDirector().getFullName().toLowerCase();
-                        if(memberDirectorFullName.contains(text_searchText.getText().toLowerCase())) {
+                        if (memberDirectorFullName.contains(text_searchText.getText().toLowerCase())) {
                             findParams.add(searchIndex);
                         }
                         ++searchIndex;
@@ -95,10 +95,10 @@ public class FindFormController {
                 }
                 break;
             case 4:
-                for (Object member: tableView.getItems()) {
-                    if(member instanceof Member) {
+                for (Object member : tableView.getItems()) {
+                    if (member instanceof Member) {
                         String services = ((Member) member).getRelate().getServices().toLowerCase();
-                        if(services.contains(text_searchText.getText().toLowerCase())) {
+                        if (services.contains(text_searchText.getText().toLowerCase())) {
                             findParams.add(searchIndex);
                         }
                         ++searchIndex;
@@ -106,7 +106,7 @@ public class FindFormController {
                 }
                 break;
         }
-        if(findParams.size() > 1) {
+        if (findParams.size() > 1) {
             btn_last.setDisable(false);
             btn_next.setDisable(false);
         } else {
@@ -116,53 +116,36 @@ public class FindFormController {
         }
 
         label_count.setText(String.valueOf(findParams.size()));
-        if(findParams.size() > 0) {
+        if (findParams.size() > 0) {
             int selectRow = findParams.get(0);
             tableView.getSelectionModel().select(selectRow);
             checkRowCount();
         }
-        printFindParams();
-
     }
-
-    private void printFindParams() {
-        System.out.println("findparams: ");
-        findParams.forEach(integer -> System.out.println(integer));
-    }
-
-
-    public void next(ActionEvent actionEvent) {
+    @FXML
+    public void next() {
         tableView.getSelectionModel().clearSelection();
         ++findIndex;
-        if(findIndex >= findParams.size()) findIndex = 0;
+        if (findIndex >= findParams.size()) findIndex = 0;
         int selectRow = findParams.get(findIndex);
         tableView.getSelectionModel().select(selectRow);
         checkRowCount();
     }
-
-    public void last(ActionEvent actionEvent) {
+    @FXML
+    public void last() {
         tableView.getSelectionModel().clearSelection();
         --findIndex;
-        if(findIndex < 0) findIndex = findParams.size() - 1;
+        if (findIndex < 0) findIndex = findParams.size() - 1;
         int selectRow = findParams.get(findIndex);
         tableView.getSelectionModel().select(selectRow);
         checkRowCount();
     }
 
     private void checkRowCount() {
-        label_count.setText(findParams.size() + " (" + Integer.toString(findIndex + 1) + " из " + String.valueOf(findParams.size()) + ")");
+        label_count.setText(findParams.size() + " (" + (findIndex + 1) + " из " + findParams.size() + ")");
     }
-
-    public void clear() {
-        text_searchText.clear();
-        comboBox_params.getSelectionModel().clearSelection();
-        btn_last.setDisable(true);
-        btn_next.setDisable(true);
-        label_count.setText(null);
-        findIndex = 0;
-    }
-
-    public void selectParams(ActionEvent actionEvent) {
+    @FXML
+    public void selectParams() {
         btn_search.setDisable(false);
     }
 }
