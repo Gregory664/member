@@ -12,12 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.hibernate.HibernateException;
 import ru.src.logic.controllers.user.CreateUserController;
 import ru.src.logic.controllers.user.UpdateUserController;
 import ru.src.logic.implementation.*;
 import ru.src.model.User;
-
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,7 +39,6 @@ public class SettingsController {
     public Button button_saveConnection;
     @FXML
     public Button button_close;
-
     @FXML
     public TableView<User> table_users;
     @FXML
@@ -55,13 +52,12 @@ public class SettingsController {
     @FXML
     public MenuItem item_deleteUser;
 
-
     private boolean changeSettingFromMainForm = false;
     public void setChangeSettingFromMainForm(boolean changeSettingFromMainForm) {
         this.changeSettingFromMainForm = changeSettingFromMainForm;
     }
 
-    private ObservableList<User> users = FXCollections.observableArrayList();
+    private ObservableList<User> users = FXCollections.observableArrayList(DBConnection.getAllUser());
 
     @FXML
     public void initialize() {
@@ -72,15 +68,14 @@ public class SettingsController {
 
         column_login.setCellValueFactory(new PropertyValueFactory<>("login"));
         column_fullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-        users.addAll(DBConnection.getAllUser());
         table_users.setItems(users);
 
         fillConnectionParams();
-    }
-
+        checkCountOfUsers();
+    } 
     @FXML
-    public void saveConnection(ActionEvent actionEvent) {
-        if(HibernateUtils.isActive()) HibernateUtils.closeSessionFactory();
+    public void saveConnection() {
+        if (HibernateUtils.isActive()) HibernateUtils.closeSessionFactory();
 
         ConnectionUtils.setConnection(text_hostName.getText(),
                 text_dataBase.getText(),
@@ -89,23 +84,16 @@ public class SettingsController {
                 getPasswordFromCurrentTextBox()
         );
 
-        try {
-            ConnectionUtils.checkConnection();
-            if(changeSettingFromMainForm) MainFormController.memberOrganizations.refresh();
-            closeCurrentStage(actionEvent);
-        }
-        catch (HibernateException e) {
-            MemberException.getCheckSqlException(e);
-        }
-    }
-
+        ConnectionUtils.activateConnection();
+        if (changeSettingFromMainForm) MainFormController.memberOrganizations.refresh();
+    } 
     @FXML
     public void addUser() {
+        FXMLLoader createUserFXMLLoader = new FXMLLoader();
         Parent createUser = null;
         CreateUserController createUserController = null;
 
         try {
-            FXMLLoader createUserFXMLLoader = new FXMLLoader();
             createUserFXMLLoader.setLocation(getClass().getResource("/ui/User/CreateUser.fxml"));
             createUser = createUserFXMLLoader.load();
             createUserController = createUserFXMLLoader.getController();
@@ -114,7 +102,7 @@ public class SettingsController {
         }
 
         Stage createUserStage = new Stage();
-        createUserStage.setScene(new Scene(Objects.requireNonNull(createUser)));
+        createUserStage.setScene(new Scene(createUser));
         createUserStage.setResizable(false);
         createUserStage.setTitle("Добавление пользователя");
 
@@ -130,8 +118,7 @@ public class SettingsController {
                 MemberUtils.warningDialog("Возникла ошибка : \n" + e.getMessage());
             }
         }
-    }
-
+    } 
     @FXML
     public void editUser() {
         Parent updateUser = null;
@@ -160,8 +147,7 @@ public class SettingsController {
             DBConnection.updateUser(selectedUser);
             MemberUtils.informationDialog("Пользователь успешно обновлен!");
         }
-    }
-
+    } 
     @FXML
     public void deleteUser() {
         User selectedUser = table_users.getSelectionModel().getSelectedItem();
@@ -178,15 +164,13 @@ public class SettingsController {
             users.remove(selectedUser);
             MemberUtils.informationDialog("Пользователь успешно удален!");
         }
-    }
-
+    } 
     @FXML
     public void closeCurrentStage(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-    }
-
+    } 
     @FXML
     public void showPasswordChar() {
         if(!text_password.isVisible()){
@@ -201,11 +185,11 @@ public class SettingsController {
             text_password.clear();
             text_password.setVisible(false);
         }
-    }
+    } 
 
     private String getPasswordFromCurrentTextBox() {
         return text_password.isVisible() ? text_password.getText() : passField_password.getText();
-    }
+    } 
 
     private void fillConnectionParams() {
         text_hostName.setText(ConnectionUtils.getConnection().getHostname());
@@ -213,7 +197,7 @@ public class SettingsController {
         text_port.setText(ConnectionUtils.getConnection().getPort());
         text_userName.setText(ConnectionUtils.getConnection().getUsername());
         passField_password.setText(ConnectionUtils.getConnection().getPassword());
-    }
+    } 
 
     private void checkCountOfUsers() {
         if(users.size() > 0) {
@@ -224,5 +208,5 @@ public class SettingsController {
             item_deleteUser.setDisable(true);
             item_editUser.setDisable(true);
         }
-    }
+    } 
 }

@@ -60,12 +60,6 @@ public class CreateUserController {
         }
     }
 
-    private void closeCurrentStage(ActionEvent actionEvent) {
-        Node source = (Node) actionEvent.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
-
     public void showPasswordChar() {
         if(!text_password.isVisible()){
             text_password.setText(passField_password.getText());
@@ -89,5 +83,11 @@ public class CreateUserController {
         set.add(MemberUtils.isEmptyField(text_fullName));
         set.add(MemberUtils.isEmptyField(text_position));
         return set.contains(true);
+    }
+
+    public void closeCurrentStage(ActionEvent actionEvent) {
+        Node source = (Node) actionEvent.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 }
