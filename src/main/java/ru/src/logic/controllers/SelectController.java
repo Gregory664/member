@@ -473,6 +473,8 @@ public class SelectController {
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
     private ObservableList<FindMember> list = FXCollections.observableArrayList();
 
+    private Stage currentStage;
+
     @FXML
     public void initialize() {
         column_memberId.setCellValueFactory(new PropertyValueFactory<>("memberId"));
@@ -1445,7 +1447,7 @@ public class SelectController {
         test.add(getWherePartFromList(listPayment, "i.INVOICE_STATUS_OF_PAYMENT", 7));
         test.add(getWherePartFromServices());
 
-        test.removeIf(Objects::isNull);
+        test.removeIf(MemberUtils::isEmptyString);
 
         String selectQuery = "SELECT DISTINCT m.MEMBER_ID, " +
                 "m.MEMBER_SERIAL, " +
@@ -1497,7 +1499,7 @@ public class SelectController {
                                 .filter(entry -> entry.getValue().equals(checkBox.getText()))
                                 .mapToInt(Map.Entry::getKey)
                                 .findFirst();
-                        if(monthNumber.isPresent()) someSelect.add(pattern + " = " + monthNumber.getAsInt());
+                        if (monthNumber.isPresent()) someSelect.add(pattern + " = " + monthNumber.getAsInt());
                         break;
                     case 7:
                         someSelect.add(pattern + " = " + MemberUtils.paymentToBoolean(checkBox.getText()));
@@ -1509,18 +1511,17 @@ public class SelectController {
             }
         }
 
-        if (someSelect.size() == 0) result = null;
-        else {
-            for (int i = 0; i < someSelect.size(); i++) {
-                if (i != someSelect.size() - 1) result += someSelect.get(i) + " OR ";
-                else result += someSelect.get(i);
+        if (!someSelect.isEmpty()) {
+            for (int i = 0; i <= someSelect.size() - 1; i++) {
+                result += someSelect.get(i) + " OR ";
             }
+            result += someSelect.get(someSelect.size() - 1);
         }
         return result;
     }
 
     private String getWherePartFromDate(ArrayList<DatePicker> datePickers, String pattern) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         ArrayList<String> someSelect = new ArrayList<>();
         String[] splitPattern = pattern.split(";");
@@ -1538,18 +1539,17 @@ public class SelectController {
                 someSelect.add(splitPattern[1] + " <= '" + datePickers.get(1).getValue().toString() + "'");
         }
 
-        if (someSelect.size() == 0) result = null;
-        else {
-            for (int i = 0; i < someSelect.size(); i++) {
-                if (i != someSelect.size() - 1) result += someSelect.get(i) + " AND ";
-                else result += someSelect.get(i);
+        if (!someSelect.isEmpty()) {
+            for (int i = 0; i <= someSelect.size() - 1; i++) {
+                result.append(someSelect.get(i)).append(" AND ");
             }
+            result.append(someSelect.get(someSelect.size() - 1));
         }
-        return result;
+        return result.toString();
     }
 
     private String getWherePartFromServices() {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder("");
         StringBuilder numbers = new StringBuilder();
         int numbersCount = 0;
         for (Map.Entry<Integer, CheckBox> entry : servicesCheckBoxMap.entrySet()) {
@@ -1560,11 +1560,12 @@ public class SelectController {
         }
         if (numbersCount != 0) {
             numbers.deleteCharAt(numbers.length() - 1);
-            return result.append("ms.SERVICES_ID IN(")
+            result.append("ms.SERVICES_ID IN(")
                     .append(numbers)
                     .append(") GROUP BY m.MEMBER_ID HAVING COUNT(*)=")
-                    .append(numbersCount).toString();
-        } else return null;
+                    .append(numbersCount);
+        }
+        return result.toString();
     }
 
     private String getAppendWhereQuery(ArrayList<String> list) {
@@ -1578,7 +1579,7 @@ public class SelectController {
     }
 
     @FXML
-    public void saveToPDF(ActionEvent actionEvent) {
+    public void saveToPDF() {
         ArrayList<String[]> listSelectedParams = new ArrayList<>();
         listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_memberStatus.getText(), listMemberStatus));
         listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_businessForm.getText(), listBusinessForm));
@@ -1614,7 +1615,7 @@ public class SelectController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf"));
-        File file = fileChooser.showSaveDialog(getCurrentStage(actionEvent));
+        File file = fileChooser.showSaveDialog(currentStage);
 
         if (file != null) {
             String path = file.getAbsolutePath();
@@ -1626,10 +1627,10 @@ public class SelectController {
     }
 
     @FXML
-    public void saveCSV(ActionEvent actionEvent) {
+    public void saveCSV() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("csv", "*.csv"));
-        File file = fileChooser.showSaveDialog(getCurrentStage(actionEvent));
+        File file = fileChooser.showSaveDialog(currentStage);
 
         if (file != null) {
             String path = file.getAbsolutePath();
@@ -1654,16 +1655,10 @@ public class SelectController {
             e.printStackTrace();
         }
     }
-
     @FXML
     private void closeCurrentStage(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
-    }
-
-    private Stage getCurrentStage(ActionEvent actionEvent) {
-        Node node = (Node) actionEvent.getSource();
-        return (Stage) node.getScene().getWindow();
     }
 }

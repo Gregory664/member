@@ -6,6 +6,7 @@ import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class MemberUtils {
@@ -55,31 +56,6 @@ public class MemberUtils {
         boolean result = false;
         if(value.equals("Имеется")) result =  true;
         if(value.equals("Отсутствует")) result = false;
-        return result;
-    }
-
-    public static boolean yesNoToBoolean(String value) {
-        boolean result = false;
-        if(value.equals("Да")) result =  true;
-        if(value.equals("Нет")) result = false;
-        return result;
-    }
-
-    public static boolean interestingToBoolean(String value) {
-        boolean result = false;
-        if(value.equals("Интересует")) result =  true;
-        if(value.equals("Не интересует")) result = false;
-        return result;
-    }
-
-    public static String dateToString(LocalDate localDate) {
-        String result;
-        if(localDate != null) {
-            result = localDate.getDayOfMonth() + "." +
-                    localDate.getMonth().getValue() + "." +
-                    localDate.getYear();
-        }
-        else result = "Не указана";
         return result;
     }
 
@@ -268,4 +244,7 @@ public class MemberUtils {
         return Hex.toHexString(digest);
     }
 
+    public static Boolean isEmptyString(String checkString) {
+        return checkString.equals("");
+    }
 }
