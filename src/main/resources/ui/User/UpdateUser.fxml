@@ -140,7 +140,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btn_closeApp" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#closeApp" text="Отмена" GridPane.columnIndex="2">
+                  <Button fx:id="btn_closeApp" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#closeCurrentStage" text="Отмена" GridPane.columnIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>

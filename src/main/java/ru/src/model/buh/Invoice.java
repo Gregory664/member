@@ -63,7 +63,6 @@ public class Invoice implements Serializable {
 
 
     private String generateInvoiceId() {
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         return this.invoiceNumber + this.dateCreation.format(formatter);
     }
