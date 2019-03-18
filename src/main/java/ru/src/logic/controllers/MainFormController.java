@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,7 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -45,21 +45,11 @@ import ru.src.model.buh.Invoice;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class MainFormController {
-
-
     @FXML
-    public TextField text_Search;
-    @FXML
-    public Button btn_Search;
-
-    @FXML
-    public TableView table_members;
+    public TableView<Member> table_members;
     @FXML
     public TableColumn<Member, String> column_memberId;
     @FXML
@@ -327,8 +317,6 @@ public class MainFormController {
     @FXML
     public MenuItem menu_addMember2;
     @FXML
-    public Menu menu_settings;
-    @FXML
     public MenuItem item_Calendar;
     @FXML
     public Label label_alarm_connection;
@@ -363,65 +351,28 @@ public class MainFormController {
     @FXML
     public Tab tab_invoice;
 
-    private static Organizations memberOrganizations = new Organizations();
-    public MenuItem menu_logOut;
     public TabPane tabPane;
+    @FXML
+    public Label label_director_phoneMobile;
+    @FXML
+    public Label label_director_phoneCity;
+    @FXML
+    public Label label_director_email;
+    @FXML
+    public Label label_director_birthday;
+    @FXML
+    public Label label_director_changes;
 
 
+    static Organizations memberOrganizations = new Organizations();
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
     private Stage mainStage;
-    private Stage createInvoiceStage;
-    private Stage updateInvoiceStage;
-    private Stage createContactPersonStage;
-    private Stage updateContactPersonStage;
-    private Stage createMemberFormStage;
-    private Stage updateMemberFormStage;
-    private Stage selectStage;
-    private Stage settingsStage;
-    private Stage calendarStage;
-    private Stage calendarNotificationStage;
-    private Stage findFormStage;
-
-    private FXMLLoader createInvoiceFxmlLoader = new FXMLLoader();
-    private FXMLLoader updateInvoiceFxmlLoader = new FXMLLoader();
-    private FXMLLoader createContactPersonFxmlLoader = new FXMLLoader();
-    private FXMLLoader updateContactPersonFxmlLoafer = new FXMLLoader();
-    private FXMLLoader createMemberFormFxmlLoader = new FXMLLoader();
-    private FXMLLoader updateMemberFormFxmlLoader = new FXMLLoader();
-    private FXMLLoader selectFormFxmlLoader = new FXMLLoader();
-    private FXMLLoader settingsFxmlLoader = new FXMLLoader();
-    private FXMLLoader calendarNotificationFxmlLoader = new FXMLLoader();
-    private FXMLLoader calendarFxmlLoader = new FXMLLoader();
-    private FXMLLoader findFormFXMLLoader = new FXMLLoader();
-
-    private Parent createInvoice;
-    private Parent updateInvoice;
-    private Parent createContactPerson;
-    private Parent updateContactPerson;
-    private Parent createMemberForm;
-    private Parent updateMemberForm;
-    private Parent selectForm;
-    private Parent settings;
-    private Parent calendarNotification;
-    private Parent calendar;
-    private Parent findForm;
-
-    private CreateInvoiceController createInvoiceController;
-    private UpdateInvoiceController updateInvoiceController;
-    private CreateContactPersonController createContactPersonController;
-    private UpdateContactPersonController updateContactPersonController;
-    private CreateMemberFormController createMemberFormController;
-    private UpdateMemberFormController updateMemberFormController;
-    private SelectController selectController;
-    private CalendarController calendarController;
-    private SettingsController settingsController;
-    private CalendarNotificationController calendarNotificationController;
-    private FindFormController findFormController;
 
     private User user;
+
     public void setUser(User user) {
         this.user = user;
         label_name.setText(user.getFullName());
@@ -429,63 +380,57 @@ public class MainFormController {
         setAccess(user.getAdmin());
     }
 
-    public void setAccess(Boolean isAdmin) {
-        if(!isAdmin) {
+    private void setAccess(Boolean isAdmin) {
+        if (!isAdmin) {
             label_notification_calendar.setVisible(false);
-           menu_renameMember.setVisible(false);
-           menu_deleteMember.setVisible(false);
-           menu_addMember.setVisible(false);
-           menu_saveMember.setVisible(false);
-           menu_addMember2.setVisible(false);
-
-
+            menu_renameMember.setVisible(false);
+            menu_deleteMember.setVisible(false);
+            menu_addMember.setVisible(false);
+            menu_saveMember.setVisible(false);
+            menu_addMember2.setVisible(false);
             item_Calendar.setVisible(false);
             item_settings.setVisible(false);
 
             row_birthday.setMinHeight(0);
             row_birthday.setMaxHeight(0);
-
             row_changes.setMinHeight(0);
             row_changes.setMaxHeight(0);
-
             row_cityPhone.setMinHeight(0);
             row_cityPhone.setMaxHeight(0);
-
             row_email.setMinHeight(0);
             row_email.setMaxHeight(0);
-
             row_phone.setMinHeight(0);
             row_phone.setMaxHeight(0);
 
             tabPane.getTabs().remove(7);
             tabPane.getTabs().remove(7);
-//            tab_contactPerson.setClosable(true);
-//            tab_invoice.setClosable(true);
 
-
-        } else label_notification_calendar.setVisible(true);
-
-        if(user.getAdmin()) checkBirthday(label_notification_calendar);
+            label_director_birthday.setVisible(false);
+            label_director_email.setVisible(false);
+            label_director_phoneCity.setVisible(false);
+            label_director_phoneMobile.setVisible(false);
+            label_director_changes.setVisible(false);
+            date_director_birthday.setVisible(false);
+            text_director_email.setVisible(false);
+            text_director_phoneCity.setVisible(false);
+            text_director_phoneMobile.setVisible(false);
+            text_director_changes.setVisible(false);
+        } else checkBirthday(label_notification_calendar);
     }
+
 
     @FXML
     public void initialize() {
-
         date_relate_dateOfCreation.setStyle("-fx-opacity: 1");
         date_relate_dateOfCreation.getEditor().setStyle("-fx-opacity: 1");
-
         date_director_birthday.setStyle("-fx-opacity: 1");
         date_director_birthday.getEditor().setStyle("-fx-opacity: 1");
-
         date_invoice_dateCreation.setStyle("-fx-opacity: 1");
         date_invoice_dateCreation.getEditor().setStyle("-fx-opacity: 1");
-
         date_invoice_orderDate.setStyle("-fx-opacity: 1");
         date_invoice_orderDate.getEditor().setStyle("-fx-opacity: 1");
-
         date_invoice_dateReceiving.setStyle("-fx-opacity: 1");
         date_invoice_dateReceiving.getEditor().setStyle("-fx-opacity: 1");
-
 
         column_memberId.setCellValueFactory(new PropertyValueFactory<>("memberId"));
         column_memberDate.setCellValueFactory(new PropertyValueFactory<>("memberDate"));
@@ -502,58 +447,20 @@ public class MainFormController {
         initListeners();
 
         table_members.setItems(memberOrganizations.getMembers());
+        table_members.setStyle("-fx-selection-bar: -fx-accent; -fx-selection-bar-non-focused: -fx-accent;");
+        table_members.setPlaceholder(new Label("Информация отсутствует"));
         countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
-        checkConnection(label_alarm_connection, HibernateUtils.isActive());
+        item_find.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN));
+        image.setImage(new Image(getClass().getResourceAsStream("/img/image.png")));
 
+        checkConnection(HibernateUtils.isActive());
 
-        //if(user.getAdmin()) {
-            initCreateInvoiceLoader();
-            initUpdateInvoiceLoader();
-            initCreateContactPersonLoader();
-            initUpdateContactPersonLoader();
-            initCreateMemberFormLoader();
-            initUpdateMemberFormLoader();
-        //}
-
-
-        initSelectFormLoader();
         initServices();
-        initCalendar();
-        initSettings();
-        initFindForm();
-        initCalendatNotification();
-
-        initInterestCheckBox();
+        setInterestCheckBoxOpacity();
 
         menu_addMember.setDisable(false);
         menu_deleteMember.setDisable(true);
         menu_renameMember.setDisable(true);
-
-        table_members.setStyle("-fx-selection-bar: -fx-accent; -fx-selection-bar-non-focused: -fx-accent;");
-
-        item_find.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN));
-
-        image.setImage(new Image(getClass().getResourceAsStream("/img/image.png")));
-    }
-
-    private void initFindForm() {
-        try {
-            findFormFXMLLoader.setLocation(getClass().getResource("/ui/FindForm.fxml"));
-            findForm = findFormFXMLLoader.load();
-            findFormController = findFormFXMLLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initCalendatNotification() {
-        try {
-            calendarNotificationFxmlLoader.setLocation(getClass().getResource("/ui/calendarNotification.fxml"));
-            calendarNotification = calendarNotificationFxmlLoader.load();
-            calendarNotificationController = calendarNotificationFxmlLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void checkBirthday(Label label) {
@@ -565,17 +472,7 @@ public class MainFormController {
         }
     }
 
-    private void initSettings() {
-        try {
-            settingsFxmlLoader.setLocation(getClass().getResource("/ui/Settings.fxml"));
-            settings = settingsFxmlLoader.load();
-            settingsController = settingsFxmlLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initInterestCheckBox() {
+    private void setInterestCheckBoxOpacity() {
         checkBox_generalInformation_vedImport.setStyle("-fx-opacity: 1");
         checkBox_generalInformation_vedExport.setStyle("-fx-opacity: 1");
         checkBox_generalInformation_interactionOffline.setStyle("-fx-opacity: 1");
@@ -593,24 +490,6 @@ public class MainFormController {
         checkBox_generalInformation_newsletter.setStyle("-fx-opacity: 1");
         checkBox_generalInformation_committees.setStyle("-fx-opacity: 1");
         checkBox_generalInformation_corporateMember.setStyle("-fx-opacity: 1");
-    }
-
-    private void initCalendar() {
-        try {
-            calendarFxmlLoader.setLocation(getClass().getResource("/ui/Calendar.fxml"));
-            calendar = calendarFxmlLoader.load();
-            calendarController = calendarFxmlLoader.getController();
-            calendarController.setParams(table_members);
-
-            calendarStage = new Stage();
-            calendarStage.setScene(new Scene(calendar));
-            //calendarStage.initModality(Modality.APPLICATION_MODAL);
-            calendarStage.setTitle("Календарь");
-            //selectStage.initStyle(StageStyle.UNDECORATED);
-            //calendarStage.initOwner(mainStage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void initServices() {
@@ -632,125 +511,434 @@ public class MainFormController {
         servicesCheckBoxMap.put(16, checkBox_services_16);
         servicesCheckBoxMap.put(17, checkBox_services_17);
 
-        servicesCheckBoxMap.forEach((integer, checkBox) -> {
-            checkBox.setStyle("-fx-opacity: 1");
-        });
-    }
-
-    private void initSelectFormLoader() {
-        try {
-            selectFormFxmlLoader.setLocation(getClass().getResource("/ui/Select.fxml"));
-            selectForm = selectFormFxmlLoader.load();
-            selectController = selectFormFxmlLoader.getController();
-            selectController.setCurrentStage(selectStage);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initCreateContactPersonLoader() {
-        try {
-            createContactPersonFxmlLoader.setLocation(getClass().getResource("/ui/ContactPerson/CreateContactPerson.fxml"));
-            createContactPerson = createContactPersonFxmlLoader.load();
-            createContactPersonController = createContactPersonFxmlLoader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initUpdateContactPersonLoader() {
-        try {
-            updateContactPersonFxmlLoafer.setLocation(getClass().getResource("/ui/ContactPerson/UpdateContactPerson.fxml"));
-            updateContactPerson = updateContactPersonFxmlLoafer.load();
-            updateContactPersonController = updateContactPersonFxmlLoafer.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initCreateInvoiceLoader() {
-        try {
-            createInvoiceFxmlLoader.setLocation(getClass().getResource("/ui/Invoice/CreateInvoiceForm.fxml"));
-            createInvoice = createInvoiceFxmlLoader.load();
-            createInvoiceController = createInvoiceFxmlLoader.getController();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initUpdateInvoiceLoader() {
-        try {
-            updateInvoiceFxmlLoader.setLocation(getClass().getResource("/ui/Invoice/UpdateInvoiceForm.fxml"));
-            updateInvoice = updateInvoiceFxmlLoader.load();
-            updateInvoiceController = updateInvoiceFxmlLoader.getController();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initCreateMemberFormLoader() {
-        try {
-            createMemberFormFxmlLoader.setLocation(getClass().getResource("/ui/CreateMemberForm.fxml"));
-            createMemberForm = createMemberFormFxmlLoader.load();
-            createMemberFormController = createMemberFormFxmlLoader.getController();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initUpdateMemberFormLoader() {
-        try {
-            updateMemberFormFxmlLoader.setLocation(getClass().getResource("/ui/UpdateMemberForm.fxml"));
-            updateMemberForm = updateMemberFormFxmlLoader.load();
-            updateMemberFormController = updateMemberFormFxmlLoader.getController();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setStyle("-fx-opacity: 1"));
     }
 
     private void initListeners() {
-        memberOrganizations.getMembers().addListener(new ListChangeListener<Member>() {
-            @Override
-            public void onChanged(Change<? extends Member> c) {
-                countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
-                //clearAll();
-                checkConnection(label_alarm_connection, HibernateUtils.isActive());
-            }
+        memberOrganizations.getMembers().addListener((ListChangeListener<Member>) c -> {
+            countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
+            checkConnection(HibernateUtils.isActive());
         });
 
-        //Слушатель, заполняющий все поля по нажатию на строку таблицы
         table_members.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                if (user.getAdmin()) {
-                    menu_addMember.setDisable(false);
-                    menu_deleteMember.setDisable(false);
-                    menu_renameMember.setDisable(false);
-                }
+                menu_addMember.setDisable(false);
+                menu_deleteMember.setDisable(false);
+                menu_renameMember.setDisable(false);
 
-                Member member = (Member) table_members.getSelectionModel().getSelectedItem();
+                Member member = table_members.getSelectionModel().getSelectedItem();
+                clearAllFields();
                 fillAllInformation(member);
             } else {
-                if (user.getAdmin()) {
-                    menu_addMember.setDisable(false);
-                    menu_deleteMember.setDisable(true);
-                    menu_renameMember.setDisable(true);
-                }
+                menu_addMember.setDisable(false);
+                menu_deleteMember.setDisable(true);
+                menu_renameMember.setDisable(true);
             }
         });
     }
 
-    private void fillAllInformation(Member member) {
-        if(user.getAdmin()) {
-            fillContactPersons(member.getContactPerson());
-            fillInvoices(member.getInvoice());
+    private void checkConnection(boolean isActiveConnection) {
+        if (isActiveConnection) {
+            label_alarm_connection.setText("установленно");
+            label_alarm_connection.setTextFill(Color.GREEN);
+        } else {
+            label_alarm_connection.setText("не установленно");
+            label_alarm_connection.setTextFill(Color.RED);
+        }
+    }
+
+    @FXML
+    private void exitApplication(ActionEvent actionEvent) {
+        Node node = (Node) actionEvent.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.close();
+        stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+    }
+
+    @FXML
+    public void saveMemberToPDF() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf"));
+        File file = fileChooser.showSaveDialog(mainStage);
+        Member member = table_members.getSelectionModel().getSelectedItem();
+
+        if (file != null) {
+            String path = file.getAbsolutePath();
+            if (!path.contains("."))
+                path += ".pdf";
+            PDFUtils.saveMemberToPDF(path, member);
+        }
+    }
+
+
+    @FXML
+    public void createInvoice() {
+        FXMLLoader createInvoiceFxmlLoader = new FXMLLoader();
+        Parent createInvoice = null;
+
+        try {
+            createInvoiceFxmlLoader.setLocation(getClass().getResource("/ui/Invoice/CreateInvoiceForm.fxml"));
+            createInvoice = createInvoiceFxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        fillRelate(member.getRelate());//
+        Stage createInvoiceStage = new Stage();
+        createInvoiceStage.setResizable(false);
+        createInvoiceStage.setScene(new Scene(Objects.requireNonNull(createInvoice)));
+        createInvoiceStage.initModality(Modality.APPLICATION_MODAL);
+        createInvoiceStage.initOwner(mainStage);
+        createInvoiceStage.setTitle("Добавление счета");
+
+        Member member = table_members.getSelectionModel().getSelectedItem();
+        if (member.getInvoice() == null) {
+            List<Invoice> invoices = new ArrayList<>();
+            member.setInvoice(invoices);
+        }
+        CreateInvoiceController createInvoiceController = createInvoiceFxmlLoader.getController();
+        createInvoiceController.setMember(member);
+        createInvoiceStage.showAndWait();
+
+        if (createInvoiceController.isCreateInvoice()) {
+            if (!DBConnection.isInvoiceExists(createInvoiceController.getInvoice().getInvoiceId())) {
+                member.getInvoice().add(createInvoiceController.getInvoice());
+                DBConnection.updateMember(member);
+                memberOrganizations.updateMember(member);
+                MemberUtils.informationDialog("Счет успешно добавлен!");
+            } else MemberUtils.warningDialog("Такой счет уже существует!");
+        }
+    }
+
+    @FXML
+    public void deleteInvoice() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Удаление счета");
+        alert.setHeaderText(null);
+        alert.setContentText("Вы действительно хотите удалить счет?");
+
+        Optional<ButtonType> response = alert.showAndWait();
+        if (response.isPresent() && response.get() == ButtonType.OK) {
+
+            Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue()));
+            Member member = table_members.getSelectionModel().getSelectedItem();
+
+            member.getInvoice().remove(invoice);
+            DBConnection.updateMember(member);
+            memberOrganizations.updateMember(member);
+            MemberUtils.informationDialog("Cчет успешно удален!");
+        }
+    }
+
+    @FXML
+    public void updateInvoice() {
+        FXMLLoader updateInvoiceFxmlLoader = new FXMLLoader();
+        Parent updateInvoice = null;
+
+        try {
+            updateInvoiceFxmlLoader.setLocation(getClass().getResource("/ui/Invoice/UpdateInvoiceForm.fxml"));
+            updateInvoice = updateInvoiceFxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage updateInvoiceStage = new Stage();
+        updateInvoiceStage.setResizable(false);
+        updateInvoiceStage.setScene(new Scene(Objects.requireNonNull(updateInvoice)));
+        updateInvoiceStage.initModality(Modality.APPLICATION_MODAL);
+        updateInvoiceStage.initOwner(mainStage);
+        updateInvoiceStage.setTitle("Редактирование счета");
+
+        UpdateInvoiceController updateInvoiceController = updateInvoiceFxmlLoader.getController();
+        Member member = table_members.getSelectionModel().getSelectedItem();
+        Invoice currentInvoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue()));
+        updateInvoiceController.setInvoice(currentInvoice);
+        updateInvoiceStage.showAndWait();
+
+        if (updateInvoiceController.isInvoiceUpdate()) {
+            DBConnection.updateMember(member);
+            memberOrganizations.updateMember(member);
+            MemberUtils.informationDialog("Счет успешно обновлен!");
+        } else MemberUtils.informationDialog("Данные по счету остались без изменений!");
+    }
+
+    @FXML
+    public void createContactPerson() {
+        FXMLLoader createContactPersonFxmlLoader = new FXMLLoader();
+        Parent createContactPerson = null;
+
+
+        try {
+            createContactPersonFxmlLoader.setLocation(getClass().getResource("/ui/ContactPerson/CreateContactPerson.fxml"));
+            createContactPerson = createContactPersonFxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage createContactPersonStage = new Stage();
+        createContactPersonStage.setResizable(false);
+        createContactPersonStage.setScene(new Scene(Objects.requireNonNull(createContactPerson)));
+        createContactPersonStage.initModality(Modality.APPLICATION_MODAL);
+        createContactPersonStage.setTitle("Добавление контактного лица");
+        createContactPersonStage.initOwner(mainStage);
+
+
+        Member member = table_members.getSelectionModel().getSelectedItem();
+        if (member.getContactPerson() == null) {
+            List<ContactPerson> people = new ArrayList<>();
+            member.setContactPerson(people);
+        }
+
+        CreateContactPersonController createContactPersonController = createContactPersonFxmlLoader.getController();
+        createContactPersonController.setMember(member);
+        createContactPersonStage.showAndWait();
+
+        if (createContactPersonController.isCreateContactPerson()) {
+            DBConnection.updateMember(member);
+            memberOrganizations.updateMember(member);
+            MemberUtils.informationDialog("Контактное лицо успешно добавлено!");
+        }
+    }
+
+    @FXML
+    public void removeContactPerson() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Удаление контактного лица");
+        alert.setHeaderText(null);
+        alert.setContentText("Вы действительно хотите удалить контактное лицо?");
+
+        Optional<ButtonType> response = alert.showAndWait();
+        if (response.isPresent() && response.get() == ButtonType.OK) {
+            ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue()));
+            Member member = table_members.getSelectionModel().getSelectedItem();
+
+            member.getContactPerson().remove(contactPerson);
+            DBConnection.updateMember(member);
+            memberOrganizations.updateMember(member);
+            MemberUtils.informationDialog("Данные контактного лица успешно удалены!");
+        }
+    }
+
+    @FXML
+    public void updateContactPerson() {
+        FXMLLoader updateContactPersonFXMLLoader = new FXMLLoader();
+        Parent updateContactPerson = null;
+
+        try {
+            updateContactPersonFXMLLoader.setLocation(getClass().getResource("/ui/ContactPerson/UpdateContactPerson.fxml"));
+            updateContactPerson = updateContactPersonFXMLLoader.load();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage updateContactPersonStage = new Stage();
+        updateContactPersonStage.setResizable(false);
+        updateContactPersonStage.setScene(new Scene(Objects.requireNonNull(updateContactPerson)));
+        updateContactPersonStage.initModality(Modality.APPLICATION_MODAL);
+        updateContactPersonStage.initOwner(mainStage);
+        updateContactPersonStage.setTitle("Редактирование данных контактного лица");
+
+        UpdateContactPersonController updateContactPersonController = updateContactPersonFXMLLoader.getController();
+        Member member = table_members.getSelectionModel().getSelectedItem();
+        ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue()));
+        updateContactPersonController.setContactPerson(contactPerson);
+        updateContactPersonStage.showAndWait();
+
+        if (updateContactPersonController.isUpdateContactPerson()) {
+            DBConnection.updateMember(member);
+            memberOrganizations.updateMember(member);
+            MemberUtils.informationDialog("Данные контактного лица успешно обновлены!");
+        }
+    }
+
+    @FXML
+    public void addMember() {
+        FXMLLoader createMemberFormFxmlLoader = new FXMLLoader();
+        Parent createMemberForm = null;
+
+        try {
+            createMemberFormFxmlLoader.setLocation(getClass().getResource("/ui/CreateMemberForm.fxml"));
+            createMemberForm = createMemberFormFxmlLoader.load();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage createMemberFormStage = new Stage();
+        createMemberFormStage.setScene(new Scene(Objects.requireNonNull(createMemberForm)));
+        createMemberFormStage.initModality(Modality.APPLICATION_MODAL);
+        createMemberFormStage.initOwner(mainStage);
+        createMemberFormStage.setTitle("Добавление организации");
+        CreateMemberFormController createMemberFormController = createMemberFormFxmlLoader.getController();
+        createMemberFormStage.showAndWait();
+
+        if (createMemberFormController.isMemberCreate()) {
+            Member newMember = createMemberFormController.getMember();
+            DBConnection.addMember(newMember);
+            memberOrganizations.addMember(newMember);
+            MemberUtils.informationDialog("Организация успешно добавлена!");
+        }
+    }
+
+    @FXML
+    public void deleteMember() {
+        Member member = table_members.getSelectionModel().getSelectedItem();
+        member.setServices(null);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Удаление организации");
+        alert.setHeaderText(null);
+        alert.setContentText("Вы действительно хотите удалить организацию:\n" +
+                member.getMemberShortName() + " ?");
+
+        Optional<ButtonType> response = alert.showAndWait();
+        if (response.isPresent() && response.get() == ButtonType.OK) {
+            DBConnection.removeMember(member);
+            memberOrganizations.removeMember(member);
+            MemberUtils.informationDialog("Организация успешно удалена");
+        }
+    }
+
+    @FXML
+    public void renameMember() {
+        FXMLLoader updateMemberFormFxmlLoader = new FXMLLoader();
+        Parent updateMemberForm = null;
+
+        try {
+            updateMemberFormFxmlLoader.setLocation(getClass().getResource("/ui/UpdateMemberForm.fxml"));
+            updateMemberForm = updateMemberFormFxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage updateMemberFormStage = new Stage();
+        updateMemberFormStage.setScene(new Scene(Objects.requireNonNull(updateMemberForm)));
+        updateMemberFormStage.initModality(Modality.APPLICATION_MODAL);
+        updateMemberFormStage.initOwner(mainStage);
+        updateMemberFormStage.setTitle("Редактирование данных организации");
+
+        UpdateMemberFormController updateMemberFormController = updateMemberFormFxmlLoader.getController();
+        Member member = table_members.getSelectionModel().getSelectedItem();
+        updateMemberFormController.setMember(member);
+        updateMemberFormStage.showAndWait();
+
+        if (updateMemberFormController.isMemberUpdate()) {
+            Member updateMember = updateMemberFormController.getMember();
+            DBConnection.updateMember(updateMember);
+            memberOrganizations.updateMember(updateMember);
+            MemberUtils.informationDialog("Данные организации успешно обновлены!");
+        } else MemberUtils.informationDialog("Данные организации остались без изменений!");
+    }
+
+    @FXML
+    public void openCalendar() {
+        FXMLLoader calendarFxmlLoader = new FXMLLoader();
+        Parent calendar = null;
+
+        try {
+            calendarFxmlLoader.setLocation(getClass().getResource("/ui/Calendar.fxml"));
+            calendar = calendarFxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage calendarStage = new Stage();
+        calendarStage.setScene(new Scene(Objects.requireNonNull(calendar)));
+        calendarStage.setTitle("Календарь");
+
+        CalendarController calendarController = calendarFxmlLoader.getController();
+        calendarController.setParams(table_members);
+        calendarStage.show();
+    }
+
+    @FXML
+    public void openNotification() {
+        FXMLLoader calendarNotificationFxmlLoader = new FXMLLoader();
+        Parent calendarNotification = null;
+
+        try {
+            calendarNotificationFxmlLoader.setLocation(getClass().getResource("/ui/calendarNotification.fxml"));
+            calendarNotification = calendarNotificationFxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage calendarNotificationStage = new Stage();
+        calendarNotificationStage.setScene(new Scene(Objects.requireNonNull(calendarNotification)));
+        calendarNotificationStage.setTitle("Уведомление!");
+        calendarNotificationStage.setResizable(false);
+
+        calendarNotificationStage.show();
+    }
+
+    @FXML
+    public void openFind() {
+        FXMLLoader findFormFXMLLoader = new FXMLLoader();
+        Parent findForm = null;
+
+        try {
+            findFormFXMLLoader.setLocation(getClass().getResource("/ui/FindForm.fxml"));
+            findForm = findFormFXMLLoader.load();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage findFormStage = new Stage();
+        findFormStage.setScene(new Scene(Objects.requireNonNull(findForm)));
+        findFormStage.setResizable(false);
+        findFormStage.setTitle("Поиск");
+
+        FindFormController findFormController = findFormFXMLLoader.getController();
+        findFormController.setParams(table_members);
+        findFormStage.showAndWait();
+    }
+
+    @FXML
+    public void openSettings() {
+        FXMLLoader settingsFxmlLoader = new FXMLLoader();
+        Parent settings = null;
+
+        try {
+            settingsFxmlLoader.setLocation(getClass().getResource("/ui/Settings.fxml"));
+            settings = settingsFxmlLoader.load();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage settingsStage = new Stage();
+        settingsStage.setScene(new Scene(Objects.requireNonNull(settings)));
+        settingsStage.setTitle("Настройки");
+
+        SettingsController settingsController = settingsFxmlLoader.getController();
+        settingsController.setChangeSettingFromMainForm(true);
+        settingsStage.show();
+    }
+
+    @FXML
+    public void openSelect() {
+        FXMLLoader selectFormFxmlLoader = new FXMLLoader();
+        Parent selectForm = null;
+        try {
+            selectFormFxmlLoader.setLocation(getClass().getResource("/ui/Select.fxml"));
+            selectForm = selectFormFxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage selectStage = new Stage();
+        selectStage.setScene(new Scene(Objects.requireNonNull(selectForm)));
+        selectStage.initModality(Modality.APPLICATION_MODAL);
+        selectStage.setTitle("Сортировка");
+        selectStage.initOwner(mainStage);
+
+        selectStage.showAndWait();
+    }
+
+
+    private void fillAllInformation(Member member) {
+        fillRelate(member.getRelate());
         fillGeneralInformation(member.getGeneralInformation());
         fillDirector(member.getDirector());
         fillContact(member.getContact());
@@ -758,37 +946,15 @@ public class MainFormController {
         fillDebt(member.getDebt());
         fillAddressLegal(member.getAddressLegal());
         fillAddressActual(member.getAddressActual());
+        if (user.getAdmin()) {
+            if (member.getContactPerson() != null) fillContactPersons(member.getContactPerson());
+            if (member.getContactPerson() != null) fillInvoices(member.getInvoice());
+        }
         fillSocialNetworks(member.getSocialNetworks());
         fillServices(member.getServices());
     }
 
-    private void fillServices(List<Services> services) {
-        clearServices();
-
-        if(services != null) {
-            services.forEach(services1 -> {
-                servicesCheckBoxMap.get(services1.getServicesId()).setSelected(true);
-            });
-        }
-    }
-
-    private void fillSocialNetworks(SocialNetworks socialNetworks) {
-        clearSocialNetworks();
-
-        text_socialNetworks_vkontakte.setText(socialNetworks.getVkontakte());
-        text_socialNetworks_facebook.setText(socialNetworks.getFacebook());
-        text_socialNetworks_telegram.setText(socialNetworks.getWhatsapp());
-        text_socialNetworks_whatsapp.setText(socialNetworks.getWhatsapp());
-        text_socialNetworks_viber.setText(socialNetworks.getViber());
-        text_socialNetworks_skype.setText(socialNetworks.getSkype());
-        text_socialNetworks_instagram.setText(socialNetworks.getInstagram());
-        text_socialNetworks_twitter.setText(socialNetworks.getTwitter());
-        text_socialNetworks_youtube.setText(socialNetworks.getYoutube());
-    }
-
     private void fillRelate(Relate relate) {
-        clearRelate();
-
         text_relate_fullName.setText(relate.getFullName());
         date_relate_dateOfCreation.setValue(relate.getDateOfCreation());
         text_relate_size.setText(relate.getSize().toString());
@@ -797,22 +963,17 @@ public class MainFormController {
     }
 
     private void fillGeneralInformation(GeneralInformation generalInformation) {
-        clearGeneralInformation();
-        clearInterestCheckBox();
-
         text_generalInformation_organizationForm.setText(generalInformation.getOrganizationForm());
         text_generalInformation_economicSector.setText(generalInformation.getEconomicSector());
         text_generalInformation_ownershipForm.setText(generalInformation.getOwnershipForm());
         text_generalInformation_activityType.setText(generalInformation.getActivityType());
         text_generalInformation_businessForm.setText(generalInformation.getBusinessForm());
-
         if (generalInformation.getInvestmentsTarget() != null) {
             text_generalInformation_investmentsTarget.setText(generalInformation.getInvestmentsTarget());
         }
         if (generalInformation.getInvestmentsSize() != null) {
             text_generalInformation_investmentsSize.setText(generalInformation.getInvestmentsSize());
         }
-
         checkBox_generalInformation_vedExport.setSelected(generalInformation.isVedExport());
         checkBox_generalInformation_vedExport.setSelected(generalInformation.isVedImport());
         checkBox_generalInformation_interactionOffline.setSelected(generalInformation.isInteractionOffline());
@@ -830,14 +991,10 @@ public class MainFormController {
         checkBox_generalInformation_newsletter.setSelected(generalInformation.isNewsletter());
         checkBox_generalInformation_committees.setSelected(generalInformation.isCommittees());
         checkBox_generalInformation_corporateMember.setSelected(generalInformation.isCorporateMember());
-
         text_generalInformation_changes.setText(generalInformation.getChanges());
-
     }
 
     private void fillDirector(Director director) {
-        clearDirector();
-
         text_director_position.setText(director.getPosition());
         text_director_fullName.setText(director.getFullName());
         text_director_phoneMobile.setText(director.getPhoneMobile());
@@ -848,8 +1005,6 @@ public class MainFormController {
     }
 
     private void fillContact(Contact contact) {
-        clearContact();
-
         text_contact_phone.setText(contact.getPhone());
         text_contact_fax.setText(contact.getFax());
         text_contact_site.setText(contact.getSite());
@@ -858,24 +1013,18 @@ public class MainFormController {
     }
 
     private void fillAccoutingInformation(AccoutingInformation accoutingInformation) {
-        clearAccoutingInformation();
-
         text_accoutingInformation_ogrn.setText(accoutingInformation.getOgrn());
         text_accoutingInformation_kpp.setText(accoutingInformation.getKpp());
         text_accoutingInformation_tin.setText(accoutingInformation.getTin());
     }
 
     private void fillDebt(Debt debt) {
-        clearDebt();
-
         text_debt_status.setText(MemberUtils.isDebt(debt.getStatus()));
         text_debt_period.setText(debt.getPeriod());
         text_debt_comment.setText(debt.getComment());
     }
 
     private void fillAddressLegal(AddressLegal addressLegal) {
-        clearAddressLegal();
-
         text_addressLegal_regionId.setText(addressLegal.getRegionId().toString());
         text_addressLegal_regionName.setText(addressLegal.getRegionName());
         text_addressLegal_index.setText(addressLegal.getIndex().toString());
@@ -888,8 +1037,6 @@ public class MainFormController {
     }
 
     private void fillAddressActual(AddressActual addressActual) {
-        clearAddressActual();
-
         text_addressActual_regionId.setText(addressActual.getRegionId().toString());
         text_addressActual_regionName.setText(addressActual.getRegionName());
         text_addressActual_index.setText(addressActual.getIndex().toString());
@@ -901,64 +1048,68 @@ public class MainFormController {
         text_addressActual_changes.setText(addressActual.getChanges());
     }
 
-    private void fillInvoices(List<Invoice> invoiceList) {
-        invoiceHashMap.clear();
-        clearInvoiceFields();
-        if(invoiceList != null) {
-            for (Invoice invoice : invoiceList) {
-                invoiceHashMap.put(invoice.getInvoiceId(), invoice);
-            }
-            ObservableList<String> observableList = FXCollections.observableArrayList();
-            invoiceHashMap.forEach((k, v) -> observableList.add(v.getInvoiceNumber().toString() + " (id" + k + ")"));
-
-            cmbBox_invoiceId.setItems(observableList);
-            btn_add_invoice.setDisable(false);
-            if (invoiceHashMap.size() > 0) {
-                cmbBox_invoiceId.getSelectionModel().select(0);
-                cmbBox_invoiceId.setDisable(false);
-                btn_rename_invoice.setDisable(false);
-                btn_remove_invoice.setDisable(false);
-            } else {
-                cmbBox_invoiceId.setDisable(true);
-                btn_rename_invoice.setDisable(true);
-                btn_remove_invoice.setDisable(true);
-            }
-        }
-    }
-
     private void fillContactPersons(List<ContactPerson> contactPeople) {
         contactPersonHashMap.clear();
-        clearContactPersonFields();
+        cmbBox_contactPersonId.getItems().clear();
+        if (!contactPeople.isEmpty()) {
+            contactPeople.forEach(cPerson -> contactPersonHashMap.put(cPerson.getContactPersonId(), cPerson));
+            ObservableList<String> contactPersonList = FXCollections.observableArrayList();
+            contactPersonHashMap.forEach((k, v) -> contactPersonList.add(v.getFullName() + " (id" + k + ")"));
+            cmbBox_contactPersonId.setItems(contactPersonList);
 
-        if(contactPeople != null) {
-            for (ContactPerson contactPerson : contactPeople) {
-                contactPersonHashMap.put(contactPerson.getContactPersonId(), contactPerson);
-            }
-            ObservableList<String> observableList = FXCollections.observableArrayList();
-            contactPersonHashMap.forEach((k, v) -> observableList.add(v.getFullName() + " (id" + k + ")"));
-
-            cmbBox_contactPersonId.setItems(observableList);
+            cmbBox_contactPersonId.getSelectionModel().select(0);
+            cmbBox_contactPersonId.setDisable(false);
             btn_add_contactPerson.setDisable(false);
-            if (contactPersonHashMap.size() > 0) {
-                cmbBox_contactPersonId.getSelectionModel().select(0);
-                cmbBox_contactPersonId.setDisable(false);
-                btn_remove_contactPerson.setDisable(false);
-                btn_rename_contactPerson.setDisable(false);
-            } else {
-                cmbBox_contactPersonId.setDisable(true);
-                btn_remove_contactPerson.setDisable(true);
-                btn_rename_contactPerson.setDisable(true);
-            }
+            btn_remove_contactPerson.setDisable(false);
+            btn_rename_contactPerson.setDisable(false);
+        } else {
+            cmbBox_contactPersonId.setDisable(true);
+            btn_add_contactPerson.setDisable(false);
+            btn_remove_contactPerson.setDisable(true);
+            btn_rename_contactPerson.setDisable(true);
         }
     }
 
-    public void fillSelectedInvoice(ActionEvent actionEvent) {
+    public void fillSelectedPerson() {
+        clearContactPersonFields();
+        String personId = cmbBox_contactPersonId.getValue();
+        if (personId != null) {
+            ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue()));
+            text_contactPerson_position.setText(contactPerson.getPosition());
+            text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
+            text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
+            text_contactPerson_email.setText(contactPerson.getEmail());
+            text_contactPerson_changes.setText(contactPerson.getChanges());
+        }
+    }
+
+    private void fillInvoices(List<Invoice> invoiceList) {
+        invoiceHashMap.clear();
+        cmbBox_invoiceId.getItems().clear();
+        if (!invoiceList.isEmpty()) {
+            invoiceList.forEach(invoice -> invoiceHashMap.put(invoice.getInvoiceId(), invoice));
+            ObservableList<String> observableList = FXCollections.observableArrayList();
+            invoiceHashMap.forEach((k, v) -> observableList.add(v.getInvoiceNumber().toString() + " (id" + k + ")"));
+            cmbBox_invoiceId.setItems(observableList);
+
+            cmbBox_invoiceId.getSelectionModel().select(0);
+            cmbBox_invoiceId.setDisable(false);
+            btn_add_invoice.setDisable(false);
+            btn_rename_invoice.setDisable(false);
+            btn_remove_invoice.setDisable(false);
+        } else {
+            cmbBox_invoiceId.setDisable(true);
+            btn_add_invoice.setDisable(false);
+            btn_rename_invoice.setDisable(true);
+            btn_remove_invoice.setDisable(true);
+        }
+    }
+
+    public void fillSelectedInvoice() {
         clearInvoiceFields();
-
-        if(invoiceHashMap.size() > 0) {
-
+        String invoiceId = cmbBox_invoiceId.getValue();
+        if (invoiceId != null) {
             Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue()));
-
             date_invoice_dateCreation.setValue(invoice.getDateCreation());
             text_invoice_statusReceiving.setText(MemberUtils.isReceive(invoice.getStatusReceiving()));
             date_invoice_dateReceiving.setValue(invoice.getDateReceiving());
@@ -970,327 +1121,25 @@ public class MainFormController {
         }
     }
 
-    public void fillSelectedPerson(ActionEvent actionEvent) {
+    private void fillSocialNetworks(SocialNetworks socialNetworks) {
+        text_socialNetworks_vkontakte.setText(socialNetworks.getVkontakte());
+        text_socialNetworks_facebook.setText(socialNetworks.getFacebook());
+        text_socialNetworks_telegram.setText(socialNetworks.getWhatsapp());
+        text_socialNetworks_whatsapp.setText(socialNetworks.getWhatsapp());
+        text_socialNetworks_viber.setText(socialNetworks.getViber());
+        text_socialNetworks_skype.setText(socialNetworks.getSkype());
+        text_socialNetworks_instagram.setText(socialNetworks.getInstagram());
+        text_socialNetworks_twitter.setText(socialNetworks.getTwitter());
+        text_socialNetworks_youtube.setText(socialNetworks.getYoutube());
+    }
 
-        clearContactPersonFields();
-
-        if(contactPersonHashMap.size() > 0) {
-            ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue()));
-
-            text_contactPerson_position.setText(contactPerson.getPosition());
-            text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
-            text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
-            text_contactPerson_email.setText(contactPerson.getEmail());
-            text_contactPerson_changes.setText(contactPerson.getChanges());
-        }
+    private void fillServices(List<Services> services) {
+        if (services != null)
+            services.forEach(servicesCBox -> servicesCheckBoxMap.get(servicesCBox.getServicesId()).setSelected(true));
     }
 
 
-    public void createInvoice(ActionEvent actionEvent) {
-        if (createInvoiceStage == null) {
-            createInvoiceStage = new Stage();
-            createInvoiceStage.setResizable(false);
-            createInvoiceStage.setScene(new Scene(createInvoice));
-            createInvoiceStage.initModality(Modality.APPLICATION_MODAL);
-            createInvoiceStage.initOwner(mainStage);
-            createInvoiceStage.setTitle("Добавление счета");
-        }
-
-        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-        if (member.getInvoice() == null) {
-            List<Invoice> invoices = new ArrayList<>();
-            member.setInvoice(invoices);
-        }
-
-        createInvoiceController.setMember(member);
-        createInvoiceStage.showAndWait();
-
-        if (createInvoiceController.isCreateInvoice()) {
-            if (DBConnection.isInvoiceExists(createInvoiceController.getInvoice().getInvoiceId())) {
-                createInvoiceController.setCreateInvoice(false);
-                member.getInvoice().add(createInvoiceController.getInvoice());
-
-                DBConnection.updateMember(member);
-                memberOrganizations.updateMember(member);
-                MemberUtils.informationDialog("Счет успешно добавлен!");
-            } else MemberUtils.warningDialog("Такой счет уже существует!");
-        }
-        createInvoiceController.clearTextAndStyle();
-    }
-
-    public void deleteInvoice(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Удаление счета");
-        alert.setHeaderText(null);
-        alert.setContentText("Вы действительно хотите удалить счет?");
-
-        Optional<ButtonType> response = alert.showAndWait();
-
-        if(response.isPresent() && response.get() == ButtonType.OK) {
-
-            Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
-            Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-            member.getInvoice().remove(invoice);
-
-            DBConnection.updateMember(member);
-            memberOrganizations.updateMember(member);
-            MemberUtils.informationDialog("Cчет успешно удален!");
-        }
-    }
-
-    public void renameInvoice(ActionEvent actionEvent) {
-        if(updateInvoiceStage == null) {
-            updateInvoiceStage = new Stage();
-            updateInvoiceStage.setResizable(false);
-            updateInvoiceStage.setScene(new Scene(updateInvoice));
-            updateInvoiceStage.initModality(Modality.APPLICATION_MODAL);
-            updateInvoiceStage.initOwner(mainStage);
-            updateInvoiceStage.setTitle("Редактирование счета");
-        }
-        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-        Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue().toString()));
-        updateInvoiceController.setInvoice(invoice);
-        updateInvoiceStage.showAndWait();
-
-        int searchIndex = -1;
-        for(Invoice invoices: member.getInvoice())
-        {
-            if(invoices.getInvoiceId().equals(invoice.getInvoiceId())) {
-                searchIndex = member.getInvoice().indexOf(invoices);
-            }
-        }
-        member.getInvoice().set(searchIndex, invoice);
-        DBConnection.updateMember(member);
-        memberOrganizations.updateMember(member);
-
-    }
-
-
-    public void createContactPerson(ActionEvent actionEvent) {
-        if(createContactPersonStage == null) {
-            createContactPersonStage = new Stage();
-            createContactPersonStage.setResizable(false);
-            createContactPersonStage.setScene(new Scene(createContactPerson));
-            createContactPersonStage.initModality(Modality.APPLICATION_MODAL);
-            createContactPersonStage.setTitle("Добавление контактного лица");
-            createContactPersonStage.initOwner(mainStage);
-        }
-
-        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-
-        if (member.getContactPerson() == null) {
-            List<ContactPerson> people = new ArrayList<>();
-            member.setContactPerson(people);
-        }
-
-        createContactPersonController.setMember(member);
-
-        createContactPersonStage.showAndWait();
-
-        if(createContactPersonController.isCreateContactPerson()) {
-            createContactPersonController.setCreateContactPerson(false);
-
-            member.getContactPerson().add(createContactPersonController.getContactPerson());
-            DBConnection.updateMember(member);
-            memberOrganizations.updateMember(member);
-            MemberUtils.informationDialog("Контактное лицо успешно добавлено!");
-        }
-        createContactPersonController.clearTextAndStyle();
-    }
-
-    public void removeContactPerson(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Удаление контактного лица");
-        alert.setHeaderText(null);
-        alert.setContentText("Вы действительно хотите удалить контактное лицо?");
-
-        Optional<ButtonType> response = alert.showAndWait();
-
-        if(response.isPresent() && response.get() == ButtonType.OK) {
-            ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue().toString()));
-            Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-            member.getContactPerson().remove(contactPerson);
-
-            DBConnection.updateMember(member);
-            memberOrganizations.updateMember(member);
-            MemberUtils.informationDialog("Данные контактного лица успешно удалены!");
-        }
-    }
-
-    public void renameContactPerson(ActionEvent actionEvent) {
-        if (updateContactPersonStage == null) {
-            updateContactPersonStage = new Stage();
-            updateContactPersonStage.setResizable(false);
-            updateContactPersonStage.setScene(new Scene(updateContactPerson));
-            updateContactPersonStage.initModality(Modality.APPLICATION_MODAL);
-            updateContactPersonStage.initOwner(mainStage);
-            updateContactPersonStage.setTitle("Редактирование данных контактного лица");
-        }
-
-        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-        ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue()));
-        updateContactPersonController.setContactPerson(contactPerson);
-        updateContactPersonStage.showAndWait();
-
-        if (updateContactPersonController.isUpdateContactPerson()) {
-            updateContactPersonController.setUpdateContactPerson(false);
-            DBConnection.updateMember(member);
-            memberOrganizations.updateMember(member);
-            MemberUtils.informationDialog("Данные контактного лица успешно обновлены!");
-        }
-        updateContactPersonController.clearTextAndStyle();
-    }
-
-
-    public void addMember(ActionEvent actionEvent) {
-        if(createMemberFormStage == null) {
-            createMemberFormStage = new Stage();
-            createMemberFormStage.setScene(new Scene(createMemberForm));
-            createMemberFormStage.initModality(Modality.APPLICATION_MODAL);
-            createMemberFormStage.initOwner(mainStage);
-            createMemberFormStage.setTitle("Добавление организации");
-        }
-
-        createMemberFormStage.showAndWait();
-
-        Member newMember = createMemberFormController.getMember();
-
-        if(createMemberFormController.isMemberCreate()) {
-            createMemberFormController.setMemberCreate(false);
-
-            DBConnection.addMember(newMember);
-            memberOrganizations.addMember(newMember);
-            MemberUtils.informationDialog("Организация успешно добавлена!");
-        }
-        createMemberFormController.clearAll();
-    }
-
-    public void deleteMember(ActionEvent actionEvent) {
-        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-        member.setServices(null);
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Удаление организации");
-        alert.setHeaderText(null);
-        alert.setContentText("Вы действительно хотите удалить организацию: " +
-                        member.getMemberShortName() + " ?");
-
-        Optional<ButtonType> response = alert.showAndWait();
-
-        if(response.isPresent() && response.get() == ButtonType.OK) {
-            DBConnection.removeMember(member);
-            memberOrganizations.removeMember(member);
-            MemberUtils.informationDialog("Организация успешно удалена");
-        }
-    }
-
-    public void renameMember(ActionEvent actionEvent) {
-        if (updateMemberFormStage == null) {
-            updateMemberFormStage = new Stage();
-            updateMemberFormStage.setScene(new Scene(updateMemberForm));
-            updateMemberFormStage.initModality(Modality.APPLICATION_MODAL);
-            updateMemberFormStage.initOwner(mainStage);
-            updateMemberFormStage.setTitle("Редактирование данных организации");
-        }
-
-        updateMemberFormController.setMember((Member) table_members.getSelectionModel().getSelectedItem());
-
-        updateMemberFormStage.showAndWait();
-
-        if(updateMemberFormController.isMemberUpdate()) {
-            updateMemberFormController.setMemberUpdate(false);
-            Member member = updateMemberFormController.getMember();
-            DBConnection.updateMember(member);
-            memberOrganizations.updateMember(member);
-            MemberUtils.informationDialog("Данные организации успешно обновлены!");
-        } else MemberUtils.informationDialog("Данные организации остались без изменений!");
-
-        updateMemberFormController.clearAll();
-    }
-
-
-    public void openCalendar(ActionEvent actionEvent) {
-        if(calendarStage == null) {
-            calendarStage = new Stage();
-            calendarStage.setScene(new Scene(calendar));
-            //calendarStage.initModality(Modality.APPLICATION_MODAL);
-            calendarStage.setTitle("Календарь");
-            //selectStage.initStyle(StageStyle.UNDECORATED);
-            //calendarStage.initOwner(mainStage);
-        }
-
-        calendarStage.show();
-    }
-
-    public void openNotification(MouseEvent mouseEvent) {
-
-        if (calendarNotificationStage == null) {
-            calendarNotificationStage = new Stage();
-            calendarNotificationStage.setScene(new Scene(calendarNotification));
-            calendarNotificationStage.setTitle("Уведомление!");
-            calendarNotificationStage.setResizable(false);
-        }
-        calendarNotificationController.setCalendarParams(calendarStage, calendarController);
-        calendarNotificationStage.show();
-
-    }
-
-    public void openFind(ActionEvent actionEvent) {
-        if(findFormStage == null) {
-            findFormStage = new Stage();
-            findFormStage.setScene(new Scene(findForm));
-            findFormStage.setResizable(false);
-            findFormStage.setTitle("Поиск");
-        }
-        findFormController.setParams(table_members);
-        findFormStage.showAndWait();
-        findFormController.clear();
-    }
-
-    public void openSettings(ActionEvent actionEvent) {
-        if(settingsStage == null) {
-            settingsStage = new Stage();
-            settingsStage.setScene(new Scene(settings));
-            settingsStage.setTitle("Настройки");
-        }
-        //settingsController.initialize();
-
-        settingsStage.show();
-       // connectionSettingsController.clear();
-
-    }
-
-    public void openSelect(ActionEvent actionEvent) {
-        if(selectStage == null) {
-            selectStage = new Stage();
-            selectStage.setScene(new Scene(selectForm));
-            selectStage.initModality(Modality.APPLICATION_MODAL);
-            selectStage.setTitle("Сортировка");
-            selectStage.initOwner(mainStage);
-        }
-
-        selectStage.showAndWait();
-    }
-
-    private void checkConnection(Label alarm, boolean isActiveConnection) {
-        if(isActiveConnection) {
-            label_alarm_connection.setText("установленно");
-            label_alarm_connection.setTextFill(Color.GREEN);
-        } else {
-            label_alarm_connection.setText("не установленно");
-            label_alarm_connection.setTextFill(Color.RED);
-        }
-    }
-
-
-    @FXML
-    private void exitApplication(ActionEvent actionEvent) {
-        Stage stage = (Stage) table_members.getScene().getWindow();
-        stage.close();
-        stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
-    }
-
-    private void clearAll() {
+    private void clearAllFields() {
         clearInterestCheckBox();
         clearRelate();
         clearGeneralInformation();
@@ -1304,6 +1153,8 @@ public class MainFormController {
         clearInvoiceFields();
         clearContactPersonFields();
         clearServices();
+
+        contactPersonHashMap.clear();
     }
 
     private void clearInterestCheckBox() {
@@ -1400,16 +1251,12 @@ public class MainFormController {
         text_addressActual_changes.clear();
     }
 
-    private void clearSocialNetworks() {
-        text_socialNetworks_vkontakte.clear();
-        text_socialNetworks_facebook.clear();
-        text_socialNetworks_telegram.clear();
-        text_socialNetworks_whatsapp.clear();
-        text_socialNetworks_viber.clear();
-        text_socialNetworks_skype.clear();
-        text_socialNetworks_instagram.clear();
-        text_socialNetworks_twitter.clear();
-        text_socialNetworks_youtube.clear();
+    private void clearContactPersonFields() {
+        text_contactPerson_position.clear();
+        text_contactPerson_phoneMobile.clear();
+        text_contactPerson_phoneCity.clear();
+        text_contactPerson_email.clear();
+        text_contactPerson_changes.clear();
     }
 
     private void clearInvoiceFields() {
@@ -1423,33 +1270,19 @@ public class MainFormController {
         text_invoice_comment.clear();
     }
 
-    private void clearContactPersonFields() {
-        text_contactPerson_position.clear();
-        text_contactPerson_phoneMobile.clear();
-        text_contactPerson_phoneCity.clear();
-        text_contactPerson_email.clear();
-        text_contactPerson_changes.clear();
+    private void clearSocialNetworks() {
+        text_socialNetworks_vkontakte.clear();
+        text_socialNetworks_facebook.clear();
+        text_socialNetworks_telegram.clear();
+        text_socialNetworks_whatsapp.clear();
+        text_socialNetworks_viber.clear();
+        text_socialNetworks_skype.clear();
+        text_socialNetworks_instagram.clear();
+        text_socialNetworks_twitter.clear();
+        text_socialNetworks_youtube.clear();
     }
 
     private void clearServices() {
-        servicesCheckBoxMap.forEach((integer, checkBox) -> {
-            checkBox.setSelected(false);
-        });
+        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setSelected(false));
     }
-
-    public void saveMemberToPDF(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("pdf", "*.pdf"));
-        File file = fileChooser.showSaveDialog((Stage)btn_add_invoice.getScene().getWindow());
-        Member member = (Member) table_members.getSelectionModel().getSelectedItem();
-
-        if (file != null) {
-            String path = file.getAbsolutePath();
-            if (!path.contains(".")) {
-                path += ".pdf";
-            }
-            PDFUtils.saveMemberToPDF(path, member);
-        }
-    }
-
 }
