@@ -108,8 +108,7 @@ public class ConnectionUtils {
         }
     }
 
-    public static void checkConnection() {
+    public static void activateConnection() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        System.out.println("Connection successful");
     }
 }
