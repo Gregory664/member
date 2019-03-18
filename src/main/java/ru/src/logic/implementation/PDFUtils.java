@@ -3,39 +3,26 @@ package ru.src.logic.implementation;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.apache.pdfbox.io.IOUtils;
-import rst.pdfbox.layout.text.NewLine;
 import ru.src.model.FindMember;
 import ru.src.model.Member;
-
-
-//import org.apache.pdfbox.pdmodel.PDDocument;
-//import org.apache.pdfbox.pdmodel.PDPageContentStream;
-//import org.apache.pdfbox.pdmodel.documentinterchange.taggedpdf.PDTableAttributeObject;
-//import org.apache.pdfbox.pdmodel.font.*;
-//
-//import rst.pdfbox.layout.elements.ControlElement;
-//import rst.pdfbox.layout.elements.Document;
-//import rst.pdfbox.layout.elements.Element;
-//import rst.pdfbox.layout.elements.Paragraph;
-
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PDFUtils {
 
 
     private static final InputStream inputStream = ClassLoader.getSystemResourceAsStream("fonts/times.ttf");
-    private static BaseFont BASE_SONT;
     private static Font FONT_HEADER;
     private static Font FONT_ROW;
 
     static {
         try {
-            byte[] bytes = IOUtils.toByteArray(inputStream);
-            BASE_SONT = BaseFont.createFont("times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, true, bytes, null);
+            byte[] bytes = IOUtils.toByteArray(Objects.requireNonNull(inputStream));
+            BaseFont BASE_SONT = BaseFont.createFont("times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, true, bytes, null);
             FONT_HEADER = new Font(BASE_SONT, 14);
             FONT_ROW = new Font(BASE_SONT, 12);
         } catch (IOException | DocumentException e) {
@@ -175,102 +162,103 @@ public class PDFUtils {
             document.add(generalInformation);
             document.add(Chunk.NEWLINE);
 
-            String checked = "X";
-            String unchecked = "O";
+            String checked = "✓";
+            String unchecked = "-";
 
             PdfPTable interest = new PdfPTable(8);
-            interest.setTotalWidth(new float[] {20, 160, 5, 20, 160, 5,  20, 160});
+            interest.setTotalWidth(new float[] {160, 20, 5, 160, 20, 5,  160, 20});
             interest.setLockedWidth(true);
 
+            interest.addCell(getCell("Являются импортерами", FONT_ROW));
             if(member.getGeneralInformation().isVedImport())
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Являются импортерами", FONT_ROW));
+            else
+                interest.addCell(getCell(unchecked, FONT_HEADER));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Выездные бизнес миссии", FONT_ROW));
             if(member.getGeneralInformation().isBusinessMissionVisiting())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Выездные бизнес миссии", FONT_ROW));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Участие в пилотных проектах", FONT_ROW));
             if(member.getGeneralInformation().isPilotProjects())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Участие в пилотных проектах", FONT_ROW));
             interest.completeRow();
 
+            interest.addCell(getCell("Являются экспортерами", FONT_ROW));
             if(member.getGeneralInformation().isVedExport())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Являются экспортерами", FONT_ROW));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Региональные бизнес миссии", FONT_ROW));
             if(member.getGeneralInformation().isBusinessMissionRegional())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Региональные бизнес миссии", FONT_ROW));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Антикоррупционная хартия", FONT_ROW));
             if(member.getGeneralInformation().isAntiCorruptionCharter())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Антикоррупционная хартия", FONT_ROW));
             interest.completeRow();
 
+            interest.addCell(getCell("Участие Online", FONT_ROW));
             if(member.getGeneralInformation().isInteractionOffline())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Участие Online", FONT_ROW));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Заинтересованность в MKAS", FONT_ROW));
             if(member.getGeneralInformation().isMkas())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Заинтересованность в MKAS", FONT_ROW));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Информационная рассылка", FONT_ROW));
             if(member.getGeneralInformation().isNewsletter())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Информационная рассылка", FONT_ROW));
             interest.completeRow();
 
+            interest.addCell(getCell("Участие Offline", FONT_ROW));
             if(member.getGeneralInformation().isInteractionOffline())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Участие Offline", FONT_ROW));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Потребность в молодых кадрах", FONT_ROW));
             if(member.getGeneralInformation().isNeedForYoungPersonnel())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Потребность в молодых кадрах", FONT_ROW));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Участие в комитетах", FONT_ROW));
             if(member.getGeneralInformation().isCommittees())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Участие в комитетах", FONT_ROW));
             interest.completeRow();
 
+            interest.addCell(getCell("Заинтересованность в B2B", FONT_ROW));
             if(member.getGeneralInformation().isB2b())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Заинтересованность в B2B", FONT_ROW));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Заинтересованность в B2C", FONT_ROW));
             if(member.getGeneralInformation().isDiscounts())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Заинтересованность в B2C", FONT_ROW));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Корпоративный член", FONT_ROW));
             if(member.getGeneralInformation().isCorporateMember())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Корпоративный член", FONT_ROW));
             interest.completeRow();
 
+            interest.addCell(getCell("Заинтересованность в B2C", FONT_ROW));
             if(member.getGeneralInformation().isB2c())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Заинтересованность в B2C", FONT_ROW));
             interest.addCell(getEmptyFillCell());
+            interest.addCell(getCell("Реестр надежных партнеров", FONT_ROW));
             if(member.getGeneralInformation().isReliablePartners())
                 interest.addCell(getCell(checked, FONT_HEADER));
             else interest.addCell(getCell(unchecked, FONT_HEADER));
-            interest.addCell(getCell("Реестр надежных партнеров", FONT_ROW));
             interest.addCell(getEmptyFillCell());
             interest.completeRow();
             document.add(interest);
