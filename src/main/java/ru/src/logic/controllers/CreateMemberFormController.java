@@ -783,13 +783,15 @@ public class CreateMemberFormController {
 
     public void duplicateAddress(MouseEvent mouseEvent) {
         if(mouseEvent.getClickCount() == 2) {
-            comboBox_addressActual_regionName.getSelectionModel().select(comboBox_addressLegal_regionName.getSelectionModel().getSelectedItem());
+            comboBox_addressActual_regionName.getSelectionModel()
+                    .select(comboBox_addressLegal_regionName.getSelectionModel().getSelectedItem());
             text_addressActual_index.setText(text_addressLegal_index.getText());
             text_addressActual_town.setText(text_addressLegal_town.getText());
             text_addressActual_street.setText(text_addressLegal_street.getText());
             text_addressActual_house.setText(text_addressLegal_house.getText());
             text_addressActual_office.setText(text_addressLegal_office.getText());
-            comboBox_addressLegal_district.getSelectionModel().select(comboBox_addressActual_district.getSelectionModel().getSelectedItem());
+            comboBox_addressActual_district.getSelectionModel()
+                    .select(comboBox_addressLegal_district.getSelectionModel().getSelectedItem());
             text_addressActual_changes.setText(text_addressLegal_changes.getText());
         }
     }

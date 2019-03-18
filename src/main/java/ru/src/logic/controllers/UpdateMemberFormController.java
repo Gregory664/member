@@ -570,7 +570,10 @@ public class UpdateMemberFormController {
         text_addressLegal_street.setText(legal.getStreet());
         text_addressLegal_house.setText(legal.getHouse());
         if (legal.getOffice() != null) text_addressLegal_office.setText(legal.getOffice());
-        if (legal.getDistrict() != null) comboBox_addressLegal_district.getSelectionModel().select(legal.getDistrict());
+        if (legal.getDistrict() != null) {
+            comboBox_addressLegal_district.setDisable(false);
+            comboBox_addressLegal_district.getSelectionModel().select(legal.getDistrict());
+        } else comboBox_addressLegal_district.setDisable(true);
         if (legal.getChanges() != null) text_addressLegal_changes.setText(legal.getChanges());
 
         AddressActual actual = member.getAddressActual();
@@ -581,8 +584,10 @@ public class UpdateMemberFormController {
         text_addressActual_street.setText(actual.getStreet());
         text_addressActual_house.setText(actual.getHouse());
         if (actual.getOffice() != null) text_addressActual_office.setText(actual.getOffice());
-        if (actual.getDistrict() != null)
+        if (actual.getDistrict() != null) {
+            comboBox_addressActual_district.setDisable(false);
             comboBox_addressActual_district.getSelectionModel().select(actual.getDistrict());
+        } else comboBox_addressActual_district.setDisable(true);
         if (actual.getChanges() != null) text_addressActual_changes.setText(actual.getChanges());
 
         SocialNetworks socialNetworks = member.getSocialNetworks();
@@ -847,7 +852,7 @@ public class UpdateMemberFormController {
             text_addressActual_street.setText(text_addressLegal_street.getText());
             text_addressActual_house.setText(text_addressLegal_house.getText());
             text_addressActual_office.setText(text_addressLegal_office.getText());
-            comboBox_addressLegal_district.getSelectionModel().select(comboBox_addressActual_district.getSelectionModel().getSelectedItem());
+            comboBox_addressActual_district.getSelectionModel().select(comboBox_addressLegal_district.getSelectionModel().getSelectedItem());
             text_addressActual_changes.setText(text_addressLegal_changes.getText());
         }
     }
