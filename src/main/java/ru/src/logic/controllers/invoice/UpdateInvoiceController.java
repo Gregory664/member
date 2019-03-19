@@ -79,26 +79,33 @@ public class UpdateInvoiceController {
         cmbBox_statusPayment.getSelectionModel().select(MemberUtils.isPayment(invoice.getStatusPayment()));
         text_price.setText(invoice.getPrice().toString());
 
-        if (invoice.getDateReceiving() != null) date_dateReceiving.setValue(invoice.getDateReceiving());
-        if (invoice.getOrderDate() != null) date_orderDate.setValue(invoice.getOrderDate());
-        if (invoice.getOrderId() != null) text_orderId.setText(invoice.getOrderId());
-        if (invoice.getComment() != null) text_comment.setText(invoice.getComment());
+        if (invoice.getDateReceiving() != null) {
+            date_dateReceiving.setValue(invoice.getDateReceiving());
+        }
+        if (invoice.getOrderDate() != null) {
+            date_orderDate.setValue(invoice.getOrderDate());
+        }
+        if (invoice.getOrderId() != null) {
+            text_orderId.setText(invoice.getOrderId());
+        }
+        if (invoice.getComment() != null) {
+            text_comment.setText(invoice.getComment());
+        }
     }
 
     public void updateInvoice(ActionEvent actionEvent) {
         label_alarm_invoiceUpdate.setText(null);
 
         boolean checkFields = true;
-        if (cmbBox_statusReceiving.getSelectionModel().getSelectedItem().equals("Получен") &&
-                date_dateReceiving.getValue() == null) {
+        if (cmbBox_statusReceiving.getSelectionModel().getSelectedItem().equals("Получен")
+                && date_dateReceiving.getValue() == null) {
             label_alarm_invoiceUpdate.setTextFill(MemberUtils.EMPTY_COLOR);
             label_alarm_invoiceUpdate.setText("Заполните обязательные поля");
             date_dateReceiving.setStyle("-fx-border-color: rgb(" + MemberUtils.EMPTY_COLOR2 + ");");
             checkFields = false;
         }
-        if (cmbBox_statusPayment.getSelectionModel().getSelectedItem().equals("Отплачен") &&
-                (date_orderDate.getValue() == null ||
-                        text_orderId.getText() == null)) {
+        if (cmbBox_statusPayment.getSelectionModel().getSelectedItem().equals("Отплачен")
+                && (date_orderDate.getValue() == null || text_orderId.getText() == null)) {
             label_alarm_invoiceUpdate.setTextFill(MemberUtils.EMPTY_COLOR);
             label_alarm_invoiceUpdate.setText("Заполните обязательные поля");
             date_orderDate.setStyle("-fx-border-color: rgb(" + MemberUtils.EMPTY_COLOR2 + ");");
@@ -114,10 +121,8 @@ public class UpdateInvoiceController {
             invoice.setOrderDate(date_orderDate.getValue());
             invoice.setPrice(Integer.valueOf(text_price.getText()));
 
-            invoice.setStatusPayment(MemberUtils.
-                    paymentToBoolean(cmbBox_statusPayment.getSelectionModel().getSelectedItem()));
-            invoice.setStatusReceiving(MemberUtils.
-                    receiveToBoolean(cmbBox_statusReceiving.getSelectionModel().getSelectedItem()));
+            invoice.setStatusPayment(MemberUtils.paymentToBoolean(cmbBox_statusPayment.getSelectionModel().getSelectedItem()));
+            invoice.setStatusReceiving(MemberUtils.receiveToBoolean(cmbBox_statusReceiving.getSelectionModel().getSelectedItem()));
 
             invoice.setComment(text_comment.getText());
             invoiceUpdate = true;

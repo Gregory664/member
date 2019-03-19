@@ -34,10 +34,11 @@ public class HibernateUtils {
                 sessionFactory = configuration.configure().buildSessionFactory();
                 active = true;
             } catch (Exception e) {
-                if(e instanceof HibernateException)
+                if(e instanceof HibernateException) {
                     MemberException.getCheckSqlException((HibernateException) e);
-                else
+                } else {
                     MemberUtils.warningDialog("Ошибка!\n" + e.getMessage());
+                }
             }
         }
         return sessionFactory;

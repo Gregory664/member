@@ -29,7 +29,7 @@ public class FindFormController {
     private TableView tableView;
     private int findIndex = 0;
 
-    public void setParams(TableView tableView) {
+    void setParams(TableView tableView) {
         this.tableView = tableView;
     }
 
@@ -126,7 +126,9 @@ public class FindFormController {
     public void next() {
         tableView.getSelectionModel().clearSelection();
         ++findIndex;
-        if (findIndex >= findParams.size()) findIndex = 0;
+        if (findIndex >= findParams.size()) {
+            findIndex = 0;
+        }
         int selectRow = findParams.get(findIndex);
         tableView.getSelectionModel().select(selectRow);
         checkRowCount();
@@ -135,7 +137,9 @@ public class FindFormController {
     public void last() {
         tableView.getSelectionModel().clearSelection();
         --findIndex;
-        if (findIndex < 0) findIndex = findParams.size() - 1;
+        if (findIndex < 0) {
+            findIndex = findParams.size() - 1;
+        }
         int selectRow = findParams.get(findIndex);
         tableView.getSelectionModel().select(selectRow);
         checkRowCount();

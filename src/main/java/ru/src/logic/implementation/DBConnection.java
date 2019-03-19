@@ -339,7 +339,7 @@ public class DBConnection implements MemberLogic {
     public static List<User> getAllUser() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
         List<User> userList = new ArrayList<>();
-        try (Session session = sessionFactory.openSession()){
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Query query = session.createQuery("from User");
             userList = query.list();

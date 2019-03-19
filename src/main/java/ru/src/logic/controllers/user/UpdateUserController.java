@@ -90,7 +90,7 @@ public class UpdateUserController {
                 label_alarm_user.setText("Пароли не совпадают");
                 updateUser = false;
             }
-        } else  {
+        } else {
             label_alarm_user.setTextFill(MemberUtils.EMPTY_COLOR);
             label_alarm_user.setText("Заполните обязательные поля");
         }
@@ -108,8 +108,7 @@ public class UpdateUserController {
             grid_password.setMinHeight(0);
             grid_password.setMaxHeight(0);
             resizeWindows(291 + 28, actionEvent);
-        }
-        else {
+        } else {
             grid_password.setVisible(true);
             grid_password.setMinHeight(84);
             grid_password.setMaxHeight(84);
@@ -119,10 +118,10 @@ public class UpdateUserController {
         passField_password2.clear();
     }
 
-    private void resizeWindows(double heigth, ActionEvent actionEvent) {
+    private void resizeWindows(double height, ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.setMinHeight(heigth);
-        stage.setMaxHeight(heigth);
+        stage.setMinHeight(height);
+        stage.setMaxHeight(height);
     }
 }

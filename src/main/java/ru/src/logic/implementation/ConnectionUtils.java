@@ -20,9 +20,7 @@ public class ConnectionUtils {
         try (InputStream inputStream = new FileInputStream(new File(path))) {
             reader = XMLInputFactory.newInstance().createXMLStreamReader(inputStream);
             while (reader.hasNext()) {
-
                 int event = reader.next();
-
                 if (event == XMLEvent.START_ELEMENT) {
                     String readerName = reader.getLocalName();
                     switch (readerName) {
@@ -55,12 +53,10 @@ public class ConnectionUtils {
                 e.printStackTrace();
             }
         }
-
         return connection;
     }
 
     public static void setConnection(String hostname, String database, String port, String username, String password) {
-
         connection.setHostname(hostname);
         connection.setDatabase(database);
         connection.setPort(port);

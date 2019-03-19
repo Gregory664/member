@@ -129,9 +129,11 @@ public class PDFUtils {
             relate.addCell(getCell(member.getRelate().getFullName(), FONT_ROW));
             relate.completeRow();
             relate.addCell(getFillCell("Дата основания организации", FONT_HEADER));
-            if(member.getRelate().getDateOfCreation() != null)
+            if(member.getRelate().getDateOfCreation() != null) {
                 relate.addCell(getCell(member.getRelate().getDateOfCreation().format(datePattern), FONT_ROW));
-            else relate.addCell(getCell("", FONT_ROW));
+            } else {
+                relate.addCell(getCell("", FONT_ROW));
+            }
             relate.completeRow();
             relate.addCell(getFillCell("Количество работников", FONT_HEADER));
             relate.addCell(getCell(member.getRelate().getSize().toString(), FONT_ROW));
@@ -170,95 +172,128 @@ public class PDFUtils {
             interest.setLockedWidth(true);
 
             interest.addCell(getCell("Являются импортерами", FONT_ROW));
-            if(member.getGeneralInformation().isVedImport())
+            if(member.getGeneralInformation().isVedImport()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else
+            } else {
                 interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Выездные бизнес миссии", FONT_ROW));
-            if(member.getGeneralInformation().isBusinessMissionVisiting())
+            if(member.getGeneralInformation().isBusinessMissionVisiting()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Участие в пилотных проектах", FONT_ROW));
-            if(member.getGeneralInformation().isPilotProjects())
+            if(member.getGeneralInformation().isPilotProjects()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.completeRow();
 
             interest.addCell(getCell("Являются экспортерами", FONT_ROW));
-            if(member.getGeneralInformation().isVedExport())
+            if(member.getGeneralInformation().isVedExport()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Региональные бизнес миссии", FONT_ROW));
-            if(member.getGeneralInformation().isBusinessMissionRegional())
+            if(member.getGeneralInformation().isBusinessMissionRegional()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Антикоррупционная хартия", FONT_ROW));
-            if(member.getGeneralInformation().isAntiCorruptionCharter())
+            if(member.getGeneralInformation().isAntiCorruptionCharter()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.completeRow();
 
             interest.addCell(getCell("Участие Online", FONT_ROW));
-            if(member.getGeneralInformation().isInteractionOffline())
+            if(member.getGeneralInformation().isInteractionOffline()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Заинтересованность в MKAS", FONT_ROW));
-            if(member.getGeneralInformation().isMkas())
+            if(member.getGeneralInformation().isMkas()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Информационная рассылка", FONT_ROW));
-            if(member.getGeneralInformation().isNewsletter())
+            if(member.getGeneralInformation().isNewsletter()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.completeRow();
 
             interest.addCell(getCell("Участие Offline", FONT_ROW));
-            if(member.getGeneralInformation().isInteractionOffline())
+            if(member.getGeneralInformation().isInteractionOffline()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Потребность в молодых кадрах", FONT_ROW));
-            if(member.getGeneralInformation().isNeedForYoungPersonnel())
+            if(member.getGeneralInformation().isNeedForYoungPersonnel()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Участие в комитетах", FONT_ROW));
-            if(member.getGeneralInformation().isCommittees())
+            if(member.getGeneralInformation().isCommittees()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.completeRow();
 
             interest.addCell(getCell("Заинтересованность в B2B", FONT_ROW));
-            if(member.getGeneralInformation().isB2b())
+            if(member.getGeneralInformation().isB2b()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Заинтересованность в B2C", FONT_ROW));
-            if(member.getGeneralInformation().isDiscounts())
+            if(member.getGeneralInformation().isDiscounts()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Корпоративный член", FONT_ROW));
-            if(member.getGeneralInformation().isCorporateMember())
+            if(member.getGeneralInformation().isCorporateMember()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.completeRow();
 
             interest.addCell(getCell("Заинтересованность в B2C", FONT_ROW));
-            if(member.getGeneralInformation().isB2c())
+            if(member.getGeneralInformation().isB2c()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Реестр надежных партнеров", FONT_ROW));
-            if(member.getGeneralInformation().isReliablePartners())
+            if(member.getGeneralInformation().isReliablePartners()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.completeRow();
             document.add(interest);
@@ -278,8 +313,9 @@ public class PDFUtils {
             director.addCell(getCell(member.getDirector().getPhoneMobile(), FONT_ROW));
             director.completeRow();
             director.addCell(getFillCell("Дополнительный телефон", FONT_HEADER));
-            if(member.getDirector().getPhoneCity() != null)
+            if(member.getDirector().getPhoneCity() != null) {
                 director.addCell(getCell(member.getDirector().getPhoneCity(), FONT_ROW));
+            }
             director.completeRow();
             director.addCell(getFillCell("Электронная почта", FONT_HEADER));
             director.addCell(getCell(member.getDirector().getEmail(), FONT_ROW));
@@ -393,18 +429,12 @@ public class PDFUtils {
             agree.addCell(getCell("", FONT_ROW));
             agree.addCell(getCell("Даю свое согласие на обработку персональных данных", FONT_ROW));
             agree.completeRow();
-
             document.add(agree);
-
-
-
 
             document.close();
         } catch (DocumentException | FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private static PdfPCell getFillCell(String text, Font font) {
@@ -428,8 +458,5 @@ public class PDFUtils {
         cell.setGrayFill(0.1f);
         return cell;
     }
-
-
-
 }
 

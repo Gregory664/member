@@ -75,7 +75,9 @@ public class SettingsController {
     } 
     @FXML
     public void saveConnection() {
-        if (HibernateUtils.isActive()) HibernateUtils.closeSessionFactory();
+        if (HibernateUtils.isActive())  {
+            HibernateUtils.closeSessionFactory();
+        }
 
         ConnectionUtils.setConnection(text_hostName.getText(),
                 text_dataBase.getText(),
@@ -85,7 +87,9 @@ public class SettingsController {
         );
 
         ConnectionUtils.activateConnection();
-        if (changeSettingFromMainForm) MainFormController.memberOrganizations.refresh();
+        if (changeSettingFromMainForm) {
+            MainFormController.memberOrganizations.refresh();
+        }
     } 
     @FXML
     public void addUser() {
@@ -173,7 +177,7 @@ public class SettingsController {
     } 
     @FXML
     public void showPasswordChar() {
-        if(!text_password.isVisible()){
+        if(!text_password.isVisible()) {
             text_password.setText(passField_password.getText());
             text_password.setVisible(true);
             passField_password.clear();

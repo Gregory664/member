@@ -130,7 +130,6 @@ public class MemberUtils {
     }
 
     public static void checkTextLength(TextField textField, Label label, int maxLength) {
-
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(textField.getText().length() >= maxLength) {
                 String s = textField.getText().substring(0, maxLength);
@@ -145,7 +144,6 @@ public class MemberUtils {
     }
 
     public static void checkTextLength(TextArea textField, Label label, int maxLength) {
-
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(textField.getText().length() >= maxLength) {
                 String s = textField.getText().substring(0, maxLength);
@@ -194,8 +192,7 @@ public class MemberUtils {
         if(comboBox.getValue() == null) {
             comboBox.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
             return true;
-        }
-        else {
+        } else {
             comboBox.setStyle(null);
             return false;
         }

@@ -564,8 +564,9 @@ public class MainFormController {
 
         if (file != null) {
             String path = file.getAbsolutePath();
-            if (!path.contains("."))
+            if (!path.contains(".")) {
                 path += ".pdf";
+            }
             PDFUtils.saveMemberToPDF(path, member);
         }
     }
@@ -605,7 +606,9 @@ public class MainFormController {
                 DBConnection.updateMember(member);
                 memberOrganizations.updateMember(member);
                 MemberUtils.informationDialog("Счет успешно добавлен!");
-            } else MemberUtils.warningDialog("Такой счет уже существует!");
+            } else {
+                MemberUtils.warningDialog("Такой счет уже существует!");
+            }
         }
     }
 
@@ -658,7 +661,9 @@ public class MainFormController {
             DBConnection.updateMember(member);
             memberOrganizations.updateMember(member);
             MemberUtils.informationDialog("Счет успешно обновлен!");
-        } else MemberUtils.informationDialog("Данные по счету остались без изменений!");
+        } else {
+            MemberUtils.informationDialog("Данные по счету остались без изменений!");
+        }
     }
 
     @FXML
@@ -788,7 +793,7 @@ public class MainFormController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Удаление организации");
         alert.setHeaderText(null);
-        alert.setContentText("Вы действительно хотите удалить организацию:\n" +
+        alert.setContentText("Вы действительно хотите удалить организацию: " +
                 member.getMemberShortName() + " ?");
 
         Optional<ButtonType> response = alert.showAndWait();
@@ -827,7 +832,9 @@ public class MainFormController {
             DBConnection.updateMember(updateMember);
             memberOrganizations.updateMember(updateMember);
             MemberUtils.informationDialog("Данные организации успешно обновлены!");
-        } else MemberUtils.informationDialog("Данные организации остались без изменений!");
+        } else {
+            MemberUtils.informationDialog("Данные организации остались без изменений!");
+        }
     }
 
     @FXML
@@ -947,8 +954,12 @@ public class MainFormController {
         fillAddressLegal(member.getAddressLegal());
         fillAddressActual(member.getAddressActual());
         if (user.getAdmin()) {
-            if (member.getContactPerson() != null) fillContactPersons(member.getContactPerson());
-            if (member.getContactPerson() != null) fillInvoices(member.getInvoice());
+            if (member.getContactPerson() != null) {
+                fillContactPersons(member.getContactPerson());
+            }
+            if (member.getContactPerson() != null) {
+                fillInvoices(member.getInvoice());
+            }
         }
         fillSocialNetworks(member.getSocialNetworks());
         fillServices(member.getServices());
@@ -1134,8 +1145,9 @@ public class MainFormController {
     }
 
     private void fillServices(List<Services> services) {
-        if (services != null)
+        if (services != null) {
             services.forEach(servicesCBox -> servicesCheckBoxMap.get(servicesCBox.getServicesId()).setSelected(true));
+        }
     }
 
 

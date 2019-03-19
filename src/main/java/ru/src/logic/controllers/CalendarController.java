@@ -77,16 +77,18 @@ public class CalendarController {
         int month = comboBox_organizationMonth.getSelectionModel().getSelectedIndex();
         ObservableList<DateOfCreationOrganization> organizations = DBConnection.getOrganizationCalendar(++month);
         table_organization.getItems().clear();
-        if (organizations != null)
+        if (organizations != null) {
             table_organization.setItems(organizations);
+        }
     } 
 
     public void selectDirectorMonth() {
         int month = comboBox_directorMonth.getSelectionModel().getSelectedIndex();
         ObservableList<DirectorCalendar> directorCalendars = DBConnection.getDirectorCalendar(++month);
         table_director.getItems().clear();
-        if (directorCalendars != null)
+        if (directorCalendars != null) {
             table_director.setItems(directorCalendars);
+        }
     } 
 
     void setCurrentMonth(int tab) {

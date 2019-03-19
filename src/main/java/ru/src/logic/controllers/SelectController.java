@@ -1527,16 +1527,20 @@ public class SelectController {
         String[] splitPattern = pattern.split(";");
 
         if (checkBox_payment_1.isSelected() && !checkBox_payment_2.isSelected()) {
-            if (!(datePickers.get(0).getValue() == null))
+            if (!(datePickers.get(0).getValue() == null)) {
                 someSelect.add(splitPattern[0] + " >= '" + datePickers.get(0).getValue().toString() + "'");
-            if (!(datePickers.get(1).getValue() == null))
+            }
+            if (!(datePickers.get(1).getValue() == null)) {
                 someSelect.add(splitPattern[0] + " <= '" + datePickers.get(1).getValue().toString() + "'");
+            }
         }
         if (!checkBox_payment_1.isSelected() && checkBox_payment_2.isSelected()) {
-            if (!(datePickers.get(0).getValue() == null))
+            if (!(datePickers.get(0).getValue() == null)) {
                 someSelect.add(splitPattern[1] + " >= '" + datePickers.get(0).getValue().toString() + "'");
-            if (!(datePickers.get(1).getValue() == null))
+            }
+            if (!(datePickers.get(1).getValue() == null)) {
                 someSelect.add(splitPattern[1] + " <= '" + datePickers.get(1).getValue().toString() + "'");
+            }
         }
 
         if (!someSelect.isEmpty()) {
@@ -1619,8 +1623,9 @@ public class SelectController {
 
         if (file != null) {
             String path = file.getAbsolutePath();
-            if (!path.contains("."))
+            if (!path.contains(".")) {
                 path += ".pdf";
+            }
             PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
         }
 
@@ -1634,8 +1639,9 @@ public class SelectController {
 
         if (file != null) {
             String path = file.getAbsolutePath();
-            if (!path.contains("."))
+            if (!path.contains(".")) {
                 path += ".csv";
+            }
             saveCSVFile(path);
         }
     }

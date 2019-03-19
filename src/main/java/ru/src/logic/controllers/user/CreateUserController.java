@@ -78,8 +78,11 @@ public class CreateUserController {
     private Boolean isEmptyFields() {
         HashSet<Boolean> set = new HashSet<>();
         set.add(MemberUtils.isEmptyField(text_login));
-        if(text_password.isVisible()) set.add(MemberUtils.isEmptyField(text_password));
-        else set.add(MemberUtils.isEmptyField(passField_password));
+        if(text_password.isVisible()) {
+            set.add(MemberUtils.isEmptyField(text_password));
+        } else {
+            set.add(MemberUtils.isEmptyField(passField_password));
+        }
         set.add(MemberUtils.isEmptyField(text_fullName));
         set.add(MemberUtils.isEmptyField(text_position));
         return set.contains(true);

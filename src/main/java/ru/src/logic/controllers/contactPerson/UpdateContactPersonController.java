@@ -67,9 +67,15 @@ public class UpdateContactPersonController {
         text_contactPerson_fullName.setText(contactPerson.getFullName());
         text_contactPerson_position.setText(contactPerson.getPosition());
         text_contactPerson_phoneMobile.setText(contactPerson.getPhoneMobile());
-        if (contactPerson.getPhoneCity() != null) text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
-        if (contactPerson.getChanges() != null) text_contactPerson_changes.setText(contactPerson.getChanges());
-        if (contactPerson.getEmail() != null) text_contactPerson_email.setText(contactPerson.getEmail());
+        if (contactPerson.getPhoneCity() != null) {
+            text_contactPerson_phoneCity.setText(contactPerson.getPhoneCity());
+        }
+        if (contactPerson.getChanges() != null) {
+            text_contactPerson_changes.setText(contactPerson.getChanges());
+        }
+        if (contactPerson.getEmail() != null) {
+            text_contactPerson_email.setText(contactPerson.getEmail());
+        }
     }
 
     @FXML
@@ -82,8 +88,7 @@ public class UpdateContactPersonController {
 
             updateContactPerson = true;
             closeWindow(actionEvent);
-        }
-        else {
+        } else {
             label_alarm_contactPerson_fullName.setText(null);
             label_alarm_contactPerson_position.setText(null);
             label_alarm_contactPerson_phoneMobile.setText(null);
@@ -107,6 +112,6 @@ public class UpdateContactPersonController {
     public void closeWindow(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.hide();
+        stage.close();
     }
 }
