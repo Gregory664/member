@@ -17,7 +17,7 @@ public class HibernateUtils {
     private HibernateUtils() {
     }
 
-    static synchronized SessionFactory getSessionFactory() {
+    static SessionFactory getSessionFactory() {
         if (sessionFactory == null || sessionFactory.isClosed()) {
             Connection connection = ConnectionUtils.getConnection();
             String url = "jdbc:mysql://" +
