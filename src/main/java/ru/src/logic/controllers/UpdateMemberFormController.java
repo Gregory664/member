@@ -358,8 +358,7 @@ public class UpdateMemberFormController {
     @FXML
     public Label label_duplicateAddress;
 
-    private LinkedHashMap<String, Integer> regionMap = ListUtils.getRegionMap();
-    private ObservableList<String> region = FXCollections.observableArrayList(regionMap.keySet());
+    private ObservableList<String> region = FXCollections.observableArrayList(ListUtils.getRegionMap().keySet());
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
     private Member member;
@@ -896,7 +895,7 @@ public class UpdateMemberFormController {
     public void editAddressLegalRegionId() {
         if (comboBox_addressLegal_regionName.getSelectionModel().getSelectedIndex() != -1) {
             String regionName = comboBox_addressLegal_regionName.getValue();
-            text_addressLegal_regionId.setText(regionMap.get(regionName).toString());
+            text_addressLegal_regionId.setText(ListUtils.getRegionMap().get(regionName).toString());
 
             if (regionName.equals("Воронежская область")) {
                 comboBox_addressLegal_district.setDisable(false);
@@ -912,7 +911,7 @@ public class UpdateMemberFormController {
     public void editAddressActualRegionId() {
         if (comboBox_addressActual_regionName.getSelectionModel().getSelectedIndex() != -1) {
             String regionName = comboBox_addressActual_regionName.getValue();
-            text_addressActual_regionId.setText(regionMap.get(regionName).toString());
+            text_addressActual_regionId.setText(ListUtils.getRegionMap().get(regionName).toString());
 
             if (regionName.equals("Воронежская область")) {
                 comboBox_addressActual_district.setDisable(false);

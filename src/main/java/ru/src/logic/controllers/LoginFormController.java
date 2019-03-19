@@ -18,6 +18,8 @@ import ru.src.logic.implementation.MemberUtils;
 import ru.src.model.User;
 
 import java.io.IOException;
+import java.util.Objects;
+import java.util.Optional;
 
 public class LoginFormController {
     @FXML
@@ -41,6 +43,7 @@ public class LoginFormController {
     private MainFormController mainFormController;
 
     private User user;
+
     public User getUser() {
         return user;
     }
@@ -60,18 +63,26 @@ public class LoginFormController {
         String login = text_login.getText();
         String password = MemberUtils.getPasswordHash(passField_password.getText());
 
-        if(DBConnection.isPairLoginAndPasswordCorrect(login, password)) {
-                user = DBConnection.getUser(login);
+        Optional<User> user = Optional.ofNullable(DBConnection.getUser(login));
+        if (user.isPresent()) {
+            if (user.get().getPassword().equals(password)) {
                 initializeMainForm();
                 checkInitMainFormStage();
                 closeCurrentStage(actionEvent);
-                mainFormController.setUser(user);
+                mainFormController.setUser(user.get());
                 mainFormStage.show();
                 mainFormStage.setOnCloseRequest(event -> exitApp(actionEvent));
+            } else {
+                warningMessage();
+            }
         } else {
-            label_alarm.setText("Проверьте пару логин/пароль");
-            label_alarm.setTextFill(MemberUtils.EMPTY_COLOR);
+            warningMessage();
         }
+    }
+
+    private void warningMessage() {
+        label_alarm.setText("Проверьте пару логин/пароль");
+        label_alarm.setTextFill(MemberUtils.EMPTY_COLOR);
     }
 
     private void initializeMainForm() {
@@ -91,7 +102,7 @@ public class LoginFormController {
     }
 
     private void checkInitMainFormStage() {
-        if(mainFormStage == null) {
+        if (mainFormStage == null) {
             mainFormStage = new Stage();
             mainFormStage.setScene(new Scene(mainForm));
             mainFormStage.setMaximized(true);
@@ -119,7 +130,7 @@ public class LoginFormController {
         }
 
         settingsStage = new Stage();
-        settingsStage.setScene(new Scene(settings));
+        settingsStage.setScene(new Scene(Objects.requireNonNull(settings)));
         settingsStage.setTitle("Настройки");
 
         settingsStage.show();

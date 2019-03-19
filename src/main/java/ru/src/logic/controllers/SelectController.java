@@ -1467,7 +1467,7 @@ public class SelectController {
     }
 
     private String getWherePartFromList(ArrayList<CheckBox> checkBoxes, String pattern, int flag) {
-        StringBuilder result = new StringBuilder("");
+        String result = "";
 
         ArrayList<String> someSelect = new ArrayList<>();
         for (CheckBox checkBox : checkBoxes) {
@@ -1512,16 +1512,13 @@ public class SelectController {
         }
 
         if (!someSelect.isEmpty()) {
-            for (int i = 0; i <= someSelect.size() - 1; i++) {
-                result.append(someSelect.get(i)).append(" OR ");
-            }
-            result.append(someSelect.get(someSelect.size() - 1));
+            result = String.join(" OR ", someSelect);
         }
-        return result.toString();
+        return result;
     }
 
     private String getWherePartFromDate(ArrayList<DatePicker> datePickers, String pattern) {
-        StringBuilder result = new StringBuilder("");
+        String result = "";
 
         ArrayList<String> someSelect = new ArrayList<>();
         String[] splitPattern = pattern.split(";");
@@ -1544,12 +1541,9 @@ public class SelectController {
         }
 
         if (!someSelect.isEmpty()) {
-            for (int i = 0; i <= someSelect.size() - 1; i++) {
-                result.append(someSelect.get(i)).append(" AND ");
-            }
-            result.append(someSelect.get(someSelect.size() - 1));
+            result = String.join(" AND ", someSelect);
         }
-        return result.toString();
+        return result;
     }
 
     private String getWherePartFromServices() {
