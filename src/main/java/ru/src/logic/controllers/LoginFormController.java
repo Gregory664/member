@@ -60,11 +60,7 @@ public class LoginFormController {
         String login = text_login.getText();
         String password = MemberUtils.getPasswordHash(passField_password.getText());
 
-        Boolean isLoginExist = DBConnection.isUserLoginExist(login);
-        Boolean isLoginPasswordPairExist = DBConnection.isUserPasswordExist(login, password);
-
-        if(isLoginExist) {
-            if(isLoginPasswordPairExist) {
+        if(DBConnection.isPairLoginAndPasswordCorrect(login, password)) {
                 user = DBConnection.getUser(login);
                 initializeMainForm();
                 checkInitMainFormStage();
@@ -72,12 +68,8 @@ public class LoginFormController {
                 mainFormController.setUser(user);
                 mainFormStage.show();
                 mainFormStage.setOnCloseRequest(event -> exitApp(actionEvent));
-            } else {
-                label_alarm.setText("Проверьте пару логин/пароль");
-                label_alarm.setTextFill(MemberUtils.EMPTY_COLOR);
-            }
         } else {
-            label_alarm.setText("Проверьте имя пользователя");
+            label_alarm.setText("Проверьте пару логин/пароль");
             label_alarm.setTextFill(MemberUtils.EMPTY_COLOR);
         }
     }

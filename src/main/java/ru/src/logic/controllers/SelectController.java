@@ -1447,7 +1447,7 @@ public class SelectController {
         test.add(getWherePartFromList(listPayment, "i.INVOICE_STATUS_OF_PAYMENT", 7));
         test.add(getWherePartFromServices());
 
-        test.removeIf(MemberUtils::isEmptyString);
+        test.removeIf(String::isEmpty);
 
         String selectQuery = "SELECT DISTINCT m.MEMBER_ID, " +
                 "m.MEMBER_SERIAL, " +
@@ -1467,7 +1467,7 @@ public class SelectController {
     }
 
     private String getWherePartFromList(ArrayList<CheckBox> checkBoxes, String pattern, int flag) {
-        String result = "";
+        StringBuilder result = new StringBuilder("");
 
         ArrayList<String> someSelect = new ArrayList<>();
         for (CheckBox checkBox : checkBoxes) {
@@ -1513,15 +1513,15 @@ public class SelectController {
 
         if (!someSelect.isEmpty()) {
             for (int i = 0; i <= someSelect.size() - 1; i++) {
-                result += someSelect.get(i) + " OR ";
+                result.append(someSelect.get(i)).append(" OR ");
             }
-            result += someSelect.get(someSelect.size() - 1);
+            result.append(someSelect.get(someSelect.size() - 1));
         }
-        return result;
+        return result.toString();
     }
 
     private String getWherePartFromDate(ArrayList<DatePicker> datePickers, String pattern) {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder("");
 
         ArrayList<String> someSelect = new ArrayList<>();
         String[] splitPattern = pattern.split(";");
@@ -1575,10 +1575,10 @@ public class SelectController {
     private String getAppendWhereQuery(ArrayList<String> list) {
         StringBuilder result = new StringBuilder();
 
-        for (int i = 0; i < list.size(); i++) {
-            if (i != list.size() - 1) result.append("(").append(list.get(i)).append(") AND ");
-            else result.append(list.get(i));
+        for (int i = 0; i <= list.size() - 1; i++) {
+            result.append("(").append(list.get(i)).append(") AND ");
         }
+        result.append(list.get(list.size() - 1));
         return result.toString();
     }
 
@@ -1628,7 +1628,6 @@ public class SelectController {
             }
             PDFUtils.savePDFfromFindResult(path, list, listSelectedParams);
         }
-
     }
 
     @FXML

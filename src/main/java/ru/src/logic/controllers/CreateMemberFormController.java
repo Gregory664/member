@@ -746,12 +746,7 @@ public class CreateMemberFormController {
     public void editAddressLegalRegionId() {
         if(comboBox_addressLegal_regionName.getSelectionModel().getSelectedIndex() != -1) {
             String regionName = comboBox_addressLegal_regionName.getValue();
-
-            Optional<Integer> id = regionMap.entrySet().stream()
-                    .filter(entry -> entry.getKey().equals(regionName))
-                    .map(Map.Entry::getValue)
-                    .findFirst();
-            id.ifPresent(s -> text_addressLegal_regionId.setText(s.toString()));
+            text_addressLegal_regionId.setText(regionMap.get(regionName).toString());
 
             if (regionName.equals("Воронежская область")) {
                 comboBox_addressLegal_district.setDisable(false);
@@ -767,12 +762,7 @@ public class CreateMemberFormController {
     public void editAddressActualRegionId() {
         if(comboBox_addressActual_regionName.getSelectionModel().getSelectedIndex() != -1) {
             String regionName = comboBox_addressActual_regionName.getValue();
-
-            Optional<Integer> id = regionMap.entrySet().stream()
-                    .filter(entry -> entry.getKey().equals(regionName))
-                    .map(Map.Entry::getValue)
-                    .findFirst();
-            id.ifPresent(s -> text_addressActual_regionId.setText(s.toString()));
+            text_addressActual_regionId.setText(regionMap.get(regionName).toString());
 
             if (regionName.equals("Воронежская область")) {
                 comboBox_addressActual_district.setDisable(false);

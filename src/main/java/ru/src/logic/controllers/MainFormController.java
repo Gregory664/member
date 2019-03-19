@@ -875,6 +875,9 @@ public class MainFormController {
         calendarNotificationStage.setTitle("Уведомление!");
         calendarNotificationStage.setResizable(false);
 
+        CalendarNotificationController calendarNotificationController = calendarNotificationFxmlLoader.getController();
+        calendarNotificationController.setMainTableView(table_members);
+
         calendarNotificationStage.show();
     }
 

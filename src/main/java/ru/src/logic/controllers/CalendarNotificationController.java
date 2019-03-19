@@ -5,11 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.DBConnection;
-import ru.src.logic.implementation.MemberUtils;
-
 import java.io.IOException;
 
 public class CalendarNotificationController {
@@ -27,6 +25,13 @@ public class CalendarNotificationController {
     private CalendarController calendarController;
     private Stage calendarStage;
 
+    private TableView mainTableView;
+
+    public void setMainTableView(TableView mainTableView) {
+        this.mainTableView = mainTableView;
+        calendarController.setParams(mainTableView);
+    }
+
     @FXML
     public void initialize() {
         label_directorBirthday_count.setText(DBConnection.getCountOfDirectorBirthdayToday().toString());
@@ -39,7 +44,6 @@ public class CalendarNotificationController {
         try {
             calendarFXMLLoader.setLocation(getClass().getResource("/ui/Calendar.fxml"));
             calendar = calendarFXMLLoader.load();
-            calendarController = calendarFXMLLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,6 +51,7 @@ public class CalendarNotificationController {
         calendarStage = new Stage();
         calendarStage.setScene(new Scene(calendar));
         calendarStage.setTitle("Календарь");
+        calendarController = calendarFXMLLoader.getController();
     }
     @FXML
     public void openDirectorCalendar() {

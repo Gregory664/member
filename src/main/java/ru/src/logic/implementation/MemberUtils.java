@@ -209,8 +209,4 @@ public class MemberUtils {
         byte[] digest = digest512.digest(password.getBytes());
         return Hex.toHexString(digest);
     }
-
-    public static Boolean isEmptyString(String checkString) {
-        return checkString.equals("");
-    }
 }
