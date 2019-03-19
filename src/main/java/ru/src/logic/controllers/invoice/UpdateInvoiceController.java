@@ -126,7 +126,6 @@ public class UpdateInvoiceController {
 
             invoice.setComment(text_comment.getText());
             invoiceUpdate = true;
-            System.out.println();
             closeCurrentStage(actionEvent);
         }
     }
