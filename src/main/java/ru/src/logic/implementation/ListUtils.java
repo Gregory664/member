@@ -5,6 +5,7 @@ import javafx.scene.control.CheckBox;
 import ru.src.model.User;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,7 +54,7 @@ public class ListUtils {
         return DISTRICT_LIST;
     }
 
-    public static HashMap<Integer, String> getRegionMap() {
+    public static LinkedHashMap<String, Integer> getRegionMap() {
         return REGION_MAP;
     }
 

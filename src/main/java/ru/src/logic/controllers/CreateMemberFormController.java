@@ -364,8 +364,8 @@ public class CreateMemberFormController {
         return member;
     }
 
-    private HashMap<Integer, String> regionMap = ListUtils.getRegionMap();
-    private ObservableList<String> region = FXCollections.observableArrayList(regionMap.values());
+    private LinkedHashMap<String, Integer> regionMap = ListUtils.getRegionMap();
+    private ObservableList<String> region = FXCollections.observableArrayList(regionMap.keySet());
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
     private boolean isMemberCreate = false;
@@ -747,11 +747,11 @@ public class CreateMemberFormController {
         if(comboBox_addressLegal_regionName.getSelectionModel().getSelectedIndex() != -1) {
             String regionName = comboBox_addressLegal_regionName.getValue();
 
-            Optional<String> id = regionMap.entrySet().stream()
-                    .filter(entry -> entry.getValue().equals(regionName))
-                    .map(value -> value.getKey().toString())
+            Optional<Integer> id = regionMap.entrySet().stream()
+                    .filter(entry -> entry.getKey().equals(regionName))
+                    .map(Map.Entry::getValue)
                     .findFirst();
-            id.ifPresent(s -> text_addressLegal_regionId.setText(s));
+            id.ifPresent(s -> text_addressLegal_regionId.setText(s.toString()));
 
             if (regionName.equals("Воронежская область")) {
                 comboBox_addressLegal_district.setDisable(false);
@@ -759,18 +759,20 @@ public class CreateMemberFormController {
                 comboBox_addressLegal_district.setDisable(true);
                 comboBox_addressLegal_district.getSelectionModel().select(null);
             }
-        } else text_addressLegal_regionId.clear();
+        } else {
+            text_addressLegal_regionId.clear();
+        }
     }
 
     public void editAddressActualRegionId() {
         if(comboBox_addressActual_regionName.getSelectionModel().getSelectedIndex() != -1) {
             String regionName = comboBox_addressActual_regionName.getValue();
 
-            Optional<String> id = regionMap.entrySet().stream()
-                    .filter(entry -> entry.getValue().equals(regionName))
-                    .map(value -> value.getKey().toString())
+            Optional<Integer> id = regionMap.entrySet().stream()
+                    .filter(entry -> entry.getKey().equals(regionName))
+                    .map(Map.Entry::getValue)
                     .findFirst();
-            id.ifPresent(s -> text_addressActual_regionId.setText(s));
+            id.ifPresent(s -> text_addressActual_regionId.setText(s.toString()));
 
             if (regionName.equals("Воронежская область")) {
                 comboBox_addressActual_district.setDisable(false);
@@ -778,7 +780,9 @@ public class CreateMemberFormController {
                 comboBox_addressActual_district.setDisable(true);
                 comboBox_addressActual_district.getSelectionModel().select(null);
             }
-        } else text_addressActual_regionId.clear();
+        } else {
+            text_addressActual_regionId.clear();
+        }
     }
 
     public void duplicateAddress(MouseEvent mouseEvent) {

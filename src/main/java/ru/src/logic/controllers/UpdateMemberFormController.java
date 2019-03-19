@@ -358,8 +358,8 @@ public class UpdateMemberFormController {
     @FXML
     public Label label_duplicateAddress;
 
-    private HashMap<Integer, String> regionMap = ListUtils.getRegionMap();
-    private ObservableList<String> region = FXCollections.observableArrayList(ListUtils.getRegionMap().values());
+    private LinkedHashMap<String, Integer> regionMap = ListUtils.getRegionMap();
+    private ObservableList<String> region = FXCollections.observableArrayList(regionMap.keySet());
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
     private Member member;
@@ -897,11 +897,11 @@ public class UpdateMemberFormController {
         if (comboBox_addressLegal_regionName.getSelectionModel().getSelectedIndex() != -1) {
             String regionName = comboBox_addressLegal_regionName.getValue();
 
-            Optional<String> id = regionMap.entrySet().stream()
-                    .filter(entry -> entry.getValue().equals(regionName))
-                    .map(value -> value.getKey().toString())
+            Optional<Integer> id = regionMap.entrySet().stream()
+                    .filter(entry -> entry.getKey().equals(regionName))
+                    .map(Map.Entry::getValue)
                     .findFirst();
-            id.ifPresent(s -> text_addressLegal_regionId.setText(s));
+            id.ifPresent(s -> text_addressLegal_regionId.setText(s.toString()));
 
             if (regionName.equals("Воронежская область")) {
                 comboBox_addressLegal_district.setDisable(false);
@@ -918,11 +918,11 @@ public class UpdateMemberFormController {
         if (comboBox_addressActual_regionName.getSelectionModel().getSelectedIndex() != -1) {
             String regionName = comboBox_addressActual_regionName.getValue();
 
-            Optional<String> id = regionMap.entrySet().stream()
-                    .filter(entry -> entry.getValue().equals(regionName))
-                    .map(value -> value.getKey().toString())
+            Optional<Integer> id = regionMap.entrySet().stream()
+                    .filter(entry -> entry.getKey().equals(regionName))
+                    .map(Map.Entry::getValue)
                     .findFirst();
-            id.ifPresent(s -> text_addressActual_regionId.setText(s));
+            id.ifPresent(s -> text_addressActual_regionId.setText(s.toString()));
 
             if (regionName.equals("Воронежская область")) {
                 comboBox_addressActual_district.setDisable(false);
