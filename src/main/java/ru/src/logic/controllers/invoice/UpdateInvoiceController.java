@@ -52,10 +52,6 @@ public class UpdateInvoiceController {
         return invoiceUpdate;
     }
 
-    private ObservableList<String> payment = ListUtils.getPayment();
-
-    private ObservableList<String> receive = ListUtils.getReceive();
-
     @FXML
     public void initialize() {
         MemberUtils.checkTextDigital(text_orderId, 5);
@@ -63,8 +59,8 @@ public class UpdateInvoiceController {
         date_dateCreation.setStyle("-fx-opacity: 1");
         date_dateCreation.getEditor().setStyle("-fx-opacity: 1");
 
-        cmbBox_statusPayment.setItems(payment);
-        cmbBox_statusReceiving.setItems(receive);
+        cmbBox_statusPayment.setItems(ListUtils.getPayment());
+        cmbBox_statusReceiving.setItems(ListUtils.getReceive());
     }
 
     public void setInvoice(Invoice invoice) {

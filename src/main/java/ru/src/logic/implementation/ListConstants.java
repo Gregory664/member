@@ -18,7 +18,7 @@ public class ListConstants {
     public static final ObservableList<String> DEDB_STATUS_LIST = FXCollections.observableArrayList();
     public static final ObservableList<String> DISTRICT_LIST = FXCollections.observableArrayList();
     public static final LinkedHashMap<String, Integer> REGION_MAP = new LinkedHashMap<>();
-    public static final HashMap<Integer, String> MONTHS_LIST = new HashMap<>();
+    public static final LinkedHashMap<String, Integer> MONTHS_LIST = new LinkedHashMap<>();
     public static final ObservableList<String> FIND_PARAMS_LIST = FXCollections.observableArrayList();
     public static final ObservableList<String> PAYMENT_LIST = FXCollections.observableArrayList();
     public static final ObservableList<String> RECEIVE_LIST = FXCollections.observableArrayList();
@@ -220,18 +220,18 @@ public class ListConstants {
         REGION_MAP.put("г. Севастополь", 92);
         REGION_MAP.put("Иные территории, включая город и космодром Байконур", 99);
 
-        MONTHS_LIST.put(1, "Январь");
-        MONTHS_LIST.put(2, "Февраль");
-        MONTHS_LIST.put(3, "Март");
-        MONTHS_LIST.put(4, "Апрель");
-        MONTHS_LIST.put(5, "Май");
-        MONTHS_LIST.put(6, "Июнь");
-        MONTHS_LIST.put(7, "Июль");
-        MONTHS_LIST.put(8, "Август");
-        MONTHS_LIST.put(9, "Сентябрь");
-        MONTHS_LIST.put(10, "Октябрь");
-        MONTHS_LIST.put(11, "Ноябрь");
-        MONTHS_LIST.put(12, "Декабрь");
+        MONTHS_LIST.put("Январь", 1);
+        MONTHS_LIST.put("Февраль", 2);
+        MONTHS_LIST.put("Март", 3);
+        MONTHS_LIST.put("Апрель", 4);
+        MONTHS_LIST.put("Май", 5);
+        MONTHS_LIST.put("Июнь", 6);
+        MONTHS_LIST.put("Июль", 7);
+        MONTHS_LIST.put("Август", 8);
+        MONTHS_LIST.put("Сентябрь", 9);
+        MONTHS_LIST.put("Октябрь", 10);
+        MONTHS_LIST.put("Ноябрь", 11);
+        MONTHS_LIST.put("Декабрь", 12);
 
         FIND_PARAMS_LIST.add("Номер билета");
         FIND_PARAMS_LIST.add("Полное название");

@@ -369,7 +369,7 @@ public class MainFormController {
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
-    private Stage mainStage;
+    private Stage mainStage = new Stage();
 
     private User user;
 
@@ -574,41 +574,35 @@ public class MainFormController {
 
     @FXML
     public void createInvoice() {
-        FXMLLoader createInvoiceFxmlLoader = new FXMLLoader();
-        Parent createInvoice = null;
-
         try {
+            FXMLLoader createInvoiceFxmlLoader = new FXMLLoader();
             createInvoiceFxmlLoader.setLocation(getClass().getResource("/ui/Invoice/CreateInvoiceForm.fxml"));
-            createInvoice = createInvoiceFxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Parent createInvoice = createInvoiceFxmlLoader.load();
 
-        Stage createInvoiceStage = new Stage();
-        createInvoiceStage.setResizable(false);
-        createInvoiceStage.setScene(new Scene(Objects.requireNonNull(createInvoice)));
-        createInvoiceStage.initModality(Modality.APPLICATION_MODAL);
-        createInvoiceStage.initOwner(mainStage);
-        createInvoiceStage.setTitle("Добавление счета");
+            Stage createInvoiceStage = new Stage();
+            createInvoiceStage.setResizable(false);
+            createInvoiceStage.setScene(new Scene(Objects.requireNonNull(createInvoice)));
+            createInvoiceStage.initModality(Modality.APPLICATION_MODAL);
+            createInvoiceStage.initOwner(mainStage);
+            createInvoiceStage.setTitle("Добавление счета");
 
-        Member member = table_members.getSelectionModel().getSelectedItem();
-        if (member.getInvoice() == null) {
-            List<Invoice> invoices = new ArrayList<>();
-            member.setInvoice(invoices);
-        }
-        CreateInvoiceController createInvoiceController = createInvoiceFxmlLoader.getController();
-        createInvoiceController.setMember(member);
-        createInvoiceStage.showAndWait();
+            Member member = table_members.getSelectionModel().getSelectedItem();
+            CreateInvoiceController createInvoiceController = createInvoiceFxmlLoader.getController();
+            createInvoiceController.setMember(member);
+            createInvoiceStage.showAndWait();
 
-        if (createInvoiceController.isCreateInvoice()) {
-            if (!DBConnection.isInvoiceExists(createInvoiceController.getInvoice().getInvoiceId())) {
-                member.getInvoice().add(createInvoiceController.getInvoice());
-                DBConnection.updateMember(member);
-                memberOrganizations.updateMember(member);
-                MemberUtils.informationDialog("Счет успешно добавлен!");
-            } else {
-                MemberUtils.warningDialog("Такой счет уже существует!");
+            if (createInvoiceController.isCreateInvoice()) {
+                if (!DBConnection.isInvoiceExists(createInvoiceController.getInvoice().getInvoiceId())) {
+                    member.getInvoice().add(createInvoiceController.getInvoice());
+                    DBConnection.updateMember(member);
+                    memberOrganizations.updateMember(member);
+                    MemberUtils.informationDialog("Счет успешно добавлен!");
+                } else {
+                    MemberUtils.warningDialog("Такой счет уже существует!");
+                }
             }
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы добавления счета: " + e.getMessage()); //TODO write to log
         }
     }
 
@@ -621,7 +615,6 @@ public class MainFormController {
 
         Optional<ButtonType> response = alert.showAndWait();
         if (response.isPresent() && response.get() == ButtonType.OK) {
-
             Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue()));
             Member member = table_members.getSelectionModel().getSelectedItem();
 
@@ -634,73 +627,62 @@ public class MainFormController {
 
     @FXML
     public void updateInvoice() {
-        FXMLLoader updateInvoiceFxmlLoader = new FXMLLoader();
-        Parent updateInvoice = null;
-
         try {
+            FXMLLoader updateInvoiceFxmlLoader = new FXMLLoader();
             updateInvoiceFxmlLoader.setLocation(getClass().getResource("/ui/Invoice/UpdateInvoiceForm.fxml"));
-            updateInvoice = updateInvoiceFxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Parent updateInvoice = updateInvoiceFxmlLoader.load();
 
-        Stage updateInvoiceStage = new Stage();
-        updateInvoiceStage.setResizable(false);
-        updateInvoiceStage.setScene(new Scene(Objects.requireNonNull(updateInvoice)));
-        updateInvoiceStage.initModality(Modality.APPLICATION_MODAL);
-        updateInvoiceStage.initOwner(mainStage);
-        updateInvoiceStage.setTitle("Редактирование счета");
+            Stage updateInvoiceStage = new Stage();
+            updateInvoiceStage.setResizable(false);
+            updateInvoiceStage.setScene(new Scene(Objects.requireNonNull(updateInvoice)));
+            updateInvoiceStage.initModality(Modality.APPLICATION_MODAL);
+            updateInvoiceStage.initOwner(mainStage);
+            updateInvoiceStage.setTitle("Редактирование счета");
 
-        UpdateInvoiceController updateInvoiceController = updateInvoiceFxmlLoader.getController();
-        Member member = table_members.getSelectionModel().getSelectedItem();
-        Invoice currentInvoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue()));
-        updateInvoiceController.setInvoice(currentInvoice);
-        updateInvoiceStage.showAndWait();
+            UpdateInvoiceController updateInvoiceController = updateInvoiceFxmlLoader.getController();
+            Member member = table_members.getSelectionModel().getSelectedItem();
+            Invoice currentInvoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue()));
+            updateInvoiceController.setInvoice(currentInvoice);
+            updateInvoiceStage.showAndWait();
 
-        if (updateInvoiceController.isInvoiceUpdate()) {
-            DBConnection.updateMember(member);
-            memberOrganizations.updateMember(member);
-            MemberUtils.informationDialog("Счет успешно обновлен!");
-        } else {
-            MemberUtils.informationDialog("Данные по счету остались без изменений!");
+            if (updateInvoiceController.isInvoiceUpdate()) {
+                DBConnection.updateMember(member);
+                memberOrganizations.updateMember(member);
+                MemberUtils.informationDialog("Счет успешно обновлен!");
+            } else {
+                MemberUtils.informationDialog("Данные по счету остались без изменений!");
+            }
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы редактирования счета: " + e.getMessage()); //TODO write to log
         }
     }
 
     @FXML
     public void createContactPerson() {
-        FXMLLoader createContactPersonFxmlLoader = new FXMLLoader();
-        Parent createContactPerson = null;
-
-
         try {
+            FXMLLoader createContactPersonFxmlLoader = new FXMLLoader();
             createContactPersonFxmlLoader.setLocation(getClass().getResource("/ui/ContactPerson/CreateContactPerson.fxml"));
-            createContactPerson = createContactPersonFxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Parent createContactPerson = createContactPersonFxmlLoader.load();
 
-        Stage createContactPersonStage = new Stage();
-        createContactPersonStage.setResizable(false);
-        createContactPersonStage.setScene(new Scene(Objects.requireNonNull(createContactPerson)));
-        createContactPersonStage.initModality(Modality.APPLICATION_MODAL);
-        createContactPersonStage.setTitle("Добавление контактного лица");
-        createContactPersonStage.initOwner(mainStage);
+            Stage createContactPersonStage = new Stage();
+            createContactPersonStage.setResizable(false);
+            createContactPersonStage.setScene(new Scene(Objects.requireNonNull(createContactPerson)));
+            createContactPersonStage.initModality(Modality.APPLICATION_MODAL);
+            createContactPersonStage.setTitle("Добавление контактного лица");
+            createContactPersonStage.initOwner(mainStage);
 
+            Member member = table_members.getSelectionModel().getSelectedItem();
+            CreateContactPersonController createContactPersonController = createContactPersonFxmlLoader.getController();
+            createContactPersonController.setMember(member);
+            createContactPersonStage.showAndWait();
 
-        Member member = table_members.getSelectionModel().getSelectedItem();
-        if (member.getContactPerson() == null) {
-            List<ContactPerson> people = new ArrayList<>();
-            member.setContactPerson(people);
-        }
-
-        CreateContactPersonController createContactPersonController = createContactPersonFxmlLoader.getController();
-        createContactPersonController.setMember(member);
-        createContactPersonStage.showAndWait();
-
-        if (createContactPersonController.isCreateContactPerson()) {
-            DBConnection.updateMember(member);
-            memberOrganizations.updateMember(member);
-            MemberUtils.informationDialog("Контактное лицо успешно добавлено!");
+            if (createContactPersonController.isCreateContactPerson()) {
+                DBConnection.updateMember(member);
+                memberOrganizations.updateMember(member);
+                MemberUtils.informationDialog("Контактное лицо успешно добавлено!");
+            }
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы добавления контактного лица: " + e.getMessage()); //TODO write to log
         }
     }
 
@@ -725,63 +707,57 @@ public class MainFormController {
 
     @FXML
     public void updateContactPerson() {
-        FXMLLoader updateContactPersonFXMLLoader = new FXMLLoader();
-        Parent updateContactPerson = null;
-
         try {
+            FXMLLoader updateContactPersonFXMLLoader = new FXMLLoader();
             updateContactPersonFXMLLoader.setLocation(getClass().getResource("/ui/ContactPerson/UpdateContactPerson.fxml"));
-            updateContactPerson = updateContactPersonFXMLLoader.load();
+            Parent updateContactPerson = updateContactPersonFXMLLoader.load();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Stage updateContactPersonStage = new Stage();
+            updateContactPersonStage.setResizable(false);
+            updateContactPersonStage.setScene(new Scene(Objects.requireNonNull(updateContactPerson)));
+            updateContactPersonStage.initModality(Modality.APPLICATION_MODAL);
+            updateContactPersonStage.initOwner(mainStage);
+            updateContactPersonStage.setTitle("Редактирование данных контактного лица");
 
-        Stage updateContactPersonStage = new Stage();
-        updateContactPersonStage.setResizable(false);
-        updateContactPersonStage.setScene(new Scene(Objects.requireNonNull(updateContactPerson)));
-        updateContactPersonStage.initModality(Modality.APPLICATION_MODAL);
-        updateContactPersonStage.initOwner(mainStage);
-        updateContactPersonStage.setTitle("Редактирование данных контактного лица");
+            UpdateContactPersonController updateContactPersonController = updateContactPersonFXMLLoader.getController();
+            Member member = table_members.getSelectionModel().getSelectedItem();
+            ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue()));
+            updateContactPersonController.setContactPerson(contactPerson);
+            updateContactPersonStage.showAndWait();
 
-        UpdateContactPersonController updateContactPersonController = updateContactPersonFXMLLoader.getController();
-        Member member = table_members.getSelectionModel().getSelectedItem();
-        ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue()));
-        updateContactPersonController.setContactPerson(contactPerson);
-        updateContactPersonStage.showAndWait();
-
-        if (updateContactPersonController.isUpdateContactPerson()) {
-            DBConnection.updateMember(member);
-            memberOrganizations.updateMember(member);
-            MemberUtils.informationDialog("Данные контактного лица успешно обновлены!");
+            if (updateContactPersonController.isUpdateContactPerson()) {
+                DBConnection.updateMember(member);
+                memberOrganizations.updateMember(member);
+                MemberUtils.informationDialog("Данные контактного лица успешно обновлены!");
+            }
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы обновления данных контактного лица: " + e.getMessage()); //TODO write to log
         }
     }
 
     @FXML
     public void addMember() {
-        FXMLLoader createMemberFormFxmlLoader = new FXMLLoader();
-        Parent createMemberForm = null;
-
         try {
+            FXMLLoader createMemberFormFxmlLoader = new FXMLLoader();
             createMemberFormFxmlLoader.setLocation(getClass().getResource("/ui/CreateMemberForm.fxml"));
-            createMemberForm = createMemberFormFxmlLoader.load();
+            Parent createMemberForm = createMemberFormFxmlLoader.load();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Stage createMemberFormStage = new Stage();
+            createMemberFormStage.setScene(new Scene(Objects.requireNonNull(createMemberForm)));
+            createMemberFormStage.initModality(Modality.APPLICATION_MODAL);
+            createMemberFormStage.initOwner(mainStage);
+            createMemberFormStage.setTitle("Добавление организации");
+            CreateMemberFormController createMemberFormController = createMemberFormFxmlLoader.getController();
+            createMemberFormStage.showAndWait();
 
-        Stage createMemberFormStage = new Stage();
-        createMemberFormStage.setScene(new Scene(Objects.requireNonNull(createMemberForm)));
-        createMemberFormStage.initModality(Modality.APPLICATION_MODAL);
-        createMemberFormStage.initOwner(mainStage);
-        createMemberFormStage.setTitle("Добавление организации");
-        CreateMemberFormController createMemberFormController = createMemberFormFxmlLoader.getController();
-        createMemberFormStage.showAndWait();
-
-        if (createMemberFormController.isMemberCreate()) {
-            Member newMember = createMemberFormController.getMember();
-            DBConnection.addMember(newMember);
-            memberOrganizations.addMember(newMember);
-            MemberUtils.informationDialog("Организация успешно добавлена!");
+            if (createMemberFormController.isMemberCreate()) {
+                Member newMember = createMemberFormController.getMember();
+                DBConnection.addMember(newMember);
+                memberOrganizations.addMember(newMember);
+                MemberUtils.informationDialog("Организация успешно добавлена!");
+            }
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы добавления организации: " + e.getMessage()); //TODO write to log
         }
     }
 
@@ -806,144 +782,131 @@ public class MainFormController {
 
     @FXML
     public void renameMember() {
-        FXMLLoader updateMemberFormFxmlLoader = new FXMLLoader();
-        Parent updateMemberForm = null;
-
         try {
+            FXMLLoader updateMemberFormFxmlLoader = new FXMLLoader();
             updateMemberFormFxmlLoader.setLocation(getClass().getResource("/ui/UpdateMemberForm.fxml"));
-            updateMemberForm = updateMemberFormFxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Parent updateMemberForm = updateMemberFormFxmlLoader.load();
 
-        Stage updateMemberFormStage = new Stage();
-        updateMemberFormStage.setScene(new Scene(Objects.requireNonNull(updateMemberForm)));
-        updateMemberFormStage.initModality(Modality.APPLICATION_MODAL);
-        updateMemberFormStage.initOwner(mainStage);
-        updateMemberFormStage.setTitle("Редактирование данных организации");
+            Stage updateMemberFormStage = new Stage();
+            updateMemberFormStage.setScene(new Scene(Objects.requireNonNull(updateMemberForm)));
+            updateMemberFormStage.initModality(Modality.APPLICATION_MODAL);
+            updateMemberFormStage.initOwner(mainStage);
+            updateMemberFormStage.setTitle("Редактирование данных организации");
 
-        UpdateMemberFormController updateMemberFormController = updateMemberFormFxmlLoader.getController();
-        Member member = table_members.getSelectionModel().getSelectedItem();
-        updateMemberFormController.setMember(member);
-        updateMemberFormStage.showAndWait();
+            UpdateMemberFormController updateMemberFormController = updateMemberFormFxmlLoader.getController();
+            Member member = table_members.getSelectionModel().getSelectedItem();
+            updateMemberFormController.setMember(member);
+            updateMemberFormStage.showAndWait();
 
-        if (updateMemberFormController.isMemberUpdate()) {
-            Member updateMember = updateMemberFormController.getMember();
-            DBConnection.updateMember(updateMember);
-            memberOrganizations.updateMember(updateMember);
-            MemberUtils.informationDialog("Данные организации успешно обновлены!");
-        } else {
-            MemberUtils.informationDialog("Данные организации остались без изменений!");
+            if (updateMemberFormController.isMemberUpdate()) {
+                Member updateMember = updateMemberFormController.getMember();
+                DBConnection.updateMember(updateMember);
+                memberOrganizations.updateMember(updateMember);
+                MemberUtils.informationDialog("Данные организации успешно обновлены!");
+            } else {
+                MemberUtils.informationDialog("Данные организации остались без изменений!");
+            }
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы обновления данных организации: " + e.getMessage()); //TODO write to log
         }
     }
 
     @FXML
     public void openCalendar() {
-        FXMLLoader calendarFxmlLoader = new FXMLLoader();
-        Parent calendar = null;
-
         try {
+            FXMLLoader calendarFxmlLoader = new FXMLLoader();
             calendarFxmlLoader.setLocation(getClass().getResource("/ui/Calendar.fxml"));
-            calendar = calendarFxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Parent calendar = calendarFxmlLoader.load();
+
+            Stage calendarStage = new Stage();
+            calendarStage.setScene(new Scene(Objects.requireNonNull(calendar)));
+            calendarStage.setTitle("Календарь");
+
+            CalendarController calendarController = calendarFxmlLoader.getController();
+            calendarController.setParams(table_members);
+            calendarStage.show();
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы календаря: " + e.getMessage()); //TODO write to log
         }
-
-        Stage calendarStage = new Stage();
-        calendarStage.setScene(new Scene(Objects.requireNonNull(calendar)));
-        calendarStage.setTitle("Календарь");
-
-        CalendarController calendarController = calendarFxmlLoader.getController();
-        calendarController.setParams(table_members);
-        calendarStage.show();
     }
 
     @FXML
     public void openNotification() {
-        FXMLLoader calendarNotificationFxmlLoader = new FXMLLoader();
-        Parent calendarNotification = null;
-
         try {
+            FXMLLoader calendarNotificationFxmlLoader = new FXMLLoader();
             calendarNotificationFxmlLoader.setLocation(getClass().getResource("/ui/calendarNotification.fxml"));
-            calendarNotification = calendarNotificationFxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Parent calendarNotification = calendarNotificationFxmlLoader.load();
+
+            Stage calendarNotificationStage = new Stage();
+            calendarNotificationStage.setScene(new Scene(Objects.requireNonNull(calendarNotification)));
+            calendarNotificationStage.setTitle("Уведомление!");
+            calendarNotificationStage.setResizable(false);
+
+            CalendarNotificationController calendarNotificationController = calendarNotificationFxmlLoader.getController();
+            calendarNotificationController.setMainTableView(table_members);
+
+            calendarNotificationStage.show();
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы уведомлений: " + e.getMessage()); //TODO write to log
         }
-
-        Stage calendarNotificationStage = new Stage();
-        calendarNotificationStage.setScene(new Scene(Objects.requireNonNull(calendarNotification)));
-        calendarNotificationStage.setTitle("Уведомление!");
-        calendarNotificationStage.setResizable(false);
-
-        CalendarNotificationController calendarNotificationController = calendarNotificationFxmlLoader.getController();
-        calendarNotificationController.setMainTableView(table_members);
-
-        calendarNotificationStage.show();
     }
 
     @FXML
     public void openFind() {
-        FXMLLoader findFormFXMLLoader = new FXMLLoader();
-        Parent findForm = null;
-
         try {
+            FXMLLoader findFormFXMLLoader = new FXMLLoader();
             findFormFXMLLoader.setLocation(getClass().getResource("/ui/FindForm.fxml"));
-            findForm = findFormFXMLLoader.load();
+            Parent findForm = findFormFXMLLoader.load();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            Stage findFormStage = new Stage();
+            findFormStage.setScene(new Scene(Objects.requireNonNull(findForm)));
+            findFormStage.setResizable(false);
+            findFormStage.setTitle("Поиск");
+
+            FindFormController findFormController = findFormFXMLLoader.getController();
+            findFormController.setParams(table_members);
+            findFormStage.showAndWait();
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы поиска: " + e.getMessage()); //TODO write to log
         }
-
-        Stage findFormStage = new Stage();
-        findFormStage.setScene(new Scene(Objects.requireNonNull(findForm)));
-        findFormStage.setResizable(false);
-        findFormStage.setTitle("Поиск");
-
-        FindFormController findFormController = findFormFXMLLoader.getController();
-        findFormController.setParams(table_members);
-        findFormStage.showAndWait();
     }
 
     @FXML
     public void openSettings() {
-        FXMLLoader settingsFxmlLoader = new FXMLLoader();
-        Parent settings = null;
-
         try {
+            FXMLLoader settingsFxmlLoader = new FXMLLoader();
             settingsFxmlLoader.setLocation(getClass().getResource("/ui/Settings.fxml"));
-            settings = settingsFxmlLoader.load();
+            Parent settings = settingsFxmlLoader.load();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            Stage settingsStage = new Stage();
+            settingsStage.setScene(new Scene(Objects.requireNonNull(settings)));
+            settingsStage.setTitle("Настройки");
+
+            SettingsController settingsController = settingsFxmlLoader.getController();
+            settingsController.setChangeSettingFromMainForm(true);
+            settingsStage.show();
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы настроек: " + e.getMessage()); //TODO write to log
         }
-
-        Stage settingsStage = new Stage();
-        settingsStage.setScene(new Scene(Objects.requireNonNull(settings)));
-        settingsStage.setTitle("Настройки");
-
-        SettingsController settingsController = settingsFxmlLoader.getController();
-        settingsController.setChangeSettingFromMainForm(true);
-        settingsStage.show();
     }
 
     @FXML
     public void openSelect() {
-        FXMLLoader selectFormFxmlLoader = new FXMLLoader();
-        Parent selectForm = null;
         try {
+            FXMLLoader selectFormFxmlLoader = new FXMLLoader();
             selectFormFxmlLoader.setLocation(getClass().getResource("/ui/Select.fxml"));
-            selectForm = selectFormFxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Parent selectForm = selectFormFxmlLoader.load();
+
+            Stage selectStage = new Stage();
+            selectStage.setScene(new Scene(Objects.requireNonNull(selectForm)));
+            selectStage.initModality(Modality.APPLICATION_MODAL);
+            selectStage.setTitle("Сортировка");
+            selectStage.initOwner(mainStage);
+
+            selectStage.showAndWait();
+        } catch (IOException | IllegalStateException e) {
+            MemberUtils.warningDialog("Ошибка инициализации формы сортировки: " + e.getMessage()); //TODO write to log
         }
-
-        Stage selectStage = new Stage();
-        selectStage.setScene(new Scene(Objects.requireNonNull(selectForm)));
-        selectStage.initModality(Modality.APPLICATION_MODAL);
-        selectStage.setTitle("Сортировка");
-        selectStage.initOwner(mainStage);
-
-        selectStage.showAndWait();
     }
 
 
@@ -957,12 +920,8 @@ public class MainFormController {
         fillAddressLegal(member.getAddressLegal());
         fillAddressActual(member.getAddressActual());
         if (user.getAdmin()) {
-            if (member.getContactPerson() != null) {
-                fillContactPersons(member.getContactPerson());
-            }
-            if (member.getContactPerson() != null) {
-                fillInvoices(member.getInvoice());
-            }
+            fillContactPersons(member.getContactPerson());
+            fillInvoices(member.getInvoice());
         }
         fillSocialNetworks(member.getSocialNetworks());
         fillServices(member.getServices());

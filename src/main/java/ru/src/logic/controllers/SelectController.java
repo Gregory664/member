@@ -473,7 +473,7 @@ public class SelectController {
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
     private ObservableList<FindMember> list = FXCollections.observableArrayList();
 
-    private Stage currentStage;
+    private Stage currentStage = new Stage();
 
     @FXML
     public void initialize() {
@@ -544,53 +544,47 @@ public class SelectController {
 
     private void addSelectAllInterestsCheckBox() {
         anchor_Interests.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 5) {
-                    selectVedImport(true);
-                    selectVedExport(true);
-                    selectB2b(true);
-                    selectB2c(true);
-                    selectBusinessMissionVisiting(true);
-                    selectBusinessMissionRegional(true);
-                    selectMkas(true);
-                    selectAntiCorruptionCharter(true);
-                    selectPilotProjects(true);
-                    selectReliablePartners(true);
-                    selectDiscounts(true);
-                    selectNeedForYoungPersonnel(true);
-                    selectNewsletter(true);
-                    selectCommittees(true);
-                    selectCorporateMember(true);
-                    selectInteractionOnline(true);
-                    selectInteractionOffline(true);
-                }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 5) {
+                selectVedImport(true);
+                selectVedExport(true);
+                selectB2b(true);
+                selectB2c(true);
+                selectBusinessMissionVisiting(true);
+                selectBusinessMissionRegional(true);
+                selectMkas(true);
+                selectAntiCorruptionCharter(true);
+                selectPilotProjects(true);
+                selectReliablePartners(true);
+                selectDiscounts(true);
+                selectNeedForYoungPersonnel(true);
+                selectNewsletter(true);
+                selectCommittees(true);
+                selectCorporateMember(true);
+                selectInteractionOnline(true);
+                selectInteractionOffline(true);
             }
         });
     }
 
     private void addSelectAllBusinessCharacteristicsCheckBox() {
         anchor_BusinessCharacteristics.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 5) {
-                    selectEconomicSector(true);
-                    selectOrganizationForm(true);
-                    selectOwnershipForm(true);
-                    selectActivityType(true);
-                    selectBusinessForm(true);
-                }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 5) {
+                selectEconomicSector(true);
+                selectOrganizationForm(true);
+                selectOwnershipForm(true);
+                selectActivityType(true);
+                selectBusinessForm(true);
             }
         });
     }
 
     private void addSelectAllGeneralCheckBox() {
         anchor_General.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 5) {
-                    selectMemberStatus(true);
-                    selectDebtStatus(true);
-                    selectLocation(true);
-                    selectMonth(true);
-                }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 5) {
+                selectMemberStatus(true);
+                selectDebtStatus(true);
+                selectLocation(true);
+                selectMonth(true);
             }
         });
     }
@@ -764,15 +758,13 @@ public class SelectController {
 
     private void addMemberStatusListener() {
         label_memberStatus.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyCBMemberStatus) {
-                        selectMemberStatus(true);
-                        isEmptyCBMemberStatus = true;
-                    } else {
-                        selectMemberStatus(false);
-                        isEmptyCBMemberStatus = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyCBMemberStatus) {
+                    selectMemberStatus(true);
+                    isEmptyCBMemberStatus = true;
+                } else {
+                    selectMemberStatus(false);
+                    isEmptyCBMemberStatus = false;
                 }
             }
         });
@@ -780,15 +772,13 @@ public class SelectController {
 
     private void addBusinessFormListener() {
         label_businessForm.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyBusinessForm) {
-                        selectBusinessForm(true);
-                        isEmptyBusinessForm = true;
-                    } else {
-                        selectBusinessForm(false);
-                        isEmptyBusinessForm = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyBusinessForm) {
+                    selectBusinessForm(true);
+                    isEmptyBusinessForm = true;
+                } else {
+                    selectBusinessForm(false);
+                    isEmptyBusinessForm = false;
                 }
             }
         });
@@ -796,15 +786,13 @@ public class SelectController {
 
     private void addDebtStatusListener() {
         label_debt_status.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyDebtStatus) {
-                        selectDebtStatus(true);
-                        isEmptyDebtStatus = true;
-                    } else {
-                        selectDebtStatus(false);
-                        isEmptyDebtStatus = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyDebtStatus) {
+                    selectDebtStatus(true);
+                    isEmptyDebtStatus = true;
+                } else {
+                    selectDebtStatus(false);
+                    isEmptyDebtStatus = false;
                 }
             }
         });
@@ -812,15 +800,13 @@ public class SelectController {
 
     private void addOrganizationFormListener() {
         label_organizationForm.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyOrganizationForm) {
-                        selectOrganizationForm(true);
-                        isEmptyOrganizationForm = true;
-                    } else {
-                        selectOrganizationForm(false);
-                        isEmptyOrganizationForm = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyOrganizationForm) {
+                    selectOrganizationForm(true);
+                    isEmptyOrganizationForm = true;
+                } else {
+                    selectOrganizationForm(false);
+                    isEmptyOrganizationForm = false;
                 }
             }
         });
@@ -828,15 +814,13 @@ public class SelectController {
 
     private void addOwnershipFormListener() {
         label_ownershipForm.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyOwnershipForm) {
-                        selectOwnershipForm(true);
-                        isEmptyOwnershipForm = true;
-                    } else {
-                        selectOwnershipForm(false);
-                        isEmptyOwnershipForm = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyOwnershipForm) {
+                    selectOwnershipForm(true);
+                    isEmptyOwnershipForm = true;
+                } else {
+                    selectOwnershipForm(false);
+                    isEmptyOwnershipForm = false;
                 }
             }
         });
@@ -844,15 +828,13 @@ public class SelectController {
 
     private void addActivityTypeListener() {
         label_activityType.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyActivityTypeForm) {
-                        selectActivityType(true);
-                        isEmptyActivityTypeForm = true;
-                    } else {
-                        selectActivityType(false);
-                        isEmptyActivityTypeForm = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyActivityTypeForm) {
+                    selectActivityType(true);
+                    isEmptyActivityTypeForm = true;
+                } else {
+                    selectActivityType(false);
+                    isEmptyActivityTypeForm = false;
                 }
             }
         });
@@ -860,15 +842,13 @@ public class SelectController {
 
     private void addEconomicSectorListener() {
         label_economicSector.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyEconomicSector) {
-                        selectEconomicSector(true);
-                        isEmptyEconomicSector = true;
-                    } else {
-                        selectEconomicSector(false);
-                        isEmptyEconomicSector = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyEconomicSector) {
+                    selectEconomicSector(true);
+                    isEmptyEconomicSector = true;
+                } else {
+                    selectEconomicSector(false);
+                    isEmptyEconomicSector = false;
                 }
             }
         });
@@ -876,15 +856,13 @@ public class SelectController {
 
     private void addVedImportListener() {
         label_vedImport.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyVedImport) {
-                        selectVedImport(true);
-                        isEmptyVedImport = true;
-                    } else {
-                        selectVedImport(false);
-                        isEmptyVedImport = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyVedImport) {
+                    selectVedImport(true);
+                    isEmptyVedImport = true;
+                } else {
+                    selectVedImport(false);
+                    isEmptyVedImport = false;
                 }
             }
         });
@@ -892,15 +870,13 @@ public class SelectController {
 
     private void addVedExportExportListener() {
         label_vedExport.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyVedExport) {
-                        selectVedExport(true);
-                        isEmptyVedExport = true;
-                    } else {
-                        selectVedExport(false);
-                        isEmptyVedExport = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyVedExport) {
+                    selectVedExport(true);
+                    isEmptyVedExport = true;
+                } else {
+                    selectVedExport(false);
+                    isEmptyVedExport = false;
                 }
             }
         });
@@ -908,15 +884,13 @@ public class SelectController {
 
     private void addInteractionOnlineListener() {
         label_interactionOnline.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyInteractionOnline) {
-                        selectInteractionOnline(true);
-                        isEmptyInteractionOnline = true;
-                    } else {
-                        selectInteractionOnline(false);
-                        isEmptyInteractionOnline = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyInteractionOnline) {
+                    selectInteractionOnline(true);
+                    isEmptyInteractionOnline = true;
+                } else {
+                    selectInteractionOnline(false);
+                    isEmptyInteractionOnline = false;
                 }
             }
         });
@@ -924,15 +898,13 @@ public class SelectController {
 
     private void addInteractionOfflineListener() {
         label_interactionOffline.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyInteractionOffline) {
-                        selectInteractionOffline(true);
-                        isEmptyInteractionOffline = true;
-                    } else {
-                        selectInteractionOffline(false);
-                        isEmptyInteractionOffline = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyInteractionOffline) {
+                    selectInteractionOffline(true);
+                    isEmptyInteractionOffline = true;
+                } else {
+                    selectInteractionOffline(false);
+                    isEmptyInteractionOffline = false;
                 }
             }
         });
@@ -940,15 +912,13 @@ public class SelectController {
 
     private void addB2bListener() {
         label_b2b.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyB2b) {
-                        selectB2b(true);
-                        isEmptyB2b = true;
-                    } else {
-                        selectB2b(false);
-                        isEmptyB2b = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyB2b) {
+                    selectB2b(true);
+                    isEmptyB2b = true;
+                } else {
+                    selectB2b(false);
+                    isEmptyB2b = false;
                 }
             }
         });
@@ -956,15 +926,13 @@ public class SelectController {
 
     private void addB2cListener() {
         label_b2c.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyB2c) {
-                        selectB2c(true);
-                        isEmptyB2c = true;
-                    } else {
-                        selectB2c(false);
-                        isEmptyB2c = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyB2c) {
+                    selectB2c(true);
+                    isEmptyB2c = true;
+                } else {
+                    selectB2c(false);
+                    isEmptyB2c = false;
                 }
             }
         });
@@ -972,15 +940,13 @@ public class SelectController {
 
     private void addBusinessMissionVisitingListener() {
         label_businessMissionVisiting.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyBusinessMissionVisiting) {
-                        selectBusinessMissionVisiting(true);
-                        isEmptyBusinessMissionVisiting = true;
-                    } else {
-                        selectBusinessMissionVisiting(false);
-                        isEmptyBusinessMissionVisiting = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyBusinessMissionVisiting) {
+                    selectBusinessMissionVisiting(true);
+                    isEmptyBusinessMissionVisiting = true;
+                } else {
+                    selectBusinessMissionVisiting(false);
+                    isEmptyBusinessMissionVisiting = false;
                 }
             }
         });
@@ -988,15 +954,13 @@ public class SelectController {
 
     private void addbusinessMissionRegionalListener() {
         label_businessMissionRegional.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptybusinessMissionRegional) {
-                        selectBusinessMissionRegional(true);
-                        isEmptybusinessMissionRegional = true;
-                    } else {
-                        selectBusinessMissionRegional(false);
-                        isEmptybusinessMissionRegional = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptybusinessMissionRegional) {
+                    selectBusinessMissionRegional(true);
+                    isEmptybusinessMissionRegional = true;
+                } else {
+                    selectBusinessMissionRegional(false);
+                    isEmptybusinessMissionRegional = false;
                 }
             }
         });
@@ -1004,32 +968,27 @@ public class SelectController {
 
     private void addMkasListener() {
         label_mkas.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyMkas) {
-                        selectMkas(true);
-                        isEmptyMkas = true;
-                    } else {
-                        selectMkas(false);
-                        isEmptyMkas = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyMkas) {
+                    selectMkas(true);
+                    isEmptyMkas = true;
+                } else {
+                    selectMkas(false);
+                    isEmptyMkas = false;
                 }
             }
         });
-
     }
 
     private void addLocationListener() {
         label_location.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyLocation) {
-                        selectLocation(true);
-                        isEmptyLocation = true;
-                    } else {
-                        selectLocation(false);
-                        isEmptyLocation = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyLocation) {
+                    selectLocation(true);
+                    isEmptyLocation = true;
+                } else {
+                    selectLocation(false);
+                    isEmptyLocation = false;
                 }
             }
         });
@@ -1037,15 +996,13 @@ public class SelectController {
 
     private void addAntiCorruptionCharterListener() {
         label_antiCorruptionCharter.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyAntiCorruptionCharter) {
-                        selectAntiCorruptionCharter(true);
-                        isEmptyAntiCorruptionCharter = true;
-                    } else {
-                        selectAntiCorruptionCharter(false);
-                        isEmptyAntiCorruptionCharter = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyAntiCorruptionCharter) {
+                    selectAntiCorruptionCharter(true);
+                    isEmptyAntiCorruptionCharter = true;
+                } else {
+                    selectAntiCorruptionCharter(false);
+                    isEmptyAntiCorruptionCharter = false;
                 }
             }
         });
@@ -1053,15 +1010,13 @@ public class SelectController {
 
     private void addPilotProjectsListener() {
         label_pilotProjects.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyPilotProjects) {
-                        selectPilotProjects(true);
-                        isEmptyPilotProjects = true;
-                    } else {
-                        selectPilotProjects(false);
-                        isEmptyPilotProjects = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyPilotProjects) {
+                    selectPilotProjects(true);
+                    isEmptyPilotProjects = true;
+                } else {
+                    selectPilotProjects(false);
+                    isEmptyPilotProjects = false;
                 }
             }
         });
@@ -1069,15 +1024,13 @@ public class SelectController {
 
     private void addReliablePartnersListener() {
         label_reliablePartners.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyReliablePartners) {
-                        selectReliablePartners(true);
-                        isEmptyReliablePartners = true;
-                    } else {
-                        selectReliablePartners(false);
-                        isEmptyReliablePartners = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyReliablePartners) {
+                    selectReliablePartners(true);
+                    isEmptyReliablePartners = true;
+                } else {
+                    selectReliablePartners(false);
+                    isEmptyReliablePartners = false;
                 }
             }
         });
@@ -1085,15 +1038,13 @@ public class SelectController {
 
     private void addDiscountsListener() {
         label_discounts.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyDiscounts) {
-                        selectDiscounts(true);
-                        isEmptyDiscounts = true;
-                    } else {
-                        selectDiscounts(false);
-                        isEmptyDiscounts = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyDiscounts) {
+                    selectDiscounts(true);
+                    isEmptyDiscounts = true;
+                } else {
+                    selectDiscounts(false);
+                    isEmptyDiscounts = false;
                 }
             }
         });
@@ -1101,15 +1052,13 @@ public class SelectController {
 
     private void addNeedForYoungPersonnelListener() {
         label_needForYoungPersonnel.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyNeedForYoungPersonnel) {
-                        selectNeedForYoungPersonnel(true);
-                        isEmptyNeedForYoungPersonnel = true;
-                    } else {
-                        selectNeedForYoungPersonnel(false);
-                        isEmptyNeedForYoungPersonnel = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyNeedForYoungPersonnel) {
+                    selectNeedForYoungPersonnel(true);
+                    isEmptyNeedForYoungPersonnel = true;
+                } else {
+                    selectNeedForYoungPersonnel(false);
+                    isEmptyNeedForYoungPersonnel = false;
                 }
             }
         });
@@ -1117,15 +1066,13 @@ public class SelectController {
 
     private void addCorporateMemberListener() {
         label_corporateMember.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyCorporateMember) {
-                        selectCorporateMember(true);
-                        isEmptyCorporateMember = true;
-                    } else {
-                        selectCorporateMember(false);
-                        isEmptyCorporateMember = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyCorporateMember) {
+                    selectCorporateMember(true);
+                    isEmptyCorporateMember = true;
+                } else {
+                    selectCorporateMember(false);
+                    isEmptyCorporateMember = false;
                 }
             }
         });
@@ -1133,15 +1080,13 @@ public class SelectController {
 
     private void addCommitteesListener() {
         label_committees.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyCommittees) {
-                        selectCommittees(true);
-                        isEmptyCommittees = true;
-                    } else {
-                        selectCommittees(false);
-                        isEmptyCommittees = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyCommittees) {
+                    selectCommittees(true);
+                    isEmptyCommittees = true;
+                } else {
+                    selectCommittees(false);
+                    isEmptyCommittees = false;
                 }
             }
         });
@@ -1149,15 +1094,13 @@ public class SelectController {
 
     private void addNewsletterListener() {
         label_newsletter.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyNewsletter) {
-                        selectNewsletter(true);
-                        isEmptyNewsletter = true;
-                    } else {
-                        selectNewsletter(false);
-                        isEmptyNewsletter = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyNewsletter) {
+                    selectNewsletter(true);
+                    isEmptyNewsletter = true;
+                } else {
+                    selectNewsletter(false);
+                    isEmptyNewsletter = false;
                 }
             }
         });
@@ -1165,15 +1108,13 @@ public class SelectController {
 
     private void addMonthListener() {
         label_month.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyMonth) {
-                        selectMonth(true);
-                        isEmptyMonth = true;
-                    } else {
-                        selectMonth(false);
-                        isEmptyMonth = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyMonth) {
+                    selectMonth(true);
+                    isEmptyMonth = true;
+                } else {
+                    selectMonth(false);
+                    isEmptyMonth = false;
                 }
             }
         });
@@ -1181,54 +1122,36 @@ public class SelectController {
 
     private void addPaymentListener() {
         label_payment.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyPayment) {
-                        selectPayment(true);
-                        isEmptyPayment = true;
-                    } else {
-                        selectPayment(false);
-                        isEmptyPayment = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyPayment) {
+                    selectPayment(true);
+                    isEmptyPayment = true;
+                } else {
+                    selectPayment(false);
+                    isEmptyPayment = false;
                 }
             }
         });
 
-        checkBox_payment_1.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) disableDatePayment(false);
-            else disableDatePayment(true);
-        });
-
-        checkBox_payment_2.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) disableDatePayment(false);
-            else disableDatePayment(true);
-        });
+        checkBox_payment_1.selectedProperty().addListener((observable, oldValue, newValue) -> disableDatePayment(!newValue));
+        checkBox_payment_2.selectedProperty().addListener((observable, oldValue, newValue) -> disableDatePayment(!newValue));
     }
 
     private void addReceivingListener() {
         label_receiving.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    if (!isEmptyReceiving) {
-                        selectReceiving(true);
-                        isEmptyReceiving = true;
-                    } else {
-                        selectReceiving(false);
-                        isEmptyReceiving = false;
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (!isEmptyReceiving) {
+                    selectReceiving(true);
+                    isEmptyReceiving = true;
+                } else {
+                    selectReceiving(false);
+                    isEmptyReceiving = false;
                 }
             }
         });
 
-        checkBox_receiving_1.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) disableDateReceiving(false);
-            else disableDateReceiving(true);
-        });
-
-        checkBox_receiving_2.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) disableDateReceiving(false);
-            else disableDateReceiving(true);
-        });
+        checkBox_receiving_1.selectedProperty().addListener((observable, oldValue, newValue) -> disableDateReceiving(!newValue));
+        checkBox_receiving_2.selectedProperty().addListener((observable, oldValue, newValue) -> disableDateReceiving(!newValue));
     }
 
 
@@ -1495,11 +1418,7 @@ public class SelectController {
                         }
                         break;
                     case 6:
-                        OptionalInt monthNumber = ListUtils.getMonth().entrySet().stream()
-                                .filter(entry -> entry.getValue().equals(checkBox.getText()))
-                                .mapToInt(Map.Entry::getKey)
-                                .findFirst();
-                        if (monthNumber.isPresent()) someSelect.add(pattern + " = " + monthNumber.getAsInt());
+                        someSelect.add(pattern + " = " + ListUtils.getMonth().get(checkBox.getText()));
                         break;
                     case 7:
                         someSelect.add(pattern + " = " + MemberUtils.paymentToBoolean(checkBox.getText()));
@@ -1654,6 +1573,7 @@ public class SelectController {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void closeCurrentStage(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();

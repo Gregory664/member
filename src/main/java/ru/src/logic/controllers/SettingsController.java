@@ -159,7 +159,7 @@ public class SettingsController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Удаление организации");
         alert.setHeaderText(null);
-        alert.setContentText("Вы действительно хотите пользователя:\n" +
+        alert.setContentText("Вы действительно хотите удалить пользователя:\n" +
                 selectedUser.getFullName() + " ?");
 
         Optional<ButtonType> response = alert.showAndWait();

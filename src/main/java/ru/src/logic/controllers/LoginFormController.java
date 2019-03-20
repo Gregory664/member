@@ -64,17 +64,13 @@ public class LoginFormController {
         String password = MemberUtils.getPasswordHash(passField_password.getText());
 
         Optional<User> user = Optional.ofNullable(DBConnection.getUser(login));
-        if (user.isPresent()) {
-            if (user.get().getPassword().equals(password)) {
-                initializeMainForm();
-                checkInitMainFormStage();
-                closeCurrentStage(actionEvent);
-                mainFormController.setUser(user.get());
-                mainFormStage.show();
-                mainFormStage.setOnCloseRequest(event -> exitApp(actionEvent));
-            } else {
-                warningMessage();
-            }
+        if (user.isPresent() && user.get().getPassword().equals(password)) {
+            initializeMainForm();
+            checkInitMainFormStage();
+            closeCurrentStage(actionEvent);
+            mainFormController.setUser(user.get());
+            mainFormStage.show();
+            mainFormStage.setOnCloseRequest(event -> exitApp(actionEvent));
         } else {
             warningMessage();
         }

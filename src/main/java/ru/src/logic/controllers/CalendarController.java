@@ -44,7 +44,7 @@ public class CalendarController {
     @FXML
     public TableColumn<DateOfCreationOrganization, String> column_organizationShortName;
 
-    private ObservableList<String> month = FXCollections.observableArrayList(ListUtils.getMonth().values());
+    private ObservableList<String> month = FXCollections.observableArrayList(ListUtils.getMonth().keySet());
     private TableView<Member> mainFormTable;
 
     void setParams(TableView params) {
