@@ -593,7 +593,7 @@ public class MainFormController {
 
             if (createInvoiceController.isCreateInvoice()) {
                 if (!DBConnection.isInvoiceExists(createInvoiceController.getInvoice().getInvoiceId())) {
-                    member.getInvoice().add(createInvoiceController.getInvoice());
+                    member.getInvoices().add(createInvoiceController.getInvoice());
                     DBConnection.updateMember(member);
                     memberOrganizations.updateMember(member);
                     MemberUtils.informationDialog("Счет успешно добавлен!");
@@ -618,7 +618,7 @@ public class MainFormController {
             Invoice invoice = invoiceHashMap.get(MemberUtils.extractId(cmbBox_invoiceId.getValue()));
             Member member = table_members.getSelectionModel().getSelectedItem();
 
-            member.getInvoice().remove(invoice);
+            member.getInvoices().remove(invoice);
             DBConnection.updateMember(member);
             memberOrganizations.updateMember(member);
             MemberUtils.informationDialog("Cчет успешно удален!");
@@ -698,7 +698,7 @@ public class MainFormController {
             ContactPerson contactPerson = contactPersonHashMap.get(MemberUtils.extractId(cmbBox_contactPersonId.getValue()));
             Member member = table_members.getSelectionModel().getSelectedItem();
 
-            member.getContactPerson().remove(contactPerson);
+            member.getContactPersons().remove(contactPerson);
             DBConnection.updateMember(member);
             memberOrganizations.updateMember(member);
             MemberUtils.informationDialog("Данные контактного лица успешно удалены!");
@@ -920,8 +920,8 @@ public class MainFormController {
         fillAddressLegal(member.getAddressLegal());
         fillAddressActual(member.getAddressActual());
         if (user.getAdmin()) {
-            fillContactPersons(member.getContactPerson());
-            fillInvoices(member.getInvoice());
+            fillContactPersons(member.getContactPersons());
+            fillInvoices(member.getInvoices());
         }
         fillSocialNetworks(member.getSocialNetworks());
         fillServices(member.getServices());

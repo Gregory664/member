@@ -83,8 +83,8 @@ public class DBConnection implements MemberLogic {
             members = query.list();
             transaction.commit();
             for (Member member : members) {
-                member.getInvoice().size();
-                member.getContactPerson().size();
+                member.getInvoices().size();
+                member.getContactPersons().size();
                 member.getServices().size();
             }
 

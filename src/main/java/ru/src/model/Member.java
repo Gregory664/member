@@ -51,7 +51,7 @@ public class Member {
     private AccoutingInformation accoutingInformation;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="member", orphanRemoval = true)
-    public List<Invoice> invoice;
+    public List<Invoice> invoices;
 
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
@@ -62,7 +62,7 @@ public class Member {
     private Contact contact;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member", orphanRemoval = true)
-    private List<ContactPerson> contactPerson;
+    private List<ContactPerson> contactPersons;
 
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
@@ -174,12 +174,12 @@ public class Member {
         this.accoutingInformation = accoutingInformation;
     }
 
-    public List<Invoice> getInvoice() {
-        return invoice;
+    public List<Invoice> getInvoices() {
+        return invoices;
     }
 
-    public void setInvoice(List<Invoice> invoice) {
-        this.invoice = invoice;
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
     public GeneralInformation getGeneralInformation() {
@@ -198,12 +198,12 @@ public class Member {
         this.contact = contact;
     }
 
-    public List<ContactPerson> getContactPerson() {
-        return contactPerson;
+    public List<ContactPerson> getContactPersons() {
+        return contactPersons;
     }
 
-    public void setContactPerson(List<ContactPerson> contactPerson) {
-        this.contactPerson = contactPerson;
+    public void setContactPersons(List<ContactPerson> contactPersons) {
+        this.contactPersons = contactPersons;
     }
 
     public Director getDirector() {

@@ -77,7 +77,7 @@ public class CreateContactPersonController {
             );
 
             createContactPerson = true;
-            member.getContactPerson().add(contactPerson);
+            member.getContactPersons().add(contactPerson);
             closeCurrentStage(actionEvent);
         } else {
             label_alarm_contactPerson_fullName.setText(null);

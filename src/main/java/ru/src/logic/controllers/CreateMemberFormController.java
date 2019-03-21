@@ -682,8 +682,8 @@ public class CreateMemberFormController {
         member.setAddressActual(actual);
         member.setSocialNetworks(networks);
         member.setDebt(debt);
-        member.setContactPerson(new ArrayList<>());
-        member.setInvoice(new ArrayList<>());
+        member.setContactPersons(new ArrayList<>());
+        member.setInvoices(new ArrayList<>());
         member.setServices(services);
     }
 
