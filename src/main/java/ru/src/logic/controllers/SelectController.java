@@ -622,27 +622,27 @@ public class SelectController {
     }
 
     private String getResultQuery() {
-        ArrayList<String> test = new ArrayList<>();
+        ArrayList<String> whereList = new ArrayList<>();
 
         for (CheckBoxGroup group : interestsGroups) {
-            test.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+            whereList.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
         }
         for (CheckBoxGroup group : generalsGroups) {
-            test.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+            whereList.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
         }
         for (CheckBoxGroup group : businessCharacteristicsGroups) {
-            test.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+            whereList.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
         }
         for (CheckBoxGroup group : withDateGroups) {
-            test.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+            whereList.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
         }
 
-        test.add(getWherePartFromDate(listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
-        test.add(getWherePartFromDate(listDateReceiving, "i.INVOICE_DATE_OF_RECEIVING;i.INVOICE_DATE_OF_RECEIVING"));
+        whereList.add(getWherePartFromDate(listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
+        whereList.add(getWherePartFromDate(listDateReceiving, "i.INVOICE_DATE_OF_RECEIVING;i.INVOICE_DATE_OF_RECEIVING"));
 
-        test.add(getWherePartFromServices());
+        whereList.add(getWherePartFromServices());
 
-        test.removeIf(String::isEmpty);
+        whereList.removeIf(String::isEmpty);
 
         //TODO check this, dont know why it was 3 separate strings
         String selectQuery = "SELECT DISTINCT m.MEMBER_ID, " +
@@ -659,7 +659,7 @@ public class SelectController {
                 "LEFT JOIN INVOICE i ON m.MEMBER_ID=i.MEMBER_ID " +
                 "LEFT JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID \n" +
                 "WHERE " +
-                "( " + String.join(" ) AND ( ", test) + " );";
+                "( " + String.join(" ) AND ( ", whereList) + " );";
         return selectQuery;
     }
 
@@ -744,6 +744,9 @@ public class SelectController {
                 .filter(checkBox -> checkBox.isSelected())
                 .map(checkBox -> String.valueOf(servicesCheckBoxList.indexOf(checkBox) + 1))
                 .collect(Collectors.toList());
+        if (numberOfSelectedServices.isEmpty()) {
+            return "";
+        }
         return "ms.SERVICES_ID IN(" + String.join(",", numberOfSelectedServices) + ") GROUP BY m.MEMBER_ID HAVING COUNT(*)=" + numberOfSelectedServices.size();
     }
 
