@@ -643,12 +643,21 @@ public class SelectController {
     private String getResultQuery() {
         ArrayList<String> test = new ArrayList<>();
 
-        interestsGroups.forEach(checkBoxGroup -> test.add(getWherePartFromList(checkBoxGroup.getCheckBoxes(), checkBoxGroup.getWherePattern(), checkBoxGroup.getWhereFlag())));
-        generalsGroups.forEach(checkBoxGroup -> test.add(getWherePartFromList(checkBoxGroup.getCheckBoxes(), checkBoxGroup.getWherePattern(), checkBoxGroup.getWhereFlag())));
-        businessCharacteristicsGroups.forEach(checkBoxGroup -> test.add(getWherePartFromList(checkBoxGroup.getCheckBoxes(), checkBoxGroup.getWherePattern(), checkBoxGroup.getWhereFlag())));
+        for (CheckBoxGroup group : interestsGroups) {
+            test.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+        }
+        for (CheckBoxGroup group : generalsGroups) {
+            test.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+        }
+        for (CheckBoxGroup group : businessCharacteristicsGroups) {
+            test.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+        }
+        for (CheckBoxGroup group : withDateGroups) {
+            test.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+        }
 
-        test.add(getWherePartFromDate(   listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
-        test.add(getWherePartFromDate(   listDateReceiving, "i.INVOICE_DATE_OF_RECEIVING;i.INVOICE_DATE_OF_RECEIVING"));
+        test.add(getWherePartFromDate(listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
+        test.add(getWherePartFromDate(listDateReceiving, "i.INVOICE_DATE_OF_RECEIVING;i.INVOICE_DATE_OF_RECEIVING"));
 
         test.add(getWherePartFromServices());
 
@@ -773,17 +782,17 @@ public class SelectController {
     public void saveToPDF() {
         List<String[]> listSelectedParams = new ArrayList<>();
 
-        for (CheckBoxGroup interestsGroup : interestsGroups) {
-            listSelectedParams.add(getDataFromCheckBoxMassive(interestsGroup.getLabel().getText(), interestsGroup.getCheckBoxes()));
+        for (CheckBoxGroup group : interestsGroups) {
+            listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
         }
-        for (CheckBoxGroup generalsGroup : generalsGroups) {
-            listSelectedParams.add(getDataFromCheckBoxMassive(generalsGroup.getLabel().getText(), generalsGroup.getCheckBoxes()));
+        for (CheckBoxGroup group : generalsGroups) {
+            listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
         }
-        for (CheckBoxGroup businessCharacteristicsGroup : businessCharacteristicsGroups) {
-            listSelectedParams.add(getDataFromCheckBoxMassive(businessCharacteristicsGroup.getLabel().getText(), businessCharacteristicsGroup.getCheckBoxes()));
+        for (CheckBoxGroup group : businessCharacteristicsGroups) {
+            listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
         }
-        for (CheckBoxGroup checkBoxGroup : withDateGroups) {
-            listSelectedParams.add(getDataFromCheckBoxMassive(checkBoxGroup.getLabel().getText(), checkBoxGroup.getCheckBoxes()));
+        for (CheckBoxGroup group : withDateGroups) {
+            listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
         }
 
         listSelectedParams.add(getDataFromCheckBoxMassive("Интересующие услуги", new ArrayList<>(servicesCheckBoxMap.values())));
