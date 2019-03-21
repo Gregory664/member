@@ -795,7 +795,7 @@ public class SelectController {
             listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
         }
 
-        listSelectedParams.add(getDataFromCheckBoxMassive("Интересующие услуги", new ArrayList<>(servicesCheckBoxMap.values())));
+        listSelectedParams.add(getDataFromCheckBoxMassive("Интересующие услуги", (List<CheckBox>) servicesCheckBoxMap.values()));
 
         listSelectedParams.removeIf(Objects::isNull);
 
