@@ -640,11 +640,10 @@ public class SelectController {
         whereList.add(getWherePartFromDate(listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
         whereList.add(getWherePartFromDate(listDateReceiving, "i.INVOICE_DATE_OF_RECEIVING;i.INVOICE_DATE_OF_RECEIVING"));
 
-        whereList.add(getWherePartFromServices());
-
         whereList.removeIf(String::isEmpty);
 
-        //TODO check this, dont know why it was 3 separate strings
+        String servicesPart = getWherePartFromServices();
+
         String selectQuery = "SELECT DISTINCT m.MEMBER_ID, " +
                 "m.MEMBER_SERIAL, " +
                 "c.CONTACT_PHONE, " +
@@ -659,7 +658,7 @@ public class SelectController {
                 "LEFT JOIN INVOICE i ON m.MEMBER_ID=i.MEMBER_ID " +
                 "LEFT JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID \n" +
                 "WHERE " +
-                "( " + String.join(" ) AND ( ", whereList) + " );";
+                "( " + String.join(" ) AND ( ", whereList) + " )" + servicesPart;
         return selectQuery;
     }
 
