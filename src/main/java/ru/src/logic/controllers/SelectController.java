@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static ru.src.logic.implementation.ListUtils.getDataFromCheckBoxMassive;
 
@@ -417,8 +418,8 @@ public class SelectController {
 
     private List<DatePicker> listDatePayment = new ArrayList<>();
     private List<DatePicker> listDateReceiving = new ArrayList<>();
+    private List<CheckBox> servicesCheckBoxList = new LinkedList<>();
 
-    private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
     private ObservableList<FindMember> list = FXCollections.observableArrayList();
 
     private Stage currentStage = new Stage();
@@ -558,24 +559,8 @@ public class SelectController {
         businessCharacteristicsGroups.add(new CheckBoxGroup(label_businessForm, Arrays.asList(checkBox_businessForm_1, checkBox_businessForm_2, checkBox_businessForm_3, checkBox_businessForm_4),
                 "gi.BUSINESS_FORM", 1));
 
-        servicesCheckBoxMap.put(1, checkBox_services_1);
-        servicesCheckBoxMap.put(2, checkBox_services_2);
-        servicesCheckBoxMap.put(3, checkBox_services_3);
-        servicesCheckBoxMap.put(4, checkBox_services_4);
-        servicesCheckBoxMap.put(5, checkBox_services_5);
-        servicesCheckBoxMap.put(6, checkBox_services_6);
-        servicesCheckBoxMap.put(7, checkBox_services_7);
-        servicesCheckBoxMap.put(8, checkBox_services_8);
-        servicesCheckBoxMap.put(9, checkBox_services_9);
-        servicesCheckBoxMap.put(10, checkBox_services_10);
-        servicesCheckBoxMap.put(11, checkBox_services_11);
-        servicesCheckBoxMap.put(12, checkBox_services_12);
-        servicesCheckBoxMap.put(13, checkBox_services_13);
-        servicesCheckBoxMap.put(14, checkBox_services_14);
-        servicesCheckBoxMap.put(15, checkBox_services_15);
-        servicesCheckBoxMap.put(16, checkBox_services_16);
-        servicesCheckBoxMap.put(17, checkBox_services_17);
 
+        servicesCheckBoxList.addAll(Arrays.asList(checkBox_services_1, checkBox_services_2, checkBox_services_3, checkBox_services_4, checkBox_services_5, checkBox_services_6, checkBox_services_7, checkBox_services_8, checkBox_services_9, checkBox_services_10, checkBox_services_11, checkBox_services_12, checkBox_services_13, checkBox_services_14, checkBox_services_15, checkBox_services_16, checkBox_services_17));
     }
 
     private void addListenerForAnchor(AnchorPane anchorPane, List<CheckBoxGroup> groupList) {
@@ -625,12 +610,8 @@ public class SelectController {
         changeStateForAllCheckBoxesInGroup(generalsGroups, false);
         changeStateForAllCheckBoxesInGroup(businessCharacteristicsGroups, false);
         changeStateForAllCheckBoxesInGroup(withDateGroups, false);
-        unSelectServices();
+        servicesCheckBoxList.forEach(checkBox -> checkBox.setSelected(false));
         list.clear();
-    }
-
-    private void unSelectServices() {
-        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setSelected(false));
     }
 
     @FXML
@@ -759,23 +740,11 @@ public class SelectController {
     }
 
     private String getWherePartFromServices() {
-        StringBuilder result = new StringBuilder("");
-        StringBuilder numbers = new StringBuilder();
-        int numbersCount = 0;
-        for (Map.Entry<Integer, CheckBox> entry : servicesCheckBoxMap.entrySet()) {
-            if (entry.getValue().isSelected()) {
-                numbersCount++;
-                numbers.append(entry.getKey()).append(",");
-            }
-        }
-        if (numbersCount != 0) {
-            numbers.deleteCharAt(numbers.length() - 1);
-            result.append("ms.SERVICES_ID IN(")
-                    .append(numbers)
-                    .append(") GROUP BY m.MEMBER_ID HAVING COUNT(*)=")
-                    .append(numbersCount);
-        }
-        return result.toString();
+        List<String> numberOfSelectedServices = servicesCheckBoxList.stream()
+                .filter(checkBox -> checkBox.isSelected())
+                .map(checkBox -> String.valueOf(servicesCheckBoxList.indexOf(checkBox) + 1))
+                .collect(Collectors.toList());
+        return "ms.SERVICES_ID IN(" + String.join(",", numberOfSelectedServices) + ") GROUP BY m.MEMBER_ID HAVING COUNT(*)=" + numberOfSelectedServices.size();
     }
 
     @FXML
@@ -795,7 +764,7 @@ public class SelectController {
             listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
         }
 
-        listSelectedParams.add(getDataFromCheckBoxMassive("Интересующие услуги", (List<CheckBox>) servicesCheckBoxMap.values()));
+        listSelectedParams.add(getDataFromCheckBoxMassive("Интересующие услуги", servicesCheckBoxList));
 
         listSelectedParams.removeIf(Objects::isNull);
 
