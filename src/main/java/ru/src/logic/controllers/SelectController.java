@@ -7,23 +7,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import ru.src.logic.dto.CheckBoxGroup;
 import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.ListUtils;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.PDFUtils;
 import ru.src.model.FindMember;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static ru.src.logic.implementation.ListUtils.getDataFromCheckBoxMassive;
 
 public class SelectController {
     @FXML
@@ -409,68 +411,15 @@ public class SelectController {
     @FXML
     public Button btn_close;
 
-    private boolean isEmptyCBMemberStatus = false;
-    private boolean isEmptyBusinessForm = false;
-    private boolean isEmptyDebtStatus = false;
-    private boolean isEmptyOrganizationForm = false;
-    private boolean isEmptyOwnershipForm = false;
-    private boolean isEmptyActivityTypeForm = false;
-    private boolean isEmptyEconomicSector = false;
-    private boolean isEmptyVedImport = false;
-    private boolean isEmptyVedExport = false;
-    private boolean isEmptyInteractionOnline = false;
-    private boolean isEmptyInteractionOffline = false;
-    private boolean isEmptyB2b = false;
-    private boolean isEmptyB2c = false;
-    private boolean isEmptyBusinessMissionVisiting = false;
-    private boolean isEmptybusinessMissionRegional = false;
-    private boolean isEmptyMkas = false;
-    private boolean isEmptyNeedForYoungPersonnel = false;
-    private boolean isEmptyDiscounts = false;
-    private boolean isEmptyReliablePartners = false;
-    private boolean isEmptyPilotProjects = false;
-    private boolean isEmptyAntiCorruptionCharter = false;
-    private boolean isEmptyNewsletter = false;
-    private boolean isEmptyCommittees = false;
-    private boolean isEmptyCorporateMember = false;
+    private List<CheckBoxGroup> generalsGroups = new ArrayList<>();
+    private List<CheckBoxGroup> businessCharacteristicsGroups = new ArrayList<>();
+    private List<CheckBoxGroup> interestsGroups = new ArrayList<>();
+    private List<CheckBoxGroup> withDateGroups = new ArrayList<>();
 
-    private boolean isEmptyLocation = false;
-    private boolean isEmptyMonth = false;
-    private boolean isEmptyPayment = false;
-    private boolean isEmptyReceiving = false;
+    private List<DatePicker> listDatePayment = new ArrayList<>();
+    private List<DatePicker> listDateReceiving = new ArrayList<>();
+    private List<CheckBox> servicesCheckBoxList = new LinkedList<>();
 
-    private ArrayList<CheckBox> listMemberStatus = new ArrayList<>();
-    private ArrayList<CheckBox> listBusinessForm = new ArrayList<>();
-    private ArrayList<CheckBox> listDebtStatus = new ArrayList<>();
-    private ArrayList<CheckBox> listOrganizationForm = new ArrayList<>();
-    private ArrayList<CheckBox> listOwnershipForm = new ArrayList<>();
-    private ArrayList<CheckBox> listActivityType = new ArrayList<>();
-    private ArrayList<CheckBox> listEconomicSector = new ArrayList<>();
-    private ArrayList<CheckBox> listVedImport = new ArrayList<>();
-    private ArrayList<CheckBox> listVedExport = new ArrayList<>();
-    private ArrayList<CheckBox> listInteractionOnline = new ArrayList<>();
-    private ArrayList<CheckBox> listInteractionOffline = new ArrayList<>();
-    private ArrayList<CheckBox> listB2b = new ArrayList<>();
-    private ArrayList<CheckBox> listB2c = new ArrayList<>();
-    private ArrayList<CheckBox> listBusinessMissionVisiting = new ArrayList<>();
-    private ArrayList<CheckBox> listBusinessMissionRegional = new ArrayList<>();
-    private ArrayList<CheckBox> listMkas = new ArrayList<>();
-    private ArrayList<CheckBox> listNeedForYoungPersonnel = new ArrayList<>();
-    private ArrayList<CheckBox> listDiscounts = new ArrayList<>();
-    private ArrayList<CheckBox> listReliablePartners = new ArrayList<>();
-    private ArrayList<CheckBox> listPilotProjects = new ArrayList<>();
-    private ArrayList<CheckBox> listAntiCorruptionCharter = new ArrayList<>();
-    private ArrayList<CheckBox> listLocation = new ArrayList<>();
-    private ArrayList<CheckBox> listMonth = new ArrayList<>();
-    private ArrayList<CheckBox> listPayment = new ArrayList<>();
-    private ArrayList<DatePicker> listDatePayment = new ArrayList<>();
-    private ArrayList<CheckBox> listReceiving = new ArrayList<>();
-    private ArrayList<DatePicker> listDateReceiving = new ArrayList<>();
-    private ArrayList<CheckBox> listNewsletter = new ArrayList<>();
-    private ArrayList<CheckBox> listCommittees = new ArrayList<>();
-    private ArrayList<CheckBox> listCorporateMember = new ArrayList<>();
-
-    private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
     private ObservableList<FindMember> list = FXCollections.observableArrayList();
 
     private Stage currentStage = new Stage();
@@ -507,820 +456,161 @@ public class SelectController {
 
         addEachCheckBoxesToEachLists();
 
-        addMemberStatusListener();
-        addBusinessFormListener();
-        addDebtStatusListener();
-        addOrganizationFormListener();
-        addOwnershipFormListener();
-        addActivityTypeListener();
-        addEconomicSectorListener();
-        addVedImportListener();
-        addVedExportExportListener();
-        addInteractionOnlineListener();
-        addInteractionOfflineListener();
-        addB2bListener();
-        addB2cListener();
-        addBusinessMissionVisitingListener();
-        addbusinessMissionRegionalListener();
-        addMkasListener();
-        addLocationListener();
-        addAntiCorruptionCharterListener();
-        addPilotProjectsListener();
-        addReliablePartnersListener();
-        addDiscountsListener();
-        addNeedForYoungPersonnelListener();
-        addMonthListener();
-        addPaymentListener();
-        addReceivingListener();
-        addNewsletterListener();
-        addCommitteesListener();
-        addCorporateMemberListener();
+        addListenersForLabels(interestsGroups);
+        addListenersForLabels(generalsGroups);
+        addListenersForLabels(businessCharacteristicsGroups);
+        addListenersWithDates(withDateGroups);
 
-        addSelectAllGeneralCheckBox();
-        addSelectAllBusinessCharacteristicsCheckBox();
-        addSelectAllInterestsCheckBox();
+        addListenerForAnchor(anchor_Interests, interestsGroups);
+        addListenerForAnchor(anchor_BusinessCharacteristics, businessCharacteristicsGroups);
+        addListenerForAnchor(anchor_General, generalsGroups);
     }
-
-
-    private void addSelectAllInterestsCheckBox() {
-        anchor_Interests.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 5) {
-                selectVedImport(true);
-                selectVedExport(true);
-                selectB2b(true);
-                selectB2c(true);
-                selectBusinessMissionVisiting(true);
-                selectBusinessMissionRegional(true);
-                selectMkas(true);
-                selectAntiCorruptionCharter(true);
-                selectPilotProjects(true);
-                selectReliablePartners(true);
-                selectDiscounts(true);
-                selectNeedForYoungPersonnel(true);
-                selectNewsletter(true);
-                selectCommittees(true);
-                selectCorporateMember(true);
-                selectInteractionOnline(true);
-                selectInteractionOffline(true);
-            }
-        });
-    }
-
-    private void addSelectAllBusinessCharacteristicsCheckBox() {
-        anchor_BusinessCharacteristics.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 5) {
-                selectEconomicSector(true);
-                selectOrganizationForm(true);
-                selectOwnershipForm(true);
-                selectActivityType(true);
-                selectBusinessForm(true);
-            }
-        });
-    }
-
-    private void addSelectAllGeneralCheckBox() {
-        anchor_General.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 5) {
-                selectMemberStatus(true);
-                selectDebtStatus(true);
-                selectLocation(true);
-                selectMonth(true);
-            }
-        });
-    }
-
 
     private void addEachCheckBoxesToEachLists() {
-        listDatePayment.add(date_payment_1);
-        listDatePayment.add(date_payment_2);
 
-        listPayment.add(checkBox_payment_1);
-        listPayment.add(checkBox_payment_2);
+        listDatePayment = Arrays.asList(date_payment_1, date_payment_2);
+        withDateGroups.add(new CheckBoxGroup(label_payment, Arrays.asList(checkBox_payment_1, checkBox_payment_2), listDatePayment,
+                "i.INVOICE_STATUS_OF_PAYMENT", 7));
 
-        listMonth.add(checkBox_month_1);
-        listMonth.add(checkBox_month_2);
-        listMonth.add(checkBox_month_3);
-        listMonth.add(checkBox_month_4);
-        listMonth.add(checkBox_month_5);
-        listMonth.add(checkBox_month_6);
-        listMonth.add(checkBox_month_7);
-        listMonth.add(checkBox_month_8);
-        listMonth.add(checkBox_month_9);
-        listMonth.add(checkBox_month_10);
-        listMonth.add(checkBox_month_11);
-        listMonth.add(checkBox_month_12);
 
-        listLocation.add(checkBox_location_1);
-        listLocation.add(checkBox_location_2);
-        listLocation.add(checkBox_location_3);
+        listDateReceiving = Arrays.asList(date_receiving_1, date_receiving_2);
+        withDateGroups.add(new CheckBoxGroup(label_receiving, Arrays.asList(checkBox_receiving_1, checkBox_receiving_2), listDateReceiving,
+                "i.INVOICE_STATUS_OF_RECEIVING", 8));
 
-        listAntiCorruptionCharter.add(checkBox_antiCorruptionCharter_1);
-        listAntiCorruptionCharter.add(checkBox_antiCorruptionCharter_0);
+        interestsGroups.add(new CheckBoxGroup(label_antiCorruptionCharter, Arrays.asList(checkBox_antiCorruptionCharter_0, checkBox_antiCorruptionCharter_1),
+                "gi.ANTI_CORRUPTION_CHARTER", 2));
 
-        listPilotProjects.add(checkBox_pilotProjects_1);
-        listPilotProjects.add(checkBox_pilotProjects_0);
+        interestsGroups.add(new CheckBoxGroup(label_pilotProjects, Arrays.asList(checkBox_pilotProjects_0, checkBox_pilotProjects_1),
+                "gi.PILOT_PROJECTS", 2));
 
-        listReliablePartners.add(checkBox_reliablePartners_1);
-        listReliablePartners.add(checkBox_reliablePartners_0);
+        interestsGroups.add(new CheckBoxGroup(label_reliablePartners, Arrays.asList(checkBox_reliablePartners_0, checkBox_reliablePartners_1),
+                "gi.RELIABLE_PARTNERS", 2));
 
-        listDiscounts.add(checkBox_discounts_1);
-        listDiscounts.add(checkBox_discounts_0);
+        interestsGroups.add(new CheckBoxGroup(label_discounts, Arrays.asList(checkBox_discounts_0, checkBox_discounts_1),
+                "gi.DISCOUNTS", 2));
 
-        listNeedForYoungPersonnel.add(checkBox_needForYoungPersonnel_1);
-        listNeedForYoungPersonnel.add(checkBox_needForYoungPersonnel_0);
+        interestsGroups.add(new CheckBoxGroup(label_needForYoungPersonnel, Arrays.asList(checkBox_needForYoungPersonnel_0, checkBox_needForYoungPersonnel_1),
+                "gi.NEED_FOR_YOUNG_PERSONNEL", 2));
 
-        listMkas.add(checkBox_mkas_1);
-        listMkas.add(checkBox_mkas_0);
+        interestsGroups.add(new CheckBoxGroup(label_mkas, Arrays.asList(checkBox_mkas_0, checkBox_mkas_1),
+                "gi.MKAS", 2));
 
-        listBusinessMissionRegional.add(checkBox_businessMissionRegional_1);
-        listBusinessMissionRegional.add(checkBox_businessMissionRegional_0);
+        interestsGroups.add(new CheckBoxGroup(label_businessMissionRegional, Arrays.asList(checkBox_businessMissionRegional_0, checkBox_businessMissionRegional_1),
+                "gi.BUSINESS_MISSION_REGIONAL", 2));
 
-        listBusinessMissionVisiting.add(checkBox_businessMissionVisiting_1);
-        listBusinessMissionVisiting.add(checkBox_businessMissionVisiting_0);
+        interestsGroups.add(new CheckBoxGroup(label_businessMissionVisiting, Arrays.asList(checkBox_businessMissionVisiting_0, checkBox_businessMissionVisiting_1),
+                "gi.BUSINESS_MISSION_VISITING", 2));
 
-        listB2c.add(checkBox_b2c_1);
-        listB2c.add(checkBox_b2c_0);
+        interestsGroups.add(new CheckBoxGroup(label_b2c, Arrays.asList(checkBox_b2c_0, checkBox_b2c_1),
+                "gi.B2C", 2));
 
-        listB2b.add(checkBox_b2b_1);
-        listB2b.add(checkBox_b2b_0);
+        interestsGroups.add(new CheckBoxGroup(label_b2b, Arrays.asList(checkBox_b2b_0, checkBox_b2b_1),
+                "gi.B2B", 2));
 
-        listInteractionOffline.add(checkBox_interactionOffline_1);
-        listInteractionOffline.add(checkBox_interactionOffline_0);
+        interestsGroups.add(new CheckBoxGroup(label_interactionOffline, Arrays.asList(checkBox_interactionOffline_0, checkBox_interactionOffline_1),
+                "gi.INTERACTION_OFFLINE", 2));
 
-        listInteractionOnline.add(checkBox_interactionOnline_1);
-        listInteractionOnline.add(checkBox_interactionOnline_0);
+        interestsGroups.add(new CheckBoxGroup(label_interactionOnline, Arrays.asList(checkBox_interactionOnline_0, checkBox_interactionOnline_1),
+                "gi.INTERACTION_ONLINE", 2));
 
-        listVedExport.add(checkBox_vedExport_1);
-        listVedExport.add(checkBox_vedExport_0);
+        interestsGroups.add(new CheckBoxGroup(label_vedExport, Arrays.asList(checkBox_vedExport_0, checkBox_vedExport_1),
+                "gi.VED_EXPORT", 2));
 
-        listVedImport.add(checkBox_vedImport_1);
-        listVedImport.add(checkBox_vedImport_0);
+        interestsGroups.add(new CheckBoxGroup(label_vedImport, Arrays.asList(checkBox_vedImport_0, checkBox_vedImport_1),
+                "gi.VED_IMPORT", 2));
 
-        listEconomicSector.add(checkBox_economicSector_1);
-        listEconomicSector.add(checkBox_economicSector_2);
-        listEconomicSector.add(checkBox_economicSector_3);
-        listEconomicSector.add(checkBox_economicSector_4);
-        listEconomicSector.add(checkBox_economicSector_5);
-        listEconomicSector.add(checkBox_economicSector_6);
-        listEconomicSector.add(checkBox_economicSector_7);
-        listEconomicSector.add(checkBox_economicSector_8);
-        listEconomicSector.add(checkBox_economicSector_9);
-        listEconomicSector.add(checkBox_economicSector_10);
-        listEconomicSector.add(checkBox_economicSector_11);
-        listEconomicSector.add(checkBox_economicSector_12);
-        listEconomicSector.add(checkBox_economicSector_13);
-        listEconomicSector.add(checkBox_economicSector_14);
-        listEconomicSector.add(checkBox_economicSector_15);
-        listEconomicSector.add(checkBox_economicSector_16);
-        listEconomicSector.add(checkBox_economicSector_17);
-        listEconomicSector.add(checkBox_economicSector_18);
-        listEconomicSector.add(checkBox_economicSector_19);
-        listEconomicSector.add(checkBox_economicSector_20);
+        interestsGroups.add(new CheckBoxGroup(label_newsletter, Arrays.asList(checkBox_newsletter_0, checkBox_newsletter_1),
+                "gi.NEWSLETTER", 2));
 
-        listActivityType.add(checkBox_activityType_1);
-        listActivityType.add(checkBox_activityType_2);
+        interestsGroups.add(new CheckBoxGroup(label_committees, Arrays.asList(checkBox_committees_0, checkBox_committees_1),
+                "gi.COMMITTEES", 2));
 
-        listOwnershipForm.add(checkBox_ownershipForm_1);
-        listOwnershipForm.add(checkBox_ownershipForm_2);
-        listOwnershipForm.add(checkBox_ownershipForm_3);
+        interestsGroups.add(new CheckBoxGroup(label_corporateMember, Arrays.asList(checkBox_corporateMember_0, checkBox_corporateMember_1),
+                "gi.CORPORATE_MEMBER", 2));
 
-        listOrganizationForm.add(checkBox_organizationForm_1);
-        listOrganizationForm.add(checkBox_organizationForm_2);
-        listOrganizationForm.add(checkBox_organizationForm_3);
-        listOrganizationForm.add(checkBox_organizationForm_4);
-        listOrganizationForm.add(checkBox_organizationForm_5);
-        listOrganizationForm.add(checkBox_organizationForm_6);
-        listOrganizationForm.add(checkBox_organizationForm_7);
-        listOrganizationForm.add(checkBox_organizationForm_8);
-        listOrganizationForm.add(checkBox_organizationForm_9);
-        listOrganizationForm.add(checkBox_organizationForm_10);
-        listOrganizationForm.add(checkBox_organizationForm_11);
-        listOrganizationForm.add(checkBox_organizationForm_12);
-        listOrganizationForm.add(checkBox_organizationForm_13);
-        listOrganizationForm.add(checkBox_organizationForm_14);
-        listOrganizationForm.add(checkBox_organizationForm_15);
-        listOrganizationForm.add(checkBox_organizationForm_16);
-        listOrganizationForm.add(checkBox_organizationForm_17);
-        listOrganizationForm.add(checkBox_organizationForm_18);
+        generalsGroups.add(new CheckBoxGroup(label_month,
+                Arrays.asList(checkBox_month_1, checkBox_month_2, checkBox_month_3, checkBox_month_4, checkBox_month_5, checkBox_month_6, checkBox_month_7, checkBox_month_8, checkBox_month_9, checkBox_month_10, checkBox_month_11, checkBox_month_12),
+                "month(MEMBER_DATE_OF_ENTRY)", 6));
 
-        listDebtStatus.add(checkBox_debt_status_1);
-        listDebtStatus.add(checkBox_debt_status_2);
+        generalsGroups.add(new CheckBoxGroup(label_location, Arrays.asList(checkBox_location_1, checkBox_location_2, checkBox_location_3),
+                "al.ADDRESS_LEGAL_REGION_ID;al.ADDRESS_LEGAL_DISTRICT", 5));
 
-        listBusinessForm.add(checkBox_businessForm_1);
-        listBusinessForm.add(checkBox_businessForm_2);
-        listBusinessForm.add(checkBox_businessForm_3);
-        listBusinessForm.add(checkBox_businessForm_4);
+        generalsGroups.add(new CheckBoxGroup(label_debt_status, Arrays.asList(checkBox_debt_status_1, checkBox_debt_status_2),
+                "d.DEBT_STATUS", 3));
 
-        listMemberStatus.add(checkBox_memberstatus_1);
-        listMemberStatus.add(checkBox_memberstatus_2);
-        listMemberStatus.add(checkBox_memberstatus_3);
-        listMemberStatus.add(checkBox_memberstatus_4);
-        listMemberStatus.add(checkBox_memberstatus_5);
-        listMemberStatus.add(checkBox_memberstatus_6);
-        listMemberStatus.add(checkBox_memberstatus_7);
-        listMemberStatus.add(checkBox_memberstatus_8);
-        listMemberStatus.add(checkBox_memberstatus_9);
-        listMemberStatus.add(checkBox_memberstatus_10);
+        generalsGroups.add(new CheckBoxGroup(label_memberStatus,
+                Arrays.asList(checkBox_memberstatus_1, checkBox_memberstatus_2, checkBox_memberstatus_3, checkBox_memberstatus_4, checkBox_memberstatus_5, checkBox_memberstatus_6, checkBox_memberstatus_7, checkBox_memberstatus_8, checkBox_memberstatus_9, checkBox_memberstatus_10),
+                "m.MEMBER_STATUS", 1));
 
-        listReceiving.add(checkBox_receiving_1);
-        listReceiving.add(checkBox_receiving_2);
+        businessCharacteristicsGroups.add(new CheckBoxGroup(label_economicSector,
+                Arrays.asList(checkBox_economicSector_1, checkBox_economicSector_2, checkBox_economicSector_3, checkBox_economicSector_4, checkBox_economicSector_5, checkBox_economicSector_6, checkBox_economicSector_7, checkBox_economicSector_8, checkBox_economicSector_9, checkBox_economicSector_10, checkBox_economicSector_11, checkBox_economicSector_12, checkBox_economicSector_13, checkBox_economicSector_14, checkBox_economicSector_15, checkBox_economicSector_16, checkBox_economicSector_17, checkBox_economicSector_18, checkBox_economicSector_19, checkBox_economicSector_20),
+                "gi.ECONOMIC_SECTOR", 1));
 
-        listDateReceiving.add(date_receiving_1);
-        listDateReceiving.add(date_receiving_2);
+        businessCharacteristicsGroups.add(new CheckBoxGroup(label_activityType, Arrays.asList(checkBox_activityType_1, checkBox_activityType_2),
+                "gi.ACTIVITY_TYPE", 1));
 
-        servicesCheckBoxMap.put(1, checkBox_services_1);
-        servicesCheckBoxMap.put(2, checkBox_services_2);
-        servicesCheckBoxMap.put(3, checkBox_services_3);
-        servicesCheckBoxMap.put(4, checkBox_services_4);
-        servicesCheckBoxMap.put(5, checkBox_services_5);
-        servicesCheckBoxMap.put(6, checkBox_services_6);
-        servicesCheckBoxMap.put(7, checkBox_services_7);
-        servicesCheckBoxMap.put(8, checkBox_services_8);
-        servicesCheckBoxMap.put(9, checkBox_services_9);
-        servicesCheckBoxMap.put(10, checkBox_services_10);
-        servicesCheckBoxMap.put(11, checkBox_services_11);
-        servicesCheckBoxMap.put(12, checkBox_services_12);
-        servicesCheckBoxMap.put(13, checkBox_services_13);
-        servicesCheckBoxMap.put(14, checkBox_services_14);
-        servicesCheckBoxMap.put(15, checkBox_services_15);
-        servicesCheckBoxMap.put(16, checkBox_services_16);
-        servicesCheckBoxMap.put(17, checkBox_services_17);
+        businessCharacteristicsGroups.add(new CheckBoxGroup(label_ownershipForm, Arrays.asList(checkBox_ownershipForm_1, checkBox_ownershipForm_2, checkBox_ownershipForm_3),
+                "gi.OWNERSHIP_FORM", 1));
 
-        listNewsletter.add(checkBox_newsletter_1);
-        listNewsletter.add(checkBox_newsletter_0);
+        businessCharacteristicsGroups.add(new CheckBoxGroup(label_organizationForm,
+                Arrays.asList(checkBox_organizationForm_1, checkBox_organizationForm_2, checkBox_organizationForm_3, checkBox_organizationForm_4, checkBox_organizationForm_5, checkBox_organizationForm_6, checkBox_organizationForm_7, checkBox_organizationForm_8, checkBox_organizationForm_9, checkBox_organizationForm_10, checkBox_organizationForm_11, checkBox_organizationForm_12, checkBox_organizationForm_13, checkBox_organizationForm_14, checkBox_organizationForm_15, checkBox_organizationForm_16, checkBox_organizationForm_17, checkBox_organizationForm_18),
+                "gi.ORGANIZATION_FORM", 1));
 
-        listCommittees.add(checkBox_committees_1);
-        listCommittees.add(checkBox_committees_0);
+        businessCharacteristicsGroups.add(new CheckBoxGroup(label_businessForm, Arrays.asList(checkBox_businessForm_1, checkBox_businessForm_2, checkBox_businessForm_3, checkBox_businessForm_4),
+                "gi.BUSINESS_FORM", 1));
 
-        listCorporateMember.add(checkBox_corporateMember_1);
-        listCorporateMember.add(checkBox_corporateMember_0);
+
+        servicesCheckBoxList.addAll(Arrays.asList(checkBox_services_1, checkBox_services_2, checkBox_services_3, checkBox_services_4, checkBox_services_5, checkBox_services_6, checkBox_services_7, checkBox_services_8, checkBox_services_9, checkBox_services_10, checkBox_services_11, checkBox_services_12, checkBox_services_13, checkBox_services_14, checkBox_services_15, checkBox_services_16, checkBox_services_17));
     }
 
-    private void addMemberStatusListener() {
-        label_memberStatus.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyCBMemberStatus) {
-                    selectMemberStatus(true);
-                    isEmptyCBMemberStatus = true;
-                } else {
-                    selectMemberStatus(false);
-                    isEmptyCBMemberStatus = false;
-                }
+    private void addListenerForAnchor(AnchorPane anchorPane, List<CheckBoxGroup> groupList) {
+        anchorPane.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 5) {
+                changeStateForAllCheckBoxesInGroup(groupList, true);
             }
         });
     }
 
-    private void addBusinessFormListener() {
-        label_businessForm.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyBusinessForm) {
-                    selectBusinessForm(true);
-                    isEmptyBusinessForm = true;
-                } else {
-                    selectBusinessForm(false);
-                    isEmptyBusinessForm = false;
+    private void addListenersForLabels(List<CheckBoxGroup> groupList) {
+        for (CheckBoxGroup checkBoxGroup : groupList) {
+            checkBoxGroup.getLabel().setOnMouseClicked(event -> {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                    checkBoxGroup.changeState();
                 }
-            }
-        });
+            });
+        }
     }
 
-    private void addDebtStatusListener() {
-        label_debt_status.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyDebtStatus) {
-                    selectDebtStatus(true);
-                    isEmptyDebtStatus = true;
-                } else {
-                    selectDebtStatus(false);
-                    isEmptyDebtStatus = false;
+    private void addListenersWithDates(List<CheckBoxGroup> groupList) {
+        for (CheckBoxGroup checkBoxGroup : groupList) {
+            checkBoxGroup.getLabel().setOnMouseClicked(event -> {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                    checkBoxGroup.changeState();
                 }
-            }
-        });
-    }
-
-    private void addOrganizationFormListener() {
-        label_organizationForm.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyOrganizationForm) {
-                    selectOrganizationForm(true);
-                    isEmptyOrganizationForm = true;
-                } else {
-                    selectOrganizationForm(false);
-                    isEmptyOrganizationForm = false;
+                for (CheckBox checkBox : checkBoxGroup.getCheckBoxes()) {
+                    checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> disableDates(checkBoxGroup.getDatePickers(), !newValue));
                 }
-            }
-        });
+            });
+        }
     }
 
-    private void addOwnershipFormListener() {
-        label_ownershipForm.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyOwnershipForm) {
-                    selectOwnershipForm(true);
-                    isEmptyOwnershipForm = true;
-                } else {
-                    selectOwnershipForm(false);
-                    isEmptyOwnershipForm = false;
-                }
-            }
-        });
+    private void changeStateForAllCheckBoxesInGroup(List<CheckBoxGroup> groupList, boolean newValue) {
+        groupList.forEach(checkBoxGroup -> checkBoxGroup.changeState(newValue));
     }
 
-    private void addActivityTypeListener() {
-        label_activityType.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyActivityTypeForm) {
-                    selectActivityType(true);
-                    isEmptyActivityTypeForm = true;
-                } else {
-                    selectActivityType(false);
-                    isEmptyActivityTypeForm = false;
-                }
-            }
-        });
-    }
-
-    private void addEconomicSectorListener() {
-        label_economicSector.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyEconomicSector) {
-                    selectEconomicSector(true);
-                    isEmptyEconomicSector = true;
-                } else {
-                    selectEconomicSector(false);
-                    isEmptyEconomicSector = false;
-                }
-            }
-        });
-    }
-
-    private void addVedImportListener() {
-        label_vedImport.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyVedImport) {
-                    selectVedImport(true);
-                    isEmptyVedImport = true;
-                } else {
-                    selectVedImport(false);
-                    isEmptyVedImport = false;
-                }
-            }
-        });
-    }
-
-    private void addVedExportExportListener() {
-        label_vedExport.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyVedExport) {
-                    selectVedExport(true);
-                    isEmptyVedExport = true;
-                } else {
-                    selectVedExport(false);
-                    isEmptyVedExport = false;
-                }
-            }
-        });
-    }
-
-    private void addInteractionOnlineListener() {
-        label_interactionOnline.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyInteractionOnline) {
-                    selectInteractionOnline(true);
-                    isEmptyInteractionOnline = true;
-                } else {
-                    selectInteractionOnline(false);
-                    isEmptyInteractionOnline = false;
-                }
-            }
-        });
-    }
-
-    private void addInteractionOfflineListener() {
-        label_interactionOffline.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyInteractionOffline) {
-                    selectInteractionOffline(true);
-                    isEmptyInteractionOffline = true;
-                } else {
-                    selectInteractionOffline(false);
-                    isEmptyInteractionOffline = false;
-                }
-            }
-        });
-    }
-
-    private void addB2bListener() {
-        label_b2b.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyB2b) {
-                    selectB2b(true);
-                    isEmptyB2b = true;
-                } else {
-                    selectB2b(false);
-                    isEmptyB2b = false;
-                }
-            }
-        });
-    }
-
-    private void addB2cListener() {
-        label_b2c.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyB2c) {
-                    selectB2c(true);
-                    isEmptyB2c = true;
-                } else {
-                    selectB2c(false);
-                    isEmptyB2c = false;
-                }
-            }
-        });
-    }
-
-    private void addBusinessMissionVisitingListener() {
-        label_businessMissionVisiting.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyBusinessMissionVisiting) {
-                    selectBusinessMissionVisiting(true);
-                    isEmptyBusinessMissionVisiting = true;
-                } else {
-                    selectBusinessMissionVisiting(false);
-                    isEmptyBusinessMissionVisiting = false;
-                }
-            }
-        });
-    }
-
-    private void addbusinessMissionRegionalListener() {
-        label_businessMissionRegional.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptybusinessMissionRegional) {
-                    selectBusinessMissionRegional(true);
-                    isEmptybusinessMissionRegional = true;
-                } else {
-                    selectBusinessMissionRegional(false);
-                    isEmptybusinessMissionRegional = false;
-                }
-            }
-        });
-    }
-
-    private void addMkasListener() {
-        label_mkas.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyMkas) {
-                    selectMkas(true);
-                    isEmptyMkas = true;
-                } else {
-                    selectMkas(false);
-                    isEmptyMkas = false;
-                }
-            }
-        });
-    }
-
-    private void addLocationListener() {
-        label_location.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyLocation) {
-                    selectLocation(true);
-                    isEmptyLocation = true;
-                } else {
-                    selectLocation(false);
-                    isEmptyLocation = false;
-                }
-            }
-        });
-    }
-
-    private void addAntiCorruptionCharterListener() {
-        label_antiCorruptionCharter.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyAntiCorruptionCharter) {
-                    selectAntiCorruptionCharter(true);
-                    isEmptyAntiCorruptionCharter = true;
-                } else {
-                    selectAntiCorruptionCharter(false);
-                    isEmptyAntiCorruptionCharter = false;
-                }
-            }
-        });
-    }
-
-    private void addPilotProjectsListener() {
-        label_pilotProjects.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyPilotProjects) {
-                    selectPilotProjects(true);
-                    isEmptyPilotProjects = true;
-                } else {
-                    selectPilotProjects(false);
-                    isEmptyPilotProjects = false;
-                }
-            }
-        });
-    }
-
-    private void addReliablePartnersListener() {
-        label_reliablePartners.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyReliablePartners) {
-                    selectReliablePartners(true);
-                    isEmptyReliablePartners = true;
-                } else {
-                    selectReliablePartners(false);
-                    isEmptyReliablePartners = false;
-                }
-            }
-        });
-    }
-
-    private void addDiscountsListener() {
-        label_discounts.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyDiscounts) {
-                    selectDiscounts(true);
-                    isEmptyDiscounts = true;
-                } else {
-                    selectDiscounts(false);
-                    isEmptyDiscounts = false;
-                }
-            }
-        });
-    }
-
-    private void addNeedForYoungPersonnelListener() {
-        label_needForYoungPersonnel.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyNeedForYoungPersonnel) {
-                    selectNeedForYoungPersonnel(true);
-                    isEmptyNeedForYoungPersonnel = true;
-                } else {
-                    selectNeedForYoungPersonnel(false);
-                    isEmptyNeedForYoungPersonnel = false;
-                }
-            }
-        });
-    }
-
-    private void addCorporateMemberListener() {
-        label_corporateMember.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyCorporateMember) {
-                    selectCorporateMember(true);
-                    isEmptyCorporateMember = true;
-                } else {
-                    selectCorporateMember(false);
-                    isEmptyCorporateMember = false;
-                }
-            }
-        });
-    }
-
-    private void addCommitteesListener() {
-        label_committees.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyCommittees) {
-                    selectCommittees(true);
-                    isEmptyCommittees = true;
-                } else {
-                    selectCommittees(false);
-                    isEmptyCommittees = false;
-                }
-            }
-        });
-    }
-
-    private void addNewsletterListener() {
-        label_newsletter.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyNewsletter) {
-                    selectNewsletter(true);
-                    isEmptyNewsletter = true;
-                } else {
-                    selectNewsletter(false);
-                    isEmptyNewsletter = false;
-                }
-            }
-        });
-    }
-
-    private void addMonthListener() {
-        label_month.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyMonth) {
-                    selectMonth(true);
-                    isEmptyMonth = true;
-                } else {
-                    selectMonth(false);
-                    isEmptyMonth = false;
-                }
-            }
-        });
-    }
-
-    private void addPaymentListener() {
-        label_payment.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyPayment) {
-                    selectPayment(true);
-                    isEmptyPayment = true;
-                } else {
-                    selectPayment(false);
-                    isEmptyPayment = false;
-                }
-            }
-        });
-
-        checkBox_payment_1.selectedProperty().addListener((observable, oldValue, newValue) -> disableDatePayment(!newValue));
-        checkBox_payment_2.selectedProperty().addListener((observable, oldValue, newValue) -> disableDatePayment(!newValue));
-    }
-
-    private void addReceivingListener() {
-        label_receiving.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (!isEmptyReceiving) {
-                    selectReceiving(true);
-                    isEmptyReceiving = true;
-                } else {
-                    selectReceiving(false);
-                    isEmptyReceiving = false;
-                }
-            }
-        });
-
-        checkBox_receiving_1.selectedProperty().addListener((observable, oldValue, newValue) -> disableDateReceiving(!newValue));
-        checkBox_receiving_2.selectedProperty().addListener((observable, oldValue, newValue) -> disableDateReceiving(!newValue));
-    }
-
-
-    private void unSelectAllCheckBox() {
-        selectMemberStatus(false);
-        selectBusinessForm(false);
-        selectDebtStatus(false);
-        selectOrganizationForm(false);
-        selectOwnershipForm(false);
-        selectActivityType(false);
-        selectEconomicSector(false);
-        selectVedImport(false);
-        selectVedExport(false);
-        selectInteractionOnline(false);
-        selectInteractionOffline(false);
-        selectB2b(false);
-        selectB2c(false);
-        selectBusinessMissionVisiting(false);
-        selectBusinessMissionRegional(false);
-        selectMkas(false);
-        selectNeedForYoungPersonnel(false);
-        selectDiscounts(false);
-        selectReliablePartners(false);
-        selectPilotProjects(false);
-        selectAntiCorruptionCharter(false);
-        selectLocation(false);
-        selectMonth(false);
-        selectPayment(false);
-        selectReceiving(false);
-        unSelectServices();
-        selectNewsletter(false);
-        selectCommittees(false);
-        selectCorporateMember(false);
-    }
-
-    private void selectMemberStatus(boolean value) {
-        listMemberStatus.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectBusinessForm(boolean value) {
-        listBusinessForm.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectDebtStatus(boolean value) {
-        listDebtStatus.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectOrganizationForm(boolean value) {
-        listOrganizationForm.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectOwnershipForm(boolean value) {
-        listOwnershipForm.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectActivityType(boolean value) {
-        listActivityType.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectEconomicSector(boolean value) {
-        listEconomicSector.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectVedImport(boolean value) {
-        listVedImport.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectVedExport(boolean value) {
-        listVedExport.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectInteractionOnline(boolean value) {
-        listInteractionOnline.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectInteractionOffline(boolean value) {
-        listInteractionOffline.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectB2b(boolean value) {
-        listB2b.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectB2c(boolean value) {
-        listB2c.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectBusinessMissionVisiting(boolean value) {
-        listBusinessMissionVisiting.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectBusinessMissionRegional(boolean value) {
-        listBusinessMissionRegional.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectMkas(boolean value) {
-        listMkas.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectAntiCorruptionCharter(boolean value) {
-        listAntiCorruptionCharter.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectPilotProjects(boolean value) {
-        listPilotProjects.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectReliablePartners(boolean value) {
-        listReliablePartners.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectDiscounts(boolean value) {
-        listDiscounts.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectNeedForYoungPersonnel(boolean value) {
-        listNeedForYoungPersonnel.forEach(checkBox -> checkBox.setSelected(value));
-
-    }
-
-    private void selectNewsletter(boolean value) {
-        listNewsletter.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectCommittees(boolean value) {
-        listCommittees.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectCorporateMember(boolean value) {
-        listCorporateMember.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectLocation(boolean value) {
-        listLocation.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectMonth(boolean value) {
-        listMonth.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectPayment(boolean value) {
-        listPayment.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void selectReceiving(boolean value) {
-        listReceiving.forEach(checkBox -> checkBox.setSelected(value));
-    }
-
-    private void unSelectServices() {
-        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setSelected(false));
-    }
-
-    private void disableDatePayment(boolean value) {
-        listDatePayment.forEach(datePicker -> {
+    private void disableDates(List<DatePicker> datePickers, boolean value) {
+        for (DatePicker datePicker : datePickers) {
             datePicker.setDisable(value);
             datePicker.getEditor().clear();
-        });
+        }
     }
-
-    private void disableDateReceiving(boolean value) {
-        listDateReceiving.forEach(datePicker -> {
-            datePicker.setDisable(value);
-            datePicker.getEditor().clear();
-        });
-    }
-
 
     public void clearAllFields() {
-        unSelectAllCheckBox();
+        changeStateForAllCheckBoxesInGroup(interestsGroups, false);
+        changeStateForAllCheckBoxesInGroup(generalsGroups, false);
+        changeStateForAllCheckBoxesInGroup(businessCharacteristicsGroups, false);
+        changeStateForAllCheckBoxesInGroup(withDateGroups, false);
+        servicesCheckBoxList.forEach(checkBox -> checkBox.setSelected(false));
         list.clear();
     }
 
@@ -1332,67 +622,49 @@ public class SelectController {
     }
 
     private String getResultQuery() {
-        ArrayList<String> test = new ArrayList<>();
+        ArrayList<String> whereList = new ArrayList<>();
 
-        test.add(getWherePartFromList(listMemberStatus, "m.MEMBER_STATUS", 1));
-        test.add(getWherePartFromList(listBusinessForm, "gi.BUSINESS_FORM", 1));
-        test.add(getWherePartFromList(listOrganizationForm, "gi.ORGANIZATION_FORM", 1));
-        test.add(getWherePartFromList(listOwnershipForm, "gi.OWNERSHIP_FORM", 1));
-        test.add(getWherePartFromList(listActivityType, "gi.ACTIVITY_TYPE", 1));
-        test.add(getWherePartFromList(listEconomicSector, "gi.ECONOMIC_SECTOR", 1));
+        for (CheckBoxGroup group : interestsGroups) {
+            whereList.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+        }
+        for (CheckBoxGroup group : generalsGroups) {
+            whereList.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+        }
+        for (CheckBoxGroup group : businessCharacteristicsGroups) {
+            whereList.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+        }
+        for (CheckBoxGroup group : withDateGroups) {
+            whereList.add(getWherePartFromList(group.getCheckBoxes(), group.getWherePattern(), group.getWhereFlag()));
+        }
 
-        test.add(getWherePartFromList(listDebtStatus, "d.DEBT_STATUS", 3));
+        whereList.add(getWherePartFromDate(listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
+        whereList.add(getWherePartFromDate(listDateReceiving, "i.INVOICE_DATE_OF_RECEIVING;i.INVOICE_DATE_OF_RECEIVING"));
+        whereList.add(getWherePartFromServices());
 
-        test.add(getWherePartFromList(listVedImport, "gi.VED_IMPORT", 2));
-        test.add(getWherePartFromList(listVedExport, "gi.VED_EXPORT", 2));
+        whereList.removeIf(String::isEmpty);
 
-        test.add(getWherePartFromList(listInteractionOnline, "gi.INTERACTION_ONLINE", 2));
-        test.add(getWherePartFromList(listInteractionOffline, "gi.INTERACTION_OFFLINE", 2));
-        test.add(getWherePartFromList(listB2b, "gi.B2B", 2));
-        test.add(getWherePartFromList(listB2c, "gi.B2C", 2));
-        test.add(getWherePartFromList(listBusinessMissionVisiting, "gi.BUSINESS_MISSION_VISITING", 2));
-        test.add(getWherePartFromList(listBusinessMissionRegional, "gi.BUSINESS_MISSION_REGIONAL", 2));
-        test.add(getWherePartFromList(listMkas, "gi.MKAS", 2));
-        test.add(getWherePartFromList(listAntiCorruptionCharter, "gi.ANTI_CORRUPTION_CHARTER", 2));
-        test.add(getWherePartFromList(listPilotProjects, "gi.PILOT_PROJECTS", 2));
-        test.add(getWherePartFromList(listReliablePartners, "gi.RELIABLE_PARTNERS", 2));
-        test.add(getWherePartFromList(listDiscounts, "gi.DISCOUNTS", 2));
-        test.add(getWherePartFromList(listNeedForYoungPersonnel, "gi.NEED_FOR_YOUNG_PERSONNEL", 2));
-        test.add(getWherePartFromList(listNewsletter, "gi.NEWSLETTER", 2));
-        test.add(getWherePartFromList(listCommittees, "gi.COMMITTEES", 2));
-        test.add(getWherePartFromList(listCorporateMember, "gi.CORPORATE_MEMBER", 2));
-
-        test.add(getWherePartFromList(listLocation, "al.ADDRESS_LEGAL_REGION_ID;al.ADDRESS_LEGAL_DISTRICT", 5));
-        test.add(getWherePartFromList(listMonth, "month(MEMBER_DATE_OF_ENTRY)", 6));
-        test.add(getWherePartFromDate(listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
-        test.add(getWherePartFromDate(listDateReceiving, "i.INVOICE_DATE_OF_RECEIVING;i.INVOICE_DATE_OF_RECEIVING"));
-        test.add(getWherePartFromList(listReceiving, "i.INVOICE_STATUS_OF_RECEIVING", 8));
-        test.add(getWherePartFromList(listPayment, "i.INVOICE_STATUS_OF_PAYMENT", 7));
-        test.add(getWherePartFromServices());
-
-        test.removeIf(String::isEmpty);
 
         String selectQuery = "SELECT DISTINCT m.MEMBER_ID, " +
                 "m.MEMBER_SERIAL, " +
                 "c.CONTACT_PHONE, " +
                 "m.MEMBER_STATUS, " +
                 "m.MEMBER_SHORT_NAME, " +
-                "c.CONTACT_EMAIL";
-        String fromQuery = "FROM MEMBER m \n" +
+                "c.CONTACT_EMAIL \n" +
+                "FROM MEMBER m \n" +
                 "INNER JOIN CONTACT c ON m.MEMBER_ID=c.MEMBER_ID " +
                 "INNER JOIN DEBT d ON m.MEMBER_ID=d.MEMBER_ID " +
                 "INNER JOIN GENERAL_INFORMATION gi ON m.MEMBER_ID=gi.MEMBER_ID " +
                 "INNER JOIN ADDRESS_LEGAL al ON m.MEMBER_ID=al.MEMBER_ID " +
                 "LEFT JOIN INVOICE i ON m.MEMBER_ID=i.MEMBER_ID " +
-                "LEFT JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID";
-        String whereQuery = "WHERE " + getAppendWhereQuery(test) + ";";
-        return selectQuery + "\n" + fromQuery + "\n" + whereQuery;
+                "LEFT JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID \n";
+        String wherePart = whereList.isEmpty() ? "" : "WHERE " + getAppendWhereQuery(whereList) + ";";
+        return selectQuery + wherePart;
     }
 
-    private String getWherePartFromList(ArrayList<CheckBox> checkBoxes, String pattern, int flag) {
+    private String getWherePartFromList(List<CheckBox> checkBoxes, String pattern, int flag) {
         String result = "";
 
-        ArrayList<String> someSelect = new ArrayList<>();
+        List<String> someSelect = new ArrayList<>();
         for (CheckBox checkBox : checkBoxes) {
             if (checkBox.isSelected()) {
                 switch (flag) {
@@ -1436,10 +708,10 @@ public class SelectController {
         return result;
     }
 
-    private String getWherePartFromDate(ArrayList<DatePicker> datePickers, String pattern) {
+    private String getWherePartFromDate(List<DatePicker> datePickers, String pattern) {
         String result = "";
 
-        ArrayList<String> someSelect = new ArrayList<>();
+        List<String> someSelect = new ArrayList<>();
         String[] splitPattern = pattern.split(";");
 
         if (checkBox_payment_1.isSelected() && !checkBox_payment_2.isSelected()) {
@@ -1466,67 +738,45 @@ public class SelectController {
     }
 
     private String getWherePartFromServices() {
-        StringBuilder result = new StringBuilder("");
-        StringBuilder numbers = new StringBuilder();
-        int numbersCount = 0;
-        for (Map.Entry<Integer, CheckBox> entry : servicesCheckBoxMap.entrySet()) {
-            if (entry.getValue().isSelected()) {
-                numbersCount++;
-                numbers.append(entry.getKey()).append(",");
-            }
+        List<String> numberOfSelectedServices = servicesCheckBoxList.stream()
+                .filter(checkBox -> checkBox.isSelected())
+                .map(checkBox -> String.valueOf(servicesCheckBoxList.indexOf(checkBox) + 1))
+                .collect(Collectors.toList());
+        if (numberOfSelectedServices.isEmpty()) {
+            return "";
         }
-        if (numbersCount != 0) {
-            numbers.deleteCharAt(numbers.length() - 1);
-            result.append("ms.SERVICES_ID IN(")
-                    .append(numbers)
-                    .append(") GROUP BY m.MEMBER_ID HAVING COUNT(*)=")
-                    .append(numbersCount);
-        }
-        return result.toString();
+        return "ms.SERVICES_ID IN(" + String.join(",", numberOfSelectedServices) + ") GROUP BY m.MEMBER_ID HAVING COUNT(*)=" + numberOfSelectedServices.size();
     }
 
-    private String getAppendWhereQuery(ArrayList<String> list) {
+    private String getAppendWhereQuery(List<String> list) {
         StringBuilder result = new StringBuilder();
 
-        for (int i = 0; i <= list.size() - 1; i++) {
+        int lastElement = list.size() - 1;
+        for (int i = 0; i < lastElement; i++) {
             result.append("(").append(list.get(i)).append(") AND ");
         }
-        result.append(list.get(list.size() - 1));
+        result.append(list.get(lastElement));
         return result.toString();
     }
 
     @FXML
     public void saveToPDF() {
-        ArrayList<String[]> listSelectedParams = new ArrayList<>();
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_memberStatus.getText(), listMemberStatus));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_businessForm.getText(), listBusinessForm));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_debt_status.getText(), listDebtStatus));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_organizationForm.getText(), listOrganizationForm));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_ownershipForm.getText(), listOwnershipForm));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_activityType.getText(), listActivityType));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_economicSector.getText(), listEconomicSector));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_vedImport.getText(), listVedImport));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_vedExport.getText(), listVedExport));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_interactionOnline.getText(), listInteractionOnline));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_interactionOffline.getText(), listInteractionOffline));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_b2b.getText(), listB2b));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_b2c.getText(), listB2c));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_businessMissionVisiting.getText(), listBusinessMissionVisiting));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_businessMissionRegional.getText(), listBusinessMissionRegional));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_mkas.getText(), listMkas));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_needForYoungPersonnel.getText(), listNeedForYoungPersonnel));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_discounts.getText(), listDiscounts));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_reliablePartners.getText(), listReliablePartners));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_pilotProjects.getText(), listPilotProjects));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_antiCorruptionCharter.getText(), listAntiCorruptionCharter));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_newsletter.getText(), listNewsletter));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_committees.getText(), listCommittees));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_corporateMember.getText(), listCorporateMember));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_location.getText(), listLocation));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_month.getText(), listMonth));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_payment.getText(), listPayment));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive(label_receiving.getText(), listReceiving));
-        listSelectedParams.add(ListUtils.getDataFromCheckBoxMassive("Интересующие услуги", new ArrayList<>(servicesCheckBoxMap.values())));
+        List<String[]> listSelectedParams = new ArrayList<>();
+
+        for (CheckBoxGroup group : interestsGroups) {
+            listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
+        }
+        for (CheckBoxGroup group : generalsGroups) {
+            listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
+        }
+        for (CheckBoxGroup group : businessCharacteristicsGroups) {
+            listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
+        }
+        for (CheckBoxGroup group : withDateGroups) {
+            listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
+        }
+
+        listSelectedParams.add(getDataFromCheckBoxMassive("Интересующие услуги", servicesCheckBoxList));
 
         listSelectedParams.removeIf(Objects::isNull);
 

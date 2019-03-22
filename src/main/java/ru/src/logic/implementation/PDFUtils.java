@@ -1,14 +1,17 @@
 package ru.src.logic.implementation;
 
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.pdfbox.io.IOUtils;
 import ru.src.model.FindMember;
 import ru.src.model.Member;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,19 +33,14 @@ public class PDFUtils {
         }
     }
 
-    public static void savePDFfromFindResult(String pathName, List<FindMember> findMembers, ArrayList<String[]> params) {
+    public static void savePDFfromFindResult(String pathName, List<FindMember> findMembers, List<String[]> params) {
 
         Document document = new Document(PageSize.A4, 20, 20, 20, 20);
         try {
             PdfWriter.getInstance(document, new FileOutputStream(new File(pathName)));
             document.open();
 
-//            byte[] bytes = IOUtils.toByteArray(inputStream);
-//            BaseFont baseFont = BaseFont.createFont("times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, true, bytes, null);
-
-
             String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.YYYY"));
-
 
             PdfPTable selectedParams = new PdfPTable(2);
             selectedParams.setTotalWidth(new float[]{150, 400});
