@@ -639,10 +639,10 @@ public class SelectController {
 
         whereList.add(getWherePartFromDate(listDatePayment, "i.INVOICE_ORDER_DATE;i.INVOICE_DATE_OF_CREATION"));
         whereList.add(getWherePartFromDate(listDateReceiving, "i.INVOICE_DATE_OF_RECEIVING;i.INVOICE_DATE_OF_RECEIVING"));
+        whereList.add(getWherePartFromServices());
 
         whereList.removeIf(String::isEmpty);
 
-        String servicesPart = getWherePartFromServices();
 
         String selectQuery = "SELECT DISTINCT m.MEMBER_ID, " +
                 "m.MEMBER_SERIAL, " +
@@ -656,10 +656,9 @@ public class SelectController {
                 "INNER JOIN GENERAL_INFORMATION gi ON m.MEMBER_ID=gi.MEMBER_ID " +
                 "INNER JOIN ADDRESS_LEGAL al ON m.MEMBER_ID=al.MEMBER_ID " +
                 "LEFT JOIN INVOICE i ON m.MEMBER_ID=i.MEMBER_ID " +
-                "LEFT JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID \n" +
-                "WHERE " +
-                "( " + String.join(" ) AND ( ", whereList) + " )" + servicesPart;
-        return selectQuery;
+                "LEFT JOIN MEMBER_SERVICES ms ON m.MEMBER_ID = ms.MEMBER_ID \n";
+        String wherePart = whereList.isEmpty() ? "" : "WHERE " + getAppendWhereQuery(whereList) + ";";
+        return selectQuery + wherePart;
     }
 
     private String getWherePartFromList(List<CheckBox> checkBoxes, String pattern, int flag) {
@@ -747,6 +746,17 @@ public class SelectController {
             return "";
         }
         return "ms.SERVICES_ID IN(" + String.join(",", numberOfSelectedServices) + ") GROUP BY m.MEMBER_ID HAVING COUNT(*)=" + numberOfSelectedServices.size();
+    }
+
+    private String getAppendWhereQuery(List<String> list) {
+        StringBuilder result = new StringBuilder();
+
+        int lastElement = list.size() - 1;
+        for (int i = 0; i < lastElement; i++) {
+            result.append("(").append(list.get(i)).append(") AND ");
+        }
+        result.append(list.get(lastElement));
+        return result.toString();
     }
 
     @FXML
