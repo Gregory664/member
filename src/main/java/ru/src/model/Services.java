@@ -18,11 +18,12 @@ public class Services {
     @Column(name = "SERVICES_NAME", nullable = false)
     private String servicesName;
 
-//    @ManyToMany(mappedBy = "services")
-//    private List<Member> members;
-
     public Integer getServicesId() {
         return servicesId;
+    }
+
+    public void setServicesId(Integer servicesId) {
+        this.servicesId = servicesId;
     }
 
     public String getServicesName() {
@@ -31,18 +32,6 @@ public class Services {
 
     public void setServicesName(String servicesName) {
         this.servicesName = servicesName;
-    }
-
-//    public List<Member> getMembers() {
-//        return members;
-//    }
-//
-//    public void setMembers(List<Member> members) {
-//        this.members = members;
-//    }
-
-    public void setServicesId(Integer servicesId) {
-        this.servicesId = servicesId;
     }
 
     private Services() {}

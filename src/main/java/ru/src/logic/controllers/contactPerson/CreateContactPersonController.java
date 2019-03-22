@@ -37,26 +37,14 @@ public class CreateContactPersonController {
     @FXML
     public Button btnCancel;
 
-    private ContactPerson contactPerson;
-
-    public ContactPerson getContactPerson() {
-        return contactPerson;
-    }
-
     private Member member;
-
     public void setMember(Member member) {
         this.member = member;
     }
 
     private boolean createContactPerson = false;
-
     public boolean isCreateContactPerson() {
         return createContactPerson;
-    }
-
-    public void setCreateContactPerson(boolean createContactPerson) {
-        this.createContactPerson = createContactPerson;
     }
 
     @FXML
@@ -65,11 +53,10 @@ public class CreateContactPersonController {
         MemberUtils.checkTextLength(text_contactPerson_fullName, label_alarm_contactPerson_fullName, 50);
         MemberUtils.checkTextLength(text_contactPerson_position, label_alarm_contactPerson_position, 255);
         MemberUtils.checkTextLength(text_contactPerson_email, label_alarm_contactPerson_email, 50);
-
     }
 
     private boolean isFieldsEmpty() {
-        HashSet<Boolean> set = new HashSet<Boolean>();
+        HashSet<Boolean> set = new HashSet<>();
         set.add(MemberUtils.isEmptyField(text_contactPerson_fullName));
         set.add(MemberUtils.isEmptyField(text_contactPerson_position));
         set.add(MemberUtils.isEmptyField(text_contactPerson_phoneMobile));
@@ -78,11 +65,10 @@ public class CreateContactPersonController {
     }
 
     public void saveContactPerson(ActionEvent actionEvent) {
-
         if (!isFieldsEmpty()) {
             label_alarm_contactPerson_email.setTextFill(null);
 
-            contactPerson = new ContactPerson(
+            ContactPerson contactPerson = new ContactPerson(
                     this.member,
                     text_contactPerson_fullName.getText(),
                     text_contactPerson_position.getText(),
@@ -91,7 +77,8 @@ public class CreateContactPersonController {
             );
 
             createContactPerson = true;
-            closeWindow(actionEvent);
+            member.getContactPersons().add(contactPerson);
+            closeCurrentStage(actionEvent);
         } else {
             label_alarm_contactPerson_fullName.setText(null);
             label_alarm_contactPerson_position.setText(null);
@@ -100,37 +87,10 @@ public class CreateContactPersonController {
             label_alarm_contactPerson_email.setTextFill(MemberUtils.EMPTY_COLOR);
             label_alarm_contactPerson_email.setText("Заполните обязательные поля");
         }
-
     }
-
-    public void clearTextAndStyle() {
-        text_contactPerson_fullName.clear();
-        text_contactPerson_position.clear();
-        text_contactPerson_phoneMobile.clear();
-        text_contactPerson_email.clear();
-
-        label_alarm_contactPerson_fullName.setText("");
-        label_alarm_contactPerson_position.setText("");
-        label_alarm_contactPerson_phoneMobile.setText("");
-        label_alarm_contactPerson_email.setText("");
-
-        text_contactPerson_fullName.setStyle(null);
-        text_contactPerson_position.setStyle(null);
-        text_contactPerson_phoneMobile.setStyle(null);
-        text_contactPerson_email.setStyle(null);
-
-        label_alarm_contactPerson_fullName.setStyle(null);
-        label_alarm_contactPerson_position.setStyle(null);
-        label_alarm_contactPerson_phoneMobile.setStyle(null);
-        label_alarm_contactPerson_email.setStyle(null);
-    }
-
-
 
     @FXML
-    public void closeWindow(ActionEvent actionEvent) {
-        clearTextAndStyle();
-
+    public void closeCurrentStage(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();

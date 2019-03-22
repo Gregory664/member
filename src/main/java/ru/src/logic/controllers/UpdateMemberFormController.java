@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.ListUtils;
 import ru.src.logic.implementation.MemberUtils;
@@ -18,6 +19,7 @@ import ru.src.model.Personal.Director;
 import ru.src.model.Personal.Relate;
 import ru.src.model.Services;
 import ru.src.model.SocialNetworks;
+import ru.src.model.buh.AccoutingInformation;
 import ru.src.model.buh.Debt;
 
 import java.util.*;
@@ -353,47 +355,36 @@ public class UpdateMemberFormController {
     public CheckBox checkBox_generalInformation_corporateMember;
     @FXML
     public Label label_alarm_createMember;
+    @FXML
+    public Label label_duplicateAddress;
 
-    private ObservableList<String> memberStatus = ListUtils.getMemberStatusList();
-    private ObservableList<String> organizationForm = ListUtils.getOrganizationForm();
-    private ObservableList<String> economicSector = ListUtils.getEconomicSector();
-    private ObservableList<String> ownershipForm = ListUtils.getOwnershipForm();
-    private ObservableList<String> activityType = ListUtils.getActivityType();
-    private ObservableList<String> businessForm = ListUtils.getBusinessForm();
-    private ObservableList<String> debd = ListUtils.getDedbStatusList();
-    private ObservableList<String> district = ListUtils.getDistrict();
-
-    private HashMap<Integer, String> regionMap = ListUtils.getRegionMap();
-    private ObservableList<String> region = FXCollections.observableArrayList();
+    private ObservableList<String> region = FXCollections.observableArrayList(ListUtils.getRegionMap().keySet());
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
 
     private Member member;
+
     public Member getMember() {
         return member;
     }
+
     public void setMember(Member member) {
         this.member = member;
         fillAllFields();
     }
 
     private boolean memberUpdate = false;
+
     boolean isMemberUpdate() {
         return memberUpdate;
     }
-    void setMemberUpdate(boolean memberUpdate) {
-        this.memberUpdate = memberUpdate;
-    }
-
 
     @FXML
     public void initialize() {
         addCheckInfoListeners();
         fillAllComboBox();
-
-        initServices();
+        initServicesCheckBoxMap();
 
         text_memberId.editableProperty().setValue(false);
-
         text_addressActual_regionId.editableProperty().setValue(false);
         text_addressLegal_regionId.editableProperty().setValue(false);
 
@@ -462,7 +453,7 @@ public class UpdateMemberFormController {
         MemberUtils.checkTextLength(text_socialNetworks_youtube, label_alarm_socialNetworks_youtube, 45);
     }
 
-    private void initServices() {
+    private void initServicesCheckBoxMap() {
         servicesCheckBoxMap.put(1, checkBox_services_1);
         servicesCheckBoxMap.put(2, checkBox_services_2);
         servicesCheckBoxMap.put(3, checkBox_services_3);
@@ -481,466 +472,201 @@ public class UpdateMemberFormController {
         servicesCheckBoxMap.put(16, checkBox_services_16);
         servicesCheckBoxMap.put(17, checkBox_services_17);
 
-        servicesCheckBoxMap.forEach((integer, checkBox) -> {
-            checkBox.setStyle("-fx-opacity: 1");
-        });
+        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setStyle("-fx-opacity: 1"));
     }
 
     private void fillAllComboBox() {
-        comboBox_memberStatus.setItems(memberStatus);
+        comboBox_memberStatus.setItems(ListUtils.getMemberStatusList());
 
-        comboBox_generalInformation_organizationForm.setItems(organizationForm);
-        comboBox_generalInformation_economicSector.setItems(economicSector);
-        comboBox_generalInformation_ownershipForm.setItems(ownershipForm);
-        comboBox_generalInformation_activityType.setItems(activityType);
-        comboBox_generalInformation_businessForm.setItems(businessForm);
+        comboBox_generalInformation_organizationForm.setItems(ListUtils.getOrganizationForm());
+        comboBox_generalInformation_economicSector.setItems(ListUtils.getEconomicSector());
+        comboBox_generalInformation_ownershipForm.setItems(ListUtils.getOwnershipForm());
+        comboBox_generalInformation_activityType.setItems(ListUtils.getActivityType());
+        comboBox_generalInformation_businessForm.setItems(ListUtils.getBusinessForm());
 
-        comboBox_debt_status.setItems(debd);
-        comboBox_addressActual_district.setItems(district);
-        comboBox_addressLegal_district.setItems(district);
+        comboBox_debt_status.setItems(ListUtils.getDedbStatusList());
+        comboBox_addressActual_district.setItems(ListUtils.getDistrict());
+        comboBox_addressLegal_district.setItems(ListUtils.getDistrict());
 
-        regionMap.forEach((integer, s) -> region.add(s));
         comboBox_addressActual_regionName.setItems(region);
         comboBox_addressLegal_regionName.setItems(region);
     }
 
-
-    private void fillServices() {
-        List<Services> services = member.getServices();
-        if(services != null) {
-            services.forEach(services1 -> {
-                servicesCheckBoxMap.get(services1.getServicesId()).setSelected(true);
-            });
-        }
-    }
-
-    private void fillSocialNetworks() {
-        SocialNetworks socialNetworks = member.getSocialNetworks();
-
-        if (socialNetworks.getVkontakte() != null)
-            text_socialNetworks_vkontakte.setText(socialNetworks.getVkontakte());
-        if (socialNetworks.getFacebook() != null)
-            text_socialNetworks_facebook.setText(socialNetworks.getFacebook());
-        if (socialNetworks.getTelegram() != null)
-            text_socialNetworks_telegram.setText(socialNetworks.getTelegram());
-        if (socialNetworks.getWhatsapp() != null)
-            text_socialNetworks_whatsapp.setText(socialNetworks.getWhatsapp());
-        if (socialNetworks.getViber() != null)
-            text_socialNetworks_viber.setText(socialNetworks.getViber());
-        if (socialNetworks.getSkype() != null)
-            text_socialNetworks_skype.setText(socialNetworks.getSkype());
-        if (socialNetworks.getInstagram() != null)
-            text_socialNetworks_instagram.setText(socialNetworks.getInstagram());
-        if (socialNetworks.getTwitter() != null)
-            text_socialNetworks_twitter.setText(socialNetworks.getTwitter());
-        if (socialNetworks.getYoutube() != null)
-            text_socialNetworks_youtube.setText(socialNetworks.getYoutube());
-
-    }
-
-    private void fillAddressActual() {
-        AddressActual actual = member.getAddressActual();
-
-        if(actual.getRegionId() != null)
-            text_addressActual_regionId.setText(actual.getRegionId().toString());
-        if(actual.getIndex() != null)
-            text_addressActual_index.setText(actual.getIndex().toString());
-        if(actual.getTown() != null)
-            text_addressActual_town.setText(actual.getTown());
-        if(actual.getStreet() != null)
-            text_addressActual_street.setText(actual.getStreet());
-        if(actual.getHouse() != null)
-            text_addressActual_house.setText(actual.getHouse());
-        if(actual.getOffice() != null)
-            text_addressActual_office.setText(actual.getOffice());
-        if(actual.getChanges() != null)
-            text_addressActual_changes.setText(actual.getChanges());
-
-        comboBox_addressActual_regionName.getSelectionModel().select(actual.getRegionName());
-        comboBox_addressActual_district.getSelectionModel().select(actual.getDistrict());
-
-    }
-
-    private void fillAddressLegal() {
-        AddressLegal legal = member.getAddressLegal();
-
-        if(legal.getRegionId() != null)
-            text_addressLegal_regionId.setText(legal.getRegionId().toString());
-        if(legal.getIndex() != null)
-            text_addressLegal_index.setText(legal.getIndex().toString());
-        if(legal.getTown() != null)
-            text_addressLegal_town.setText(legal.getTown());
-        if(legal.getStreet() != null)
-            text_addressLegal_street.setText(legal.getStreet());
-        if(legal.getHouse() != null)
-            text_addressLegal_house.setText(legal.getHouse());
-        if(legal.getOffice() != null)
-            text_addressLegal_office.setText(legal.getOffice());
-        if(legal.getChanges() != null)
-            text_addressLegal_changes.setText(legal.getChanges());
-
-        comboBox_addressLegal_regionName.getSelectionModel().select(member.getAddressLegal().getRegionName());
-        comboBox_addressLegal_district.getSelectionModel().select(member.getAddressLegal().getDistrict());
-
-    }
-
-    private void fillDebt() {
-        Debt debt = member.getDebt();
-        if (debt.getPeriod() != null)
-            text_debt_period.setText(debt.getPeriod());
-        if (debt.getComment() != null)
-            text_debt_comment.setText(debt.getComment());
-
-        comboBox_debt_status.getSelectionModel().select(MemberUtils.isDebt(member.getDebt().getStatus()));
-    }
-
-    private void fillAccoutingInformation() {
-        text_accoutingInformation_ogrn.setText(member.getAccoutingInformation().getOgrn());
-        text_accoutingInformation_kpp.setText(member.getAccoutingInformation().getKpp());
-        text_accoutingInformation_tin.setText(member.getAccoutingInformation().getTin());
-    }
-
-    private void fillContact() {
-        Contact contact = member.getContact();
-        if(contact.getFax() != null)
-            text_contact_fax.setText(contact.getFax());
-        if(contact.getSite() != null)
-            text_contact_site.setText(contact.getSite());
-        if(contact.getChanges() != null)
-            text_contact_changes.setText(contact.getChanges());
-        if(contact.getPhone() != null)
-            text_contact_phone.setText(contact.getPhone());
-        if(contact.getEmail() != null)
-            text_contact_email.setText(contact.getEmail());
-    }
-
-    private void fillDirector() {
-        Director director = member.getDirector();
-
-        if(director.getPhoneCity() != null)
-            text_director_phoneCity.setText(director.getPhoneCity());
-        if(director.getChanges() != null)
-            text_director_changes.setText(director.getChanges());
-        if(director.getBirthday() != null)
-            date_director_birthday.setValue(director.getBirthday());
-
-        text_director_fullName.setText(director.getFullName());
-        text_director_position.setText(director.getPosition());
-        text_director_phoneMobile.setText(director.getPhoneMobile());
-
-        text_director_email.setText(director.getEmail());
-    }
-
-    private void fillGeneralInformation() {
-        GeneralInformation generalInformation = member.getGeneralInformation();
-
-        comboBox_generalInformation_organizationForm.getSelectionModel().select(generalInformation.getOrganizationForm());
-        comboBox_generalInformation_economicSector.getSelectionModel().select(generalInformation.getEconomicSector());
-        if (generalInformation.getInvestmentsTarget() != null)
-            text_generalInformation_investmentsTarget.setText(generalInformation.getInvestmentsTarget());
-        if (generalInformation.getInvestmentsSize() != null)
-            text_generalInformation_investmentsSize.setText(generalInformation.getInvestmentsSize());
-        if (generalInformation.getChanges() != null)
-            text_generalInformation_changes.setText(generalInformation.getChanges());
-        comboBox_generalInformation_ownershipForm.getSelectionModel().select(generalInformation.getOwnershipForm());
-        comboBox_generalInformation_activityType.getSelectionModel().select(generalInformation.getActivityType());
-        comboBox_generalInformation_businessForm.getSelectionModel().select(generalInformation.getBusinessForm());
-        
-        checkBox_generalInformation_vedImport.setSelected(generalInformation.isVedImport());
-        checkBox_generalInformation_vedExport.setSelected(generalInformation.isVedExport());
-        checkBox_generalInformation_interactionOnline.setSelected(generalInformation.isInteractionOnline());
-        checkBox_generalInformation_interactionOffline.setSelected(generalInformation.isInteractionOffline());
-        checkBox_generalInformation_b2b.setSelected(generalInformation.isB2b());
-        checkBox_generalInformation_b2c.setSelected(generalInformation.isB2c());
-        checkBox_generalInformation_businessMissionRegional.setSelected(generalInformation.isBusinessMissionRegional());
-        checkBox_generalInformation_businessMissionVisiting.setSelected(generalInformation.isBusinessMissionVisiting());
-        checkBox_generalInformation_mkas.setSelected(generalInformation.isMkas());
-        checkBox_generalInformation_needForYoungPersonnel.setSelected(generalInformation.isNeedForYoungPersonnel());
-        checkBox_generalInformation_discounts.setSelected(generalInformation.isDiscounts());
-        checkBox_generalInformation_reliablePartners.setSelected(generalInformation.isReliablePartners());
-        checkBox_generalInformation_pilotProjects.setSelected(generalInformation.isPilotProjects());
-        checkBox_generalInformation_antiCorruptionCharter.setSelected(generalInformation.isAntiCorruptionCharter());
-        checkBox_generalInformation_committees.setSelected(generalInformation.isCommittees());
-        checkBox_generalInformation_newsletter.setSelected(generalInformation.isNewsletter());
-        checkBox_generalInformation_corporateMember.setSelected(generalInformation.isCorporateMember());
-    }
-
-    private void fillMember() {
+    private void fillAllFields() {
         text_memberId.setText(member.getMemberId());
         text_memberSerial.setText(member.getMemberSerial().toString());
         comboBox_memberStatus.getSelectionModel().select(member.getMemberStatus());
         date_memberDate.setValue(member.getMemberDate());
         text_memberShortName.setText(member.getMemberShortName());
-    }
 
-    private void fillRelate() {
         Relate relate = member.getRelate();
-
-        if(relate.getChanges() != null)
+        if (relate.getChanges() != null) {
             text_relate_changes.setText(relate.getChanges());
-        if(relate.getDateOfCreation() != null)
+        }
+        if (relate.getDateOfCreation() != null) {
             date_relate_dateOfCreation.setValue(relate.getDateOfCreation());
+        }
         text_relate_fullName.setText(relate.getFullName());
         text_relate_size.setText(relate.getSize().toString());
         text_relate_services.setText(relate.getServices());
 
+        GeneralInformation gInfo = member.getGeneralInformation();
+        comboBox_generalInformation_organizationForm.getSelectionModel().select(gInfo.getOrganizationForm());
+        comboBox_generalInformation_economicSector.getSelectionModel().select(gInfo.getEconomicSector());
+        if (gInfo.getInvestmentsTarget() != null) {
+            text_generalInformation_investmentsTarget.setText(gInfo.getInvestmentsTarget());
+        }
+        if (gInfo.getInvestmentsSize() != null) {
+            text_generalInformation_investmentsSize.setText(gInfo.getInvestmentsSize());
+        }
+        if (gInfo.getChanges() != null) {
+            text_generalInformation_changes.setText(gInfo.getChanges());
+        }
+        comboBox_generalInformation_ownershipForm.getSelectionModel().select(gInfo.getOwnershipForm());
+        comboBox_generalInformation_activityType.getSelectionModel().select(gInfo.getActivityType());
+        comboBox_generalInformation_businessForm.getSelectionModel().select(gInfo.getBusinessForm());
+        checkBox_generalInformation_vedImport.setSelected(gInfo.isVedImport());
+        checkBox_generalInformation_vedExport.setSelected(gInfo.isVedExport());
+        checkBox_generalInformation_interactionOnline.setSelected(gInfo.isInteractionOnline());
+        checkBox_generalInformation_interactionOffline.setSelected(gInfo.isInteractionOffline());
+        checkBox_generalInformation_b2b.setSelected(gInfo.isB2b());
+        checkBox_generalInformation_b2c.setSelected(gInfo.isB2c());
+        checkBox_generalInformation_businessMissionRegional.setSelected(gInfo.isBusinessMissionRegional());
+        checkBox_generalInformation_businessMissionVisiting.setSelected(gInfo.isBusinessMissionVisiting());
+        checkBox_generalInformation_mkas.setSelected(gInfo.isMkas());
+        checkBox_generalInformation_needForYoungPersonnel.setSelected(gInfo.isNeedForYoungPersonnel());
+        checkBox_generalInformation_discounts.setSelected(gInfo.isDiscounts());
+        checkBox_generalInformation_reliablePartners.setSelected(gInfo.isReliablePartners());
+        checkBox_generalInformation_pilotProjects.setSelected(gInfo.isPilotProjects());
+        checkBox_generalInformation_antiCorruptionCharter.setSelected(gInfo.isAntiCorruptionCharter());
+        checkBox_generalInformation_committees.setSelected(gInfo.isCommittees());
+        checkBox_generalInformation_newsletter.setSelected(gInfo.isNewsletter());
+        checkBox_generalInformation_corporateMember.setSelected(gInfo.isCorporateMember());
+
+        Director director = member.getDirector();
+        if (director.getPhoneCity() != null) {
+            text_director_phoneCity.setText(director.getPhoneCity());
+        }
+        if (director.getChanges() != null) {
+            text_director_changes.setText(director.getChanges());
+        }
+        if (director.getBirthday() != null) {
+            date_director_birthday.setValue(director.getBirthday());
+        }
+        text_director_fullName.setText(director.getFullName());
+        text_director_position.setText(director.getPosition());
+        text_director_phoneMobile.setText(director.getPhoneMobile());
+        text_director_email.setText(director.getEmail());
+
+        Contact contact = member.getContact();
+        text_contact_phone.setText(contact.getPhone());
+        text_contact_email.setText(contact.getEmail());
+        if (contact.getFax() != null) {
+            text_contact_fax.setText(contact.getFax());
+        }
+        if (contact.getSite() != null) {
+            text_contact_site.setText(contact.getSite());
+        }
+        if (contact.getChanges() != null) {
+            text_contact_changes.setText(contact.getChanges());
+        }
+
+        AccoutingInformation aInformation = member.getAccoutingInformation();
+        text_accoutingInformation_ogrn.setText(aInformation.getOgrn());
+        text_accoutingInformation_kpp.setText(aInformation.getKpp());
+        text_accoutingInformation_tin.setText(aInformation.getTin());
+
+        Debt debt = member.getDebt();
+        comboBox_debt_status.getSelectionModel().select(MemberUtils.isDebt(member.getDebt().getStatus()));
+        if (debt.getPeriod() != null) {
+            text_debt_period.setText(debt.getPeriod());
+        }
+        if (debt.getComment() != null) {
+            text_debt_comment.setText(debt.getComment());
+        }
+
+        AddressLegal legal = member.getAddressLegal();
+        text_addressLegal_regionId.setText(legal.getRegionId().toString());
+        comboBox_addressLegal_regionName.getSelectionModel().select(legal.getRegionName());
+        text_addressLegal_index.setText(legal.getIndex().toString());
+        text_addressLegal_town.setText(legal.getTown());
+        text_addressLegal_street.setText(legal.getStreet());
+        text_addressLegal_house.setText(legal.getHouse());
+        if (legal.getOffice() != null) {
+            text_addressLegal_office.setText(legal.getOffice());
+        }
+        if (legal.getDistrict() != null) {
+            comboBox_addressLegal_district.setDisable(false);
+            comboBox_addressLegal_district.getSelectionModel().select(legal.getDistrict());
+        } else {
+            comboBox_addressLegal_district.setDisable(true);
+        }
+        if (legal.getChanges() != null) {
+            text_addressLegal_changes.setText(legal.getChanges());
+        }
+
+        AddressActual actual = member.getAddressActual();
+        text_addressActual_regionId.setText(actual.getRegionId().toString());
+        comboBox_addressActual_regionName.getSelectionModel().select(actual.getRegionName());
+        text_addressActual_index.setText(actual.getIndex().toString());
+        text_addressActual_town.setText(actual.getTown());
+        text_addressActual_street.setText(actual.getStreet());
+        text_addressActual_house.setText(actual.getHouse());
+        if (actual.getOffice() != null) {
+            text_addressActual_office.setText(actual.getOffice());
+        }
+        if (actual.getDistrict() != null) {
+            comboBox_addressActual_district.setDisable(false);
+            comboBox_addressActual_district.getSelectionModel().select(actual.getDistrict());
+        } else {
+            comboBox_addressActual_district.setDisable(true);
+        }
+        if (actual.getChanges() != null) {
+            text_addressActual_changes.setText(actual.getChanges());
+        }
+
+        SocialNetworks socialNetworks = member.getSocialNetworks();
+        if (socialNetworks.getVkontakte() != null) {
+            text_socialNetworks_vkontakte.setText(socialNetworks.getVkontakte());
+        }
+        if (socialNetworks.getFacebook() != null) {
+            text_socialNetworks_facebook.setText(socialNetworks.getFacebook());
+        }
+        if (socialNetworks.getTelegram() != null) {
+            text_socialNetworks_telegram.setText(socialNetworks.getTelegram());
+        }
+        if (socialNetworks.getWhatsapp() != null) {
+            text_socialNetworks_whatsapp.setText(socialNetworks.getWhatsapp());
+        }
+        if (socialNetworks.getViber() != null) {
+            text_socialNetworks_viber.setText(socialNetworks.getViber());
+        }
+        if (socialNetworks.getSkype() != null) {
+            text_socialNetworks_skype.setText(socialNetworks.getSkype());
+        }
+        if (socialNetworks.getInstagram() != null) {
+            text_socialNetworks_instagram.setText(socialNetworks.getInstagram());
+        }
+        if (socialNetworks.getTwitter() != null) {
+            text_socialNetworks_twitter.setText(socialNetworks.getTwitter());
+        }
+        if (socialNetworks.getYoutube() != null) {
+            text_socialNetworks_youtube.setText(socialNetworks.getYoutube());
+        }
+
+        List<Services> services = member.getServices();
+        if (services != null) {
+            services.forEach(services1 -> servicesCheckBoxMap.get(services1.getServicesId()).setSelected(true));
+        }
     }
-
-    private void fillAllFields() {
-        fillMember();
-        fillRelate();
-        fillGeneralInformation();
-        fillDirector();
-        fillContact();
-        fillAccoutingInformation();
-        fillDebt();
-        fillAddressLegal();
-        fillAddressActual();
-        fillSocialNetworks();
-        fillServices();
-    }
-
-
-    private void clearObjects() {
-        comboBox_addressActual_district.getSelectionModel().clearSelection();
-        comboBox_addressLegal_district.getSelectionModel().clearSelection();
-        comboBox_addressLegal_regionName.getSelectionModel().clearSelection();
-        comboBox_debt_status.getSelectionModel().clearSelection();
-        comboBox_addressActual_regionName.getSelectionModel().clearSelection();
-        comboBox_generalInformation_businessForm.getSelectionModel().clearSelection();
-        comboBox_generalInformation_activityType.getSelectionModel().clearSelection();
-        comboBox_generalInformation_ownershipForm.getSelectionModel().clearSelection();
-        comboBox_generalInformation_economicSector.getSelectionModel().clearSelection();
-        comboBox_generalInformation_organizationForm.getSelectionModel().clearSelection();
-        comboBox_memberStatus.getSelectionModel().clearSelection();
-
-        text_memberId.setStyle(null);
-        text_memberSerial.setStyle(null);
-        date_memberDate.setStyle(null);
-        comboBox_memberStatus.setStyle(null);
-        text_memberShortName.setStyle(null);
-
-        text_relate_fullName.setStyle(null);
-        text_relate_size.setStyle(null);
-        text_relate_services.setStyle(null);
-
-        comboBox_generalInformation_organizationForm.setStyle(null);
-        comboBox_generalInformation_economicSector.setStyle(null);
-        comboBox_generalInformation_ownershipForm.setStyle(null);
-        comboBox_generalInformation_activityType.setStyle(null);
-        comboBox_generalInformation_businessForm.setStyle(null);
-
-        text_director_fullName.setStyle(null);
-        text_director_position.setStyle(null);
-        text_director_phoneMobile.setStyle(null);
-        text_director_email.setStyle(null);
-
-        text_contact_phone.setStyle(null);
-        text_contact_email.setStyle(null);
-
-        text_accoutingInformation_ogrn.setStyle(null);
-        text_accoutingInformation_kpp.setStyle(null);
-        text_accoutingInformation_tin.setStyle(null);
-
-        comboBox_debt_status.setStyle(null);
-
-        comboBox_addressLegal_regionName.setStyle(null);
-        text_addressLegal_index.setStyle(null);
-        text_addressLegal_town.setStyle(null);
-        text_addressLegal_street.setStyle(null);
-        text_addressLegal_house.setStyle(null);
-
-        comboBox_addressActual_regionName.setStyle(null);
-        text_addressActual_index.setStyle(null);
-        text_addressActual_town.setStyle(null);
-        text_addressActual_street.setStyle(null);
-        text_addressActual_house.setStyle(null);
-
-        date_relate_dateOfCreation.setValue(null);
-        date_memberDate.setValue(null);
-        date_director_birthday.setValue(null);
-
-        date_relate_dateOfCreation.setValue(null);
-        date_memberDate.setValue(null);
-        date_director_birthday.setValue(null);
-
-    }
-
-    private void clearLabelAlarm() {
-        label_alarm_memberId.setText(null);
-        label_alarm_memberSerial.setText(null);
-        label_alarm_memberStatus.setText(null);
-        label_alarm_memberDate.setText(null);
-        label_alarm_memberShortName.setText(null);
-
-        label_alarm_relate_fullName.setText(null);
-        label_alarm_relate_dateOfCreation.setText(null);
-        label_alarm_relate_size.setText(null);
-        label_alarm_relate_services.setText(null);
-        label_alarm_relate_changes.setText(null);
-
-        label_alarm_generalInformation_investmentsTarget.setText(null);
-        label_alarm_generalInformation_investmentsSize.setText(null);
-        label_alarm_generalInformation_changes.setText(null);
-
-        label_alarm_director_fullName.setText(null);
-        label_alarm_director_position.setText(null);
-        label_alarm_director_phoneMobile.setText(null);
-        label_alarm_director_phoneCity.setText(null);
-        label_alarm_director_email.setText(null);
-        label_alarm_director_birthday.setText(null);
-        label_alarm_director_changes.setText(null);
-
-        label_alarm_contact_phone.setText(null);
-        label_alarm_contact_fax.setText(null);
-        label_alarm_contact_site.setText(null);
-        label_alarm_contact_email.setText(null);
-        label_alarm_contact_changes.setText(null);
-
-        label_alarm_accoutingInformation_ogrn.setText(null);
-        label_alarm_accoutingInformation_kpp.setText(null);
-        label_alarm_accoutingInformation_tin.setText(null);
-
-        label_alarm_debt_status.setText(null);
-        label_alarm_debt_period.setText(null);
-        label_alarm_debt_comment.setText(null);
-
-        label_alarm_addressLegal_regionId.setText(null);
-        label_alarm_addressLegal_regionName.setText(null);
-        label_alarm_addressLegal_index.setText(null);
-        label_alarm_addressLegal_town.setText(null);
-        label_alarm_addressLegal_street.setText(null);
-        label_alarm_addressLegal_house.setText(null);
-        label_alarm_addressLegal_office.setText(null);
-        label_alarm_addressLegal_district.setText(null);
-        label_alarm_addressLegal_changes.setText(null);
-
-        label_alarm_addressActual_regionId.setText(null);
-        label_alarm_addressActual_regionName.setText(null);
-        label_alarm_addressActual_index.setText(null);
-        label_alarm_addressActual_town.setText(null);
-        label_alarm_addressActual_street.setText(null);
-        label_alarm_addressActual_house.setText(null);
-        label_alarm_addressActual_office.setText(null);
-        label_alarm_addressActual_district.setText(null);
-        label_alarm_addressActual_changes.setText(null);
-
-        label_alarm_socialNetworks_vkontakte.setText(null);
-        label_alarm_socialNetworks_facebook.setText(null);
-        label_alarm_socialNetworks_telegram.setText(null);
-        label_alarm_socialNetworks_whatsapp.setText(null);
-        label_alarm_socialNetworks_viber.setText(null);
-        label_alarm_socialNetworks_skype.setText(null);
-        label_alarm_socialNetworks_instagram.setText(null);
-        label_alarm_socialNetworks_twitter.setText(null);
-        label_alarm_socialNetworks_youtube.setText(null);
-
-        label_alarm_createMember.setText(null);
-    }
-
-    private void clearText() {
-
-        text_memberId.clear();
-        text_memberSerial.clear();
-        text_memberShortName.clear();
-
-        text_relate_fullName.clear();
-        text_relate_size.clear();
-        text_relate_services.clear();
-        text_relate_changes.clear();
-
-        text_generalInformation_investmentsTarget.clear();
-        text_generalInformation_investmentsSize.clear();
-        text_generalInformation_changes.clear();
-
-        text_director_fullName.clear();
-        text_director_position.clear();
-        text_director_phoneMobile.clear();
-        text_director_phoneCity.clear();
-        text_director_email.clear();
-        text_director_changes.clear();
-
-        text_contact_phone.clear();
-        text_contact_fax.clear();
-        text_contact_site.clear();
-        text_contact_email.clear();
-        text_contact_changes.clear();
-
-        text_accoutingInformation_ogrn.clear();
-        text_accoutingInformation_kpp.clear();
-        text_accoutingInformation_tin.clear();
-
-        text_debt_period.clear();
-        text_debt_comment.clear();
-
-        text_addressLegal_regionId.clear();
-        text_addressLegal_index.clear();
-        text_addressLegal_town.clear();
-        text_addressLegal_street.clear();
-        text_addressLegal_house.clear();
-        text_addressLegal_office.clear();
-        text_addressLegal_changes.clear();
-
-        text_addressActual_regionId.clear();
-        text_addressActual_index.clear();
-        text_addressActual_town.clear();
-        text_addressActual_street.clear();
-        text_addressActual_house.clear();
-        text_addressActual_office.clear();
-        text_addressActual_changes.clear();
-
-        text_socialNetworks_vkontakte.clear();
-        text_socialNetworks_facebook.clear();
-        text_socialNetworks_telegram.clear();
-        text_socialNetworks_whatsapp.clear();
-        text_socialNetworks_viber.clear();
-        text_socialNetworks_skype.clear();
-        text_socialNetworks_instagram.clear();
-        text_socialNetworks_twitter.clear();
-        text_socialNetworks_youtube.clear();
-    }
-
-    private void clearInterest() {
-        checkBox_generalInformation_vedImport.setSelected(false);
-        checkBox_generalInformation_vedExport.setSelected(false);
-        checkBox_generalInformation_interactionOnline.setSelected(false);
-        checkBox_generalInformation_interactionOffline.setSelected(false);
-        checkBox_generalInformation_b2b.setSelected(false);
-        checkBox_generalInformation_b2c.setSelected(false);
-        checkBox_generalInformation_businessMissionVisiting.setSelected(false);
-        checkBox_generalInformation_businessMissionRegional.setSelected(false);
-        checkBox_generalInformation_mkas.setSelected(false);
-        checkBox_generalInformation_needForYoungPersonnel.setSelected(false);
-        checkBox_generalInformation_discounts.setSelected(false);
-        checkBox_generalInformation_reliablePartners.setSelected(false);
-        checkBox_generalInformation_pilotProjects.setSelected(false);
-        checkBox_generalInformation_antiCorruptionCharter.setSelected(false);
-        checkBox_generalInformation_newsletter.setSelected(false);
-        checkBox_generalInformation_committees.setSelected(false);
-        checkBox_generalInformation_corporateMember.setSelected(false);
-    }
-
-    private void clearServices() {
-        servicesCheckBoxMap.forEach((integer, checkBox) -> checkBox.setSelected(false));
-    }
-
-    void clearAll() {
-        clearObjects();
-        clearLabelAlarm();
-        clearText();
-        clearInterest();
-        clearServices();
-    }
-
 
     @FXML
     public void saveMember(ActionEvent actionEvent) {
         if (!isFieldsEmpty()) {
             label_alarm_createMember.setTextFill(null);
             setMemberParams();
-            clearAll();
             memberUpdate = true;
-            closeWindow(actionEvent);
+            closeCurrentStage(actionEvent);
         } else {
             label_alarm_createMember.setText("Заполните обязательные поля");
             label_alarm_createMember.setTextFill(MemberUtils.EMPTY_COLOR);
@@ -956,10 +682,12 @@ public class UpdateMemberFormController {
         member.getRelate().setFullName(text_relate_fullName.getText());
         member.getRelate().setSize(Integer.valueOf(text_relate_size.getText()));
         member.getRelate().setServices(text_relate_services.getText());
-        if (date_relate_dateOfCreation.getValue() != null)
+        if (date_relate_dateOfCreation.getValue() != null) {
             member.getRelate().setDateOfCreation(date_relate_dateOfCreation.getValue());
-        if(text_relate_changes.getText() != null)
+        }
+        if (text_relate_changes.getText() != null) {
             member.getRelate().setChanges(text_relate_changes.getText());
+        }
 
         member.getGeneralInformation().setOrganizationForm(comboBox_generalInformation_organizationForm.getSelectionModel().getSelectedItem());
         member.getGeneralInformation().setEconomicSector(comboBox_generalInformation_economicSector.getSelectionModel().getSelectedItem());
@@ -983,34 +711,43 @@ public class UpdateMemberFormController {
         member.getGeneralInformation().setNewsletter(checkBox_generalInformation_newsletter.isSelected());
         member.getGeneralInformation().setCommittees(checkBox_generalInformation_committees.isSelected());
         member.getGeneralInformation().setCorporateMember(checkBox_generalInformation_corporateMember.isSelected());
-        
-        if (text_generalInformation_investmentsTarget.getText() != null)
+
+        if (text_generalInformation_investmentsTarget.getText() != null) {
             member.getGeneralInformation().setInvestmentsTarget(text_generalInformation_investmentsTarget.getText());
-        if (text_generalInformation_investmentsSize.getText() != null && text_generalInformation_investmentsSize.getText().length() > 0)
+        }
+        if (text_generalInformation_investmentsSize.getText() != null && text_generalInformation_investmentsSize.getText().length() > 0) {
             member.getGeneralInformation().setInvestmentsSize(text_generalInformation_investmentsSize.getText());
-        if(text_generalInformation_changes.getText() != null )
+        }
+        if (text_generalInformation_changes.getText() != null) {
             member.getGeneralInformation().setChanges(text_generalInformation_changes.getText());
+        }
 
         member.getDirector().setPosition(text_director_position.getText());
         member.getDirector().setFullName(text_director_fullName.getText());
         member.getDirector().setPhoneMobile(text_director_phoneMobile.getText());
         member.getDirector().setEmail(text_director_email.getText());
-        if (text_director_phoneCity.getText() != null)
+        if (text_director_phoneCity.getText() != null) {
             member.getDirector().setPhoneCity(text_director_phoneCity.getText());
-        if (text_director_changes.getText() != null)
+        }
+        if (text_director_changes.getText() != null) {
             member.getDirector().setChanges(text_director_changes.getText());
-        if(date_director_birthday.getValue() != null)
+        }
+        if (date_director_birthday.getValue() != null) {
             member.getDirector().setBirthday(date_director_birthday.getValue());
+        }
 
 
         member.getContact().setPhone(text_contact_phone.getText());
         member.getContact().setEmail(text_contact_email.getText());
-        if (text_contact_fax.getText() != null)
+        if (text_contact_fax.getText() != null) {
             member.getContact().setFax(text_contact_fax.getText());
-        if (text_contact_site.getText() != null)
+        }
+        if (text_contact_site.getText() != null) {
             member.getContact().setSite(text_contact_site.getText());
-        if (text_contact_changes.getText() != null)
+        }
+        if (text_contact_changes.getText() != null) {
             member.getContact().setChanges(text_contact_changes.getText());
+        }
 
         member.getAccoutingInformation().setOgrn(text_accoutingInformation_ogrn.getText());
         member.getAccoutingInformation().setKpp(text_accoutingInformation_kpp.getText());
@@ -1022,13 +759,17 @@ public class UpdateMemberFormController {
         member.getAddressLegal().setTown(text_addressLegal_town.getText());
         member.getAddressLegal().setStreet(text_addressLegal_street.getText());
         member.getAddressLegal().setHouse(text_addressLegal_house.getText());
-        if (text_addressLegal_office.getText() != null)
+        if (text_addressLegal_office.getText() != null) {
             member.getAddressLegal().setOffice(text_addressLegal_office.getText());
-        if (!comboBox_addressLegal_district.isDisable())
+        }
+        if (!comboBox_addressLegal_district.isDisable()) {
             member.getAddressLegal().setDistrict(comboBox_addressLegal_district.getSelectionModel().getSelectedItem());
-        else member.getAddressLegal().setDistrict(null);
-        if (text_addressLegal_changes.getText() != null)
+        } else {
+            member.getAddressLegal().setDistrict(null);
+        }
+        if (text_addressLegal_changes.getText() != null) {
             member.getAddressLegal().setChanges(text_addressLegal_changes.getText());
+        }
 
 
         member.getAddressActual().setRegionId(Integer.valueOf(text_addressActual_regionId.getText()));
@@ -1037,48 +778,62 @@ public class UpdateMemberFormController {
         member.getAddressActual().setTown(text_addressActual_town.getText());
         member.getAddressActual().setStreet(text_addressActual_street.getText());
         member.getAddressActual().setHouse(text_addressActual_house.getText());
-        if (text_addressActual_office.getText() != null)
+        if (text_addressActual_office.getText() != null) {
             member.getAddressActual().setOffice(text_addressActual_office.getText());
-        if (!comboBox_addressActual_district.isDisable())
+        }
+        if (!comboBox_addressActual_district.isDisable()) {
             member.getAddressActual().setDistrict(comboBox_addressActual_district.getSelectionModel().getSelectedItem());
-        else member.getAddressActual().setDistrict(null);
-        if (text_addressActual_changes.getText() != null)
+        } else {
+            member.getAddressActual().setDistrict(null);
+        }
+        if (text_addressActual_changes.getText() != null) {
             member.getAddressActual().setChanges(text_addressActual_changes.getText());
+        }
 
 
         member.getDebt().setStatus(MemberUtils.debtToBoolean(comboBox_debt_status.getSelectionModel().getSelectedItem()));
-        if (text_debt_period.getText() != null)
+        if (text_debt_period.getText() != null) {
             member.getDebt().setPeriod(text_debt_period.getText());
-        if (text_debt_comment.getText() != null)
+        }
+        if (text_debt_comment.getText() != null) {
             member.getDebt().setComment(text_debt_comment.getText());
+        }
 
 
-        if (text_socialNetworks_vkontakte.getText() != null)
+        if (text_socialNetworks_vkontakte.getText() != null) {
             member.getSocialNetworks().setVkontakte(text_socialNetworks_vkontakte.getText());
-        if (text_socialNetworks_facebook.getText() != null)
+        }
+        if (text_socialNetworks_facebook.getText() != null) {
             member.getSocialNetworks().setFacebook(text_socialNetworks_facebook.getText());
-        if (text_socialNetworks_telegram.getText() != null)
+        }
+        if (text_socialNetworks_telegram.getText() != null) {
             member.getSocialNetworks().setTelegram(text_socialNetworks_telegram.getText());
-        if (text_socialNetworks_whatsapp.getText() != null)
+        }
+        if (text_socialNetworks_whatsapp.getText() != null) {
             member.getSocialNetworks().setWhatsapp(text_socialNetworks_whatsapp.getText());
-        if (text_socialNetworks_viber.getText() != null)
+        }
+        if (text_socialNetworks_viber.getText() != null) {
             member.getSocialNetworks().setViber(text_socialNetworks_viber.getText());
-        if (text_socialNetworks_skype.getText() != null)
+        }
+        if (text_socialNetworks_skype.getText() != null) {
             member.getSocialNetworks().setSkype(text_socialNetworks_skype.getText());
-        if (text_socialNetworks_instagram.getText() != null)
+        }
+        if (text_socialNetworks_instagram.getText() != null) {
             member.getSocialNetworks().setInstagram(text_socialNetworks_instagram.getText());
-        if (text_socialNetworks_twitter.getText() != null)
+        }
+        if (text_socialNetworks_twitter.getText() != null) {
             member.getSocialNetworks().setTwitter(text_socialNetworks_twitter.getText());
-        if (text_socialNetworks_youtube.getText() != null)
+        }
+        if (text_socialNetworks_youtube.getText() != null) {
             member.getSocialNetworks().setYoutube(text_socialNetworks_youtube.getText());
+        }
 
         List<Services> services = new ArrayList<>();
         servicesCheckBoxMap.forEach((integer, checkBox) -> {
-            if(checkBox.isSelected()) {
+            if (checkBox.isSelected()) {
                 services.add(new Services(integer, checkBox.getText()));
             }
         });
-
         member.setServices(services);
     }
 
@@ -1131,26 +886,16 @@ public class UpdateMemberFormController {
     }
 
     @FXML
-    public void closeWindow(ActionEvent actionEvent) {
-        clearAll();
-
+    public void closeCurrentStage(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-        stage.hide();
+        stage.close();
     }
 
     public void editAddressLegalRegionId() {
-        Integer id = -1;
-        if(comboBox_addressLegal_regionName.getSelectionModel().getSelectedIndex() != -1) {
+        if (comboBox_addressLegal_regionName.getSelectionModel().getSelectedIndex() != -1) {
             String regionName = comboBox_addressLegal_regionName.getValue();
-
-            for (Map.Entry<Integer, String> entry : regionMap.entrySet()) {
-                if (entry.getValue().equals(regionName)) {
-                    id = entry.getKey();
-                }
-            }
-
-            text_addressLegal_regionId.setText(id.toString());
+            text_addressLegal_regionId.setText(ListUtils.getRegionMap().get(regionName).toString());
 
             if (regionName.equals("Воронежская область")) {
                 comboBox_addressLegal_district.setDisable(false);
@@ -1158,21 +903,15 @@ public class UpdateMemberFormController {
                 comboBox_addressLegal_district.setDisable(true);
                 comboBox_addressLegal_district.getSelectionModel().select(null);
             }
-        } else text_addressLegal_regionId.clear();
+        } else {
+            text_addressLegal_regionId.clear();
+        }
     }
 
     public void editAddressActualRegionId() {
-        Integer id = -1;
-        if(comboBox_addressActual_regionName.getSelectionModel().getSelectedIndex() != -1) {
+        if (comboBox_addressActual_regionName.getSelectionModel().getSelectedIndex() != -1) {
             String regionName = comboBox_addressActual_regionName.getValue();
-
-            for (Map.Entry<Integer, String> entry : regionMap.entrySet()) {
-                if (entry.getValue().equals(regionName)) {
-                    id = entry.getKey();
-                }
-            }
-
-            text_addressActual_regionId.setText(id.toString());
+            text_addressActual_regionId.setText(ListUtils.getRegionMap().get(regionName).toString());
 
             if (regionName.equals("Воронежская область")) {
                 comboBox_addressActual_district.setDisable(false);
@@ -1180,6 +919,21 @@ public class UpdateMemberFormController {
                 comboBox_addressActual_district.setDisable(true);
                 comboBox_addressActual_district.getSelectionModel().select(null);
             }
-        } else text_addressActual_regionId.clear();
+        } else {
+            text_addressActual_regionId.clear();
+        }
+    }
+
+    public void duplicateAddress(MouseEvent mouseEvent) {
+        if(mouseEvent.getClickCount() == 2) {
+            comboBox_addressActual_regionName.getSelectionModel().select(comboBox_addressLegal_regionName.getSelectionModel().getSelectedItem());
+            text_addressActual_index.setText(text_addressLegal_index.getText());
+            text_addressActual_town.setText(text_addressLegal_town.getText());
+            text_addressActual_street.setText(text_addressLegal_street.getText());
+            text_addressActual_house.setText(text_addressLegal_house.getText());
+            text_addressActual_office.setText(text_addressLegal_office.getText());
+            comboBox_addressActual_district.getSelectionModel().select(comboBox_addressLegal_district.getSelectionModel().getSelectedItem());
+            text_addressActual_changes.setText(text_addressLegal_changes.getText());
+        }
     }
 }

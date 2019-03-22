@@ -42,9 +42,7 @@ public class SocialNetworks implements Serializable {
         this.memberId = memberId;
     }
 
-    private SocialNetworks() {
-
-    }
+    private SocialNetworks() { }
 
     public Member getMemberId() {
         return memberId;

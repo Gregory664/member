@@ -1,41 +1,31 @@
 package ru.src.logic.implementation;
 
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.pdfbox.io.IOUtils;
-import rst.pdfbox.layout.text.NewLine;
 import ru.src.model.FindMember;
 import ru.src.model.Member;
-
-
-//import org.apache.pdfbox.pdmodel.PDDocument;
-//import org.apache.pdfbox.pdmodel.PDPageContentStream;
-//import org.apache.pdfbox.pdmodel.documentinterchange.taggedpdf.PDTableAttributeObject;
-//import org.apache.pdfbox.pdmodel.font.*;
-//
-//import rst.pdfbox.layout.elements.ControlElement;
-//import rst.pdfbox.layout.elements.Document;
-//import rst.pdfbox.layout.elements.Element;
-//import rst.pdfbox.layout.elements.Paragraph;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PDFUtils {
 
 
     private static final InputStream inputStream = ClassLoader.getSystemResourceAsStream("fonts/times.ttf");
-    private static BaseFont BASE_SONT;
     private static Font FONT_HEADER;
     private static Font FONT_ROW;
 
     static {
         try {
-            byte[] bytes = IOUtils.toByteArray(inputStream);
-            BASE_SONT = BaseFont.createFont("times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, true, bytes, null);
+            byte[] bytes = IOUtils.toByteArray(Objects.requireNonNull(inputStream));
+            BaseFont BASE_SONT = BaseFont.createFont("times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, true, bytes, null);
             FONT_HEADER = new Font(BASE_SONT, 14);
             FONT_ROW = new Font(BASE_SONT, 12);
         } catch (IOException | DocumentException e) {
@@ -43,19 +33,14 @@ public class PDFUtils {
         }
     }
 
-    public static void savePDFfromFindResult(String pathName, List<FindMember> findMembers, ArrayList<String[]> params) {
+    public static void savePDFfromFindResult(String pathName, List<FindMember> findMembers, List<String[]> params) {
 
         Document document = new Document(PageSize.A4, 20, 20, 20, 20);
         try {
             PdfWriter.getInstance(document, new FileOutputStream(new File(pathName)));
             document.open();
 
-//            byte[] bytes = IOUtils.toByteArray(inputStream);
-//            BaseFont baseFont = BaseFont.createFont("times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, true, bytes, null);
-
-
             String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.YYYY"));
-
 
             PdfPTable selectedParams = new PdfPTable(2);
             selectedParams.setTotalWidth(new float[]{150, 400});
@@ -142,9 +127,11 @@ public class PDFUtils {
             relate.addCell(getCell(member.getRelate().getFullName(), FONT_ROW));
             relate.completeRow();
             relate.addCell(getFillCell("Дата основания организации", FONT_HEADER));
-            if(member.getRelate().getDateOfCreation() != null)
+            if(member.getRelate().getDateOfCreation() != null) {
                 relate.addCell(getCell(member.getRelate().getDateOfCreation().format(datePattern), FONT_ROW));
-            else relate.addCell(getCell("", FONT_ROW));
+            } else {
+                relate.addCell(getCell("", FONT_ROW));
+            }
             relate.completeRow();
             relate.addCell(getFillCell("Количество работников", FONT_HEADER));
             relate.addCell(getCell(member.getRelate().getSize().toString(), FONT_ROW));
@@ -175,102 +162,136 @@ public class PDFUtils {
             document.add(generalInformation);
             document.add(Chunk.NEWLINE);
 
-            String checked = "X";
-            String unchecked = "O";
+            String checked = "✓";
+            String unchecked = "-";
 
             PdfPTable interest = new PdfPTable(8);
-            interest.setTotalWidth(new float[] {20, 160, 5, 20, 160, 5,  20, 160});
+            interest.setTotalWidth(new float[] {160, 20, 5, 160, 20, 5,  160, 20});
             interest.setLockedWidth(true);
 
-            if(member.getGeneralInformation().isVedImport())
-                interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
             interest.addCell(getCell("Являются импортерами", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isBusinessMissionVisiting())
+            if(member.getGeneralInformation().isVedImport()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Выездные бизнес миссии", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isPilotProjects())
+            if(member.getGeneralInformation().isBusinessMissionVisiting()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Участие в пилотных проектах", FONT_ROW));
+            if(member.getGeneralInformation().isPilotProjects()) {
+                interest.addCell(getCell(checked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.completeRow();
 
-            if(member.getGeneralInformation().isVedExport())
-                interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
             interest.addCell(getCell("Являются экспортерами", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isBusinessMissionRegional())
+            if(member.getGeneralInformation().isVedExport()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Региональные бизнес миссии", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isAntiCorruptionCharter())
+            if(member.getGeneralInformation().isBusinessMissionRegional()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Антикоррупционная хартия", FONT_ROW));
+            if(member.getGeneralInformation().isAntiCorruptionCharter()) {
+                interest.addCell(getCell(checked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.completeRow();
 
-            if(member.getGeneralInformation().isInteractionOffline())
-                interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
             interest.addCell(getCell("Участие Online", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isMkas())
+            if(member.getGeneralInformation().isInteractionOffline()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Заинтересованность в MKAS", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isNewsletter())
+            if(member.getGeneralInformation().isMkas()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Информационная рассылка", FONT_ROW));
+            if(member.getGeneralInformation().isNewsletter()) {
+                interest.addCell(getCell(checked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.completeRow();
 
-            if(member.getGeneralInformation().isInteractionOffline())
-                interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
             interest.addCell(getCell("Участие Offline", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isNeedForYoungPersonnel())
+            if(member.getGeneralInformation().isInteractionOffline()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Потребность в молодых кадрах", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isCommittees())
+            if(member.getGeneralInformation().isNeedForYoungPersonnel()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Участие в комитетах", FONT_ROW));
+            if(member.getGeneralInformation().isCommittees()) {
+                interest.addCell(getCell(checked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.completeRow();
 
-            if(member.getGeneralInformation().isB2b())
-                interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
             interest.addCell(getCell("Заинтересованность в B2B", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isDiscounts())
+            if(member.getGeneralInformation().isB2b()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Заинтересованность в B2C", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isCorporateMember())
+            if(member.getGeneralInformation().isDiscounts()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Корпоративный член", FONT_ROW));
+            if(member.getGeneralInformation().isCorporateMember()) {
+                interest.addCell(getCell(checked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.completeRow();
 
-            if(member.getGeneralInformation().isB2c())
-                interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
             interest.addCell(getCell("Заинтересованность в B2C", FONT_ROW));
-            interest.addCell(getEmptyFillCell());
-            if(member.getGeneralInformation().isReliablePartners())
+            if(member.getGeneralInformation().isB2c()) {
                 interest.addCell(getCell(checked, FONT_HEADER));
-            else interest.addCell(getCell(unchecked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
+            interest.addCell(getEmptyFillCell());
             interest.addCell(getCell("Реестр надежных партнеров", FONT_ROW));
+            if(member.getGeneralInformation().isReliablePartners()) {
+                interest.addCell(getCell(checked, FONT_HEADER));
+            } else {
+                interest.addCell(getCell(unchecked, FONT_HEADER));
+            }
             interest.addCell(getEmptyFillCell());
             interest.completeRow();
             document.add(interest);
@@ -290,8 +311,9 @@ public class PDFUtils {
             director.addCell(getCell(member.getDirector().getPhoneMobile(), FONT_ROW));
             director.completeRow();
             director.addCell(getFillCell("Дополнительный телефон", FONT_HEADER));
-            if(member.getDirector().getPhoneCity() != null)
+            if(member.getDirector().getPhoneCity() != null) {
                 director.addCell(getCell(member.getDirector().getPhoneCity(), FONT_ROW));
+            }
             director.completeRow();
             director.addCell(getFillCell("Электронная почта", FONT_HEADER));
             director.addCell(getCell(member.getDirector().getEmail(), FONT_ROW));
@@ -405,18 +427,12 @@ public class PDFUtils {
             agree.addCell(getCell("", FONT_ROW));
             agree.addCell(getCell("Даю свое согласие на обработку персональных данных", FONT_ROW));
             agree.completeRow();
-
             document.add(agree);
-
-
-
 
             document.close();
         } catch (DocumentException | FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private static PdfPCell getFillCell(String text, Font font) {
@@ -440,8 +456,5 @@ public class PDFUtils {
         cell.setGrayFill(0.1f);
         return cell;
     }
-
-
-
 }
 

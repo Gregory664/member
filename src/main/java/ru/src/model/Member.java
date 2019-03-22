@@ -1,7 +1,5 @@
 package ru.src.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.ManyToAny;
 import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
 import ru.src.model.General.GeneralInformation;
@@ -12,7 +10,6 @@ import ru.src.model.Personal.Relate;
 import ru.src.model.buh.AccoutingInformation;
 import ru.src.model.buh.Debt;
 import ru.src.model.buh.Invoice;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -54,7 +51,7 @@ public class Member {
     private AccoutingInformation accoutingInformation;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="member", orphanRemoval = true)
-    public List<Invoice> invoice;
+    public List<Invoice> invoices;
 
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
@@ -64,8 +61,8 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private Contact contact;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member")
-    private List<ContactPerson> contactPerson;
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member", orphanRemoval = true)
+    private List<ContactPerson> contactPersons;
 
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
@@ -84,8 +81,6 @@ public class Member {
             joinColumns = { @JoinColumn(name = "MEMBER_ID") },
             inverseJoinColumns = { @JoinColumn(name = "SERVICES_ID")})
     private List<Services> services;
-
-
 
     private Member() {
 
@@ -179,12 +174,12 @@ public class Member {
         this.accoutingInformation = accoutingInformation;
     }
 
-    public List<Invoice> getInvoice() {
-        return invoice;
+    public List<Invoice> getInvoices() {
+        return invoices;
     }
 
-    public void setInvoice(List<Invoice> invoice) {
-        this.invoice = invoice;
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
     public GeneralInformation getGeneralInformation() {
@@ -203,12 +198,12 @@ public class Member {
         this.contact = contact;
     }
 
-    public List<ContactPerson> getContactPerson() {
-        return contactPerson;
+    public List<ContactPerson> getContactPersons() {
+        return contactPersons;
     }
 
-    public void setContactPerson(List<ContactPerson> contactPerson) {
-        this.contactPerson = contactPerson;
+    public void setContactPersons(List<ContactPerson> contactPersons) {
+        this.contactPersons = contactPersons;
     }
 
     public Director getDirector() {

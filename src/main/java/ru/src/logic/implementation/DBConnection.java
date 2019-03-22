@@ -9,14 +9,12 @@ import org.hibernate.query.Query;
 import ru.src.logic.interfaces.MemberLogic;
 import ru.src.model.*;
 import ru.src.model.buh.Invoice;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DBConnection implements MemberLogic {
-
-
     public static Member getMember(String memberId) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
         Member member = null;
@@ -24,8 +22,9 @@ public class DBConnection implements MemberLogic {
             Transaction transaction = session.beginTransaction();
             member = session.get(Member.class, memberId);
             transaction.commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Objects.requireNonNull(member);
+        } catch (NullPointerException e) {
+            //TODO need to add correct error handling implementation
         }
         return member;
     }
@@ -37,7 +36,7 @@ public class DBConnection implements MemberLogic {
             session.save(member);
             transaction.commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO need to add correct error handling implementation
         }
     }
 
@@ -48,7 +47,7 @@ public class DBConnection implements MemberLogic {
             session.delete(member);
             transaction.commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO need to add correct error handling implementation
         }
     }
 
@@ -59,23 +58,20 @@ public class DBConnection implements MemberLogic {
             session.update(member);
             transaction.commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO need to add correct error handling implementation
         }
     }
 
     public static boolean isMemberExists(String id) {
-        boolean result;
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Member member = session.get(Member.class, id);
             transaction.commit();
             return member != null;
+        } catch (Exception e) {
+            return false;
         }
-        catch (Exception e) {
-            result = false;
-        }
-        return result;
     }
 
     public static List<Member> getAllMembers() {
@@ -86,9 +82,9 @@ public class DBConnection implements MemberLogic {
             Query query = session.createQuery("from Member");
             members = query.list();
             transaction.commit();
-            for (Member member: members) {
-                member.getInvoice().size();
-                member.getContactPerson().size();
+            for (Member member : members) {
+                member.getInvoices().size();
+                member.getContactPersons().size();
                 member.getServices().size();
             }
 
@@ -101,19 +97,15 @@ public class DBConnection implements MemberLogic {
     }
 
     public static boolean isInvoiceExists(String id) {
-        boolean result;
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Invoice invoice = session.get(Invoice.class, id);
             transaction.commit();
             return invoice != null;
+        } catch (Exception e) {
+            return true;
         }
-        catch (Exception e) {
-            result = false;
-        }
-        return result;
-
     }
 
     public static List<FindMember> getQueryList(String queryString) {
@@ -137,9 +129,8 @@ public class DBConnection implements MemberLogic {
 
                 findMembers.add(new FindMember(memberId, memberSerial, memberPhone, memberStatus, memberShortName, email));
             }
-
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO need to add correct error handling implementation
         }
         return findMembers;
     }
@@ -153,11 +144,11 @@ public class DBConnection implements MemberLogic {
             Transaction transaction = session.beginTransaction();
             String queryString =
                     "SELECT d.DIRECTOR_BIRTHDAY, " +
-                    "d.DIRECTOR_FULL_NAME, " +
-                    "m.MEMBER_ID, " +
-                    "m.MEMBER_SHORT_NAME\n" +
-                    "FROM MEMBER m, DIRECTOR d\n" +
-                    "where m.MEMBER_ID = d.MEMBER_ID AND MONTH(d.DIRECTOR_BIRTHDAY) = " + month + ";";
+                            "d.DIRECTOR_FULL_NAME, " +
+                            "m.MEMBER_ID, " +
+                            "m.MEMBER_SHORT_NAME\n" +
+                            "FROM MEMBER m, DIRECTOR d\n" +
+                            "where m.MEMBER_ID = d.MEMBER_ID AND MONTH(d.DIRECTOR_BIRTHDAY) = " + month + ";";
             Query query = session.createSQLQuery(queryString);
             result = query.list();
             transaction.commit();
@@ -173,7 +164,7 @@ public class DBConnection implements MemberLogic {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO need to add correct error handling implementation
         }
         return directorCalendars;
     }
@@ -201,66 +192,62 @@ public class DBConnection implements MemberLogic {
                 LocalDate dateOfCreation = LocalDate.of(Integer.valueOf(date[0]), Integer.valueOf(date[1]), Integer.valueOf(date[2]));
                 String memberId = g[1].toString();
                 String shortName = g[2].toString();
-                organizations.add(new DateOfCreationOrganization(dateOfCreation, memberId,shortName));
+                organizations.add(new DateOfCreationOrganization(dateOfCreation, memberId, shortName));
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO need to add correct error handling implementation
         }
         return organizations;
     }
 
     public static Integer getCountOfOrganizationBirthdayToday() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Integer result = -1;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Integer currentMonth = LocalDate.now().getMonth().getValue();
             Integer currentDay = LocalDate.now().getDayOfMonth();
             String queryString =
                     "SELECT Count(*)\n" +
-                    "FROM RELATE\n" +
-                    "WHERE month(RELATE_DATE_OF_CREATION) = " + currentMonth +
-                        " AND day(RELATE_DATE_OF_CREATION) = " + currentDay + ";";
+                            "FROM RELATE\n" +
+                            "WHERE month(RELATE_DATE_OF_CREATION) = " + currentMonth +
+                            " AND day(RELATE_DATE_OF_CREATION) = " + currentDay + ";";
             Query query = session.createSQLQuery(queryString);
-            result = Integer.valueOf(query.list().get(0).toString());
             transaction.commit();
+            return Integer.valueOf(query.list().get(0).toString());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return -1;
+            //TODO need to add correct error handling implementation
         }
-        return result;
     }
 
     public static Integer getCountOfDirectorBirthdayToday() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Integer result = -1;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Integer currentMonth = LocalDate.now().getMonth().getValue();
             Integer currentDay = LocalDate.now().getDayOfMonth();
             String queryString =
                     "SELECT Count(*)\n" + "FROM DIRECTOR\n" +
-                    "WHERE month(DIRECTOR_BIRTHDAY) = " + currentMonth +
-                    " AND day(DIRECTOR_BIRTHDAY) = " + currentDay + ";";
+                            "WHERE month(DIRECTOR_BIRTHDAY) = " + currentMonth +
+                            " AND day(DIRECTOR_BIRTHDAY) = " + currentDay + ";";
             Query query = session.createSQLQuery(queryString);
-            result = Integer.valueOf(query.list().get(0).toString());
             transaction.commit();
+            return Integer.valueOf(query.list().get(0).toString());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return -1;
+            //TODO need to add correct error handling implementation
         }
-        return result;
     }
-
 
     public static User getUser(String login) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
         User user = null;
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             user = session.get(User.class, login);
             transaction.commit();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return user;
@@ -268,89 +255,67 @@ public class DBConnection implements MemberLogic {
 
     public static void addUser(User user) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO need to add correct error handling implementation
         }
     }
 
     public static void updateUser(User user) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.update(user);
             transaction.commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO need to add correct error handling implementation
         }
     }
 
     public static void removeUser(User user) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             session.delete(user);
             transaction.commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO need to add correct error handling implementation
         }
     }
 
-    public static Boolean isUserLoginExist(String login) {
-        boolean isExist = false;
+    public static Boolean isPairLoginAndPasswordCorrect(String login, String password) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            String queryString =
-                    "SELECT COUNT(*)\n" +
-                    "FROM USER\n" +
-                    "WHERE USER.USER_LOGIN = '" + login + "';";
-            Query query = session.createSQLQuery(queryString);
-            int count = Integer.parseInt(query.list().get(0).toString());
-            isExist = count == 1;
+            User user = session.get(User.class, login);
             transaction.commit();
+            if (user == null) {
+                return false;
+            } else {
+                return user.getPassword().equals(password);
+            }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return false;
+            //TODO need to add correct error handling implementation
         }
-        return isExist;
-    }
-
-    public static Boolean isUserPasswordExist(String login, String password) {
-        boolean isExist = false;
-        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        try(Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            String queryString = "SELECT COUNT(*)\n" +
-                    "FROM USER\n" +
-                    "WHERE USER.USER_LOGIN = '" + login + "'" +
-                    " AND USER.USER_PASSWORD = '" + password + "';";
-            Query query = session.createSQLQuery(queryString);
-            Integer count = Integer.valueOf(query.list().get(0).toString());
-            isExist = count == 1;
-            transaction.commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return isExist;
     }
 
     public static List<User> getAllUser() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
         List<User> userList = new ArrayList<>();
-        try (Session session = sessionFactory.openSession()){
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             Query query = session.createQuery("from User");
             userList = query.list();
             transaction.commit();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO need to add correct error handling implementation
         }
         return userList;
 
     }
-
 }
 

@@ -6,24 +6,13 @@ import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class MemberUtils {
     //private static final String  EMPTY_COLOR = "#de9396";
     public static final Color EMPTY_COLOR = Color.rgb(255, 0, 0);
     public static final String EMPTY_COLOR2 = "255,0,0";
-    
-
-    public static String isImportExport(boolean value) {
-        return value ? "Да" : "Нет";
-    }
-    public static String isYesNo(boolean value) {
-        return value ? "Да" : "Нет";
-    }
-
-    public static String isInteresting(boolean value) {
-        return value ? "Интересует" : "Не интересует";
-    }
 
     public static String isReceive(boolean value) {
         return value ? "Получен" : "Не получен";
@@ -38,49 +27,15 @@ public class MemberUtils {
     }
 
     public static boolean receiveToBoolean(String value) {
-        boolean result = false;
-        if(value.equals("Получен")) result =  true;
-        if(value.equals("Не получен")) result = false;
-        return result;
+        return value.equals("Получен");
     }
 
     public static boolean paymentToBoolean(String value) {
-        boolean result = false;
-        if(value.equals("Отплачен")) result =  true;
-        if(value.equals("Не отплачен")) result = false;
-        return result;
+        return value.equals("Отплачен");
     }
 
     public static boolean debtToBoolean(String value)  {
-        boolean result = false;
-        if(value.equals("Имеется")) result =  true;
-        if(value.equals("Отсутствует")) result = false;
-        return result;
-    }
-
-    public static boolean yesNoToBoolean(String value) {
-        boolean result = false;
-        if(value.equals("Да")) result =  true;
-        if(value.equals("Нет")) result = false;
-        return result;
-    }
-
-    public static boolean interestingToBoolean(String value) {
-        boolean result = false;
-        if(value.equals("Интересует")) result =  true;
-        if(value.equals("Не интересует")) result = false;
-        return result;
-    }
-
-    public static String dateToString(LocalDate localDate) {
-        String result;
-        if(localDate != null) {
-            result = localDate.getDayOfMonth() + "." +
-                    localDate.getMonth().getValue() + "." +
-                    localDate.getYear();
-        }
-        else result = "Не указана";
-        return result;
+        return value.equals("Имеется");
     }
 
     public static String extractId(String id) {
@@ -175,7 +130,6 @@ public class MemberUtils {
     }
 
     public static void checkTextLength(TextField textField, Label label, int maxLength) {
-
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(textField.getText().length() >= maxLength) {
                 String s = textField.getText().substring(0, maxLength);
@@ -190,7 +144,6 @@ public class MemberUtils {
     }
 
     public static void checkTextLength(TextArea textField, Label label, int maxLength) {
-
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(textField.getText().length() >= maxLength) {
                 String s = textField.getText().substring(0, maxLength);
@@ -206,60 +159,49 @@ public class MemberUtils {
 
 
     public static boolean isEmptyField(TextField text) {
-        boolean isEmpty;
         if(text.getText().isEmpty()) {
             text.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
-            isEmpty = true;
+            return true;
         } else {
             text.setStyle(null);
-            isEmpty = false;
+            return false;
         }
-        return isEmpty;
     }
 
     public static boolean isEmptyField(TextArea text) {
-        boolean isEmpty;
         if(text.getText().isEmpty()) {
             text.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
-            isEmpty = true;
+            return true;
         } else {
             text.setStyle(null);
-            isEmpty = false;
-            
+            return false;
         }
-        return isEmpty;
     }
 
     public static boolean isEmptyField(DatePicker date) {
-        boolean isEmpty;
         if(date.getValue() == null) {
-            isEmpty = true;
             date.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
+            return true;
         } else {
-            isEmpty = false;
             date.setStyle(null);
+            return false;
         }
-        return isEmpty;
     }
 
     public static boolean isEmptyField(ComboBox comboBox) {
-        boolean isEmpty;
         if(comboBox.getValue() == null) {
             comboBox.setStyle("-fx-border-color: rgb(" + EMPTY_COLOR2 + ");");
-            isEmpty = true;
-        }
-        else {
+            return true;
+        } else {
             comboBox.setStyle(null);
-            isEmpty = false;
+            return false;
         }
-        return isEmpty;
     }
 
     public static boolean checkBoxIDToBoolean(CheckBox checkBox) {
         String checkBoxID = checkBox.getId();
         String last = checkBoxID.substring(checkBoxID.length() - 1);
         return last.equals("1");
-
     }
 
     public static String getPasswordHash(String password) {
@@ -267,5 +209,4 @@ public class MemberUtils {
         byte[] digest = digest512.digest(password.getBytes());
         return Hex.toHexString(digest);
     }
-
 }

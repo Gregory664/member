@@ -34,6 +34,8 @@ public class ListUtilsTest {
         assertEquals(VED_LIST, ListUtils.getYesNo());
         assertEquals(MONTHS_LIST, ListUtils.getMonth());
         assertEquals(REGION_MAP, ListUtils.getRegionMap());
+        assertEquals(PAYMENT_LIST, ListUtils.getPayment());
+        assertEquals(RECEIVE_LIST, ListUtils.getReceive());
     }
 
     @Test

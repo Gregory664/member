@@ -137,7 +137,7 @@
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnCancel" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#closeWindow" text="Отмена" GridPane.columnIndex="1">
+                  <Button fx:id="btnCancel" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#closeCurrentStage" text="Отмена" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>

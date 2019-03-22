@@ -29,7 +29,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.MainFormController">
    <children>
-      <SplitPane dividerPositions="0.5730688935281837" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="1024.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.48484848484848486" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="1024.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
             <VBox>
                <children>
@@ -85,7 +85,7 @@
                               </Label>
                               <Label fx:id="label_position" text="Label" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="17.0" />
                                  </font>
                               </Label>
                            </children>
@@ -102,11 +102,11 @@
                      <children>
                         <TableView fx:id="table_members" layoutX="14.0" layoutY="51.0" prefHeight="334.0" prefWidth="994.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
                           <columns>
-                            <TableColumn fx:id="column_memberId" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="-1.0" text="Номер билета" />
-                              <TableColumn fx:id="column_memberSerial" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="149.0" text="Номер" />
-                            <TableColumn fx:id="column_memberDate" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="50.0" text="Дата вступления в ТПП" />
-                              <TableColumn fx:id="column_memberStatus" editable="false" maxWidth="220.0" minWidth="220.0" prefWidth="40.0" text="Статус" />
-                              <TableColumn fx:id="column_memberShortName" editable="false" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="210.0" text="Сокращенное название организации" />
+                            <TableColumn fx:id="column_memberId" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="-1.0" resizable="false" text="Номер билета" />
+                              <TableColumn fx:id="column_memberSerial" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="149.0" resizable="false" text="Номер" />
+                            <TableColumn fx:id="column_memberDate" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="50.0" resizable="false" text="Дата вступления в ТПП" />
+                              <TableColumn fx:id="column_memberStatus" editable="false" maxWidth="220.0" minWidth="220.0" prefWidth="40.0" resizable="false" text="Статус" />
+                              <TableColumn fx:id="column_memberShortName" editable="false" minWidth="300.0" prefWidth="210.0" text="Сокращенное название организации" />
                           </columns>
                            <contextMenu>
                               <ContextMenu fx:id="contextMenu_table_members">
@@ -118,6 +118,9 @@
                                 </items>
                               </ContextMenu>
                            </contextMenu>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <Label fx:id="countOfOrganization" text="Label" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
                      </children>
@@ -485,27 +488,27 @@
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Мобильный телефон" GridPane.rowIndex="2">
+                                                <Label fx:id="label_director_phoneMobile" text="Мобильный телефон" GridPane.rowIndex="2">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Дополнительный телефон" GridPane.rowIndex="3">
+                                                <Label fx:id="label_director_phoneCity" text="Дополнительный телефон" GridPane.rowIndex="3">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Электронная почта" GridPane.rowIndex="4">
+                                                <Label fx:id="label_director_email" text="Электронная почта" GridPane.rowIndex="4">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label text="Дата рождения" GridPane.rowIndex="5">
+                                                <Label fx:id="label_director_birthday" text="Дата рождения" GridPane.rowIndex="5">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label prefHeight="36.0" prefWidth="127.0" text="Дополнительная информация" wrapText="true" GridPane.rowIndex="6">
+                                                <Label fx:id="label_director_changes" prefHeight="36.0" prefWidth="127.0" text="Дополнительная информация" wrapText="true" GridPane.rowIndex="6">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -535,7 +538,7 @@
                                                       <Font size="14.0" />
                                                    </font>
                                                 </TextField>
-                                                <DatePicker fx:id="date_director_birthday" editable="false" maxHeight="30.0" minHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <DatePicker fx:id="date_director_birthday" disable="true" editable="false" maxHeight="30.0" minHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                 <TextArea fx:id="text_director_changes" editable="false" maxHeight="60.0" minHeight="60.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                                    <font>
                                                       <Font size="14.0" />
@@ -1041,7 +1044,7 @@
                                                       <ComboBox fx:id="cmbBox_contactPersonId" disable="true" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#fillSelectedPerson" prefHeight="30.0" prefWidth="967.0" GridPane.columnIndex="1" GridPane.vgrow="ALWAYS" />
                                                       <Button fx:id="btn_add_contactPerson" disable="true" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#createContactPerson" text="+" GridPane.columnIndex="2" />
                                                       <Button fx:id="btn_remove_contactPerson" disable="true" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#removeContactPerson" text="-" GridPane.columnIndex="3" />
-                                                      <Button fx:id="btn_rename_contactPerson" disable="true" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#renameContactPerson" text="R" GridPane.columnIndex="4" />
+                                                      <Button fx:id="btn_rename_contactPerson" disable="true" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#updateContactPerson" text="R" GridPane.columnIndex="4" />
                                                    </children>
                                                 </GridPane>
                                                 <GridPane hgap="14.0" vgap="14.0">
@@ -1154,7 +1157,7 @@
                                                       <ComboBox fx:id="cmbBox_invoiceId" disable="true" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" onAction="#fillSelectedInvoice" prefHeight="26.0" prefWidth="949.0" GridPane.columnIndex="1" />
                                                       <Button fx:id="btn_add_invoice" disable="true" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#createInvoice" text="+" GridPane.columnIndex="2" />
                                                       <Button fx:id="btn_remove_invoice" disable="true" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#deleteInvoice" text="-" GridPane.columnIndex="3" />
-                                                      <Button fx:id="btn_rename_invoice" disable="true" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#renameInvoice" text="R" GridPane.columnIndex="4" />
+                                                      <Button fx:id="btn_rename_invoice" disable="true" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#updateInvoice" text="R" GridPane.columnIndex="4" />
                                                    </children>
                                                 </GridPane>
                                                 <GridPane hgap="14.0" vgap="14.0">

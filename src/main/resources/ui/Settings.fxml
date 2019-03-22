@@ -116,7 +116,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="button_close" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#closeApp" text="Отмена" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                    <Button fx:id="button_close" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#closeCurrentStage" text="Отмена" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -148,8 +148,8 @@
                               <ContextMenu>
                                 <items>
                                   <MenuItem fx:id="item_addUser" mnemonicParsing="false" onAction="#addUser" text="Добавить" />
-                                    <MenuItem fx:id="item_editUser" mnemonicParsing="false" onAction="#editUser" text="Редактировать" />
-                                    <MenuItem fx:id="item_deleteUser" mnemonicParsing="false" onAction="#deleteUser" text="Удалить" />
+                                    <MenuItem fx:id="item_editUser" disable="true" mnemonicParsing="false" onAction="#editUser" text="Редактировать" />
+                                    <MenuItem fx:id="item_deleteUser" disable="true" mnemonicParsing="false" onAction="#deleteUser" text="Удалить" />
                                 </items>
                               </ContextMenu>
                            </contextMenu>

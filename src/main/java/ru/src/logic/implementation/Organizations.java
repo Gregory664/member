@@ -43,7 +43,7 @@ public class Organizations implements MemberLogic {
 
     public void refresh() {
         members.clear();
-        initialize();
+        if(HibernateUtils.isActive()) initialize();
     }
 
     public Integer getLength() {

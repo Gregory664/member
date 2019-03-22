@@ -5,6 +5,7 @@ import javafx.scene.control.CheckBox;
 import ru.src.model.User;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,17 +54,26 @@ public class ListUtils {
         return DISTRICT_LIST;
     }
 
-    public static HashMap<Integer, String> getRegionMap() {
+    public static LinkedHashMap<String, Integer> getRegionMap() {
         return REGION_MAP;
     }
 
-    public static HashMap<Integer, String> getMonth() {
+    public static LinkedHashMap<String, Integer> getMonth() {
         return MONTHS_LIST;
     }
 
     public static ObservableList<String> getFindParamsList() {
         return FIND_PARAMS_LIST;
     }
+
+    public static ObservableList<String> getPayment() {
+        return PAYMENT_LIST;
+    }
+
+    public static ObservableList<String> getReceive() {
+        return RECEIVE_LIST;
+    }
+
 
     public static String[] getDataFromCheckBoxMassive(String title, List<CheckBox> checkBoxes) {
         String[] result = new String[2];
@@ -83,7 +93,7 @@ public class ListUtils {
 
     public static void updateUser(ObservableList<User> usersList, User modifiedUser) {
         Optional<User> userToModify = usersList.stream().filter(defaultUser -> defaultUser.getLogin().equals(modifiedUser.getLogin())).findFirst();
-        if(userToModify.isPresent()) {
+        if (userToModify.isPresent()) {
             int index = usersList.indexOf(userToModify.get());
             usersList.set(index, modifiedUser);
         }

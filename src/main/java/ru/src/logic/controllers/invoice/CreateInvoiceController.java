@@ -12,7 +12,6 @@ import ru.src.logic.implementation.MemberUtils;
 import ru.src.model.Member;
 import ru.src.model.buh.Invoice;
 
-import java.time.LocalDate;
 import java.util.HashSet;
 
 public class CreateInvoiceController {
@@ -35,31 +34,27 @@ public class CreateInvoiceController {
     public Label label_alarm_invoice_price;
 
     private Invoice invoice;
-    private Member member;
-    private boolean createInvoice = false;
-
     public Invoice getInvoice() {
         return invoice;
     }
 
-    public void setCreateInvoice(boolean createInvoice) {
-        this.createInvoice = createInvoice;
-    }
-
+    private Member member;
     public void setMember(Member member) {
         this.member = member;
     }
 
+    private boolean createInvoice = false;
     public boolean isCreateInvoice() {
         return createInvoice;
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         MemberUtils.checkTextDigital(text_invoiceNumber, label_alarm_invoiceNumber, 5);
         MemberUtils.checkTextDigital(text_invoice_price, label_alarm_invoice_price, 9);
     }
 
+    @FXML
     public void saveInvoice(ActionEvent actionEvent) {
         if (!isFieldsEmpty()) {
             label_alarm_invoice_price.setTextFill(null);
@@ -73,7 +68,7 @@ public class CreateInvoiceController {
             invoice.setStatusReceiving(false);
 
             createInvoice = true;
-            closeWindow(actionEvent);
+            closeCurrentStage(actionEvent);
         } else {
             label_alarm_invoiceNumber.setText("");
             label_alarm_invoice_dateCreation.setText("");
@@ -83,37 +78,18 @@ public class CreateInvoiceController {
     }
 
     private boolean isFieldsEmpty() {
-        HashSet<Boolean> set = new HashSet<Boolean>();
+        HashSet<Boolean> set = new HashSet<>();
         set.add(MemberUtils.isEmptyField(text_invoiceNumber));
         set.add(MemberUtils.isEmptyField(text_invoice_price));
         set.add(MemberUtils.isEmptyField(date_invoice_dateCreation));
         return set.contains(true);
     }
 
-
     @FXML
-    private void closeWindow(ActionEvent actionEvent) {
-        clearTextAndStyle();
-
+    private void closeCurrentStage(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
 
-    public void clearTextAndStyle() {
-        text_invoice_price.clear();
-        text_invoiceNumber.clear();
-        date_invoice_dateCreation.setValue(null);
-        label_alarm_invoiceNumber.setText("");
-        label_alarm_invoice_price.setText("");
-        label_alarm_invoice_dateCreation.setText("");
-
-        text_invoiceNumber.setStyle(null);
-        text_invoice_price.setStyle(null);
-        date_invoice_dateCreation.setStyle(null);
-        label_alarm_invoice_dateCreation.setStyle(null);
-        label_alarm_invoice_price.setStyle(null);
-        label_alarm_invoiceNumber.setStyle(null);
-
-    }
 }
