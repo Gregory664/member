@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import ru.src.logic.controllers.user.CreateUserController;
 import ru.src.logic.controllers.user.UpdateUserController;
+import ru.src.logic.factory.HibernateUtils;
 import ru.src.logic.implementation.*;
 import ru.src.model.User;
 import java.io.IOException;
@@ -88,7 +89,7 @@ public class SettingsController {
 
         ConnectionUtils.activateConnection();
         if (changeSettingFromMainForm) {
-            MainFormController.memberOrganizations.refresh();
+            MainFormController.memberOrganizations.refresh();//TODO check this
         }
     } 
     @FXML
@@ -164,7 +165,7 @@ public class SettingsController {
 
         Optional<ButtonType> response = alert.showAndWait();
         if(response.isPresent() && response.get() == ButtonType.OK) {
-            DBConnection.removeUser(selectedUser);
+            DBConnection.deleteUser(selectedUser);
             users.remove(selectedUser);
             MemberUtils.informationDialog("Пользователь успешно удален!");
         }

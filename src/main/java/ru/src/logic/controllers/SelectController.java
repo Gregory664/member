@@ -617,7 +617,7 @@ public class SelectController {
     @FXML
     public void search() {
         list.clear();
-        list.addAll(DBConnection.getQueryList(getResultQuery()));
+        list.addAll(DBConnection.getFindMembers(getResultQuery()));
         table_select.setItems(list);
     }
 

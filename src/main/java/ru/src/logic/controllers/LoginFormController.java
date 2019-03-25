@@ -13,7 +13,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.DBConnection;
-import ru.src.logic.implementation.HibernateUtils;
+import ru.src.logic.factory.HibernateUtils;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.model.User;
 

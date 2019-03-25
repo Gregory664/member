@@ -26,6 +26,8 @@ import ru.src.logic.controllers.contactPerson.CreateContactPersonController;
 import ru.src.logic.controllers.contactPerson.UpdateContactPersonController;
 import ru.src.logic.controllers.invoice.CreateInvoiceController;
 import ru.src.logic.controllers.invoice.UpdateInvoiceController;
+import ru.src.logic.dto.Organizations;
+import ru.src.logic.factory.HibernateUtils;
 import ru.src.logic.implementation.*;
 import ru.src.model.Address.AddressActual;
 import ru.src.model.Address.AddressLegal;
@@ -362,12 +364,20 @@ public class MainFormController {
     public Label label_director_birthday;
     @FXML
     public Label label_director_changes;
-
+    @FXML
+    public Button btn_previousPage;
+    @FXML
+    public Button btn_nextPage;
+    @FXML
+    public ComboBox<Integer> comboBox_pageSize;
+    @FXML
+    public Label label_currentPage;
 
     static Organizations memberOrganizations = new Organizations();
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
+    private ObservableList<Integer> pageSizeList = FXCollections.observableArrayList();
 
     private Stage mainStage = new Stage();
 
@@ -418,7 +428,6 @@ public class MainFormController {
         } else checkBirthday(label_notification_calendar);
     }
 
-
     @FXML
     public void initialize() {
         date_relate_dateOfCreation.setStyle("-fx-opacity: 1");
@@ -449,7 +458,7 @@ public class MainFormController {
         table_members.setItems(memberOrganizations.getMembers());
         table_members.setStyle("-fx-selection-bar: -fx-accent; -fx-selection-bar-non-focused: -fx-accent;");
         table_members.setPlaceholder(new Label("Информация отсутствует"));
-        countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
+        countOfOrganization.setText("Количество организаций: " + memberOrganizations.getFullSize());
         item_find.setAccelerator(new KeyCodeCombination(KeyCode.F, KeyCombination.CONTROL_DOWN));
         image.setImage(new Image(getClass().getResourceAsStream("/img/image.png")));
 
@@ -458,9 +467,24 @@ public class MainFormController {
         initServices();
         setInterestCheckBoxOpacity();
 
+        pageSizeList.addAll(2, 4, 6);
+        comboBox_pageSize.setItems(pageSizeList);
+        comboBox_pageSize.getSelectionModel().select(0);
+        checkPageButton();
+
         menu_addMember.setDisable(false);
         menu_deleteMember.setDisable(true);
         menu_renameMember.setDisable(true);
+    }
+
+    private void checkPageButton() {
+        if (memberOrganizations.getLastPageNumber() > 1) {
+            btn_previousPage.setDisable(false);
+            btn_nextPage.setDisable(false);
+        } else {
+            btn_previousPage.setDisable(true);
+            btn_nextPage.setDisable(true);
+        }
     }
 
     private void checkBirthday(Label label) {
@@ -516,8 +540,10 @@ public class MainFormController {
 
     private void initListeners() {
         memberOrganizations.getMembers().addListener((ListChangeListener<Member>) c -> {
-            countOfOrganization.setText("Количество организаций: " + memberOrganizations.getLength());
+            countOfOrganization.setText("Количество организаций: " + memberOrganizations.getFullSize());
             checkConnection(HibernateUtils.isActive());
+            label_currentPage.setText(memberOrganizations.getCurrentPage().toString());
+            checkPageButton();
         });
 
         table_members.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -594,7 +620,6 @@ public class MainFormController {
             if (createInvoiceController.isCreateInvoice()) {
                 if (!DBConnection.isInvoiceExists(createInvoiceController.getInvoice().getInvoiceId())) {
                     member.getInvoices().add(createInvoiceController.getInvoice());
-                    DBConnection.updateMember(member);
                     memberOrganizations.updateMember(member);
                     MemberUtils.informationDialog("Счет успешно добавлен!");
                 } else {
@@ -619,7 +644,6 @@ public class MainFormController {
             Member member = table_members.getSelectionModel().getSelectedItem();
 
             member.getInvoices().remove(invoice);
-            DBConnection.updateMember(member);
             memberOrganizations.updateMember(member);
             MemberUtils.informationDialog("Cчет успешно удален!");
         }
@@ -646,7 +670,6 @@ public class MainFormController {
             updateInvoiceStage.showAndWait();
 
             if (updateInvoiceController.isInvoiceUpdate()) {
-                DBConnection.updateMember(member);
                 memberOrganizations.updateMember(member);
                 MemberUtils.informationDialog("Счет успешно обновлен!");
             } else {
@@ -677,7 +700,6 @@ public class MainFormController {
             createContactPersonStage.showAndWait();
 
             if (createContactPersonController.isCreateContactPerson()) {
-                DBConnection.updateMember(member);
                 memberOrganizations.updateMember(member);
                 MemberUtils.informationDialog("Контактное лицо успешно добавлено!");
             }
@@ -699,7 +721,6 @@ public class MainFormController {
             Member member = table_members.getSelectionModel().getSelectedItem();
 
             member.getContactPersons().remove(contactPerson);
-            DBConnection.updateMember(member);
             memberOrganizations.updateMember(member);
             MemberUtils.informationDialog("Данные контактного лица успешно удалены!");
         }
@@ -726,7 +747,6 @@ public class MainFormController {
             updateContactPersonStage.showAndWait();
 
             if (updateContactPersonController.isUpdateContactPerson()) {
-                DBConnection.updateMember(member);
                 memberOrganizations.updateMember(member);
                 MemberUtils.informationDialog("Данные контактного лица успешно обновлены!");
             }
@@ -752,7 +772,6 @@ public class MainFormController {
 
             if (createMemberFormController.isMemberCreate()) {
                 Member newMember = createMemberFormController.getMember();
-                DBConnection.addMember(newMember);
                 memberOrganizations.addMember(newMember);
                 MemberUtils.informationDialog("Организация успешно добавлена!");
             }
@@ -774,8 +793,8 @@ public class MainFormController {
 
         Optional<ButtonType> response = alert.showAndWait();
         if (response.isPresent() && response.get() == ButtonType.OK) {
-            DBConnection.removeMember(member);
-            memberOrganizations.removeMember(member);
+
+            memberOrganizations.deleteMember(member);
             MemberUtils.informationDialog("Организация успешно удалена");
         }
     }
@@ -800,7 +819,6 @@ public class MainFormController {
 
             if (updateMemberFormController.isMemberUpdate()) {
                 Member updateMember = updateMemberFormController.getMember();
-                DBConnection.updateMember(updateMember);
                 memberOrganizations.updateMember(updateMember);
                 MemberUtils.informationDialog("Данные организации успешно обновлены!");
             } else {
@@ -907,6 +925,23 @@ public class MainFormController {
         } catch (IOException | IllegalStateException e) {
             MemberUtils.warningDialog("Ошибка инициализации формы сортировки: " + e.getMessage()); //TODO write to log
         }
+    }
+
+    @FXML
+    public void setPageSize() {
+        Integer pageSize = comboBox_pageSize.getSelectionModel().getSelectedItem();
+        System.out.println("pageSize = " + pageSize);
+        memberOrganizations.setPageSize(pageSize);
+    }
+
+    @FXML
+    public void getPreviousPage() {
+        memberOrganizations.previousPage();
+    }
+
+    @FXML
+    public void getNextPage() {
+        memberOrganizations.nextPage();
     }
 
 

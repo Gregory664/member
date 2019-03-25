@@ -1,7 +1,7 @@
 package ru.src.logic.implementation;
 
-import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import ru.src.logic.factory.HibernateUtils;
 import ru.src.model.Connection;
 
 import javax.xml.stream.*;

@@ -106,7 +106,7 @@ public class Relate implements Serializable {
         return "Relate{" +
                 "member=" + member.getMemberId() +
                 ", fullName='" + fullName + '\'' +
-                ", size='" + size + '\'' +
+                ", getCurrentSize='" + size + '\'' +
                 ", dateOfCreation=" + dateOfCreation +
                 ", services='" + services + '\'' +
                 ", changes='" + changes + '\'' +

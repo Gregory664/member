@@ -1,8 +1,11 @@
-package ru.src.logic.implementation;
+package ru.src.logic.factory;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import ru.src.logic.implementation.ConnectionUtils;
+import ru.src.logic.implementation.MemberException;
+import ru.src.logic.implementation.MemberUtils;
 import ru.src.model.Connection;
 
 public class HibernateUtils {
@@ -17,7 +20,7 @@ public class HibernateUtils {
     private HibernateUtils() {
     }
 
-    static SessionFactory getSessionFactory() {
+    public static SessionFactory getSessionFactory() {
         if (sessionFactory == null || sessionFactory.isClosed()) {
             Connection connection = ConnectionUtils.getConnection();
             String url = "jdbc:mysql://" +
@@ -37,7 +40,7 @@ public class HibernateUtils {
                 if(e instanceof HibernateException) {
                     MemberException.getCheckSqlException((HibernateException) e);
                 } else {
-                    MemberUtils.warningDialog("Ошибка!\n" + e.getMessage());
+                    //TODO throw new GetSessionFactoryException
                 }
             }
         }
