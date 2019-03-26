@@ -1,103 +1,88 @@
 package ru.src.logic.implementation;
 
-import com.mysql.cj.exceptions.UnableToConnectException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.hibernate.*;
-import org.hibernate.criterion.CriteriaQuery;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Projections;
 import org.hibernate.query.Query;
 import ru.src.logic.factory.HibernateUtils;
-import ru.src.logic.interfaces.MemberLogic;
 import ru.src.model.*;
 import ru.src.model.buh.Invoice;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DBConnection implements MemberLogic {
+public class DBConnection {
     public static Member getMember(String memberId) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
         Member member = null;
-        try {
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             member = session.get(Member.class, memberId);
             transaction.commit();
             Objects.requireNonNull(member);
         } catch (NullPointerException e) {
             //TODO throw new MemberIsNotExistException
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new CanNotGetMemberFromDBException:#
-        } finally {
-            session.close();
         }
         return member;
-    }//++
+    }
 
     public static void addMember(Member member) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             session.save(member);
             transaction.commit();
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new AddMemberToDBException
-        } finally {
-            session.close();
         }
-    }//++
+    }
 
     public static void deleteMember(Member member) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             session.delete(member);
             transaction.commit();
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new DeleteMemberFromDBException
-        } finally {
-            session.close();
         }
-    }//++
+    }
 
     public static void updateMember(Member member) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             session.update(member);
             transaction.commit();
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new UpdateMemberException
-        } finally {
-            session.close();
         }
-    }//++
+    }
 
     public static Long getMemberCount() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
         Long memberCount = null;
-        try {
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             Query query = session.createQuery("select count(*) from Member");
             memberCount = (Long) query.getSingleResult();
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetMemberCountException
-        } finally {
-            session.close();
         }
         return memberCount;
     }
@@ -116,10 +101,10 @@ public class DBConnection implements MemberLogic {
 
     public static List<Member> getAllMembers() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
         List<Member> members = new ArrayList<>();
-        try {
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             Query query = session.createQuery("from Member");
             members = query.list();
             transaction.commit();
@@ -129,20 +114,18 @@ public class DBConnection implements MemberLogic {
                 member.getServices().isEmpty();
             }
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetAllMembersException
-        } finally {
-            session.close();
         }
         return members;
-    } //TODO add pagination
+    }
 
     public static List<Member> getMemberListPage(Integer pageNumber, Integer pageSize) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
         List<Member> memberListPage = new ArrayList<>();
-        try {
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             Query query = session.createQuery("From Member");
             query.setFirstResult((pageNumber - 1) * pageSize);
             query.setMaxResults(pageSize);
@@ -153,10 +136,8 @@ public class DBConnection implements MemberLogic {
                 member.getServices().isEmpty();
             }
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetMemberListPageException
-        } finally {
-            session.close();
         }
         return memberListPage;
     }
@@ -175,11 +156,11 @@ public class DBConnection implements MemberLogic {
 
     public static List<FindMember> getFindMembers(String queryString) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
         List<String> findMembersList;
         List<FindMember> findMembers = new ArrayList<>();
-        try {
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             Query query = session.createSQLQuery(queryString);
             findMembersList = query.list();
             transaction.commit();
@@ -195,21 +176,19 @@ public class DBConnection implements MemberLogic {
                 findMembers.add(new FindMember(memberId, memberSerial, memberPhone, memberStatus, memberShortName, email));
             }
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetFindMembersException
-        } finally {
-            session.close();
         }
         return findMembers;
-    }//++
+    }
 
     public static ObservableList<DirectorCalendar> getDirectorCalendar(Integer month) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
         ObservableList<DirectorCalendar> directorCalendars = FXCollections.observableArrayList();
         List<String> getDirectorCalendarList;
-        try {
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             String queryString = "SELECT d.DIRECTOR_BIRTHDAY, " +
                     "d.DIRECTOR_FULL_NAME, " +
                     "m.MEMBER_ID, " +
@@ -230,21 +209,19 @@ public class DBConnection implements MemberLogic {
                 directorCalendars.add(new DirectorCalendar(memberId, fio, shortName, birthday));
             }
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetDirectorCalendarException
-        } finally {
-            session.close();
         }
         return directorCalendars;
-    }//++
+    }
 
     public static ObservableList<DateOfCreationOrganization> getOrganizationCalendar(int month) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
         List<String> getOrganizationCalendarList;
         ObservableList<DateOfCreationOrganization> organizations = FXCollections.observableArrayList();
-        try {
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             String queryString = "SELECT r.RELATE_DATE_OF_CREATION, " +
                     "m.MEMBER_ID, " +
                     "m.MEMBER_SHORT_NAME\n" +
@@ -263,20 +240,18 @@ public class DBConnection implements MemberLogic {
                 organizations.add(new DateOfCreationOrganization(dateOfCreation, memberId, shortName));
             }
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetOrganizationCalendarException
-        } finally {
-            session.close();
         }
         return organizations;
-    }//++
+    }
 
     public static Integer getCountOfOrganizationBirthdayToday() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
         Integer countOfOrganizationBirthdayToday = 0;
-        try {
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             Integer currentMonth = LocalDate.now().getMonth().getValue();
             Integer currentDay = LocalDate.now().getDayOfMonth();
             String queryString = "SELECT Count(*)\n" +
@@ -288,13 +263,11 @@ public class DBConnection implements MemberLogic {
             countOfOrganizationBirthdayToday = Integer.valueOf(query.list().get(0).toString());
             return countOfOrganizationBirthdayToday;
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetCountOfOrganizationBirthdayTodayException
-        } finally {
-            session.close();
         }
         return countOfOrganizationBirthdayToday;
-    }//--
+    }
 
     public static Integer getCountOfDirectorBirthdayToday() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
@@ -313,84 +286,76 @@ public class DBConnection implements MemberLogic {
             return -1;
             //TODO need to add correct error handling implementation
         }
-    }//--
+    }
 
     public static User getUser(String login) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
         User user = null;
-        try {
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             user = session.get(User.class, login);
             transaction.commit();
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetUserFromDBException
-        } finally {
-            session.close();
         }
         return user;
-    }//++
+    }
 
     public static void addUser(User user) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new AddUserToDBException
-        } finally {
-            session.close();
         }
-    } //++
+    }
 
     public static void updateUser(User user) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             session.update(user);
             transaction.commit();
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new UpdateUserException
-        } finally {
-            session.close();
         }
-    } //++
+    }
 
     public static void deleteUser(User user) {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             session.delete(user);
             transaction.commit();
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new DeleteUserException
-        } finally {
-            session.close();
         }
-    } //++
+    }
 
     public static List<User> getAllUser() {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
         List<User> userList = new ArrayList<>();
-        try {
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
             Query query = session.createQuery("from User");
             userList = query.list();
             transaction.commit();
         } catch (HibernateException e) {
-            transaction.rollback();
+            Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetAllUserException
         }
         return userList;
-    } //++
+    }
 }
 

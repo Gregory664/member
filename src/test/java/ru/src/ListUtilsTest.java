@@ -36,6 +36,7 @@ public class ListUtilsTest {
         assertEquals(REGION_MAP, ListUtils.getRegionMap());
         assertEquals(PAYMENT_LIST, ListUtils.getPayment());
         assertEquals(RECEIVE_LIST, ListUtils.getReceive());
+        assertEquals(PAGE_SIZE, ListUtils.getPageSize());
     }
 
     @Test

@@ -74,6 +74,10 @@ public class ListUtils {
         return RECEIVE_LIST;
     }
 
+    public static ObservableList<Integer> getPageSize() {
+        return PAGE_SIZE;
+    }
+
 
     public static String[] getDataFromCheckBoxMassive(String title, List<CheckBox> checkBoxes) {
         String[] result = new String[2];

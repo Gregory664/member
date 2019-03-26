@@ -377,7 +377,6 @@ public class MainFormController {
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
-    private ObservableList<Integer> pageSizeList = FXCollections.observableArrayList();
 
     private Stage mainStage = new Stage();
 
@@ -467,8 +466,7 @@ public class MainFormController {
         initServices();
         setInterestCheckBoxOpacity();
 
-        pageSizeList.addAll(2, 4, 6);
-        comboBox_pageSize.setItems(pageSizeList);
+        comboBox_pageSize.setItems(ListUtils.getPageSize());
         comboBox_pageSize.getSelectionModel().select(0);
         checkPageButton();
 

@@ -4,16 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.factory.HibernateUtils;
-import ru.src.logic.interfaces.MemberLogic;
 import ru.src.model.Member;
 
 import java.util.Optional;
 
-public class Organizations implements MemberLogic {
+public class Organizations {
 
     private ObservableList<Member> members = FXCollections.observableArrayList();
     private Long fullSize;
-    private int pageSize = 2;
+    private int pageSize = 10;
     private Integer currentPage = 1;
     private int lastPageNumber;
 
@@ -27,7 +26,7 @@ public class Organizations implements MemberLogic {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
-        lastPageNumber =  (int) Math.ceil(fullSize * 1.0 / pageSize);
+        lastPageNumber = (int) Math.ceil(fullSize * 1.0 / pageSize);
         currentPage = 1;
         members.clear();
         members.addAll(DBConnection.getMemberListPage(currentPage, pageSize));
@@ -37,10 +36,9 @@ public class Organizations implements MemberLogic {
         return fullSize;
     }
 
-
     public Organizations() {
         this.fullSize = DBConnection.getMemberCount();
-        lastPageNumber =  (int) Math.ceil(fullSize * 1.0 / pageSize);
+        lastPageNumber = (int) Math.ceil(fullSize * 1.0 / pageSize);
         fillMembers();
     }
 
@@ -54,7 +52,7 @@ public class Organizations implements MemberLogic {
 
     public void previousPage() {
         currentPage--;
-        if(currentPage < 1) {
+        if (currentPage < 1) {
             currentPage = lastPageNumber;
         }
         fillMembers();
@@ -89,7 +87,7 @@ public class Organizations implements MemberLogic {
     }
 
     public void refresh() {
-        if(HibernateUtils.isActive()) {
+        if (HibernateUtils.isActive()) {
             new Organizations();
         } //TODO check this
 //        members.clear();
