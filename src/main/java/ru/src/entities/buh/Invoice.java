@@ -1,14 +1,12 @@
-package ru.src.model.buh;
+package ru.src.entities.buh;
 
-import ru.src.model.Member;
+import ru.src.entities.Member;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "INVOICE")
@@ -27,13 +25,13 @@ public class Invoice implements Serializable {
     @Column(name = "INVOICE_DATE_OF_CREATION", nullable = false)
     private LocalDate dateCreation;
 
-    @Column(name = "INVOICE_STATUS_OF_RECEIVING")
+    @Column(name = "INVOICE_STATUS_OF_RECEIVING", nullable = false)
     private Boolean statusReceiving;
 
     @Column(name = "INVOICE_DATE_OF_RECEIVING")
     private LocalDate dateReceiving;
 
-    @Column(name = "INVOICE_STATUS_OF_PAYMENT")
+    @Column(name = "INVOICE_STATUS_OF_PAYMENT", nullable = false)
     private Boolean statusPayment;
 
     @Column(name = "INVOICE_ORDER_ID")
@@ -48,9 +46,7 @@ public class Invoice implements Serializable {
     @Column(name = "INVOICE_COMMENT")
     private String comment;
 
-
-    private Invoice() {
-
+    public Invoice() {
     }
 
     public Invoice(Member member, Integer invoiceNumber, LocalDate dateCreation, Integer price) {
@@ -61,12 +57,10 @@ public class Invoice implements Serializable {
         this.invoiceId = generateInvoiceId();
     }
 
-
     private String generateInvoiceId() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         return this.invoiceNumber + this.dateCreation.format(formatter);
     }
-
 
     public String getInvoiceId() {
         return invoiceId;
@@ -154,5 +148,45 @@ public class Invoice implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Invoice invoice = (Invoice) o;
+        return invoiceId.equals(invoice.invoiceId) &&
+                member.equals(invoice.member) &&
+                invoiceNumber.equals(invoice.invoiceNumber) &&
+                dateCreation.equals(invoice.dateCreation) &&
+                statusReceiving.equals(invoice.statusReceiving) &&
+                Objects.equals(dateReceiving, invoice.dateReceiving) &&
+                statusPayment.equals(invoice.statusPayment) &&
+                Objects.equals(orderId, invoice.orderId) &&
+                Objects.equals(orderDate, invoice.orderDate) &&
+                price.equals(invoice.price) &&
+                Objects.equals(comment, invoice.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(invoiceId, member, invoiceNumber, dateCreation, statusReceiving, dateReceiving, statusPayment, orderId, orderDate, price, comment);
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "invoiceId='" + invoiceId + '\'' +
+                ", member=" + member +
+                ", invoiceNumber=" + invoiceNumber +
+                ", dateCreation=" + dateCreation +
+                ", statusReceiving=" + statusReceiving +
+                ", dateReceiving=" + dateReceiving +
+                ", statusPayment=" + statusPayment +
+                ", orderId='" + orderId + '\'' +
+                ", orderDate=" + orderDate +
+                ", price=" + price +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

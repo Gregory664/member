@@ -4,9 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.hibernate.*;
 import org.hibernate.query.Query;
+import ru.src.entities.DateOfCreationOrganization;
+import ru.src.entities.DirectorCalendar;
+import ru.src.entities.FindMember;
 import ru.src.logic.factory.HibernateUtils;
-import ru.src.model.*;
-import ru.src.model.buh.Invoice;
+import ru.src.entities.*;
+import ru.src.entities.buh.Invoice;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

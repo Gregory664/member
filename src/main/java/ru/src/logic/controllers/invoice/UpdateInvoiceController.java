@@ -1,6 +1,5 @@
 package ru.src.logic.controllers.invoice;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.ListUtils;
 import ru.src.logic.implementation.MemberUtils;
-import ru.src.model.buh.Invoice;
+import ru.src.entities.buh.Invoice;
 
 public class UpdateInvoiceController {
     @FXML

@@ -1,4 +1,6 @@
-package ru.src.model;
+package ru.src.entities;
+
+import java.util.Objects;
 
 public class FindMember {
     private String memberId;
@@ -63,5 +65,35 @@ public class FindMember {
 
     public void setMemberShortName(String memberShortName) {
         this.memberShortName = memberShortName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FindMember that = (FindMember) o;
+        return memberId.equals(that.memberId) &&
+                memberSerial.equals(that.memberSerial) &&
+                memberStatus.equals(that.memberStatus) &&
+                phone.equals(that.phone) &&
+                memberShortName.equals(that.memberShortName) &&
+                email.equals(that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(memberId, memberSerial, memberStatus, phone, memberShortName, email);
+    }
+
+    @Override
+    public String toString() {
+        return "FindMember{" +
+                "memberId='" + memberId + '\'' +
+                ", memberSerial='" + memberSerial + '\'' +
+                ", memberStatus='" + memberStatus + '\'' +
+                ", phone='" + phone + '\'' +
+                ", memberShortName='" + memberShortName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

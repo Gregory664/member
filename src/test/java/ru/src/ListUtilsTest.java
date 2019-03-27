@@ -7,7 +7,7 @@ import javafx.scene.control.CheckBox;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import ru.src.logic.implementation.ListUtils;
-import ru.src.model.User;
+import ru.src.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;

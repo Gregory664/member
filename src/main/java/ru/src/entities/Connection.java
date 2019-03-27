@@ -1,4 +1,4 @@
-package ru.src.model;
+package ru.src.entities;
 
 public class Connection {
     private static String hostname;

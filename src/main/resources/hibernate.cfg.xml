@@ -21,25 +21,25 @@
         <property name="hibernate.connection.characterEncoding">utf8</property>
         <property name="hibernate.connection.useUnicode">true</property>
 
-        <mapping class="ru.src.model.Member"></mapping>
+        <mapping class="ru.src.entities.Member"></mapping>
 
-        <mapping class="ru.src.model.buh.Debt"></mapping>
-        <mapping class="ru.src.model.buh.AccoutingInformation"></mapping>
-        <mapping class="ru.src.model.buh.Invoice"></mapping>
+        <mapping class="ru.src.entities.buh.Debt"></mapping>
+        <mapping class="ru.src.entities.buh.AccoutingInformation"></mapping>
+        <mapping class="ru.src.entities.buh.Invoice"></mapping>
 
-        <mapping class="ru.src.model.General.GeneralInformation"></mapping>
+        <mapping class="ru.src.entities.General.GeneralInformation"></mapping>
 
-        <mapping class="ru.src.model.Personal.Contact"></mapping>
-        <mapping class="ru.src.model.Personal.ContactPerson"></mapping>
-        <mapping class="ru.src.model.Personal.Director"></mapping>
-        <mapping class="ru.src.model.Personal.Relate"></mapping>
+        <mapping class="ru.src.entities.Personal.Contact"></mapping>
+        <mapping class="ru.src.entities.Personal.ContactPerson"></mapping>
+        <mapping class="ru.src.entities.Personal.Director"></mapping>
+        <mapping class="ru.src.entities.Personal.Relate"></mapping>
 
-        <mapping class="ru.src.model.Address.AddressActual"></mapping>
-        <mapping class="ru.src.model.Address.AddressLegal"></mapping>
-        <mapping class="ru.src.model.SocialNetworks"></mapping>
-        <mapping class="ru.src.model.Services"></mapping>
+        <mapping class="ru.src.entities.Address.AddressActual"></mapping>
+        <mapping class="ru.src.entities.Address.AddressLegal"></mapping>
+        <mapping class="ru.src.entities.SocialNetworks"></mapping>
+        <mapping class="ru.src.entities.Services"></mapping>
 
-        <mapping class="ru.src.model.User"></mapping>
+        <mapping class="ru.src.entities.User"></mapping>
 
 
 

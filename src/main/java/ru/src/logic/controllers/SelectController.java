@@ -17,7 +17,7 @@ import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.ListUtils;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.PDFUtils;
-import ru.src.model.FindMember;
+import ru.src.entities.FindMember;
 
 import java.io.File;
 import java.io.FileWriter;

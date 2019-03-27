@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.MemberUtils;
-import ru.src.model.User;
+import ru.src.entities.User;
 
 import java.util.HashSet;
 

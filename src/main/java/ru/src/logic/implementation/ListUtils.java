@@ -2,9 +2,8 @@ package ru.src.logic.implementation;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
-import ru.src.model.User;
+import ru.src.entities.User;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;

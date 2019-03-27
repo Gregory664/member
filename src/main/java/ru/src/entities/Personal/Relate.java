@@ -1,11 +1,10 @@
-package ru.src.model.Personal;
+package ru.src.entities.Personal;
 
-import org.hibernate.annotations.CreationTimestamp;
-import ru.src.model.Member;
+import ru.src.entities.Member;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "RELATE")
@@ -30,9 +29,7 @@ public class Relate implements Serializable {
     @Column(name = "RELATE_CHANGES")
     private String changes;
 
-
-    private Relate() {
-
+    public Relate() {
     }
 
     public Relate(Member member, String fullName, Integer size, String services) {
@@ -41,16 +38,6 @@ public class Relate implements Serializable {
         this.size = size;
         this.services = services;
     }
-
-    public Relate(Member member, String fullName, Integer size, LocalDate dateOfCreation, String services, String changes) {
-        this.member = member;
-        this.fullName = fullName;
-        this.size = size;
-        this.dateOfCreation = dateOfCreation;
-        this.services = services;
-        this.changes = changes;
-    }
-
 
     public Member getMember() {
         return member;
@@ -100,13 +87,30 @@ public class Relate implements Serializable {
         this.changes = changes;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Relate relate = (Relate) o;
+        return member.equals(relate.member) &&
+                fullName.equals(relate.fullName) &&
+                size.equals(relate.size) &&
+                Objects.equals(dateOfCreation, relate.dateOfCreation) &&
+                services.equals(relate.services) &&
+                Objects.equals(changes, relate.changes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(member, fullName, size, dateOfCreation, services, changes);
+    }
 
     @Override
     public String toString() {
         return "Relate{" +
-                "member=" + member.getMemberId() +
+                "member=" + member +
                 ", fullName='" + fullName + '\'' +
-                ", getCurrentSize='" + size + '\'' +
+                ", size=" + size +
                 ", dateOfCreation=" + dateOfCreation +
                 ", services='" + services + '\'' +
                 ", changes='" + changes + '\'' +

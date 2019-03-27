@@ -1,8 +1,9 @@
-package ru.src.model.buh;
+package ru.src.entities.buh;
 
-import ru.src.model.Member;
+import ru.src.entities.Member;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ACCOUTING_INFORMATION")
@@ -21,10 +22,7 @@ public class AccoutingInformation implements Serializable {
     @Column(name = "ACCOUTING_INFORMATION_TIN", nullable = false)
     private String tin;
 
-
-    private AccoutingInformation() {
-
-    }
+    public AccoutingInformation() { }
 
     public AccoutingInformation(Member member, String ogrn, String kpp, String tin) {
         this.member = member;
@@ -32,7 +30,6 @@ public class AccoutingInformation implements Serializable {
         this.kpp = kpp;
         this.tin = tin;
     }
-
 
     public Member getMember() {
         return member;
@@ -66,6 +63,21 @@ public class AccoutingInformation implements Serializable {
         this.tin = tin;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AccoutingInformation that = (AccoutingInformation) o;
+        return member.equals(that.member) &&
+                ogrn.equals(that.ogrn) &&
+                kpp.equals(that.kpp) &&
+                tin.equals(that.tin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(member, ogrn, kpp, tin);
+    }
 
     @Override
     public String toString() {

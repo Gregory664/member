@@ -9,8 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.MemberUtils;
-import ru.src.model.Member;
-import ru.src.model.buh.Invoice;
+import ru.src.entities.Member;
+import ru.src.entities.buh.Invoice;
 
 import java.util.HashSet;
 

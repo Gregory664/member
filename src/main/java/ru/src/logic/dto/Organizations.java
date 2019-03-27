@@ -4,8 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.factory.HibernateUtils;
-import ru.src.model.Member;
+import ru.src.entities.Member;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class Organizations {
@@ -92,6 +93,23 @@ public class Organizations {
         } //TODO check this
 //        members.clear();
 //        if (HibernateUtils.isActive()) initialize();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organizations that = (Organizations) o;
+        return pageSize == that.pageSize &&
+                lastPageNumber == that.lastPageNumber &&
+                members.equals(that.members) &&
+                fullSize.equals(that.fullSize) &&
+                Objects.equals(currentPage, that.currentPage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(members, fullSize, pageSize, currentPage, lastPageNumber);
     }
 }
 

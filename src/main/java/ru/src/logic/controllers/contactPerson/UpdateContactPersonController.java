@@ -9,7 +9,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.MemberUtils;
-import ru.src.model.Personal.ContactPerson;
+import ru.src.entities.Personal.ContactPerson;
 
 import java.util.HashSet;
 

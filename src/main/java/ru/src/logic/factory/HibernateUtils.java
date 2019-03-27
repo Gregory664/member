@@ -5,8 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import ru.src.logic.implementation.ConnectionUtils;
 import ru.src.logic.implementation.MemberException;
-import ru.src.logic.implementation.MemberUtils;
-import ru.src.model.Connection;
+import ru.src.entities.Connection;
 
 public class HibernateUtils {
     private static SessionFactory sessionFactory;

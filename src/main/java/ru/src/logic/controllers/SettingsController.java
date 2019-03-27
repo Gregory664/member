@@ -16,7 +16,7 @@ import ru.src.logic.controllers.user.CreateUserController;
 import ru.src.logic.controllers.user.UpdateUserController;
 import ru.src.logic.factory.HibernateUtils;
 import ru.src.logic.implementation.*;
-import ru.src.model.User;
+import ru.src.entities.User;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;

@@ -1,16 +1,15 @@
-package ru.src.model.Personal;
+package ru.src.entities.Personal;
 
-import ru.src.model.Member;
+import ru.src.entities.Member;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "DIRECTOR")
 public class Director implements Serializable {
-
     @Id
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
@@ -37,9 +36,7 @@ public class Director implements Serializable {
     @Column(name = "DIRECTOR_CHANGES")
     private String changes;
 
-
-    private Director() {
-
+    public Director() {
     }
 
     public Director(Member member,
@@ -53,7 +50,6 @@ public class Director implements Serializable {
         this.phoneMobile = phoneMobile;
         this.email = email;
     }
-
 
     public Member getMember() {
         return member;
@@ -117,5 +113,39 @@ public class Director implements Serializable {
 
     public void setChanges(String changes) {
         this.changes = changes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Director director = (Director) o;
+        return member.equals(director.member) &&
+                position.equals(director.position) &&
+                fullName.equals(director.fullName) &&
+                phoneMobile.equals(director.phoneMobile) &&
+                Objects.equals(phoneCity, director.phoneCity) &&
+                email.equals(director.email) &&
+                Objects.equals(birthday, director.birthday) &&
+                Objects.equals(changes, director.changes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(member, position, fullName, phoneMobile, phoneCity, email, birthday, changes);
+    }
+
+    @Override
+    public String toString() {
+        return "Director{" +
+                "member=" + member +
+                ", position='" + position + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phoneMobile='" + phoneMobile + '\'' +
+                ", phoneCity='" + phoneCity + '\'' +
+                ", email='" + email + '\'' +
+                ", birthday=" + birthday +
+                ", changes='" + changes + '\'' +
+                '}';
     }
 }

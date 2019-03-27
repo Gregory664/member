@@ -2,7 +2,7 @@ package ru.src.logic.implementation;
 
 import org.hibernate.SessionFactory;
 import ru.src.logic.factory.HibernateUtils;
-import ru.src.model.Connection;
+import ru.src.entities.Connection;
 
 import javax.xml.stream.*;
 import javax.xml.stream.events.XMLEvent;

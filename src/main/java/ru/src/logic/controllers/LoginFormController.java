@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.factory.HibernateUtils;
 import ru.src.logic.implementation.MemberUtils;
-import ru.src.model.User;
+import ru.src.entities.User;
 
 import java.io.IOException;
 import java.util.Objects;

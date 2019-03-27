@@ -1,9 +1,10 @@
-package ru.src.model.General;
+package ru.src.entities.General;
 
-import ru.src.model.Member;
+import ru.src.entities.Member;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "GENERAL_INFORMATION")
@@ -88,9 +89,7 @@ public class GeneralInformation implements Serializable {
     @Column(name = "GENERAL_INFORMATION_CHANGES")
     private String changes;
 
-
-    private GeneralInformation() {
-
+    public GeneralInformation() {
     }
 
     public boolean isNewsletter() {
@@ -347,5 +346,75 @@ public class GeneralInformation implements Serializable {
 
     public void setChanges(String changes) {
         this.changes = changes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GeneralInformation that = (GeneralInformation) o;
+        return vedImport == that.vedImport &&
+                vedExport == that.vedExport &&
+                interactionOffline == that.interactionOffline &&
+                interactionOnline == that.interactionOnline &&
+                b2b == that.b2b &&
+                b2c == that.b2c &&
+                businessMissionVisiting == that.businessMissionVisiting &&
+                businessMissionRegional == that.businessMissionRegional &&
+                mkas == that.mkas &&
+                needForYoungPersonnel == that.needForYoungPersonnel &&
+                discounts == that.discounts &&
+                reliablePartners == that.reliablePartners &&
+                pilotProjects == that.pilotProjects &&
+                antiCorruptionCharter == that.antiCorruptionCharter &&
+                newsletter == that.newsletter &&
+                committees == that.committees &&
+                corporateMember == that.corporateMember &&
+                member.equals(that.member) &&
+                organizationForm.equals(that.organizationForm) &&
+                economicSector.equals(that.economicSector) &&
+                ownershipForm.equals(that.ownershipForm) &&
+                activityType.equals(that.activityType) &&
+                businessForm.equals(that.businessForm) &&
+                Objects.equals(investmentsTarget, that.investmentsTarget) &&
+                Objects.equals(investmentsSize, that.investmentsSize) &&
+                Objects.equals(changes, that.changes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(member, organizationForm, economicSector, ownershipForm, activityType, businessForm, vedImport, vedExport, investmentsTarget, investmentsSize, interactionOffline, interactionOnline, b2b, b2c, businessMissionVisiting, businessMissionRegional, mkas, needForYoungPersonnel, discounts, reliablePartners, pilotProjects, antiCorruptionCharter, newsletter, committees, corporateMember, changes);
+    }
+
+    @Override
+    public String toString() {
+        return "GeneralInformation{" +
+                "member=" + member +
+                ", organizationForm='" + organizationForm + '\'' +
+                ", economicSector='" + economicSector + '\'' +
+                ", ownershipForm='" + ownershipForm + '\'' +
+                ", activityType='" + activityType + '\'' +
+                ", businessForm='" + businessForm + '\'' +
+                ", vedImport=" + vedImport +
+                ", vedExport=" + vedExport +
+                ", investmentsTarget='" + investmentsTarget + '\'' +
+                ", investmentsSize='" + investmentsSize + '\'' +
+                ", interactionOffline=" + interactionOffline +
+                ", interactionOnline=" + interactionOnline +
+                ", b2b=" + b2b +
+                ", b2c=" + b2c +
+                ", businessMissionVisiting=" + businessMissionVisiting +
+                ", businessMissionRegional=" + businessMissionRegional +
+                ", mkas=" + mkas +
+                ", needForYoungPersonnel=" + needForYoungPersonnel +
+                ", discounts=" + discounts +
+                ", reliablePartners=" + reliablePartners +
+                ", pilotProjects=" + pilotProjects +
+                ", antiCorruptionCharter=" + antiCorruptionCharter +
+                ", newsletter=" + newsletter +
+                ", committees=" + committees +
+                ", corporateMember=" + corporateMember +
+                ", changes='" + changes + '\'' +
+                '}';
     }
 }
