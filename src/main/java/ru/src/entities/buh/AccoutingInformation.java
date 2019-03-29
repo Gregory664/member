@@ -68,15 +68,14 @@ public class AccoutingInformation implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AccoutingInformation that = (AccoutingInformation) o;
-        return member.equals(that.member) &&
-                ogrn.equals(that.ogrn) &&
+        return ogrn.equals(that.ogrn) &&
                 kpp.equals(that.kpp) &&
                 tin.equals(that.tin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(member, ogrn, kpp, tin);
+        return Objects.hash(ogrn, kpp, tin);
     }
 
     @Override

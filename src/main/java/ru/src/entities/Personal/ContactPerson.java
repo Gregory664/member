@@ -12,7 +12,7 @@ public class ContactPerson implements Serializable {
     @Column(name = "CONTACT_PERSON_ID", nullable = false)
     private String contactPersonId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Member.class)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
@@ -125,7 +125,6 @@ public class ContactPerson implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         ContactPerson that = (ContactPerson) o;
         return contactPersonId.equals(that.contactPersonId) &&
-                member.equals(that.member) &&
                 fullName.equals(that.fullName) &&
                 position.equals(that.position) &&
                 phoneMobile.equals(that.phoneMobile) &&
@@ -136,14 +135,14 @@ public class ContactPerson implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(contactPersonId, member, fullName, position, phoneMobile, phoneCity, email, changes);
+        return Objects.hash(contactPersonId, fullName, position, phoneMobile, phoneCity, email, changes);
     }
 
     @Override
     public String toString() {
         return "ContactPerson{" +
                 "contactPersonId='" + contactPersonId + '\'' +
-                ", member=" + member +
+                ", member=" + member.getMemberId() +
                 ", fullName='" + fullName + '\'' +
                 ", position='" + position + '\'' +
                 ", phoneMobile='" + phoneMobile + '\'' +

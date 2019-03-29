@@ -69,14 +69,13 @@ public class Debt implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Debt debt = (Debt) o;
         return status == debt.status &&
-                member.equals(debt.member) &&
                 Objects.equals(period, debt.period) &&
                 Objects.equals(comment, debt.comment);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(member, status, period, comment);
+        return Objects.hash(status, period, comment);
     }
 
     @Override

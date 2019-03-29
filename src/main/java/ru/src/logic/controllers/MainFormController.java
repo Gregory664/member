@@ -28,6 +28,7 @@ import ru.src.logic.controllers.invoice.CreateInvoiceController;
 import ru.src.logic.controllers.invoice.UpdateInvoiceController;
 import ru.src.logic.dto.Organizations;
 import ru.src.logic.factory.HibernateUtils;
+import ru.src.logic.factory.OrganizationFactory;
 import ru.src.logic.implementation.*;
 import ru.src.entities.Address.AddressActual;
 import ru.src.entities.Address.AddressLegal;
@@ -373,7 +374,7 @@ public class MainFormController {
     @FXML
     public Label label_currentPage;
 
-    static Organizations memberOrganizations = new Organizations();
+    private Organizations memberOrganizations = OrganizationFactory.getOrganization();
     private HashMap<String, Invoice> invoiceHashMap = new HashMap<>();
     private HashMap<String, ContactPerson> contactPersonHashMap = new HashMap<>();
     private HashMap<Integer, CheckBox> servicesCheckBoxMap = new HashMap<>();
@@ -879,9 +880,9 @@ public class MainFormController {
             findFormStage.setResizable(false);
             findFormStage.setTitle("Поиск");
 
-            FindFormController findFormController = findFormFXMLLoader.getController();
-            findFormController.setParams(table_members);
             findFormStage.showAndWait();
+            comboBox_pageSize.getSelectionModel().select(0);
+            memberOrganizations.refresh();
         } catch (IOException | IllegalStateException e) {
             MemberUtils.warningDialog("Ошибка инициализации формы поиска: " + e.getMessage()); //TODO write to log
         }
@@ -928,7 +929,6 @@ public class MainFormController {
     @FXML
     public void setPageSize() {
         Integer pageSize = comboBox_pageSize.getSelectionModel().getSelectedItem();
-        System.out.println("pageSize = " + pageSize);
         memberOrganizations.setPageSize(pageSize);
     }
 

@@ -12,11 +12,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
 import ru.src.logic.controllers.user.CreateUserController;
 import ru.src.logic.controllers.user.UpdateUserController;
 import ru.src.logic.factory.HibernateUtils;
+import ru.src.logic.factory.OrganizationFactory;
 import ru.src.logic.implementation.*;
 import ru.src.entities.User;
+
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,6 +57,7 @@ public class SettingsController {
     public MenuItem item_deleteUser;
 
     private boolean changeSettingFromMainForm = false;
+
     public void setChangeSettingFromMainForm(boolean changeSettingFromMainForm) {
         this.changeSettingFromMainForm = changeSettingFromMainForm;
     }
@@ -73,10 +77,11 @@ public class SettingsController {
 
         fillConnectionParams();
         checkCountOfUsers();
-    } 
+    }
+
     @FXML
-    public void saveConnection() {
-        if (HibernateUtils.isActive())  {
+    public void saveConnection(ActionEvent actionEvent) {
+        if (HibernateUtils.isActive()) {
             HibernateUtils.closeSessionFactory();
         }
 
@@ -88,10 +93,14 @@ public class SettingsController {
         );
 
         ConnectionUtils.activateConnection();
-        if (changeSettingFromMainForm) {
-            MainFormController.memberOrganizations.refresh();//TODO check this
+        if(HibernateUtils.isActive() && changeSettingFromMainForm) {
+            OrganizationFactory.getOrganization().refresh();//TODO check this
+            closeCurrentStage(actionEvent);
+        } else {
+            OrganizationFactory.getOrganization().clear();
         }
-    } 
+    }
+
     @FXML
     public void addUser() {
         FXMLLoader createUserFXMLLoader = new FXMLLoader();
@@ -107,7 +116,7 @@ public class SettingsController {
         }
 
         Stage createUserStage = new Stage();
-        createUserStage.setScene(new Scene(createUser));
+        createUserStage.setScene(new Scene(Objects.requireNonNull(createUser)));
         createUserStage.setResizable(false);
         createUserStage.setTitle("Добавление пользователя");
 
@@ -123,7 +132,8 @@ public class SettingsController {
                 MemberUtils.warningDialog("Возникла ошибка : \n" + e.getMessage());
             }
         }
-    } 
+    }
+
     @FXML
     public void editUser() {
         Parent updateUser = null;
@@ -152,7 +162,8 @@ public class SettingsController {
             DBConnection.updateUser(selectedUser);
             MemberUtils.informationDialog("Пользователь успешно обновлен!");
         }
-    } 
+    }
+
     @FXML
     public void deleteUser() {
         User selectedUser = table_users.getSelectionModel().getSelectedItem();
@@ -169,13 +180,15 @@ public class SettingsController {
             users.remove(selectedUser);
             MemberUtils.informationDialog("Пользователь успешно удален!");
         }
-    } 
+    }
+
     @FXML
     public void closeCurrentStage(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-    } 
+    }
+
     @FXML
     public void showPasswordChar() {
         if(!text_password.isVisible()) {

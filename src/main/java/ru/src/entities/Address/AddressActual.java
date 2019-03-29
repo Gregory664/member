@@ -160,8 +160,7 @@ public class AddressActual implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AddressActual that = (AddressActual) o;
-        return member.equals(that.member) &&
-                regionId.equals(that.regionId) &&
+        return regionId.equals(that.regionId) &&
                 regionName.equals(that.regionName) &&
                 index.equals(that.index) &&
                 town.equals(that.town) &&
@@ -174,13 +173,13 @@ public class AddressActual implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(member, regionId, regionName, index, town, street, house, office, district, changes);
+        return Objects.hash(regionId, regionName, index, town, street, house, office, district, changes);
     }
 
     @Override
     public String toString() {
         return "AddressActual{" +
-                "member=" + member +
+                "member=" + member.getMemberId() +
                 ", regionId=" + regionId +
                 ", regionName='" + regionName + '\'' +
                 ", index=" + index +

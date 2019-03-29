@@ -150,7 +150,7 @@ public class SocialNetworks implements Serializable {
     @Override
     public String toString() {
         return "SocialNetworks{" +
-                "memberId=" + memberId +
+                "memberId=" + memberId.getMemberId() +
                 ", vkontakte='" + vkontakte + '\'' +
                 ", facebook='" + facebook + '\'' +
                 ", telegram='" + telegram + '\'' +

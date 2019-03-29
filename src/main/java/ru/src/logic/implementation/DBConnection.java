@@ -7,10 +7,15 @@ import org.hibernate.query.Query;
 import ru.src.entities.DateOfCreationOrganization;
 import ru.src.entities.DirectorCalendar;
 import ru.src.entities.FindMember;
+import ru.src.entities.Personal.Director;
+import ru.src.entities.Personal.Relate;
+import ru.src.entities.buh.Debt;
 import ru.src.logic.factory.HibernateUtils;
 import ru.src.entities.*;
 import ru.src.entities.buh.Invoice;
 
+import javax.persistence.criteria.*;
+import javax.persistence.metamodel.EntityType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,11 +116,6 @@ public class DBConnection {
             Query query = session.createQuery("from Member");
             members = query.list();
             transaction.commit();
-            for (Member member : members) {
-                member.getInvoices().isEmpty();
-                member.getContactPersons().isEmpty();
-                member.getServices().isEmpty();
-            }
         } catch (HibernateException e) {
             Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetAllMembersException
@@ -133,16 +133,90 @@ public class DBConnection {
             query.setFirstResult((pageNumber - 1) * pageSize);
             query.setMaxResults(pageSize);
             memberListPage = query.list();
-            for (Member member : memberListPage) {
-                member.getInvoices().isEmpty();
-                member.getContactPersons().isEmpty();
-                member.getServices().isEmpty();
-            }
         } catch (HibernateException e) {
             Objects.requireNonNull(transaction).rollback();
             //TODO throw new GetMemberListPageException
         }
         return memberListPage;
+    }
+
+    public static ObservableList<Member> getMemberListBySearchParameter(SearchParameter parameter, String findParams) {
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        ObservableList<Member> memberList = FXCollections.observableArrayList();
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = sessionFactory.getCriteriaBuilder();
+            CriteriaQuery<Member> memberCriteriaQuery = criteriaBuilder.createQuery(Member.class);
+            EntityType<Member> memberEntityType = session.getEntityManagerFactory().getMetamodel().entity(Member.class);
+            EntityType<Relate> relateEntityType = session.getEntityManagerFactory().getMetamodel().entity(Relate.class);
+            EntityType<Director> directorEntityType = session.getEntityManagerFactory().getMetamodel().entity(Director.class);
+            Root<Member> memberRoot = memberCriteriaQuery.from(Member.class);
+            Root<Relate> relateRoot;
+            Root<Director> directorRoot;
+
+            switch (parameter) {
+                case ID:
+                    memberCriteriaQuery.select(memberRoot).where(
+                            criteriaBuilder.like(
+                                    criteriaBuilder.lower(
+                                            memberRoot.get(memberEntityType.getSingularAttribute("memberId", String.class))
+                                    ), "%" + findParams.toLowerCase() + "%"
+                            ));
+                    memberList.addAll(session.createQuery(memberCriteriaQuery).getResultList());
+                    break;
+                case FULL_NAME:
+                    relateRoot = memberCriteriaQuery.from(Relate.class);
+                    memberCriteriaQuery.select(memberRoot).where(
+                            criteriaBuilder.and(
+                                    criteriaBuilder.equal(
+                                            memberRoot.get("memberId"), relateRoot.get("member"))
+                                    ),
+                                    criteriaBuilder.like(
+                                            criteriaBuilder.lower(
+                                                    relateRoot.get(relateEntityType.getSingularAttribute("fullName", String.class))
+                                            ), "%" + findParams.toLowerCase() + "%"
+                                    ));
+                    memberList.addAll(session.createQuery(memberCriteriaQuery).getResultList());
+                    break;
+                case SHORT_NAME:
+                   memberCriteriaQuery.select(memberRoot).where(
+                            criteriaBuilder.like(
+                                    criteriaBuilder.lower(
+                                            memberRoot.get(memberEntityType.getSingularAttribute("memberShortName", String.class))
+                                    ), "%" + findParams.toLowerCase() + "%"
+                            ));
+                    memberList.addAll(session.createQuery(memberCriteriaQuery).getResultList());
+                    break;
+                case DIRECTOR_FULL_NAME:
+                    directorRoot = memberCriteriaQuery.from(Director.class);
+                    memberCriteriaQuery.select(memberRoot).where(
+                            criteriaBuilder.and(
+                                    criteriaBuilder.equal(
+                                            memberRoot.get("memberId"), directorRoot.get("member"))
+                            ),
+                            criteriaBuilder.like(
+                                    criteriaBuilder.lower(
+                                            directorRoot.get(directorEntityType.getSingularAttribute("fullName", String.class))
+                                    ), "%" + findParams.toLowerCase() + "%"
+                            ));
+                    memberList.addAll(session.createQuery(memberCriteriaQuery).getResultList());
+                    break;
+                case SERVICES:
+                    relateRoot = memberCriteriaQuery.from(Relate.class);
+                    memberCriteriaQuery.select(memberRoot).where(
+                            criteriaBuilder.and(
+                                    criteriaBuilder.equal(
+                                            memberRoot.get("memberId"), relateRoot.get("member"))
+                            ),
+                            criteriaBuilder.like(
+                                    criteriaBuilder.lower(
+                                            relateRoot.get(relateEntityType.getSingularAttribute("services", String.class))
+                                    ), "%" + findParams.toLowerCase() + "%"
+                            ));
+                    memberList.addAll(session.createQuery(memberCriteriaQuery).getResultList());
+                    break;
+            }
+            return memberList;
+        }
     }
 
     public static boolean isInvoiceExists(String id) {

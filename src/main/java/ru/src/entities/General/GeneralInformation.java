@@ -370,7 +370,6 @@ public class GeneralInformation implements Serializable {
                 newsletter == that.newsletter &&
                 committees == that.committees &&
                 corporateMember == that.corporateMember &&
-                member.equals(that.member) &&
                 organizationForm.equals(that.organizationForm) &&
                 economicSector.equals(that.economicSector) &&
                 ownershipForm.equals(that.ownershipForm) &&
@@ -383,13 +382,13 @@ public class GeneralInformation implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(member, organizationForm, economicSector, ownershipForm, activityType, businessForm, vedImport, vedExport, investmentsTarget, investmentsSize, interactionOffline, interactionOnline, b2b, b2c, businessMissionVisiting, businessMissionRegional, mkas, needForYoungPersonnel, discounts, reliablePartners, pilotProjects, antiCorruptionCharter, newsletter, committees, corporateMember, changes);
+        return Objects.hash(organizationForm, economicSector, ownershipForm, activityType, businessForm, vedImport, vedExport, investmentsTarget, investmentsSize, interactionOffline, interactionOnline, b2b, b2c, businessMissionVisiting, businessMissionRegional, mkas, needForYoungPersonnel, discounts, reliablePartners, pilotProjects, antiCorruptionCharter, newsletter, committees, corporateMember, changes);
     }
 
     @Override
     public String toString() {
         return "GeneralInformation{" +
-                "member=" + member +
+                "member=" + member.getMemberId() +
                 ", organizationForm='" + organizationForm + '\'' +
                 ", economicSector='" + economicSector + '\'' +
                 ", ownershipForm='" + ownershipForm + '\'' +

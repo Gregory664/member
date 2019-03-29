@@ -89,8 +89,7 @@ public class Contact implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contact contact = (Contact) o;
-        return member.equals(contact.member) &&
-                phone.equals(contact.phone) &&
+        return phone.equals(contact.phone) &&
                 Objects.equals(fax, contact.fax) &&
                 Objects.equals(site, contact.site) &&
                 email.equals(contact.email) &&
@@ -99,7 +98,7 @@ public class Contact implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(member, phone, fax, site, email, changes);
+        return Objects.hash(phone, fax, site, email, changes);
     }
 
     @Override

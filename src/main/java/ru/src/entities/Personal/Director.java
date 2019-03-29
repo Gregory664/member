@@ -120,8 +120,7 @@ public class Director implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Director director = (Director) o;
-        return member.equals(director.member) &&
-                position.equals(director.position) &&
+        return position.equals(director.position) &&
                 fullName.equals(director.fullName) &&
                 phoneMobile.equals(director.phoneMobile) &&
                 Objects.equals(phoneCity, director.phoneCity) &&
@@ -132,13 +131,13 @@ public class Director implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(member, position, fullName, phoneMobile, phoneCity, email, birthday, changes);
+        return Objects.hash(position, fullName, phoneMobile, phoneCity, email, birthday, changes);
     }
 
     @Override
     public String toString() {
         return "Director{" +
-                "member=" + member +
+                "member=" + member.getMemberId() +
                 ", position='" + position + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", phoneMobile='" + phoneMobile + '\'' +

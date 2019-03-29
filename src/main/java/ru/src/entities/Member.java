@@ -1,5 +1,7 @@
 package ru.src.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import ru.src.entities.Address.AddressActual;
 import ru.src.entities.Address.AddressLegal;
 import ru.src.entities.General.GeneralInformation;
@@ -49,7 +51,8 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private AccoutingInformation accoutingInformation;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "member", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "member", orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Invoice> invoices;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -60,7 +63,8 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private Contact contact;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "member", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "member", orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<ContactPerson> contactPersons;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -75,13 +79,15 @@ public class Member {
     @JoinColumn(name = "MEMBER_ID")
     private SocialNetworks socialNetworks;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "MEMBER_SERVICES",
             joinColumns = {@JoinColumn(name = "MEMBER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "SERVICES_ID")})
     private List<Services> services;
 
-    public Member() { }
+    public Member() {
+    }
 
     public Member(String memberId, Integer memberSerial, String memberStatus, LocalDate memberDate, String memberShortName) {
         this.memberId = memberId;
@@ -233,7 +239,7 @@ public class Member {
         if (o == null || getClass() != o.getClass()) return false;
         Member member = (Member) o;
         return memberId.equals(member.memberId) &&
-                Objects.equals(memberSerial, member.memberSerial) &&
+                memberSerial.equals(member.memberSerial) &&
                 memberStatus.equals(member.memberStatus) &&
                 memberDate.equals(member.memberDate) &&
                 memberShortName.equals(member.memberShortName) &&
@@ -241,14 +247,14 @@ public class Member {
                 addressLegal.equals(member.addressLegal) &&
                 debt.equals(member.debt) &&
                 accoutingInformation.equals(member.accoutingInformation) &&
-                invoices.equals(member.invoices) &&
+                Objects.equals(invoices, member.invoices) &&
                 generalInformation.equals(member.generalInformation) &&
                 contact.equals(member.contact) &&
-                contactPersons.equals(member.contactPersons) &&
+                Objects.equals(contactPersons, member.contactPersons) &&
                 director.equals(member.director) &&
                 relate.equals(member.relate) &&
                 socialNetworks.equals(member.socialNetworks) &&
-                services.equals(member.services);
+                Objects.equals(services, member.services);
     }
 
     @Override

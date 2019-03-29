@@ -15,7 +15,7 @@ public class Invoice implements Serializable {
     @Column(name = "INVOICE_ID", nullable = false)
     private String invoiceId;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Member.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Member.class)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     public Member member;
 
@@ -156,7 +156,6 @@ public class Invoice implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Invoice invoice = (Invoice) o;
         return invoiceId.equals(invoice.invoiceId) &&
-                member.equals(invoice.member) &&
                 invoiceNumber.equals(invoice.invoiceNumber) &&
                 dateCreation.equals(invoice.dateCreation) &&
                 statusReceiving.equals(invoice.statusReceiving) &&
@@ -170,14 +169,14 @@ public class Invoice implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(invoiceId, member, invoiceNumber, dateCreation, statusReceiving, dateReceiving, statusPayment, orderId, orderDate, price, comment);
+        return Objects.hash(invoiceId, invoiceNumber, dateCreation, statusReceiving, dateReceiving, statusPayment, orderId, orderDate, price, comment);
     }
 
     @Override
     public String toString() {
         return "Invoice{" +
                 "invoiceId='" + invoiceId + '\'' +
-                ", member=" + member +
+                ", member=" + member.getMemberId() +
                 ", invoiceNumber=" + invoiceNumber +
                 ", dateCreation=" + dateCreation +
                 ", statusReceiving=" + statusReceiving +

@@ -92,8 +92,7 @@ public class Relate implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Relate relate = (Relate) o;
-        return member.equals(relate.member) &&
-                fullName.equals(relate.fullName) &&
+        return fullName.equals(relate.fullName) &&
                 size.equals(relate.size) &&
                 Objects.equals(dateOfCreation, relate.dateOfCreation) &&
                 services.equals(relate.services) &&
@@ -102,13 +101,13 @@ public class Relate implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(member, fullName, size, dateOfCreation, services, changes);
+        return Objects.hash(fullName, size, dateOfCreation, services, changes);
     }
 
     @Override
     public String toString() {
         return "Relate{" +
-                "member=" + member +
+                "member=" + member.getMemberId() +
                 ", fullName='" + fullName + '\'' +
                 ", size=" + size +
                 ", dateOfCreation=" + dateOfCreation +

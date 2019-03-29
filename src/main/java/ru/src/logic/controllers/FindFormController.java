@@ -1,12 +1,11 @@
 package ru.src.logic.controllers;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import ru.src.logic.implementation.ListUtils;
-import ru.src.entities.Member;
 
-import java.util.ArrayList;
+import ru.src.logic.factory.OrganizationFactory;
+import ru.src.logic.implementation.ListUtils;
+import ru.src.logic.implementation.SearchParameter;
 
 public class FindFormController {
     @FXML
@@ -16,139 +15,52 @@ public class FindFormController {
     @FXML
     public TextField text_searchText;
     @FXML
-    public Button btn_last;
-    @FXML
-    public Button btn_next;
-    @FXML
     public Label label_count;
-
-    private ObservableList<String> paramsList = ListUtils.getFindParamsList();
-    private ArrayList<Integer> findParams = new ArrayList<>();
-
-    private TableView tableView;
-    private int findIndex = 0;
-
-    void setParams(TableView tableView) {
-        this.tableView = tableView;
-    }
+    @FXML
+    public Button btn_clear;
 
     @FXML
     public void initialize() {
-        comboBox_params.setItems(paramsList);
-        btn_last.setDisable(true);
-        btn_next.setDisable(true);
+        comboBox_params.setItems(ListUtils.getFindParamsList());
         btn_search.setDisable(true);
         label_count.setText(null);
-
     }
+
     @FXML
     public void search() {
-
-        findParams.clear();
-        int searchIndex = 0;
-        findIndex = 0;
-
-        switch (comboBox_params.getSelectionModel().getSelectedIndex()) {
-            case 0:
-                for (Object member : tableView.getItems()) {
-                    if (member instanceof Member) {
-                        String memberId = ((Member) member).getMemberId();
-                        if (memberId.contains(text_searchText.getText())) {
-                            findParams.add(searchIndex);
-                        }
-                        ++searchIndex;
-                    }
-                }
-                break;
-            case 1:
-                for (Object member : tableView.getItems()) {
-                    if (member instanceof Member) {
-                        String memberFullName = ((Member) member).getRelate().getFullName().toLowerCase();
-                        if (memberFullName.contains(text_searchText.getText().toLowerCase())) {
-                            findParams.add(searchIndex);
-                        }
-                        ++searchIndex;
-                    }
-                }
-                break;
-            case 2:
-                for (Object member : tableView.getItems()) {
-                    if (member instanceof Member) {
-                        String memberShortName = ((Member) member).getMemberShortName().toLowerCase();
-                        if (memberShortName.contains(text_searchText.getText().toLowerCase())) {
-                            findParams.add(searchIndex);
-                        }
-                        ++searchIndex;
-                    }
-                }
-                break;
-            case 3:
-                for (Object member : tableView.getItems()) {
-                    if (member instanceof Member) {
-                        String memberDirectorFullName = ((Member) member).getDirector().getFullName().toLowerCase();
-                        if (memberDirectorFullName.contains(text_searchText.getText().toLowerCase())) {
-                            findParams.add(searchIndex);
-                        }
-                        ++searchIndex;
-                    }
-                }
-                break;
-            case 4:
-                for (Object member : tableView.getItems()) {
-                    if (member instanceof Member) {
-                        String services = ((Member) member).getRelate().getServices().toLowerCase();
-                        if (services.contains(text_searchText.getText().toLowerCase())) {
-                            findParams.add(searchIndex);
-                        }
-                        ++searchIndex;
-                    }
-                }
-                break;
-        }
-        if (findParams.size() > 1) {
-            btn_last.setDisable(false);
-            btn_next.setDisable(false);
+        if(!text_searchText.getText().isEmpty()) {
+            switch (comboBox_params.getSelectionModel().getSelectedItem()) {
+                case "Номер билета":
+                    OrganizationFactory.getOrganization().refreshBySearchParam(SearchParameter.ID, text_searchText.getText());
+                    break;
+                case "Полное название":
+                    OrganizationFactory.getOrganization().refreshBySearchParam(SearchParameter.FULL_NAME, text_searchText.getText());
+                    break;
+                case "Сокращенное название":
+                    OrganizationFactory.getOrganization().refreshBySearchParam(SearchParameter.SHORT_NAME, text_searchText.getText());
+                    break;
+                case "ФИО руководителя":
+                    OrganizationFactory.getOrganization().refreshBySearchParam(SearchParameter.DIRECTOR_FULL_NAME, text_searchText.getText());
+                    break;
+                case "Деятельность/Услуги":
+                    OrganizationFactory.getOrganization().refreshBySearchParam(SearchParameter.SERVICES, text_searchText.getText());
+                    break;
+            }
         } else {
-            btn_last.setDisable(true);
-            btn_next.setDisable(true);
-            tableView.getSelectionModel().clearSelection();
+            OrganizationFactory.getOrganization().getMembers().clear();
+            label_count.setText("0");
         }
-
-        label_count.setText(String.valueOf(findParams.size()));
-        if (findParams.size() > 0) {
-            int selectRow = findParams.get(0);
-            tableView.getSelectionModel().select(selectRow);
-            checkRowCount();
-        }
-    }
-    @FXML
-    public void next() {
-        tableView.getSelectionModel().clearSelection();
-        ++findIndex;
-        if (findIndex >= findParams.size()) {
-            findIndex = 0;
-        }
-        int selectRow = findParams.get(findIndex);
-        tableView.getSelectionModel().select(selectRow);
-        checkRowCount();
-    }
-    @FXML
-    public void last() {
-        tableView.getSelectionModel().clearSelection();
-        --findIndex;
-        if (findIndex < 0) {
-            findIndex = findParams.size() - 1;
-        }
-        int selectRow = findParams.get(findIndex);
-        tableView.getSelectionModel().select(selectRow);
-        checkRowCount();
+        label_count.setText(String.valueOf(OrganizationFactory.getOrganization().getFullSize()));
     }
 
-    private void checkRowCount() {
-        label_count.setText(findParams.size() + " (" + (findIndex + 1) + " из " + findParams.size() + ")");
-    }
     @FXML
     public void selectParams() {
         btn_search.setDisable(false);
+    }
+
+    public void clearOrganization() {
+        label_count.setText("0");
+        text_searchText.clear();
+        OrganizationFactory.getOrganization().refresh();
     }
 }
