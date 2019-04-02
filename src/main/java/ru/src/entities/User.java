@@ -1,11 +1,10 @@
-package ru.src.model;
+package ru.src.entities;
 
 import ru.src.logic.implementation.MemberUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Objects;
+
 @Entity
 @Table(name = "USER")
 public class User {
@@ -21,7 +20,7 @@ public class User {
     @Column(name = "USER_POSITION", nullable = false)
     private String position;
 
-    private User() { }
+    public User() { }
 
     public User(String login, String password, Boolean isAdmin, String fullName, String position) {
         this.login = login;
@@ -69,6 +68,23 @@ public class User {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return login.equals(user.login) &&
+                password.equals(user.password) &&
+                isAdmin.equals(user.isAdmin) &&
+                fullName.equals(user.fullName) &&
+                position.equals(user.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login, password, isAdmin, fullName, position);
     }
 
     @Override

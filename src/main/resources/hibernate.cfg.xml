@@ -6,14 +6,8 @@
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <!--<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/TPP_MEMBERS?serverTimezone=UTC</property>-->
-        <!--<property name="hibernate.connection.username">root</property>-->
-        <!--<property name="hibernate.connection.password">gregory27041996</property>-->
-        <!--<property name="hibernate.connection.url">jdbc:mysql://192.168.0.1:3306/TPP_MEMBERS?serverTimezone=UTC</property>-->
-        <!--<property name="hibernate.connection.username">gregory</property>-->
-        <!--<property name="hibernate.connection.password">gregory27041996</property>-->
 
-        <property name="show_sql">true</property>
+        <property name="show_sql">false</property>
         <property name="format_sql">true</property>
         <property name="use_sql_comments">false</property>
 
@@ -21,28 +15,24 @@
         <property name="hibernate.connection.characterEncoding">utf8</property>
         <property name="hibernate.connection.useUnicode">true</property>
 
-        <mapping class="ru.src.model.Member"></mapping>
+        <mapping class="ru.src.entities.Member"></mapping>
 
-        <mapping class="ru.src.model.buh.Debt"></mapping>
-        <mapping class="ru.src.model.buh.AccoutingInformation"></mapping>
-        <mapping class="ru.src.model.buh.Invoice"></mapping>
+        <mapping class="ru.src.entities.buh.Debt"></mapping>
+        <mapping class="ru.src.entities.buh.AccoutingInformation"></mapping>
+        <mapping class="ru.src.entities.buh.Invoice"></mapping>
 
-        <mapping class="ru.src.model.General.GeneralInformation"></mapping>
+        <mapping class="ru.src.entities.General.GeneralInformation"></mapping>
 
-        <mapping class="ru.src.model.Personal.Contact"></mapping>
-        <mapping class="ru.src.model.Personal.ContactPerson"></mapping>
-        <mapping class="ru.src.model.Personal.Director"></mapping>
-        <mapping class="ru.src.model.Personal.Relate"></mapping>
+        <mapping class="ru.src.entities.Personal.Contact"></mapping>
+        <mapping class="ru.src.entities.Personal.ContactPerson"></mapping>
+        <mapping class="ru.src.entities.Personal.Director"></mapping>
+        <mapping class="ru.src.entities.Personal.Relate"></mapping>
 
-        <mapping class="ru.src.model.Address.AddressActual"></mapping>
-        <mapping class="ru.src.model.Address.AddressLegal"></mapping>
-        <mapping class="ru.src.model.SocialNetworks"></mapping>
-        <mapping class="ru.src.model.Services"></mapping>
+        <mapping class="ru.src.entities.Address.AddressActual"></mapping>
+        <mapping class="ru.src.entities.Address.AddressLegal"></mapping>
+        <mapping class="ru.src.entities.SocialNetworks"></mapping>
+        <mapping class="ru.src.entities.Services"></mapping>
 
-        <mapping class="ru.src.model.User"></mapping>
-
-
-
-
+        <mapping class="ru.src.entities.User"></mapping>
     </session-factory>
 </hibernate-configuration>

@@ -8,9 +8,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.ListUtils;
-import ru.src.model.DateOfCreationOrganization;
-import ru.src.model.DirectorCalendar;
-import ru.src.model.Member;
+import ru.src.entities.DateOfCreationOrganization;
+import ru.src.entities.DirectorCalendar;
+import ru.src.entities.Member;
 import java.time.LocalDate;
 import java.util.Optional;
 

@@ -17,7 +17,7 @@ import ru.src.logic.implementation.DBConnection;
 import ru.src.logic.implementation.ListUtils;
 import ru.src.logic.implementation.MemberUtils;
 import ru.src.logic.implementation.PDFUtils;
-import ru.src.model.FindMember;
+import ru.src.entities.FindMember;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -617,7 +617,7 @@ public class SelectController {
     @FXML
     public void search() {
         list.clear();
-        list.addAll(DBConnection.getQueryList(getResultQuery()));
+        list.addAll(DBConnection.getFindMembers(getResultQuery()));
         table_select.setItems(list);
     }
 

@@ -1,7 +1,8 @@
-package ru.src.model;
+package ru.src.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "SOCIAL_NETWORKS")
@@ -38,11 +39,11 @@ public class SocialNetworks implements Serializable {
     @Column(name = "SOCIAL_NETWORKS_YOUTUBE")
     private String youtube;
 
+    public SocialNetworks() { }
+
     public SocialNetworks(Member memberId) {
         this.memberId = memberId;
     }
-
-    private SocialNetworks() { }
 
     public Member getMemberId() {
         return memberId;
@@ -122,5 +123,43 @@ public class SocialNetworks implements Serializable {
 
     public void setYoutube(String youtube) {
         this.youtube = youtube;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SocialNetworks that = (SocialNetworks) o;
+        return memberId.equals(that.memberId) &&
+                Objects.equals(vkontakte, that.vkontakte) &&
+                Objects.equals(facebook, that.facebook) &&
+                Objects.equals(telegram, that.telegram) &&
+                Objects.equals(whatsapp, that.whatsapp) &&
+                Objects.equals(viber, that.viber) &&
+                Objects.equals(skype, that.skype) &&
+                Objects.equals(instagram, that.instagram) &&
+                Objects.equals(twitter, that.twitter) &&
+                Objects.equals(youtube, that.youtube);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(memberId, vkontakte, facebook, telegram, whatsapp, viber, skype, instagram, twitter, youtube);
+    }
+
+    @Override
+    public String toString() {
+        return "SocialNetworks{" +
+                "memberId=" + memberId.getMemberId() +
+                ", vkontakte='" + vkontakte + '\'' +
+                ", facebook='" + facebook + '\'' +
+                ", telegram='" + telegram + '\'' +
+                ", whatsapp='" + whatsapp + '\'' +
+                ", viber='" + viber + '\'' +
+                ", skype='" + skype + '\'' +
+                ", instagram='" + instagram + '\'' +
+                ", twitter='" + twitter + '\'' +
+                ", youtube='" + youtube + '\'' +
+                '}';
     }
 }

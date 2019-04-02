@@ -6,7 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.MemberUtils;
-import ru.src.model.User;
+import ru.src.entities.User;
 
 import java.util.HashSet;
 

@@ -1,8 +1,9 @@
-package ru.src.model;
+package ru.src.entities;
 
 import javafx.fxml.FXML;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class DateOfCreationOrganization {
     @FXML
@@ -40,5 +41,29 @@ public class DateOfCreationOrganization {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DateOfCreationOrganization that = (DateOfCreationOrganization) o;
+        return dateOfCreation.equals(that.dateOfCreation) &&
+                memberId.equals(that.memberId) &&
+                shortName.equals(that.shortName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateOfCreation, memberId, shortName);
+    }
+
+    @Override
+    public String toString() {
+        return "DateOfCreationOrganization{" +
+                "dateOfCreation=" + dateOfCreation +
+                ", memberId='" + memberId + '\'' +
+                ", shortName='" + shortName + '\'' +
+                '}';
     }
 }

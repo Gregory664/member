@@ -9,8 +9,8 @@ import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import ru.src.logic.implementation.DBConnection;
-import ru.src.logic.implementation.Organizations;
-import ru.src.model.Member;
+import ru.src.logic.dto.Organizations;
+import ru.src.entities.Member;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

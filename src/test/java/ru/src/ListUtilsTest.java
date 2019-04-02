@@ -7,7 +7,7 @@ import javafx.scene.control.CheckBox;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import ru.src.logic.implementation.ListUtils;
-import ru.src.model.User;
+import ru.src.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +36,7 @@ public class ListUtilsTest {
         assertEquals(REGION_MAP, ListUtils.getRegionMap());
         assertEquals(PAYMENT_LIST, ListUtils.getPayment());
         assertEquals(RECEIVE_LIST, ListUtils.getReceive());
+        assertEquals(PAGE_SIZE, ListUtils.getPageSize());
     }
 
     @Test

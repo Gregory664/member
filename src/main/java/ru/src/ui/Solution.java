@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ru.src.logic.implementation.ConnectionUtils;
-import ru.src.logic.implementation.HibernateUtils;
+import ru.src.logic.factory.HibernateUtils;
 
 public class Solution extends Application {
 

@@ -6,8 +6,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.pdfbox.io.IOUtils;
-import ru.src.model.FindMember;
-import ru.src.model.Member;
+import ru.src.entities.FindMember;
+import ru.src.entities.Member;
 
 import java.io.*;
 import java.time.LocalDate;

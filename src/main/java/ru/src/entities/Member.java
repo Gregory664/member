@@ -1,15 +1,17 @@
-package ru.src.model;
+package ru.src.entities;
 
-import ru.src.model.Address.AddressActual;
-import ru.src.model.Address.AddressLegal;
-import ru.src.model.General.GeneralInformation;
-import ru.src.model.Personal.Contact;
-import ru.src.model.Personal.ContactPerson;
-import ru.src.model.Personal.Director;
-import ru.src.model.Personal.Relate;
-import ru.src.model.buh.AccoutingInformation;
-import ru.src.model.buh.Debt;
-import ru.src.model.buh.Invoice;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import ru.src.entities.Address.AddressActual;
+import ru.src.entities.Address.AddressLegal;
+import ru.src.entities.General.GeneralInformation;
+import ru.src.entities.Personal.Contact;
+import ru.src.entities.Personal.ContactPerson;
+import ru.src.entities.Personal.Director;
+import ru.src.entities.Personal.Relate;
+import ru.src.entities.buh.AccoutingInformation;
+import ru.src.entities.buh.Debt;
+import ru.src.entities.buh.Invoice;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -17,7 +19,6 @@ import java.util.*;
 @Entity
 @Table(name = "MEMBER")
 public class Member {
-
     @Id
     @Column(name = "MEMBER_ID", nullable = false, length = 10)
     private String memberId;
@@ -34,56 +35,58 @@ public class Member {
     @Column(name = "MEMBER_SHORT_NAME", nullable = false)
     private String memberShortName;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private AddressActual addressActual;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private AddressLegal addressLegal;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private Debt debt;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private AccoutingInformation accoutingInformation;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="member", orphanRemoval = true)
-    public List<Invoice> invoices;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "member", orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Invoice> invoices;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private GeneralInformation generalInformation;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private Contact contact;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,  mappedBy="member", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "member", orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<ContactPerson> contactPersons;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private Director director;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private Relate relate;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBER_ID")
     private SocialNetworks socialNetworks;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name = "MEMBER_SERVICES",
-            joinColumns = { @JoinColumn(name = "MEMBER_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "SERVICES_ID")})
+            joinColumns = {@JoinColumn(name = "MEMBER_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "SERVICES_ID")})
     private List<Services> services;
 
-    private Member() {
-
+    public Member() {
     }
 
     public Member(String memberId, Integer memberSerial, String memberStatus, LocalDate memberDate, String memberShortName) {
@@ -228,5 +231,57 @@ public class Member {
 
     public void setSocialNetworks(SocialNetworks socialNetworks) {
         this.socialNetworks = socialNetworks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Member member = (Member) o;
+        return memberId.equals(member.memberId) &&
+                memberSerial.equals(member.memberSerial) &&
+                memberStatus.equals(member.memberStatus) &&
+                memberDate.equals(member.memberDate) &&
+                memberShortName.equals(member.memberShortName) &&
+                addressActual.equals(member.addressActual) &&
+                addressLegal.equals(member.addressLegal) &&
+                debt.equals(member.debt) &&
+                accoutingInformation.equals(member.accoutingInformation) &&
+                Objects.equals(invoices, member.invoices) &&
+                generalInformation.equals(member.generalInformation) &&
+                contact.equals(member.contact) &&
+                Objects.equals(contactPersons, member.contactPersons) &&
+                director.equals(member.director) &&
+                relate.equals(member.relate) &&
+                socialNetworks.equals(member.socialNetworks) &&
+                Objects.equals(services, member.services);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(memberId, memberSerial, memberStatus, memberDate, memberShortName, addressActual, addressLegal, debt, accoutingInformation, invoices, generalInformation, contact, contactPersons, director, relate, socialNetworks, services);
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberId='" + memberId + '\'' +
+                ", memberSerial=" + memberSerial +
+                ", memberStatus='" + memberStatus + '\'' +
+                ", memberDate=" + memberDate +
+                ", memberShortName='" + memberShortName + '\'' +
+                ", addressActual=" + addressActual +
+                ", addressLegal=" + addressLegal +
+                ", debt=" + debt +
+                ", accoutingInformation=" + accoutingInformation +
+                ", invoices=" + invoices +
+                ", generalInformation=" + generalInformation +
+                ", contact=" + contact +
+                ", contactPersons=" + contactPersons +
+                ", director=" + director +
+                ", relate=" + relate +
+                ", socialNetworks=" + socialNetworks +
+                ", services=" + services +
+                '}';
     }
 }

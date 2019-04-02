@@ -1,13 +1,13 @@
-package ru.src.model.Personal;
+package ru.src.entities.Personal;
 
-import ru.src.model.Member;
+import ru.src.entities.Member;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "CONTACT")
 public class Contact implements Serializable {
-
     @Id
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
@@ -28,17 +28,13 @@ public class Contact implements Serializable {
     @Column(name = "CONTACT_CHANGES")
     private String changes;
 
-
-    private Contact() {
-
-    }
+    public Contact() { }
 
     public Contact(Member member, String phone, String email) {
         this.member = member;
         this.phone = phone;
         this.email = email;
     }
-
 
     public Member getMember() {
         return member;
@@ -86,6 +82,23 @@ public class Contact implements Serializable {
 
     public void setChanges(String changes) {
         this.changes = changes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return phone.equals(contact.phone) &&
+                Objects.equals(fax, contact.fax) &&
+                Objects.equals(site, contact.site) &&
+                email.equals(contact.email) &&
+                Objects.equals(changes, contact.changes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(phone, fax, site, email, changes);
     }
 
     @Override

@@ -22,6 +22,7 @@ public class ListConstants {
     public static final ObservableList<String> FIND_PARAMS_LIST = FXCollections.observableArrayList();
     public static final ObservableList<String> PAYMENT_LIST = FXCollections.observableArrayList();
     public static final ObservableList<String> RECEIVE_LIST = FXCollections.observableArrayList();
+    public static final ObservableList<Integer> PAGE_SIZE = FXCollections.observableArrayList();
 
     static {
         MEMBER_STATUS_LIST.add("Актуально стабильно");
@@ -244,5 +245,10 @@ public class ListConstants {
 
         RECEIVE_LIST.add("Получен");
         RECEIVE_LIST.add("Не получен");
+
+        PAGE_SIZE.add(10);
+        PAGE_SIZE.add(20);
+        PAGE_SIZE.add(50);
+        PAGE_SIZE.add(100);
     }
 }

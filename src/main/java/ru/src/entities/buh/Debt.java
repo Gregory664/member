@@ -1,14 +1,14 @@
-package ru.src.model.buh;
+package ru.src.entities.buh;
 
-import ru.src.model.Member;
+import ru.src.entities.Member;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "DEBT")
 public class Debt implements Serializable {
-
     @Id
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
@@ -23,22 +23,13 @@ public class Debt implements Serializable {
     @Column(name = "DEBT_COMMENT")
     private String comment;
 
-
-    private Debt() {
-
+    public Debt() {
     }
 
     public Debt(Member member, boolean status) {
         this.member = member;
         this.status = status;
     }
-
-    public Debt(Member member, boolean status, String period) {
-        this.member = member;
-        this.status = status;
-        this.period = period;
-    }
-
 
     public Member getMember() {
         return member;
@@ -72,6 +63,20 @@ public class Debt implements Serializable {
         this.comment = comment;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Debt debt = (Debt) o;
+        return status == debt.status &&
+                Objects.equals(period, debt.period) &&
+                Objects.equals(comment, debt.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, period, comment);
+    }
 
     @Override
     public String toString() {

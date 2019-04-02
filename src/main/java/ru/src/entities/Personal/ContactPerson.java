@@ -1,18 +1,18 @@
-package ru.src.model.Personal;
+package ru.src.entities.Personal;
 
-import ru.src.model.Member;
+import ru.src.entities.Member;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "CONTACT_PERSON")
 public class ContactPerson implements Serializable {
-
     @Id
     @Column(name = "CONTACT_PERSON_ID", nullable = false)
     private String contactPersonId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Member.class)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
@@ -34,9 +34,7 @@ public class ContactPerson implements Serializable {
     @Column(name = "CONTACT_CHANGES")
     private String changes;
 
-    private ContactPerson() {
-
-    }
+    public ContactPerson() { }
 
     public ContactPerson(Member member,
                          String fullName,
@@ -51,13 +49,11 @@ public class ContactPerson implements Serializable {
         this.contactPersonId = generateContactPersonId();
     }
 
-
     private String generateContactPersonId() {
         String id = String.valueOf(this.fullName.length()) + String.valueOf(this.position.length());
         String time = String.valueOf(System.nanoTime()).substring(7);
         return id + time;
     }
-
 
     public String getContactPersonId() {
         return contactPersonId;
@@ -121,5 +117,38 @@ public class ContactPerson implements Serializable {
 
     public void setChanges(String changes) {
         this.changes = changes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactPerson that = (ContactPerson) o;
+        return contactPersonId.equals(that.contactPersonId) &&
+                fullName.equals(that.fullName) &&
+                position.equals(that.position) &&
+                phoneMobile.equals(that.phoneMobile) &&
+                Objects.equals(phoneCity, that.phoneCity) &&
+                email.equals(that.email) &&
+                Objects.equals(changes, that.changes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(contactPersonId, fullName, position, phoneMobile, phoneCity, email, changes);
+    }
+
+    @Override
+    public String toString() {
+        return "ContactPerson{" +
+                "contactPersonId='" + contactPersonId + '\'' +
+                ", member=" + member.getMemberId() +
+                ", fullName='" + fullName + '\'' +
+                ", position='" + position + '\'' +
+                ", phoneMobile='" + phoneMobile + '\'' +
+                ", phoneCity='" + phoneCity + '\'' +
+                ", email='" + email + '\'' +
+                ", changes='" + changes + '\'' +
+                '}';
     }
 }

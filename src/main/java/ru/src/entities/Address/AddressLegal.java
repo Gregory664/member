@@ -1,13 +1,13 @@
-package ru.src.model.Address;
+package ru.src.entities.Address;
 
-import ru.src.model.Member;
+import ru.src.entities.Member;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ADDRESS_LEGAL")
 public class AddressLegal implements Serializable {
-
     @Id
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
@@ -40,9 +40,7 @@ public class AddressLegal implements Serializable {
     @Column(name = "ADDRESS_LEGAL_CHANGES")
     private String changes;
 
-    private AddressLegal() {
-
-    }
+    public AddressLegal() { }
 
     public AddressLegal(Member member,
                         Integer regionId,
@@ -138,5 +136,42 @@ public class AddressLegal implements Serializable {
 
     public void setChanges(String changes) {
         this.changes = changes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressLegal that = (AddressLegal) o;
+        return regionId.equals(that.regionId) &&
+                regionName.equals(that.regionName) &&
+                index.equals(that.index) &&
+                town.equals(that.town) &&
+                street.equals(that.street) &&
+                house.equals(that.house) &&
+                Objects.equals(office, that.office) &&
+                Objects.equals(district, that.district) &&
+                Objects.equals(changes, that.changes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(regionId, regionName, index, town, street, house, office, district, changes);
+    }
+
+    @Override
+    public String toString() {
+        return "AddressLegal{" +
+                "member=" + member.getMemberId() +
+                ", regionId=" + regionId +
+                ", regionName='" + regionName + '\'' +
+                ", index=" + index +
+                ", town='" + town + '\'' +
+                ", street='" + street + '\'' +
+                ", house='" + house + '\'' +
+                ", office='" + office + '\'' +
+                ", district='" + district + '\'' +
+                ", changes='" + changes + '\'' +
+                '}';
     }
 }
