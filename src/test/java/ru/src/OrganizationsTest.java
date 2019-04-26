@@ -35,6 +35,7 @@ public class OrganizationsTest {
         organizations = new Organizations();
     }
 
+    @Ignore
     @Test
     public void testInitialization() {
         List<Member> expected = prepareMembers();
@@ -42,9 +43,10 @@ public class OrganizationsTest {
         assertEquals(members.size(), expected.size());
     }
 
+    @Ignore
     @Test
     public void testUpdateMember() {
-        Member modifiedMember = new Member("memberId_1", 123, "modifiedMemberStatus", LocalDate.now(), "modifiedMemberShortName");
+        Member modifiedMember = new Member("memberId_1", 1, "modifiedMemberStatus", LocalDate.now(), "modifiedMemberShortName");
         Member defaultMember = prepareMembers().stream().filter(member -> member.getMemberId().equals("memberId_1")).findFirst().get();
 
         organizations.updateMember(modifiedMember);
