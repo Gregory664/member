@@ -62,21 +62,23 @@ public class SettingsController {
         this.changeSettingFromMainForm = changeSettingFromMainForm;
     }
 
-    private ObservableList<User> users = FXCollections.observableArrayList(DBConnection.getAllUser());
+    private ObservableList<User> users = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        users.addListener((ListChangeListener<User>) c -> checkCountOfUsers());
+        if(HibernateUtils.isActive()) {
+            users.addAll(DBConnection.getAllUser());
+            users.addListener((ListChangeListener<User>) c -> checkCountOfUsers());
+            column_login.setCellValueFactory(new PropertyValueFactory<>("login"));
+            column_fullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+            table_users.setItems(users);
+            checkCountOfUsers();
+        }
 
         text_password.clear();
         text_password.setVisible(false);
 
-        column_login.setCellValueFactory(new PropertyValueFactory<>("login"));
-        column_fullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-        table_users.setItems(users);
-
         fillConnectionParams();
-        checkCountOfUsers();
     }
 
     @FXML

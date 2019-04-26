@@ -17,6 +17,9 @@ public class ConnectionUtils {
     private static XMLStreamWriter writer;
 
     public static Connection getConnection() {
+        if(!new File(path).isFile()) {
+            setConnection("localhost", "default", "3306", "root", "root");
+        }
         try (InputStream inputStream = new FileInputStream(new File(path))) {
             reader = XMLInputFactory.newInstance().createXMLStreamReader(inputStream);
             while (reader.hasNext()) {
@@ -43,7 +46,7 @@ public class ConnectionUtils {
                 }
             }
         } catch (XMLStreamException | FileNotFoundException e) {
-            MemberUtils.warningDialog("Проверьте настройки соединения!");
+            MemberUtils.warningDialog("Файл с настройками соединения не найден!");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

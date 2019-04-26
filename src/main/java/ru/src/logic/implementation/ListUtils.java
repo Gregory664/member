@@ -94,6 +94,34 @@ public class ListUtils {
         return result;
     }
 
+    public static String[] getDataFromInterestingCheckBoxMassive(String title, List<CheckBox> checkBoxes) {
+        String[] result = new String[2];
+
+        if(checkBoxes.size() == 0) {
+            return null;
+        }
+
+        CheckBox checkBoxTrue = checkBoxes.get(0);
+        CheckBox checkBoxFalse = checkBoxes.get(1);
+
+        if(checkBoxTrue.isSelected()) {
+            if (checkBoxFalse.isSelected()) {
+                result[1] = "Да/Интересует, Нет/Не интересует.";
+            } else {
+                result[1] = "Да/Интересует.";
+            }
+        } else {
+            if (checkBoxFalse.isSelected()) {
+                result[1] = "Нет/Не интересует.";
+            } else {
+                return null;
+            }
+        }
+
+        result[0] = title;
+        return result;
+    }
+
     public static void updateUser(ObservableList<User> usersList, User modifiedUser) {
         Optional<User> userToModify = usersList.stream().filter(defaultUser -> defaultUser.getLogin().equals(modifiedUser.getLogin())).findFirst();
         if (userToModify.isPresent()) {

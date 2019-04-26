@@ -26,6 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static ru.src.logic.implementation.ListUtils.getDataFromCheckBoxMassive;
+import static ru.src.logic.implementation.ListUtils.getDataFromInterestingCheckBoxMassive;
 
 public class SelectController {
     @FXML
@@ -764,7 +765,7 @@ public class SelectController {
         List<String[]> listSelectedParams = new ArrayList<>();
 
         for (CheckBoxGroup group : interestsGroups) {
-            listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
+            listSelectedParams.add(getDataFromInterestingCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
         }
         for (CheckBoxGroup group : generalsGroups) {
             listSelectedParams.add(getDataFromCheckBoxMassive(group.getLabel().getText(), group.getCheckBoxes()));
