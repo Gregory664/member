@@ -27,7 +27,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.MainFormController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.src.logic.controllers.MainFormController">
    <children>
       <SplitPane dividerPositions="0.534965034965035" layoutX="321.0" layoutY="187.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="1024.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -89,7 +89,7 @@
                                     <Font size="17.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="comboBox_pageSize" maxHeight="20.0" minHeight="25.0" onAction="#setPageSize" prefWidth="70.0" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                              <ComboBox fx:id="comboBox_pageSize" maxHeight="20.0" minHeight="25.0" onAction="#setPageSize" prefWidth="80.0" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                            </children>
                            <padding>
                               <Insets right="14.0" />

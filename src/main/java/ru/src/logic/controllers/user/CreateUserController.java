@@ -46,7 +46,7 @@ public class CreateUserController {
         if(!isEmptyFields()) {
             newUser = new User(
                     text_login.getText(),
-                    MemberUtils.getPasswordHash(text_password.isVisible() ? text_password.getText() : passField_password.getText()),
+                    text_password.isVisible() ? text_password.getText() : passField_password.getText(),
                     isAdmin.isSelected(),
                     text_fullName.getText(),
                     text_position.getText()
